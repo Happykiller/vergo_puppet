@@ -11,3 +11,8 @@ pip install --no-cache-dir --upgrade pip && \
 ### Start
 
 `uvicorn app.main:app --reload`
+
+### Tests
+
+`pip install pytest`
+`pytest tests/`

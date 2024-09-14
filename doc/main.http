@@ -8,6 +8,10 @@ Content-Type: application/json
 }
 
 ###
+GET {{host}}/models
+Content-Type: application/json
+
+###
 POST {{host}}/train_model
 Content-Type: application/json
 
