@@ -1,0 +1,30 @@
+###
+POST {{host}}/create_model
+Content-Type: application/json
+
+{
+  "name": "model1",
+  "glossary": ["token1", "token2", "token3"]
+}
+
+###
+POST {{host}}/train_model
+Content-Type: application/json
+
+{
+  "name": "model1",
+  "dictionary": [
+    ["token1", "token3"],
+    ["token2"],
+    ["token2", "token1"]
+  ]
+}
+
+###
+POST {{host}}/search
+Content-Type: application/json
+
+{
+  "name": "model1",
+  "vector": ["token1", "token4", "token3"]
+}

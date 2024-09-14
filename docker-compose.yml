@@ -1,0 +1,9 @@
+services:
+  vergo_puppet:
+    image: vergo_puppet
+    container_name: vergo_puppet
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
