@@ -54,7 +54,7 @@ def test_train_model_success():
     # Enregistrer un modèle
     save_model("model1", { "hello": "test" })
 
-    # Appeler la fonction avec un dictionnaire valide
+    # Appeler la fonction avec des données d'entrainement valide
     response = train_model("model1", [[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 
     # Vérifier que la réponse est correcte

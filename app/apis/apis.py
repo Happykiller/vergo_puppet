@@ -11,7 +11,7 @@ router = APIRouter()
 # Schéma pour la création de modèle
 class CreateModelData(BaseModel):
     name: str
-    glossary: List[str]
+    vector_dict: List[str]
 
 # Schéma pour l'entraînement du modèle
 class TrainModelData(BaseModel):
@@ -26,7 +26,7 @@ class SearchData(BaseModel):
 # API pour créer un modèle
 @router.post("/create_model")
 async def create_model_api(data: CreateModelData):
-    return create_model(data.name, data.glossary)
+    return create_model(data.name, data.vector_dict)
 
 # API pour entraîner un modèle
 @router.post("/train_model")

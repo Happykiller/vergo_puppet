@@ -15,7 +15,7 @@ def search_model(name: str, vector: list):
         raise HTTPException(status_code=400, detail="No neural network model found in the model")
 
     # Vérifiez si le dictionnaire de vecteurs est vide
-    vector_dict = model.get("glossary", [])
+    vector_dict = model.get("vector_dict", [])
     if not vector_dict:
         raise HTTPException(status_code=400, detail="No vectors available in the model")
 

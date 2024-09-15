@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "name": "model1",
-  "glossary": ["token1", "token2", "token3"]
+  "vector_dict": ["token1", "token2", "token3"]
 }
 
 ###
