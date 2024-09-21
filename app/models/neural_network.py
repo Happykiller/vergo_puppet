@@ -32,11 +32,11 @@ def train_model_nn(train_data, vector_size, epochs=100, learning_rate=0.001):
     targets = torch.Tensor([pair[1] for pair in train_data])
 
     # Afficher les poids initiaux des couches
-    print("\n[DEBUG] Poids et biais initiaux:")
-    print(f"Poids fc1: {model.fc1.weight.data}")
-    print(f"Biais fc1: {model.fc1.bias.data}")
-    print(f"Poids fc2: {model.fc2.weight.data}")
-    print(f"Biais fc2: {model.fc2.bias.data}")
+    #print("\n[DEBUG] Poids et biais initiaux:")
+    #print(f"Poids fc1: {model.fc1.weight.data}")
+    #print(f"Biais fc1: {model.fc1.bias.data}")
+    #print(f"Poids fc2: {model.fc2.weight.data}")
+    #print(f"Biais fc2: {model.fc2.bias.data}")
 
     losses = []  # Stocker la perte à chaque époque
 
@@ -55,11 +55,11 @@ def train_model_nn(train_data, vector_size, epochs=100, learning_rate=0.001):
             print(f"[DEBUG] Époque {epoch+1}/{epochs}, Perte: {loss.item()}")
 
     # Afficher les poids après entraînement
-    print("\n[DEBUG] Poids et biais après entraînement:")
-    print(f"Poids fc1: {model.fc1.weight.data}")
-    print(f"Biais fc1: {model.fc1.bias.data}")
-    print(f"Poids fc2: {model.fc2.weight.data}")
-    print(f"Biais fc2: {model.fc2.bias.data}")
+    #print("\n[DEBUG] Poids et biais après entraînement:")
+    #print(f"Poids fc1: {model.fc1.weight.data}")
+    #print(f"Biais fc1: {model.fc1.bias.data}")
+    #print(f"Poids fc2: {model.fc2.weight.data}")
+    #print(f"Biais fc2: {model.fc2.bias.data}")
 
     print(f"[DEBUG] Perte finale: {losses[-1]}")
     return model, losses

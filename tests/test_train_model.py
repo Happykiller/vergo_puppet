@@ -9,7 +9,7 @@ def setup_function():
 # Test 1: Vérifier qu'une erreur 404 est levée si le modèle n'existe pas
 def test_train_model_not_found():
     with pytest.raises(Exception) as excinfo:
-        train_model("model1", [[1, 2, 3]]) # Modèle non existant
+        train_model("model1", [["token1", "token2", "token3"]]) # Modèle non existant
     
     assert excinfo.value.status_code == 404 # Vérifie que l'erreur est 404
     assert str(excinfo.value.detail) == "Model not found"
@@ -17,7 +17,11 @@ def test_train_model_not_found():
 # Test 2: Vérifier qu'une erreur 400 est levée si aucun dictionnaire n'est fourni
 def test_train_model_no_dictionary():
     # Enregistrer un modèle vide
-    save_model("model1", [[1, 2, 3]])
+    save_model("model1", {
+        "dictionary": [["token1", "token2", "token3"]],
+        "indexed_dictionary": [[0,1,2]],
+        "glossary": ["token1", "token2", "token3"]
+    })
 
     with pytest.raises(Exception) as excinfo:
         train_model("model1", None)
@@ -28,7 +32,11 @@ def test_train_model_no_dictionary():
 # Test 3: Vérifier qu'une erreur 400 est levée si le dictionnaire est vide
 def test_train_model_empty_dictionary():
     # Enregistrer un modèle vide
-    save_model("model1", [[1, 2, 3]])
+    save_model("model1", {
+        "dictionary": [["token1", "token2", "token3"]],
+        "indexed_dictionary": [[0,1,2]],
+        "glossary": ["token1", "token2", "token3"]
+    })
 
     with pytest.raises(Exception) as excinfo:
         train_model("model1", [])
@@ -40,11 +48,15 @@ def test_train_model_empty_dictionary():
 # Test 4: Vérifier que tous les vecteurs ont la même longueur
 def test_train_model_inconsistent_vector_size():
     # Enregistrer un modèle
-    save_model("model1", [[1, 2, 3]])
+    save_model("model1", {
+        "dictionary": [["token1", "token2", "token3"]],
+        "indexed_dictionary": [[0,1,2]],
+        "glossary": ["token1", "token2", "token3"]
+    })
 
     # Fournir un dictionnaire avec des vecteurs de taille différente
     with pytest.raises(Exception) as excinfo:
-        train_model("model1", [[1, 2, 3], [1, 2]])
+        train_model("model1", [["token1", "token2", "token3"], ["token1", "token2"]])
 
     assert excinfo.value.status_code == 400
     assert str(excinfo.value.detail) == "All vectors must have the same length"
@@ -52,10 +64,14 @@ def test_train_model_inconsistent_vector_size():
 # Test 5: Entraînement réussi
 def test_train_model_success():
     # Enregistrer un modèle
-    save_model("model1", { "hello": "test" })
+    save_model("model1", {
+        "dictionary": [["token1", "token2", "token3"], ["token1", "token2", "token4"], ["token1", "token2", "token5"]],
+        "indexed_dictionary": [[0,1,2], [0,1,3], [0,1,4]],
+        "glossary": ["token1", "token2", "token3", "token4", "token5"]
+    })
 
     # Appeler la fonction avec des données d'entrainement valide
-    response = train_model("model1", [[1, 2, 3], [4, 5, 6], [7, 8, 9]])
+    response = train_model("model1", [["token1", "token2", "token3"], ["token1", "token2", "token4"], ["token1", "token2", "token5"]])
 
     # Vérifier que la réponse est correcte
     assert response["status"] == "training completed"

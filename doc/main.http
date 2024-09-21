@@ -4,7 +4,13 @@ Content-Type: application/json
 
 {
   "name": "model1",
-  "vector_dict": ["token1", "token2", "token3"]
+  "dictionary": [
+    ["jump", "squat"],
+    ["squat"],
+    ["jump", "lunge"],
+    ["half", "lunge", "dumbbell"]
+  ],
+  "glossary": ["jump", "squat", "burpee", "tricep", "bridge", "dip", "half", "dumbbell", "lunge"]
 }
 
 ###
@@ -18,9 +24,10 @@ Content-Type: application/json
 {
   "name": "model1",
   "dictionary": [
-    ["token1", "token3"],
-    ["token2"],
-    ["token2", "token1"]
+    ["jump", "squat"],
+    ["squat"],
+    ["jump", "lunge"],
+    ["half", "lunge", "dumbbell"]
   ]
 }
 
@@ -30,5 +37,9 @@ Content-Type: application/json
 
 {
   "name": "model1",
-  "vector": ["token1", "token4", "token3"]
+  "vector": ["jump", "squat"]
 }
+
+###
+GET {{host}}/version
+Content-Type: application/json
