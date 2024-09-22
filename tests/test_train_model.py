@@ -27,7 +27,7 @@ def test_train_model_no_dictionary():
         train_model("model1", None)
     
     assert excinfo.value.status_code == 400
-    assert str(excinfo.value.detail) == "No vectors provided for training"
+    assert str(excinfo.value.detail) == "No training data provided"
 
 # Test 3: Vérifier qu'une erreur 400 est levée si le dictionnaire est vide
 def test_train_model_empty_dictionary():
@@ -42,24 +42,7 @@ def test_train_model_empty_dictionary():
         train_model("model1", [])
     
     assert excinfo.value.status_code == 400
-    assert str(excinfo.value.detail) == "Dictionary of vectors is empty"
-
-#@pytest.mark.focus
-# Test 4: Vérifier que tous les vecteurs ont la même longueur
-def test_train_model_inconsistent_vector_size():
-    # Enregistrer un modèle
-    save_model("model1", {
-        "dictionary": [["token1", "token2", "token3"]],
-        "indexed_dictionary": [[0,1,2]],
-        "glossary": ["token1", "token2", "token3"]
-    })
-
-    # Fournir un dictionnaire avec des vecteurs de taille différente
-    with pytest.raises(Exception) as excinfo:
-        train_model("model1", [["token1", "token2", "token3"], ["token1", "token2"]])
-
-    assert excinfo.value.status_code == 400
-    assert str(excinfo.value.detail) == "All vectors must have the same length"
+    assert str(excinfo.value.detail) == "Training data is empty"
 
 # Test 5: Entraînement réussi
 def test_train_model_success():
@@ -71,7 +54,11 @@ def test_train_model_success():
     })
 
     # Appeler la fonction avec des données d'entrainement valide
-    response = train_model("model1", [["token1", "token2", "token3"], ["token1", "token2", "token4"], ["token1", "token2", "token5"]])
+    response = train_model("model1", [
+        (["token1", "token2", "token3"], ["token1", "token2", "token3"]), 
+        (["token1", "token2", "token4"], ["token1", "token2", "token4"]), 
+        (["token1", "token2", "token5"], ["token1", "token2", "token5"])
+    ])
 
     # Vérifier que la réponse est correcte
     assert response["status"] == "training completed"

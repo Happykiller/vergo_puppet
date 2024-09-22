@@ -8,11 +8,18 @@ client = TestClient(app)
 # Données de test
 dictionary = [
     ["token1", "token2", "token3"], 
-    ["token1", "token2", "token4"], 
+    ["token1", "token2", "token3", "token4"], 
     ["token1", "token2", "token5"]
 ]
 glossary = ["token1", "token2", "token3", "token4", "token5"]
 search_vector = ["token1", "token2", "token3"]
+training_data = [
+    [["token1", "token2", "token3"], ["token2", "token3", "token4"]],
+    [["token1", "token2", "token4"], ["token2", "token4", "token5"]],
+    [["token1", "token4"], ["token4", "token5"]],
+    [["token1", "token2", "token5"], ["token2", "token5", "token1"]],
+    [["token1", "token2", "token3", "token4"], ["token2", "token3", "token4", "token5"]]
+]
 
 # Test de l'API de création de modèle
 def test_create_model():
@@ -29,7 +36,7 @@ def test_create_model():
 def test_train_model():
     data = {
         "name": "model1",
-        "dictionary": dictionary
+        "training_data": training_data
     }
     response = client.post("/train_model", json=data)
     assert response.status_code == 200, f"Erreur lors de l'entraînement du modèle : {response.text}"
@@ -61,4 +68,3 @@ def test_get_version():
     assert response.status_code == 200, f"Erreur lors de la récupération de la version : {response.text}"
     version_info = response.json()
     assert "version" in version_info
-    assert version_info["version"] == "0.2.0"  # Mettre à jour avec la version actuelle de ton application

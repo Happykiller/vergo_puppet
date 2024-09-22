@@ -1,3 +1,4 @@
+from app.commons.commons import pad_vector
 from app.repositories.memory import get_model
 from app.models.neural_network import predict
 from app.usecases.indices_to_tokens import indices_to_tokens
@@ -14,22 +15,28 @@ def search_model(name: str, search: list):
     if not nn_model:
         raise HTTPException(status_code=400, detail="No neural network model found in the model")
 
-    # Vérifiez si le dictionnaire de vecteurs est vide
     indexed_dictionary = model.get("indexed_dictionary", [])
     if not indexed_dictionary:
         raise HTTPException(status_code=400, detail="No vectors available in the model")
     
     indexed_search = tokens_to_indices(search, model["glossary"])
 
-    # Utiliser le réseau de neurones pour prédire le vecteur le plus proche
-    predicted_vector = predict(nn_model, indexed_search)
+    # Trouver la taille maximale des vecteurs dans le dictionnaire
+    max_vector_size = max(len(vector) for vector in indexed_dictionary)
 
-    # Recherche du meilleur vecteur en vérifiant que dictionary n'est pas vide
+    # Padder le vecteur de recherche pour qu'il ait la même longueur
+    padded_indexed_search = pad_vector(indexed_search, max_vector_size)
+
+    # Utiliser le réseau de neurones pour prédire le vecteur le plus proche
+    predicted_vector = predict(nn_model, padded_indexed_search)
+
+    # Recherche du meilleur vecteur dans le dictionnaire paddé
     try:
-        indexed_find = max(indexed_dictionary, key=lambda v: torch.dist(torch.Tensor(v), predicted_vector).item())
+        padded_indexed_dictionary = [pad_vector(vector, max_vector_size) for vector in indexed_dictionary]
+        indexed_find = max(padded_indexed_dictionary, key=lambda v: torch.dist(torch.Tensor(v), predicted_vector).item())
     except ValueError:
         raise HTTPException(status_code=400, detail="No valid vectors to compare")
-    
+
     find = indices_to_tokens(indexed_find, model["glossary"])
 
     accuracy = 1 / torch.dist(torch.Tensor(indexed_find), predicted_vector).item()

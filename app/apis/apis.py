@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException  # type: ignore
 from pydantic import BaseModel, Field
-from typing import List
+from typing import List, Tuple
 from app.usecases.create_model import create_model
 from app.usecases.train_model import train_model
 from app.usecases.search import search_model
@@ -19,7 +19,7 @@ class CreateModelData(BaseModel):
 # Schéma pour l'entraînement du modèle
 class TrainModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à entraîner")
-    dictionary: List[List[str]] = Field(..., description="Liste de listes de tokens pour entraîner le modèle")
+    training_data: List[Tuple[List[str], List[str]]] = Field(..., description="Liste de tuples (input, target) pour entraîner le modèle")
 
 # Schéma pour la recherche
 class SearchData(BaseModel):
@@ -38,21 +38,22 @@ async def create_model_api(data: CreateModelData):
         raise e
     except Exception as e:
         # Gestion des erreurs générales
-        raise HTTPException(status_code=500, detail=f"Une erreur s'est produite : {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Une erreur s'est produite pendant la création : {str(e)}")
 
 # API pour entraîner un modèle
 @router.post("/train_model")
 async def train_model_api(data: TrainModelData):
     """
-    Entraîne un modèle existant avec un dictionnaire de tokens.
+    Entraîne un modèle existant avec des tuples (input, target).
     """
     try:
-        return train_model(data.name, data.dictionary)
+        return train_model(data.name, data.training_data)
     except HTTPException as e:
         raise e
     except Exception as e:
         # Gestion des erreurs générales
-        raise HTTPException(status_code=500, detail=f"Une erreur s'est produite : {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Une erreur s'est produite pendant l'entrainement : {str(e)}")
+
 
 # API pour rechercher un vecteur dans un modèle
 @router.post("/search")
@@ -66,7 +67,7 @@ async def search_model_api(data: SearchData):
         raise e
     except Exception as e:
         # Gestion des erreurs générales
-        raise HTTPException(status_code=500, detail=f"Une erreur s'est produite : {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Une erreur s'est produite pendant la recherche : {str(e)}")
 
 # Nouvelle API pour récupérer tous les modèles
 @router.get("/models")
@@ -78,7 +79,7 @@ async def get_all_models_api():
         return get_all_models_usecase()
     except Exception as e:
         # Gestion des erreurs générales
-        raise HTTPException(status_code=500, detail=f"Une erreur s'est produite : {str(e)}")
+        raise HTTPException(status_code=500, detail=f"Une erreur s'est produite le listing : {str(e)}")
     
 @router.get("/version")
 async def get_version():
