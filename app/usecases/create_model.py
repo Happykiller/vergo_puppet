@@ -21,6 +21,9 @@ def create_model(name: str, dictionary: List[List[str]], glossary: List[str]):
     if len(glossary) == 0:
         raise HTTPException(status_code=400, detail="Glossary cannot be empty")
 
+    # Ajouter une valeur vierge au début du glossaire
+    glossary = [""] + ["UNK"] + glossary
+
     # Transformer chaque liste de tokens en liste d'indices
     indexed_dictionary = [
         tokens_to_indices(tokens, glossary) for tokens in dictionary

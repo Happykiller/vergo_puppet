@@ -33,7 +33,7 @@ def search_model(name: str, search: list):
     # Recherche du meilleur vecteur dans le dictionnaire paddé
     try:
         padded_indexed_dictionary = [pad_vector(vector, max_vector_size) for vector in indexed_dictionary]
-        indexed_find = max(padded_indexed_dictionary, key=lambda v: torch.dist(torch.Tensor(v), predicted_vector).item())
+        indexed_find = min(padded_indexed_dictionary, key=lambda v: torch.dist(torch.Tensor(v), predicted_vector).item())
     except ValueError:
         raise HTTPException(status_code=400, detail="No valid vectors to compare")
 

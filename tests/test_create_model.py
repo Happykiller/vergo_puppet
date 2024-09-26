@@ -22,7 +22,7 @@ def test_create_model_success():
     assert models["model1"]["dictionary"] == [["token1", "token2"], ["token1", "token3"]]
     
     # Vérifie que le dictionnaire indexé a été correctement généré
-    assert models["model1"]["indexed_dictionary"] == [[0, 1], [0, 2]]
+    assert models["model1"]["indexed_dictionary"] == [[2, 3], [2, 4]]
 
 # Test de tentative de création d'un modèle déjà existant
 def test_create_model_already_exists():
@@ -85,7 +85,7 @@ def test_create_model_with_unknown_tokens():
     assert result == {"status": "model created", "model_name": "model1"}
     
     # Vérifie que le dictionnaire indexé contient None pour le token "tokenX"
-    assert models["model1"]["indexed_dictionary"] == [[0, 1, None]]
+    assert models["model1"]["indexed_dictionary"] == [[2, 3, 1]]
 
 # Test de création d'un modèle avec un glossaire contenant des doublons
 def test_create_model_no_duplicates_in_glossary():
@@ -96,7 +96,7 @@ def test_create_model_no_duplicates_in_glossary():
     assert result == {"status": "model created", "model_name": "model1"}
     
     # Vérifie que le dictionnaire indexé n'utilise que la première occurrence de "token1"
-    assert models["model1"]["indexed_dictionary"] == [[0, 1]]
+    assert models["model1"]["indexed_dictionary"] == [[2, 3]]
 
 # Test de création d'un modèle avec des sous-listes vides dans le dictionnaire
 def test_create_model_empty_token_lists():
@@ -107,4 +107,4 @@ def test_create_model_empty_token_lists():
     assert result == {"status": "model created", "model_name": "model1"}
     
     # Vérifie que les sous-listes vides restent vides dans le dictionnaire indexé
-    assert models["model1"]["indexed_dictionary"] == [[], [0, 1], []]
+    assert models["model1"]["indexed_dictionary"] == [[], [2, 3], []]

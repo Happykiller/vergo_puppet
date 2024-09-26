@@ -27,9 +27,9 @@ def test_search_model_success():
 
     # Assertions
     assert result["search"] == ["token1", "token2", "token3"]
-    assert result["indexed_search"] == [0, 1, 2]
-    assert result["find"] == ["token1", "token2", "token5"]  # Le vecteur recherché devrait correspondre exactement
-    assert result["indexed_find"] == [0, 1, 4]  # Le vecteur recherché devrait correspondre exactement
+    assert result["indexed_search"] == [2, 3, 4]
+    assert result["find"] == ['token1', 'token2', 'token3']  # Le vecteur recherché devrait correspondre exactement
+    assert result["indexed_find"] == [2, 3, 4]  # Le vecteur recherché devrait correspondre exactement
     assert result["stats"]["accuracy"] > 0  # La précision devrait être supérieure à 0
 
 # Test 2: Recherche réussie avec des vecteurs à taille multiple
@@ -63,11 +63,48 @@ def test_search_pad_success():
     result = search_model("model1", ["token1", "token2"])
 
     # Assertions
-    print(result)
     assert result["search"] == ["token1", "token2"]
-    assert result["indexed_search"] == [0, 1]
-    assert result["find"] == ["token1", "token2", "token5", "token1"]  # Le vecteur recherché devrait correspondre exactement
-    assert result["indexed_find"] == [0, 1, 4, 0]  # Le vecteur recherché devrait correspondre exactement
+    assert result["indexed_search"] == [2, 3]
+    assert result["find"] == ['token1', 'token4', '', '']  # Le vecteur recherché devrait correspondre exactement
+    assert result["indexed_find"] == [2, 5, 0, 0]  # Le vecteur recherché devrait correspondre exactement
+    assert result["stats"]["accuracy"] > 0  # La précision devrait être supérieure à 0
+
+# Test: Recherche réussie avec mot inconnu
+# @pytest.mark.focus
+def test_search_unkown_success():
+    # Créer et entraîner un modèle
+    create_model(
+        "model1", 
+        [
+            ["token1", "token2", "token3"], 
+            ["token1", "token2", "token4"], 
+            ["token1", "token4"], 
+            ["token1", "token2", "token5"],
+            ["token1", "token2", "token3", "token4"],
+        ], 
+        ["token1", "token2", "token3", "token4", "token5"]
+    )
+
+    # Entraîner le modèle avec des vecteurs non vides
+    train_model(
+        "model1", 
+        [
+            (["token1", "token2", "token3"], ["token2", "token3", "token4"]),  # Input -> Target
+            (["token1", "token2", "token4"], ["token2", "token4", "token5"]),
+            (["token1", "token4"], ["token4", "token5"]),  # Cible plus courte que l'input
+            (["token1", "token2", "token5"], ["token2", "token5", "token1"]),
+            (["token1", "token2", "token3", "token4"], ["token2", "token3", "token4", "token5"])
+        ]
+    )
+
+    # Recherche avec un vecteur whith token unkown 
+    result = search_model("model1", ["token1", "token6"])
+
+    # Assertions
+    assert result["search"] == ["token1", "token6"]
+    assert result["indexed_search"] == [2, 1]
+    assert result["find"] == ['token1', 'token4', '', '']  # Le vecteur recherché devrait correspondre exactement
+    assert result["indexed_find"] == [2, 5, 0, 0]  # Le vecteur recherché devrait correspondre exactement
     assert result["stats"]["accuracy"] > 0  # La précision devrait être supérieure à 0
 
 # Test 3: Recherche dans un modèle inexistant

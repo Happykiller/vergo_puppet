@@ -5,7 +5,7 @@ AI for Vergo service
 
 ```
 pip install --no-cache-dir --upgrade pip && \
-  pip install --no-cache-dir -r /app/requirements.txt
+  pip install --no-cache-dir -r requirements.txt
 ```
 
 ### Start

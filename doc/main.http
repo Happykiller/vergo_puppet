@@ -23,11 +23,11 @@ Content-Type: application/json
 
 {
   "name": "model1",
-  "dictionary": [
-    ["jump", "squat"],
-    ["squat"],
-    ["jump", "lunge"],
-    ["half", "lunge", "dumbbell"]
+  "training_data": [
+    [ ["jump", "squat"], ["jump", "squat"] ],
+    [ ["squat"], ["squat"] ],
+    [ ["jump", "lunge"], ["jump", "lunge"] ],
+    [ ["half", "lunge", "dumbbell"], ["half", "lunge", "dumbbell"] ]
   ]
 }
 

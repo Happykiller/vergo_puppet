@@ -11,6 +11,6 @@ def indices_to_tokens(indices: List[Optional[int]], glossary: List[str]) -> List
             result.append(glossary[idx])
         else:
             # Ajouter None si l'indice est None ou hors de portée
-            result.append(None)
+            result.append("UNK")
 
     return result

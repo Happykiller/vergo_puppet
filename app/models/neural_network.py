@@ -27,7 +27,7 @@ def train_model_nn(train_data, vector_size, epochs=100, learning_rate=0.001):
         model = SimpleNN(input_size, hidden_size, output_size)
 
         # Critère de perte et optimiseur
-        criterion = nn.MSELoss()  # Erreur quadratique moyenne pour minimiser la différence entre vecteurs
+        criterion = nn.MSELoss()  # Erreur quadratique moyenne pour minimiser la différence entre vecteurs RMSE
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
         # Convertir les données en tenseurs PyTorch
