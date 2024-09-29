@@ -37,10 +37,7 @@ def train_model(name: str, training_data: List[Tuple[List[str], List[str]]]):
     # Trouver la taille maximale des vecteurs
     max_input_size = max(len(pair[0]) for pair in indexed_training_data)
     max_target_size = max(len(pair[1]) for pair in indexed_training_data)
-    max_size = max(max_input_size, max_target_size)
-
-    if max_size != max_dictionary_size:
-        raise ValueError(f"Les tailles maximum pour le dictionnaire et les données d'entrainement sont divergentes, max_size : {str(max_size)}, max_size : {str(max_dictionary_size)}")
+    max_size = max(max_input_size, max_target_size, max_dictionary_size)
 
     # Entraîner le réseau de neurones avec les vecteurs paddés
     nn_model, _ = train_model_nn(indexed_training_data, max_size)
