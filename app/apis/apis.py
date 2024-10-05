@@ -15,6 +15,7 @@ class CreateModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à créer")
     dictionary: List[List[str]] = Field(..., description="Liste de listes de tokens pour le modèle")
     glossary: List[str] = Field(..., description="Glossaire de référence pour le modèle")
+    neural_network_type: str = Field(default="SimpleNN", description="Type de réseau de neurones ('SimpleNN' ou 'LSTMNN')")
 
 # Schéma pour l'entraînement du modèle
 class TrainModelData(BaseModel):

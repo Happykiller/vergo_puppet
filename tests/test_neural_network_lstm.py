@@ -1,6 +1,7 @@
 import pytest
 import torch
-from app.models.neural_network_lstm import LSTMNN, train_model_nn, search_with_similarity
+from app.machine_learning.neural_network_lstm import LSTMNN, train_lstm_model_nn, search_with_similarity
+from app.usecases.indices_to_tokens import indices_to_tokens
 
 # Test 1: Vérifier la structure du modèle LSTM
 def test_lstm_neural_network_structure():
@@ -22,14 +23,14 @@ def test_lstm_neural_network_structure():
 # Test 2: Vérifier l'entraînement du modèle LSTM
 def test_train_lstm_model_nn():
     train_data = [
-        ([1, 2, 3], [1, 2, 3]),
-        ([4, 5, 6], [4, 5, 6]),
-        ([7, 8, 9], [7, 8, 9])
+        ([10, 20, 30], [10, 20, 30]),
+        ([40, 50, 60], [40, 50, 60]),
+        ([70, 80, 90], [70, 80, 90])
     ]
     vector_size = 3
 
     # Entraîner le modèle
-    nn_model, _ = train_model_nn(train_data, vector_size=vector_size, epochs=10, learning_rate=0.01)
+    nn_model, _ = train_lstm_model_nn(train_data, vector_size=vector_size, epochs=10, learning_rate=0.01)
 
     # Vérifier que le modèle a bien été créé
     assert nn_model is not None, "Le modèle LSTM n'a pas été correctement entraîné."
@@ -37,38 +38,39 @@ def test_train_lstm_model_nn():
 # Test 3: Vérifier la fonction de recherche avec similarité cosinus
 def test_search_with_similarity():
     train_data = [
-        ([1, 2, 3], [1, 2, 3]),
-        ([4, 5, 6], [4, 5, 6]),
-        ([7, 8, 9], [7, 8, 9])
+        ([3.14, 2.71, 1.41], [3.14, 2.71, 1.41]),
+        ([5.67, 8.32, 9.21], [5.67, 8.32, 9.21]),
+        ([7.54, 3.33, 6.78], [7.54, 3.33, 6.78])
     ]
     vector_size = 3
-    glossary = ['a', 'b', 'c']  # Exemples fictifs
 
     # Entraîner le modèle
-    nn_model, _ = train_model_nn(train_data, vector_size=vector_size, epochs=100, learning_rate=0.01)
+    nn_model, losses = train_lstm_model_nn(train_data, vector_size=vector_size, epochs=2000, learning_rate=0.01)
+
+    # Afficher la perte pour voir si elle converge
+    print(f"Perte finale après 2000 epochs : {losses[-1]}")
 
     # Créer une recherche avec un vecteur
-    search_vector = [1, 2, 3]
-    indexed_dictionary = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    search_vector = [3.14, 2.71, 1.41]
+    indexed_dictionary = [[3.14, 2.71, 1.41], [5.67, 8.32, 9.21], [7.54, 3.33, 6.78]]
 
-    # Effectuer une recherche
-    result = search_with_similarity(nn_model, search_vector, indexed_dictionary, glossary)
-
-    # Vérifier que la meilleure correspondance est correcte
-    assert result['best_match'] == glossary[0], "Le résultat de la recherche n'est pas correct."
-    assert result['similarity_score'] > 0.9, "Le score de similarité est trop faible."
+    # Effectuer la recherche plusieurs fois pour vérifier la stabilité
+    for _ in range(10):
+        result = search_with_similarity(nn_model, search_vector, indexed_dictionary)
+        # Vérifier que la meilleure correspondance est correcte à chaque itération
+        assert result['best_match'] == [3.14, 2.71, 1.41], "Le résultat de la recherche n'est pas stable."
 
 # Test 4: Vérifier que la perte diminue avec Cosine Similarity
 def test_loss_decreases_during_training_with_cosine_similarity():
     train_data = [
-        ([1, 2, 3], [1, 2, 3]),
-        ([4, 5, 6], [4, 5, 6]),
-        ([7, 8, 9], [7, 8, 9])
+        ([10, 20, 30], [10, 20, 30]),
+        ([40, 50, 60], [40, 50, 60]),
+        ([70, 80, 90], [70, 80, 90])
     ]
     vector_size = 3
 
     # Entraîner le modèle sur plusieurs époques
-    nn_model, losses = train_model_nn(train_data, vector_size=vector_size, epochs=100, learning_rate=0.01)
+    nn_model, losses = train_lstm_model_nn(train_data, vector_size=vector_size, epochs=100, learning_rate=0.01)
 
     # Vérifier que la perte diminue au fil du temps
     assert losses[0] > losses[-1], "La perte n'a pas diminué avec Cosine Similarity."

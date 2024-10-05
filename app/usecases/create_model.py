@@ -5,7 +5,7 @@ from typing import List
 # Importer la fonction de conversion
 from app.usecases.tokens_to_indices import tokens_to_indices  # Ajuster le chemin si nécessaire
 
-def create_model(name: str, dictionary: List[List[str]], glossary: List[str]):
+def create_model(name: str, dictionary: List[List[str]], glossary: List[str], neural_network_type="SimpleNN"):
     if model_exists(name):
         raise HTTPException(status_code=400, detail="Model already exists")
     
@@ -32,8 +32,9 @@ def create_model(name: str, dictionary: List[List[str]], glossary: List[str]):
     # Enregistrer le modèle avec le glossaire et le dictionnaire d'indices
     model_data = {
         "dictionary": dictionary,
-        "indexed_dictionary": indexed_dictionary,  # Dictionnaire transformé avec les indices
-        "glossary": glossary               # Glossaire original
+        "indexed_dictionary": indexed_dictionary, # Dictionnaire transformé avec les indices
+        "glossary": glossary,  # Glossaire original
+        "neural_network_type": neural_network_type # Enregistrement du type de modèle
     }
     save_model(name, model_data)
 

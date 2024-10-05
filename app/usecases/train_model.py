@@ -1,5 +1,6 @@
 from app.repositories.memory import get_model, update_model
-from app.models.neural_network import train_model_nn
+from app.machine_learning.neural_network_simple import train_model_nn
+from app.machine_learning.neural_network_lstm import train_lstm_model_nn
 from app.usecases.tokens_to_indices import tokens_to_indices
 from fastapi import HTTPException  # type: ignore
 from typing import List, Tuple
@@ -39,8 +40,16 @@ def train_model(name: str, training_data: List[Tuple[List[str], List[str]]]):
     max_target_size = max(len(pair[1]) for pair in indexed_training_data)
     max_size = max(max_input_size, max_target_size, max_dictionary_size)
 
-    # Entraîner le réseau de neurones avec les vecteurs paddés
-    nn_model, _ = train_model_nn(indexed_training_data, max_size)
+    # Vérifier le type de modèle à utiliser
+    neural_network_type = model.get("neural_network_type", "SimpleNN")  # Par défaut SimpleNN si non spécifié
+
+    # Entraîner le réseau de neurones en fonction du type de modèle
+    if neural_network_type == "SimpleNN":
+        nn_model, _ = train_model_nn(indexed_training_data, max_size)
+    elif neural_network_type == "LSTMNN":
+        nn_model, _ = train_lstm_model_nn(indexed_training_data, max_size)
+    else:
+        raise HTTPException(status_code=400, detail="Invalid model type")
 
     # Enregistrer le modèle de réseau de neurones entraîné
     update_model(name, {"nn_model": nn_model})

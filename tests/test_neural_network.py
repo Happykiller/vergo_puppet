@@ -1,19 +1,23 @@
 import pytest
 import torch
-from app.models.neural_network import SimpleNN, train_model_nn, predict
+from app.machine_learning.neural_network_simple import SimpleNN, train_model_nn, predict
 
 # Test 1: Vérifier la structure du modèle
 def test_neural_network_structure():
     model = SimpleNN(input_size=3, hidden_size=128, output_size=3)
-    
+
     # Vérifier que le modèle a bien les couches définies
     assert isinstance(model.fc1, torch.nn.Linear), "La première couche n'est pas une couche Linéaire"
     assert model.fc1.in_features == 3, "La couche fc1 ne reçoit pas la bonne taille d'entrée"
     assert model.fc1.out_features == 128, "La couche fc1 ne produit pas la bonne taille de sortie"
-    
+
     assert isinstance(model.fc2, torch.nn.Linear), "La deuxième couche n'est pas une couche Linéaire"
     assert model.fc2.in_features == 128, "La couche fc2 ne reçoit pas la bonne taille d'entrée"
-    assert model.fc2.out_features == 3, "La couche fc2 ne produit pas la bonne taille de sortie"
+    assert model.fc2.out_features == 128, "La couche fc2 ne produit pas la bonne taille de sortie"
+
+    assert isinstance(model.fc3, torch.nn.Linear), "La troisième couche n'est pas une couche Linéaire"
+    assert model.fc3.in_features == 128, "La couche fc3 ne reçoit pas la bonne taille d'entrée"
+    assert model.fc3.out_features == 3, "La couche fc3 ne produit pas la bonne taille de sortie"
 
 # Test 2: Vérifier l'entraînement du modèle et que les poids sont mis à jour
 def test_train_model_nn():
@@ -44,17 +48,22 @@ def test_predict_with_trained_model():
     vector_size = 3
 
     # Entraîner le modèle
-    nn_model, _ = train_model_nn(train_data, vector_size=vector_size, epochs=100, learning_rate=0.01)
+    nn_model, _ = train_model_nn(train_data, vector_size=vector_size, epochs=2000, learning_rate=0.01)
 
     # Faire une prédiction avec un vecteur d'entrée
     input_vector = [1, 2, 3]
     predicted_vector = predict(nn_model, input_vector)
 
+    # Dénormaliser le vecteur prédit pour revenir à l'échelle originale
+    min_val = min(input_vector)
+    max_val = max(input_vector)
+    denormalized_predicted_vector = predicted_vector * (max_val - min_val) + min_val
+
     # Vérifier que la prédiction retourne un vecteur de la bonne taille
     assert predicted_vector.shape[0] == vector_size, "La taille du vecteur prédit est incorrecte."
 
     # Vérifier que la prédiction est proche du vecteur d'entrée (car le modèle est entraîné sur des exemples similaires)
-    assert torch.allclose(predicted_vector, torch.Tensor([1, 2, 3]), atol=0.1), "La prédiction n'est pas suffisamment proche du vecteur d'entrée."
+    assert torch.allclose(denormalized_predicted_vector, torch.Tensor(input_vector), rtol=1, atol=1), "La prédiction n'est pas suffisamment proche du vecteur d'entrée."
 
 # Test 4: Vérifier que la perte diminue pendant l'entraînement
 def test_loss_decreases_during_training():

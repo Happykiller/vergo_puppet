@@ -48,59 +48,54 @@ class HybridLoss(nn.Module):
         # Combinaison des deux pertes : 0.5 * MSE + 0.5 * (1 - Cosine Similarity)
         return 0.5 * mse_loss + 0.5 * (1 - cos_sim.mean())  # Moyenne pour s'assurer d'un scalaire
 
-# Fonction de recherche avec Cosine Similarity en PyTorch
-def search_with_similarity(nn_model, search_vector, indexed_dictionary, glossary):
-    """
-    Recherche l'entrée du dictionnaire la plus proche du vecteur de recherche
-    """
-    predicted_vector = predict(nn_model, search_vector).squeeze(0)  # Réduire la dimension
-    dictionary_tensors = [torch.Tensor(vector).unsqueeze(0) for vector in indexed_dictionary]  # Ajouter batch size
+# Fonction de recherche avec Cosine Similarity et Distance Euclidienne
+def search_with_similarity(nn_model, search_vector, indexed_dictionary):
+    padded_search_vector = torch.Tensor(search_vector).unsqueeze(0)  # Ajouter la dimension batch_size
+    best_match = None
+    best_score = float('inf')  # Utiliser une grande valeur pour initialiser
 
-    # Utiliser cosine_similarity de PyTorch
-    similarities = [
-        nn.functional.cosine_similarity(predicted_vector, vector.squeeze(0), dim=0).item()
-        for vector in dictionary_tensors
-    ]
+    # Comparer chaque vecteur du dictionnaire
+    for vector in indexed_dictionary:
+        padded_vector = torch.Tensor(vector).unsqueeze(0)
+        with torch.no_grad():
+            # Calcul de la similarité cosinus
+            cos_similarity = nn.functional.cosine_similarity(nn_model(padded_vector), padded_search_vector).item()
+            
+            # Calcul de la distance euclidienne
+            euclidean_distance = torch.dist(nn_model(padded_vector), padded_search_vector).item()
 
-    best_match_index = torch.argmax(torch.tensor(similarities))
-    best_match_tokens = glossary[best_match_index]
+            # Combinaison des deux : par exemple, 0.5 * Cosine Similarity + 0.5 * (1 / Euclidean Distance)
+            score = 0.5 * (1 - cos_similarity) + 0.5 * euclidean_distance
+
+            # Sélectionner le vecteur avec le score le plus bas
+            if score < best_score:
+                best_score = score
+                best_match = vector
 
     return {
-        "best_match": best_match_tokens,
-        "similarity_score": similarities[best_match_index]
+        "best_match": best_match,  # Renvoie uniquement le vecteur d'indices
+        "similarity_score": best_score
     }
 
-# Fonction pour entraîner le modèle avec early stopping et Hybrid Loss
-def train_model_nn(train_data, vector_size, epochs=1000, learning_rate=0.001, patience=10, improvement_threshold=0.00001):
+# Fonction pour entraîner le modèle LSTM avec Early Stopping
+def train_lstm_model_nn(train_data, vector_size, epochs=2000, learning_rate=0.001, patience=10, improvement_threshold=0.00001):
     try:
         input_size = vector_size
-        hidden_size = 128
-        output_size = vector_size
+        hidden_size = 128  # Taille de la couche cachée
+        output_size = vector_size  # Taille de sortie égale à celle du vecteur
         model = LSTMNN(input_size, hidden_size, output_size)
 
-        # Utilisation de la perte hybride MSE + Cosine Similarity
+        # Critère de perte hybride (MSE et Cosine Similarity)
         criterion = HybridLoss()
-        optimizer = optim.Adam(model.parameters(), lr=learning_rate, weight_decay=1e-4)  # Ajout de L2 régularisation
+        optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-        inputs_np = np.array([min_max_normalize(pad_vector(pair[0], vector_size)) for pair in train_data])
-        targets_np = np.array([min_max_normalize(pad_vector(pair[1], vector_size)) for pair in train_data])
+        # Conversion des données en tenseurs
+        inputs = torch.Tensor(np.array([min_max_normalize(pad_vector(pair[0], vector_size)) for pair in train_data]))
+        targets = torch.Tensor(np.array([min_max_normalize(pad_vector(pair[1], vector_size)) for pair in train_data]))
 
-        inputs = torch.Tensor(inputs_np)
-        targets = torch.Tensor(targets_np)
-
+        losses = []
         start_time = time.time()
 
-    except IndexError as e:
-        raise ValueError(f"Erreur dans la méthode 'train_model_nn': Problème avec les indices dans les données d'entraînement. Détails : {str(e)}") from e
-
-    except TypeError as e:
-        raise ValueError(f"Erreur dans la méthode 'train_model_nn': Type de données incorrect. Vérifiez que 'train_data' est une liste de tuples (input, target). Détails : {str(e)}") from e
-
-    except Exception as e:
-        raise RuntimeError(f"Erreur inattendue dans la méthode 'train_model_nn': {str(e)}") from e
-
-    try:
-        losses = []
         best_loss = float('inf')
         epochs_without_improvement = 0
 
@@ -148,10 +143,3 @@ def train_model_nn(train_data, vector_size, epochs=1000, learning_rate=0.001, pa
     logging.info(f"Perte finale après {len(losses)} epochs : {losses[-1]}")
 
     return model, losses
-
-# Fonction pour faire une prédiction
-def predict(model, input_vector):
-    input_tensor = torch.Tensor(input_vector).unsqueeze(0)
-    with torch.no_grad():
-        output_vector = model(input_tensor)
-    return output_vector

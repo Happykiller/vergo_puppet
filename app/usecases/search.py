@@ -1,6 +1,7 @@
 from app.commons.commons import pad_vector
 from app.repositories.memory import get_model
-from app.models.neural_network import predict
+from app.machine_learning.neural_network_simple import predict
+from app.machine_learning.neural_network_lstm import search_with_similarity
 from app.usecases.indices_to_tokens import indices_to_tokens
 from app.usecases.tokens_to_indices import tokens_to_indices
 from fastapi import HTTPException # type: ignore
@@ -19,6 +20,7 @@ def search_model(name: str, search: list):
     if not indexed_dictionary:
         raise HTTPException(status_code=400, detail="No vectors available in the model")
     
+    glossary = model.get("glossary", [])
     indexed_search = tokens_to_indices(search, model["glossary"])
 
     # Trouver la taille maximale des vecteurs dans le dictionnaire
@@ -27,19 +29,34 @@ def search_model(name: str, search: list):
     # Padder le vecteur de recherche pour qu'il ait la même longueur
     padded_indexed_search = pad_vector(indexed_search, max_vector_size)
 
-    # Utiliser le réseau de neurones pour prédire le vecteur le plus proche
-    predicted_vector = predict(nn_model, padded_indexed_search)
+    # Récupérer le type de modèle (par défaut SimpleNN)
+    neural_network_type = model.get("neural_network_type", "SimpleNN")
 
-    # Recherche du meilleur vecteur dans le dictionnaire paddé
-    try:
-        padded_indexed_dictionary = [pad_vector(vector, max_vector_size) for vector in indexed_dictionary]
-        indexed_find = min(padded_indexed_dictionary, key=lambda v: torch.dist(torch.Tensor(v), predicted_vector).item())
-    except ValueError:
-        raise HTTPException(status_code=400, detail="No valid vectors to compare")
+    if neural_network_type == "SimpleNN":
+        # Utiliser le réseau de neurones SimpleNN pour prédire le vecteur le plus proche
+        predicted_vector = predict(nn_model, padded_indexed_search)
 
-    find = indices_to_tokens(indexed_find, model["glossary"])
+        # Recherche du meilleur vecteur dans le dictionnaire paddé
+        try:
+            padded_indexed_dictionary = [pad_vector(vector, max_vector_size) for vector in indexed_dictionary]
+            indexed_find = min(padded_indexed_dictionary, key=lambda v: torch.dist(torch.Tensor(v), predicted_vector).item())
+        except ValueError:
+            raise HTTPException(status_code=400, detail="No valid vectors to compare")
 
-    accuracy = 1 / torch.dist(torch.Tensor(indexed_find), predicted_vector).item()
+        find = indices_to_tokens(indexed_find, glossary)
+
+        # Calcul de l'accuracy pour SimpleNN
+        accuracy = 1 / torch.dist(torch.Tensor(indexed_find), predicted_vector).item()
+
+    elif neural_network_type == "LSTMNN":
+        # Utiliser LSTM pour la recherche basée sur la similarité cosinus
+        search_result = search_with_similarity(nn_model, padded_indexed_search, indexed_dictionary, glossary)
+        indexed_find = search_result['best_match']
+        accuracy = search_result['similarity_score']
+        find = indices_to_tokens(indexed_find, glossary)
+
+    else:
+        raise HTTPException(status_code=400, detail="Invalid model type")
 
     return {
         "search": search,
