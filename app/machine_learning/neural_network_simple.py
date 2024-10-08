@@ -2,11 +2,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 import time
-import logging
+from app.services.logger import logger
 import numpy as np
-
-# Configurer le logger pour afficher les informations pendant l'entraînement
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
 
 # Fonction pour normaliser les données entre 0 et 1 (Min-Max scaling)
 def min_max_normalize(data):
@@ -137,7 +134,7 @@ def train_model_nn(train_data, vector_size, epochs=3000, learning_rate=0.001, pa
 
             # Afficher la perte toutes les 10 époques
             if (epoch + 1) % 10 == 0:
-                logging.debug(f"Époque {epoch + 1}/{epochs}, Perte: {current_loss}")
+                logger.debug(f"Époque {epoch + 1}/{epochs}, Perte: {current_loss}")
 
             # Vérification de l'amélioration de la perte
             if current_loss < best_loss - improvement_threshold:
@@ -148,7 +145,7 @@ def train_model_nn(train_data, vector_size, epochs=3000, learning_rate=0.001, pa
 
             # Arrêter l'entraînement si la perte n'améliore plus
             if epochs_without_improvement >= patience:
-                logging.info(f"Arrêt anticipé à l'époque {epoch + 1}. Perte optimale atteinte : {best_loss:.6f}")
+                logger.info(f"Arrêt anticipé à l'époque {epoch + 1}. Perte optimale atteinte : {best_loss:.6f}")
                 break
 
     except RuntimeError as e:
@@ -166,12 +163,12 @@ def train_model_nn(train_data, vector_size, epochs=3000, learning_rate=0.001, pa
     max_loss = max(losses)
 
     # Log des statistiques d'entraînement
-    logging.info(f"Temps total d'entraînement: {total_training_time:.2f} secondes")
-    logging.info(f"Nombre total de paramètres: {total_parameters}")
-    logging.info(f"Perte moyenne: {avg_loss}")
-    logging.info(f"Perte minimale: {min_loss}")
-    logging.info(f"Perte maximale: {max_loss}")
-    logging.info(f"Perte finale après {len(losses)} epochs : {losses[-1]}")
+    logger.info(f"Temps total d'entraînement: {total_training_time:.2f} secondes")
+    logger.info(f"Nombre total de paramètres: {total_parameters}")
+    logger.info(f"Perte moyenne: {avg_loss}")
+    logger.info(f"Perte minimale: {min_loss}")
+    logger.info(f"Perte maximale: {max_loss}")
+    logger.info(f"Perte finale après {len(losses)} epochs : {losses[-1]}")
 
     return model, losses  # Retourner le modèle entraîné et les pertes
 

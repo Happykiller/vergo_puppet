@@ -1,11 +1,14 @@
 from app.repositories.memory import model_exists, save_model
 from fastapi import HTTPException  # type: ignore
 from typing import List
+from app.services.logger import logger
 
 # Importer la fonction de conversion
 from app.usecases.tokens_to_indices import tokens_to_indices  # Ajuster le chemin si nécessaire
 
 def create_model(name: str, dictionary: List[List[str]], glossary: List[str], neural_network_type="SimpleNN"):
+    logger.info(f"Type de machine learning utilisé pour la création du model {neural_network_type}")
+
     if model_exists(name):
         raise HTTPException(status_code=400, detail="Model already exists")
     

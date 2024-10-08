@@ -5,6 +5,7 @@ from app.usecases.create_model import create_model
 from app.usecases.train_model import train_model
 from app.usecases.search import search_model
 from app.usecases.getall_model import get_all_models_usecase
+from app.services.logger import logger
 from app.version import __version__
 
 # Initialisation du routeur
@@ -34,7 +35,7 @@ async def create_model_api(data: CreateModelData):
     Crée un nouveau modèle avec un dictionnaire de tokens et un glossaire.
     """
     try:
-        return create_model(data.name, data.dictionary, data.glossary)
+        return create_model(data.name, data.dictionary, data.glossary, data.neural_network_type)
     except HTTPException as e:
         raise e
     except Exception as e:
@@ -68,6 +69,7 @@ async def search_model_api(data: SearchData):
         raise e
     except Exception as e:
         # Gestion des erreurs générales
+        logger.error(f"Une erreur s'est produite pendant la recherche : {str(e)}")
         raise HTTPException(status_code=500, detail=f"Une erreur s'est produite pendant la recherche : {str(e)}")
 
 # Nouvelle API pour récupérer tous les modèles

@@ -2,6 +2,7 @@ from app.commons.commons import pad_vector
 from app.repositories.memory import get_model
 from app.machine_learning.neural_network_simple import predict
 from app.machine_learning.neural_network_lstm import search_with_similarity
+from app.services.logger import logger
 from app.usecases.indices_to_tokens import indices_to_tokens
 from app.usecases.tokens_to_indices import tokens_to_indices
 from fastapi import HTTPException # type: ignore
@@ -32,6 +33,8 @@ def search_model(name: str, search: list):
     # Récupérer le type de modèle (par défaut SimpleNN)
     neural_network_type = model.get("neural_network_type", "SimpleNN")
 
+    logger.info(f"Type de machine learning utilisé la recherche {neural_network_type}")
+
     if neural_network_type == "SimpleNN":
         # Utiliser le réseau de neurones SimpleNN pour prédire le vecteur le plus proche
         predicted_vector = predict(nn_model, padded_indexed_search)
@@ -50,7 +53,7 @@ def search_model(name: str, search: list):
 
     elif neural_network_type == "LSTMNN":
         # Utiliser LSTM pour la recherche basée sur la similarité cosinus
-        search_result = search_with_similarity(nn_model, padded_indexed_search, indexed_dictionary, glossary)
+        search_result = search_with_similarity(nn_model, padded_indexed_search, indexed_dictionary)
         indexed_find = search_result['best_match']
         accuracy = search_result['similarity_score']
         find = indices_to_tokens(indexed_find, glossary)

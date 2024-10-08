@@ -4,6 +4,7 @@ from app.machine_learning.neural_network_lstm import train_lstm_model_nn
 from app.usecases.tokens_to_indices import tokens_to_indices
 from fastapi import HTTPException  # type: ignore
 from typing import List, Tuple
+from app.services.logger import logger
 
 def train_model(name: str, training_data: List[Tuple[List[str], List[str]]]):
     """
@@ -42,6 +43,7 @@ def train_model(name: str, training_data: List[Tuple[List[str], List[str]]]):
 
     # Vérifier le type de modèle à utiliser
     neural_network_type = model.get("neural_network_type", "SimpleNN")  # Par défaut SimpleNN si non spécifié
+    logger.info(f"Type de machine learning utilisé pour l'entrainement {neural_network_type}")
 
     # Entraîner le réseau de neurones en fonction du type de modèle
     if neural_network_type == "SimpleNN":
