@@ -55,9 +55,12 @@ def search_with_similarity(nn_model, search_vector, indexed_dictionary):
             search_output = nn_model(tensed_search_vector)  # Vecteur de recherche traité
         best_match = None
         best_score = float('inf')  # Initialiser avec une grande valeur
+        best_match_index = -1  # Initialiser avec un index invalide
+
+        logger.debug(f"search_vector {padded_search_vector}.")
 
         # Comparer chaque vecteur du dictionnaire
-        for vector in indexed_dictionary:
+        for index, vector in enumerate(indexed_dictionary):
             padded_vector = pad_vector(vector, input_size)
             tensed_vector = torch.Tensor(padded_vector).unsqueeze(0)
             with torch.no_grad():
@@ -71,13 +74,19 @@ def search_with_similarity(nn_model, search_vector, indexed_dictionary):
                 # Combiner les deux : par exemple, 0.5 * (1 - Similarité Cosinus) + 0.5 * Distance Euclidienne
                 score = 0.5 * (1 - cos_similarity) + 0.5 * euclidean_distance
 
+                logger.debug(f"Vector score {score} {vector}.")
+
                 # Sélectionner le vecteur avec le score le plus bas
                 if score < best_score:
                     best_score = score
                     best_match = vector
+                    best_match_index = index  # Mettre à jour correctement l'index
+
+        logger.debug(f"Best Vector score {best_score} {best_match}.")
 
         return {
             "best_match": best_match,  # Retourne uniquement le vecteur d'indices
+            "best_match_index": best_match_index,
             "similarity_score": best_score
         }
     except Exception as e:
@@ -86,12 +95,16 @@ def search_with_similarity(nn_model, search_vector, indexed_dictionary):
 
 
 # Fonction pour entraîner le modèle LSTM avec Early Stopping
-def train_lstm_model_nn(train_data, vector_size, epochs=2000, learning_rate=0.001, patience=10, improvement_threshold=0.00001):
+def train_lstm_model_nn(train_data, vector_size, epochs=2000, learning_rate=0.001, patience_perc=10, improvement_threshold=0.00001):
     try:
         input_size = vector_size
         hidden_size = 128  # Taille de la couche cachée
         output_size = vector_size  # Taille de sortie égale à celle du vecteur
         model = LSTMNN(input_size, hidden_size, output_size)
+        patience = (epochs/100*patience_perc)
+        logger.debug(f"Vector size {vector_size}.")
+        logger.debug(f"Epochs {epochs}.")
+        logger.debug(f"Patience choisi {patience}.")
 
         # Critère de perte hybride (MSE et Cosine Similarity)
         criterion = HybridLoss()
@@ -126,7 +139,8 @@ def train_lstm_model_nn(train_data, vector_size, epochs=2000, learning_rate=0.00
             else:
                 epochs_without_improvement += 1
 
-            if epochs_without_improvement >= patience:
+
+            if epochs_without_improvement >= (epochs/100*patience):
                 logger.info(f"Arrêt anticipé à l'époque {epoch + 1}. Perte optimale atteinte : {best_loss:.6f}")
                 break
 

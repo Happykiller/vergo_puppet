@@ -18,6 +18,7 @@ def search_model(name: str, search: list):
         raise HTTPException(status_code=400, detail="No neural network model found in the model")
 
     indexed_dictionary = model.get("indexed_dictionary", [])
+    dictionary = model.get("dictionary", [])
     if not indexed_dictionary:
         raise HTTPException(status_code=400, detail="No vectors available in the model")
     
@@ -46,7 +47,7 @@ def search_model(name: str, search: list):
         except ValueError:
             raise HTTPException(status_code=400, detail="No valid vectors to compare")
 
-        find = indices_to_tokens(indexed_find, glossary)
+        find = dictionary[padded_indexed_dictionary.index(indexed_find)]
 
         # Calcul de l'accuracy pour SimpleNN
         accuracy = 1 / torch.dist(torch.Tensor(indexed_find), predicted_vector).item()
@@ -55,8 +56,9 @@ def search_model(name: str, search: list):
         # Utiliser LSTM pour la recherche basée sur la similarité cosinus
         search_result = search_with_similarity(nn_model, padded_indexed_search, indexed_dictionary)
         indexed_find = search_result['best_match']
+        index_find = search_result['best_match_index']
         accuracy = search_result['similarity_score']
-        find = indices_to_tokens(indexed_find, glossary)
+        find = dictionary[index_find]
 
     else:
         raise HTTPException(status_code=400, detail="Invalid model type")
