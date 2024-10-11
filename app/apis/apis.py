@@ -16,12 +16,12 @@ class CreateModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à créer")
     dictionary: List[List[str]] = Field(..., description="Liste de listes de tokens pour le modèle")
     glossary: List[str] = Field(..., description="Glossaire de référence pour le modèle")
-    neural_network_type: str = Field(default="SimpleNN", description="Type de réseau de neurones ('SimpleNN' ou 'LSTMNN')")
+    neural_network_type: str = Field(default="SimpleNN", description="Type de réseau de neurones ('SimpleNN' ou 'LSTMNN' ou 'SIAMESE')")
 
 # Schéma pour l'entraînement du modèle
 class TrainModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à entraîner")
-    training_data: List[Tuple[List[str], List[str]]] = Field(..., description="Liste de tuples (input, target) pour entraîner le modèle")
+    training_data: List[Tuple[List[str], List[str], float]] = Field(..., description="Liste de tuples (input, target) pour entraîner le modèle")
 
 # Schéma pour la recherche
 class SearchData(BaseModel):
@@ -40,6 +40,7 @@ async def create_model_api(data: CreateModelData):
         raise e
     except Exception as e:
         # Gestion des erreurs générales
+        logger.error(f"Une erreur s'est produite pendant la création : {str(e)}")
         raise HTTPException(status_code=500, detail=f"Une erreur s'est produite pendant la création : {str(e)}")
 
 # API pour entraîner un modèle
@@ -54,8 +55,8 @@ async def train_model_api(data: TrainModelData):
         raise e
     except Exception as e:
         # Gestion des erreurs générales
+        logger.error(f"Une erreur s'est produite pendant l'entrainement : {str(e)}")
         raise HTTPException(status_code=500, detail=f"Une erreur s'est produite pendant l'entrainement : {str(e)}")
-
 
 # API pour rechercher un vecteur dans un modèle
 @router.post("/search")
