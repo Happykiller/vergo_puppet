@@ -1,4 +1,4 @@
-from app.commons.commons import create_glossary_from_dictionary, pad_vector
+from app.commons.commons import create_glossary_from_dictionary, create_indexed_glossary, pad_vector
 from app.machine_learning.neural_network_siamese import evaluate_similarity
 from app.repositories.memory import get_model
 from app.machine_learning.neural_network_simple import predict
@@ -62,17 +62,14 @@ def search_model(name: str, search: list):
         find = dictionary[index_find]
 
     elif neural_network_type == "SIAMESE":
-        glossary = create_glossary_from_dictionary([["man", "sit"], ["man", "sit", "up"]])
-        word2idx = {word: idx for idx, word in enumerate(glossary)}
+        word2idx = create_indexed_glossary(glossary)
         
         similarities = []
         for vector in dictionary:
-            similarity = evaluate_similarity(nn_model, ["man", "sit"], ["man", "sit", "up"], word2idx)
+            similarity = evaluate_similarity(nn_model, search, vector, word2idx)
             similarities.append((vector, similarity))
         similarities.sort(key=lambda x: x[1], reverse=True)
 
-        indexed_find = 0
-        index_find = 0
         accuracy = similarities[0][1]
         find = similarities[0][0]
     else:
@@ -80,11 +77,8 @@ def search_model(name: str, search: list):
 
     return {
         "search": search,
-        "indexed_search": indexed_search,
-        "indexed_find": indexed_find,
         "find": find,
         "stats": {
             "accuracy": accuracy
-        },
-        "model_used": name
+        }
     }

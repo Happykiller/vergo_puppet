@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException  # type: ignore
 from pydantic import BaseModel, Field
-from typing import List, Tuple
+from typing import List, Optional, Tuple, Union
 from app.usecases.create_model import create_model
 from app.usecases.train_model import train_model
 from app.usecases.search import search_model
@@ -21,7 +21,23 @@ class CreateModelData(BaseModel):
 # Schéma pour l'entraînement du modèle
 class TrainModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à entraîner")
-    training_data: List[Tuple[List[str], List[str], float]] = Field(..., description="Liste de tuples (input, target) pour entraîner le modèle")
+    # Le dernier membre (float) est maintenant optionnel
+    training_data: List[Union[Tuple[List[str], List[str]], Tuple[List[str], List[str], Optional[float]]]] = Field(
+        ..., description="Liste de tuples (input, target) | (siamese1, siamese2, target) pour entraîner le modèle"
+    )
+
+    def __init__(self, **data):
+        super().__init__(**data)
+        # Si le dernier élément du tuple n'est pas défini, on lui attribue une valeur par défaut
+        for i, elem in enumerate(self.training_data):
+            # Vérification de la longueur du tuple
+            if len(elem) == 2:
+                siamese1, siamese2 = elem
+                self.training_data[i] = (siamese1, siamese2)
+            elif len(elem) == 3:
+                siamese1, siamese2, target = elem
+                if target is None:
+                    self.training_data[i] = (siamese1, siamese2, 0.0)
 
 # Schéma pour la recherche
 class SearchData(BaseModel):

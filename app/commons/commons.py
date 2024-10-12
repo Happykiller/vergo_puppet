@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import Dict, List, Tuple
 
 def pad_vector(vector, max_length):
     """Ajoute du padding à un vecteur pour qu'il ait la taille max_length."""
@@ -18,3 +18,13 @@ def create_glossary_from_dictionary(dictionary: List[List[str]]) -> List[str]:
         unique_tokens.update(seq)
     # Ajouter éventuellement <PAD> si nécessaire
     return ["<PAD>"] + sorted(unique_tokens)
+
+def create_indexed_glossary(glossary: List[str]) -> Dict[str, int]:
+    # Démarrer avec le token spécial <PAD> associé à l'index 0
+    indexed_glossary = {"<PAD>": 0}
+    
+    # Ajouter les mots du glossaire en commençant à l'index 1
+    for idx, word in enumerate(sorted(glossary), 1):
+        indexed_glossary[word] = idx
+    
+    return indexed_glossary
