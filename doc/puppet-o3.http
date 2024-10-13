@@ -60,13 +60,51 @@ Content-Type: application/json
 {
   "name": "model1",
   "training_data": [
-    [["dog", "cat"], ["lion", "tiger"], 0],
     [["dog", "cat", "bird"], ["dog", "cat", "bird"], 1.0],
-    [["frog", "lion", "tiger"], ["frog", "lion", "tiger"], 1.0],
-    [["dog", "cat", "bird"], ["frog", "lion", "tiger"], 0.5],
-    [["elephant", "giraffe", "zebra"], ["elephant", "giraffe", "zebra"], 1.0],
-    [["dog", "cat", "bird"], ["elephant", "giraffe", "zebra"], 0.4],
-    [["frog", "lion", "tiger"], ["elephant", "giraffe", "zebra"], 0.3]
+    [["dog", "cat", "bird"], ["bird", "cat", "dog"], 0.9],
+    [["dog", "cat", "bird"], ["cat", "dog", "lion"], 0.7],
+    [["dog", "cat", "bird"], ["lion", "dog", "elephant", "cat"], 0.6],
+    [["dog", "cat", "bird"], ["dog", "elephant", "lion"], 0.5],
+    [["dog", "cat", "bird"], ["lion", "elephant", "bird"], 0.4],
+    [["dog", "cat", "bird"], ["lion", "tiger", "elephant"], 0.0],
+    [["dog", "cat"], ["dog", "cat", "bird", "fish"], 0.85],
+    [["cat", "bird"], ["lion", "cat", "bird", "dog"], 0.65],
+    [["apple", "banana", "cherry"], ["apple", "banana", "cherry"], 1.0],
+    [["apple", "banana", "cherry"], ["banana", "apple", "cherry"], 0.9],
+    [["apple", "banana", "cherry"], ["cherry", "banana", "apple"], 0.8],
+    [["apple", "banana", "cherry"], ["apple", "grape", "cherry"], 0.75],
+    [["apple", "banana", "cherry"], ["grape", "apple", "melon"], 0.55],
+    [["apple", "banana", "cherry"], ["melon", "grape", "kiwi"], 0.0],
+    [["king", "queen", "prince"], ["king", "duke", "earl"], 0.7],
+    [["king", "queen", "prince"], ["duke", "king", "earl"], 0.6],
+    [["king", "queen", "prince"], ["earl", "duke", "king"], 0.5],
+    [["red", "green", "blue"], ["red", "green"], 0.9],
+    [["red", "green"], ["red", "green", "blue"], 0.95],
+    [["red", "green", "blue"], ["yellow", "purple", "red"], 0.5],
+    [["run", "jump", "swim"], ["run", "walk", "jump", "swim"], 0.95],
+    [["run", "jump", "swim"], ["walk", "run", "swim", "jump"], 0.8],
+    [["run", "jump", "swim"], ["swim", "jump", "run"], 0.7],
+    [["run", "jump", "swim"], ["walk", "skip", "dive"], 0.0],
+    [["important", "common", "rare"], ["important", "unique", "common"], 0.85],
+    [["important", "common", "rare"], ["common", "rare", "important"], 0.8],
+    [["important", "common", "rare"], ["unique", "exclusive", "rare"], 0.4],
+    [["sun", "moon", "stars"], ["sun", "planet", "moon", "comet", "stars"], 0.9],
+    [["sun", "moon", "stars"], ["stars", "comet", "moon", "planet", "sun"], 0.6],
+    [["sun", "moon", "stars"], ["galaxy", "nebula", "asteroid"], 0.0],
+    [["first", "second", "third"], ["first", "third", "second"], 0.9],
+    [["first", "second", "third"], ["second", "first", "third"], 0.8],
+    [["first", "second", "third"], ["third", "second", "first"], 0.7],
+    [["dog", "cat"], ["lion", "dog", "cat", "bird"], 0.75],
+    [["dog", "cat"], ["dog", "bird", "cat", "lion"], 0.7],
+    [["dog", "cat"], ["bird", "lion", "tiger"], 0.0],
+    [["dog", "cat"], ["dog", "dog", "cat", "cat"], 0.85],
+    [["dog", "cat"], ["cat", "dog", "dog", "cat"], 0.8],
+    [["dog", "cat"], ["dog", "lion", "dog", "lion"], 0.5],
+    [["urgent", "task", "deadline"], ["task", "deadline", "meeting"], 0.7],
+    [["urgent", "task", "deadline"], ["meeting", "schedule", "plan"], 0.0],
+    [["alpha", "beta", "gamma"], ["delta", "epsilon", "zeta"], 0.0],
+    [["north", "south", "east"], ["west", "north", "south"], 0.6],
+    [["morning", "afternoon", "evening"], ["evening", "night", "dawn"], 0.4]
   ]
 }
 
@@ -77,6 +115,47 @@ Content-Type: application/json
 {
   "name": "model1",
   "vector": ["sit", "up"]
+}
+
+### 
+POST {{host}}/test
+Content-Type: application/json
+
+{
+  "name": "model1",
+  "neural_network_type": "SIAMESE",
+  "test_data": [
+    [["air", "squat"], ["air", "squat"], 1.0],
+    [["push", "up"], ["push", "up"], 1.0],
+    [["man", "push", "up"], ["woman", "push", "up"], 0.85],
+    [["man", "squat", "dumbbell"], ["woman", "squat", "dumbbell"], 0.85],
+    [["jump", "squat"], ["squat", "jump"], 0.9],
+    [["mountain", "climber"], ["mountain", "climber"], 1.0],
+    [["man", "dumbbell", "bicep", "curl"], ["woman", "dumbbell", "bicep", "curl"], 0.85],
+    [["push", "up"], ["pull", "up"], 0.5],
+    [["lunges", "step", "up"], ["step", "up", "knee", "lift"], 0.7],
+    [["burpee"], ["jump", "squat"], 0.3],
+    [["plank", "shoulder", "tap"], ["plank", "shoulder", "tap"], 1.0],
+    [["man", "dumbbell", "deadlift"], ["woman", "kettlebell", "deadlift"], 0.7],
+    [["glute", "bridge"], ["hip", "thrust"], 0.4],
+    [["high", "knees"], ["butt", "kick"], 0.2],
+    [["lat", "pull", "down"], ["pull", "up"], 0.3],
+    [["man", "tricep", "dip"], ["woman", "tricep", "kickback"], 0.5],
+    [["jump", "rope"], ["high", "knees"], 0.2],
+    [["box", "jump"], ["jump", "squat"], 0.6],
+    [["man", "bench", "press"], ["woman", "bench", "press"], 0.85],
+    [["sitting", "hamstring", "stretch"], ["standing", "hamstring", "stretch"], 0.9],
+    [["deadlift"], ["squat"], 0.3],
+    [["plank"], ["plank", "exercise"], 0.9],
+    [["yoga", "pose"], ["woman", "yoga", "stand", "stretch"], 0.4],
+    [["core", "exercise"], ["plank", "shoulder", "tap"], 0.2],
+    [["jump", "squat"], ["box", "jump"], 0.6],
+    [["kettlebell", "swing"], ["kettlebell", "swing"], 1.0],
+    [["lunge"], ["lunges", "step", "up"], 0.8], 
+    [["sit", "up"], ["crunch"], 0.3],
+    [["pull", "up"], ["chin", "up"], 0.5],
+    [["bicep", "curl"], ["hammer", "curl"], 0.5]
+  ]
 }
 
 ###

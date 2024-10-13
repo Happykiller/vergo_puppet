@@ -139,7 +139,6 @@ def train_lstm_model_nn(train_data, vector_size, epochs=2000, learning_rate=0.00
             else:
                 epochs_without_improvement += 1
 
-
             if epochs_without_improvement >= (epochs/100*patience):
                 logger.info(f"Arrêt anticipé à l'époque {epoch + 1}. Perte optimale atteinte : {best_loss:.6f}")
                 break
