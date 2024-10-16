@@ -2,8 +2,9 @@ from app.commons.commons import create_indexed_glossary
 from app.machine_learning.neural_network_siamese import evaluate_similarity
 from app.repositories.memory import get_model
 from app.services.logger import logger
+from app.usecases.tokens_to_indices import tokens_to_indices
 
-def test_siamese(name, test_data):
+def mesure_siamese(name, test_data):
     try:
         total_error = 0
         correct_predictions = 0
@@ -13,7 +14,9 @@ def test_siamese(name, test_data):
         nn_model = model.get("nn_model", None)
         word2idx = create_indexed_glossary(glossary)
         for vector1, vector2, expected_similarity in test_data:
-            predicted_similarity = evaluate_similarity(nn_model, vector1, vector2, word2idx)
+            vector1_indices = tokens_to_indices(vector1, word2idx)
+            vector2_indices = tokens_to_indices(vector2, word2idx)
+            predicted_similarity = evaluate_similarity(nn_model, vector1_indices, vector2_indices)
             error = abs(predicted_similarity - expected_similarity)
             total_error += error
             # Considérer la prédiction correcte si la différence est inférieure à un seuil (par exemple 0.1)

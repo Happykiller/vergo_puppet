@@ -1,6 +1,6 @@
-from app.usecases.test_siamese import test_siamese
+from app.usecases.mesure_siamese import mesure_siamese
 from fastapi import APIRouter, HTTPException  # type: ignore
-from pydantic import BaseModel, Field, root_validator
+from pydantic import BaseModel, Field
 from typing import List, Optional, Tuple, Union
 from app.usecases.create_model import create_model
 from app.usecases.train_model import train_model
@@ -45,7 +45,6 @@ class TestModelData(BaseModel):
     neural_network_type: str = Field(..., description="Type de réseau de neurones ('SimpleNN', 'LSTMNN', 'SIAMESE')")
     test_data: Union[List[Tuple[List[str], List[str]]], List[Tuple[List[str], List[str], float]]] = Field(..., description="Données de test")
 
-    @root_validator(pre=True)
     def validate_test_data(cls, values):
         network_type = values.get('neural_network_type')
         test_data = values.get('test_data')
@@ -118,7 +117,7 @@ async def test(data: TestModelData):
     """
     try:
         if (data.neural_network_type == 'SIAMESE') :
-            return test_siamese(data.name, data.test_data)
+            return mesure_siamese(data.name, data.test_data)
         else :
             raise HTTPException(status_code=400, detail="Model type not supported yet")
     except HTTPException as e:

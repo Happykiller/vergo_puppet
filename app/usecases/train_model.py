@@ -69,10 +69,17 @@ def train_model(name: str, training_data: List[Tuple[List[str], List[str], float
     elif neural_network_type == "SIAMESE":
         training_glossary = create_glossary_from_training_data(training_data)
         training_word2idx = {word: idx for idx, word in enumerate(training_glossary)}
+       
+        transformed_data = []
+        for source_tokens, target_tokens, score in training_data:
+            source_indices = tokens_to_indices(source_tokens, training_word2idx)
+            target_indices = tokens_to_indices(target_tokens, training_word2idx)
+            transformed_data.append((source_indices, target_indices, score))
+
         vocab_size = len(model["glossary"])+1
         
         # Entraîner le modèle
-        nn_model, _ = train_siamese_model_nn(training_data, training_word2idx, vocab_size)
+        nn_model, _ = train_siamese_model_nn(transformed_data, vocab_size)
     else:
         raise HTTPException(status_code=400, detail="Invalid model type")
 

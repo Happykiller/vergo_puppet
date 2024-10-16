@@ -157,12 +157,3 @@ Content-Type: application/json
     [["bicep", "curl"], ["hammer", "curl"], 0.5]
   ]
 }
-
-###
-GET {{host}}/models
-Content-Type: application/json
-
-
-###
-GET {{host}}/version
-Content-Type: application/json

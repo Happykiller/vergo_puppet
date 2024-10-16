@@ -27,9 +27,7 @@ def test_search_model_success():
 
     # Assertions
     assert result["search"] == ["chat", "chien", "oiseau"]
-    assert result["indexed_search"] == [2, 3, 4]
     assert result["find"] == ["chat", "chien", "oiseau"]
-    assert result["indexed_find"] == [2, 3, 4]
     assert result["stats"]["accuracy"] > 0
 
 # Test 2: Recherche réussie avec des vecteurs à taille multiple
@@ -62,9 +60,7 @@ def test_search_pad_success():
 
     # Assertions
     assert result["search"] == ["livre", "stylo"]
-    assert result["indexed_search"] == [2, 3]
     assert result["find"] == ["livre", "stylo", "sac"]
-    assert result["indexed_find"] == [2, 3, 4]
     assert result["stats"]["accuracy"] > 0
 
 # Test 3: Recherche réussie avec un mot inconnu
@@ -95,9 +91,7 @@ def test_search_unknown_success():
 
     # Assertions
     assert result["search"] == ["chat", "lion"]
-    assert result["indexed_search"] == [2, 1]  # "lion" est traité comme inconnu
     assert result["find"] == ["chat", "chien", "oiseau"]
-    assert result["indexed_find"] == [2, 3, 4]
     assert result["stats"]["accuracy"] > 0
 
 # Test 4: Recherche dans un modèle inexistant

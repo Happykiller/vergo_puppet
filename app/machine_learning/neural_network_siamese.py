@@ -1,5 +1,6 @@
 # neural_network_siamese.py
 
+from app.usecases.tokens_to_indices import tokens_to_indices
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -64,27 +65,17 @@ class SimilarityLoss(nn.Module):
         loss = self.mse_loss(similarity, label)
         return loss
 
-# Fonction pour convertir une séquence de tokens en indices
-def tokens_to_indices(tokens: List[str], word2idx: dict) -> List[int]:
-    # Convertit chaque token en son indice dans le vocabulaire
-    return [word2idx.get(token, 0) for token in tokens]
-
-# Fonction pour préparer une séquence en tenseur
-def prepare_sequence(seq: List[str], word2idx: dict) -> torch.Tensor:
-    # Convertit la séquence de tokens en une séquence d'indices
-    idxs = tokens_to_indices(seq, word2idx)
-    # Convertit la liste d'indices en tenseur PyTorch
-    return torch.tensor(idxs, dtype=torch.long)
-
 # Dataset personnalisé pour les paires de séquences et leur similarité
 class SimilarityDataset(Dataset):
-    def __init__(self, data: List[Tuple[List[str], List[str], float]], word2idx: dict):
+    def __init__(self, data: List[Tuple[List[int], List[int], float]]):
         self.pairs = []
         self.labels = []
-        for seq1, seq2, label in data:
+        for idxs1, idxs2, label in data:
             # Prépare les séquences et les ajoute à la liste des paires
+            torch1 = torch.tensor(idxs1, dtype=torch.long)
+            torch2 = torch.tensor(idxs2, dtype=torch.long)
             self.pairs.append(
-                (prepare_sequence(seq1, word2idx), prepare_sequence(seq2, word2idx))
+                (torch1, torch2)
             )
             # Ajoute le label correspondant
             self.labels.append(label)
@@ -125,8 +116,7 @@ def collate_fn(data):
 
 # Fonction pour entraîner le modèle Siamese LSTM avec early stopping et logging
 def train_siamese_model_nn(
-    training_data: List[Tuple[List[str], List[str], float]],
-    word2idx: dict,
+    training_data: List[Tuple[List[int], List[int], float]],
     vocab_size: int,
     embedding_dim: int = 128,
     hidden_dim: int = 256,
@@ -136,7 +126,7 @@ def train_siamese_model_nn(
     patience: int = 10  # Nombre d'époques sans amélioration avant d'arrêter
 ):
     # Création du dataset personnalisé
-    dataset = SimilarityDataset(training_data, word2idx)
+    dataset = SimilarityDataset(training_data)
     # Création du DataLoader pour gérer les batches
     train_loader = DataLoader(
         dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn
@@ -226,17 +216,19 @@ def train_siamese_model_nn(
 # Fonction pour évaluer la similarité entre deux séquences avec le modèle entraîné
 def evaluate_similarity(
     model: SiameseLSTM,
-    seq1_tokens: List[str],
-    seq2_tokens: List[str],
-    word2idx: dict
+    idxs1: List[int],
+    idxs2: List[int]
 ) -> float:
     model.eval()  # Mise en mode évaluation
     with torch.no_grad():  # Désactive le calcul des gradients
         # Préparation des séquences
-        seq1 = prepare_sequence(seq1_tokens, word2idx).unsqueeze(0)  # Ajout d'une dimension batch
-        lengths1 = torch.tensor([len(seq1_tokens)])
-        seq2 = prepare_sequence(seq2_tokens, word2idx).unsqueeze(0)
-        lengths2 = torch.tensor([len(seq2_tokens)])
+        torch1 = torch.tensor(idxs1, dtype=torch.long)
+        seq1 = torch1.unsqueeze(0)  # Ajout d'une dimension batch
+        lengths1 = torch.tensor([len(idxs1)])
+
+        torch2 = torch.tensor(idxs2, dtype=torch.long)
+        seq2 = torch2.unsqueeze(0)
+        lengths2 = torch.tensor([len(idxs2)])
 
         # Déplacement des données sur le device
         device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')

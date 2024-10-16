@@ -63,10 +63,12 @@ def search_model(name: str, search: list):
 
     elif neural_network_type == "SIAMESE":
         word2idx = create_indexed_glossary(glossary)
-        
+        search_indices = tokens_to_indices(search, word2idx)
+
         similarities = []
         for vector in dictionary:
-            similarity = evaluate_similarity(nn_model, search, vector, word2idx)
+            vector_indices = tokens_to_indices(vector, word2idx)
+            similarity = evaluate_similarity(nn_model, search_indices, vector_indices)
             similarities.append((vector, similarity))
         similarities.sort(key=lambda x: x[1], reverse=True)
 
