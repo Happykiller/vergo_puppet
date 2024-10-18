@@ -1,0 +1,170 @@
+###
+POST {{host}}/create_model
+Content-Type: application/json
+
+{
+  "name": "puppet-o1",
+  "neural_network_type": "SimpleNN"
+}
+
+###
+POST {{host}}/train_model
+Content-Type: application/json
+
+{
+  "name": "puppet-o1",
+  "neural_network_type": "SimpleNN",
+  "training_data": [
+    {
+        "type":4,
+        "surface":98,
+        "pieces":4,
+        "floor":5,
+        "parking":1,
+        "balcon":0,
+        "ascenseur":1,
+        "orientation":6,
+        "transports":1,
+        "neighborhood":1,
+        "price":215000
+    },
+    {
+        "type":4,
+        "surface":68,
+        "pieces":4,
+        "floor":5,
+        "parking":1,
+        "balcon":1,
+        "ascenseur":1,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":2,
+        "price":130000
+    },
+    {
+        "type":3,
+        "surface":58,
+        "pieces":3,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":1,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":150000
+    },
+    {
+        "type":7,
+        "surface":18,
+        "pieces":1,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":5,
+        "price":65000
+    },
+    {
+        "type":5,
+        "surface":127,
+        "pieces":5,
+        "floor":15,
+        "parking":0,
+        "balcon":1,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":3,
+        "price":270000
+    },
+    {
+        "type":2,
+        "surface":48,
+        "pieces":2,
+        "floor":2,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":159000
+    },
+    {
+        "type":1,
+        "surface":34,
+        "pieces":1,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":100000
+    },
+    {
+        "type":4,
+        "surface":56,
+        "pieces":4,
+        "floor":0,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":0,
+        "transports":1,
+        "neighborhood":4,
+        "price":160000
+    },
+    {
+        "type":2,
+        "surface":48,
+        "pieces":2,
+        "floor":0,
+        "parking":0,
+        "balcon":1,
+        "ascenseur":1,
+        "orientation":5,
+        "transports":1,
+        "neighborhood":2,
+        "price":160000
+    },
+    {
+        "type":3,
+        "surface":70,
+        "pieces":3,
+        "floor":2,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":3,
+        "transports":1,
+        "neighborhood":1,
+        "price":220000
+    }
+  ]
+}
+
+###
+POST {{host}}/search
+Content-Type: application/json
+
+{
+    "name": "puppet-o1",
+    "neural_network_type": "SimpleNN",
+    "vector": {
+        "type":3,
+        "surface":70,
+        "pieces":3,
+        "floor":2,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":3,
+        "transports":1,
+        "neighborhood":1
+    }
+}

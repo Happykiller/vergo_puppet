@@ -1,6 +1,11 @@
+from app.apis.models.simple_nn_search_data import SimpleNNSearchData
 from app.usecases.mesure_siamese import mesure_siamese
+from app.usecases.simple_nn.create_model_simple_nn import create_model_simpleNN
+from app.usecases.simple_nn.search_model_simple_nn import search_model_simple_nn
+from app.usecases.simple_nn.train_model_simple_nn import train_model_simple_nn
 from fastapi import APIRouter, HTTPException  # type: ignore
 from pydantic import BaseModel, Field
+from app.apis.models.simple_nn_training_data import SimpleNNTrainingData
 from typing import List, Optional, Tuple, Union
 from app.usecases.create_model import create_model
 from app.usecases.train_model import train_model
@@ -15,30 +20,47 @@ router = APIRouter()
 # Schéma pour la création de modèle
 class CreateModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à créer")
-    dictionary: List[List[str]] = Field(..., description="Liste de listes de tokens pour le modèle")
-    glossary: List[str] = Field(..., description="Glossaire de référence pour le modèle")
+    dictionary: Optional[List[List[str]]] = Field(None, description="Liste de listes de tokens pour le modèle (obligatoire sauf pour SimpleNN)")
+    glossary: Optional[List[str]] = Field(None, description="Glossaire de référence pour le modèle (obligatoire sauf pour SimpleNN)")
     neural_network_type: str = Field(default="SimpleNN", description="Type de réseau de neurones ('SimpleNN' ou 'LSTMNN' ou 'SIAMESE')")
+
+    def check_required_fields(cls, values):
+        neural_network_type = values.get('neural_network_type')
+        dictionary = values.get('dictionary')
+        glossary = values.get('glossary')
+
+        if neural_network_type != "SimpleNN":
+            if dictionary is None or glossary is None:
+                raise ValueError("Les champs 'dictionary' et 'glossary' sont obligatoires sauf pour 'SimpleNN'.")
+
+        return values
 
 # Schéma pour l'entraînement du modèle
 class TrainModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à entraîner")
+    neural_network_type: Optional[str] = Field(description="Type de réseau de neurones ('SimpleNN' ou 'LSTMNN' ou 'SIAMESE')")
     # Le dernier membre (float) est maintenant optionnel
-    training_data: List[Union[Tuple[List[str], List[str]], Tuple[List[str], List[str], Optional[float]]]] = Field(
+    training_data: Union[
+        List[ Tuple[List[str], List[str]] ],
+        List[ Tuple[List[str], List[str], Optional[float]] ],
+        List[ SimpleNNTrainingData ]
+    ] = Field (
         ..., description="Liste de tuples (input, target) | (siamese1, siamese2, target) pour entraîner le modèle"
     )
 
     def __init__(self, **data):
         super().__init__(**data)
-        # Si le dernier élément du tuple n'est pas défini, on lui attribue une valeur par défaut
-        for i, elem in enumerate(self.training_data):
-            # Vérification de la longueur du tuple
-            if len(elem) == 2:
-                siamese1, siamese2 = elem
-                self.training_data[i] = (siamese1, siamese2)
-            elif len(elem) == 3:
-                siamese1, siamese2, target = elem
-                if target is None:
-                    self.training_data[i] = (siamese1, siamese2, 0.0)
+        if(self.neural_network_type == 'SIAMESE'):
+            # Si le dernier élément du tuple n'est pas défini, on lui attribue une valeur par défaut
+            for i, elem in enumerate(self.training_data):
+                # Vérification de la longueur du tuple
+                if len(elem) == 2:
+                    siamese1, siamese2 = elem
+                    self.training_data[i] = (siamese1, siamese2)
+                elif len(elem) == 3:
+                    siamese1, siamese2, target = elem
+                    if target is None:
+                        self.training_data[i] = (siamese1, siamese2, 0.0)
 
 class TestModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à tester")
@@ -62,7 +84,11 @@ class TestModelData(BaseModel):
 # Schéma pour la recherche
 class SearchData(BaseModel):
     name: str = Field(..., description="Nom du modèle dans lequel effectuer la recherche")
-    vector: List[str] = Field(..., description="Liste de tokens représentant le vecteur à rechercher")
+    neural_network_type: str = Field(..., description="Type de réseau de neurones ('SimpleNN', 'LSTMNN', 'SIAMESE')")
+    vector: Union[
+        List[str],
+        SimpleNNSearchData
+    ] = Field(..., description="Liste de tokens représentant le vecteur à rechercher")
 
 # API pour créer un modèle
 @router.post("/create_model")
@@ -71,7 +97,10 @@ async def create_model_api(data: CreateModelData):
     Crée un nouveau modèle avec un dictionnaire de tokens et un glossaire.
     """
     try:
-        return create_model(data.name, data.dictionary, data.glossary, data.neural_network_type)
+        if (data.neural_network_type == 'SimpleNN') :
+            return create_model_simpleNN(data.name, data.neural_network_type)
+        else:
+            return create_model(data.name, data.dictionary, data.glossary, data.neural_network_type)
     except HTTPException as e:
         raise e
     except Exception as e:
@@ -86,7 +115,10 @@ async def train_model_api(data: TrainModelData):
     Entraîne un modèle existant avec des tuples (input, target).
     """
     try:
-        return train_model(data.name, data.training_data)
+        if (data.neural_network_type == 'SimpleNN') :
+            return train_model_simple_nn(data.name, data.training_data)
+        else:
+            return train_model(data.name, data.training_data)
     except HTTPException as e:
         raise e
     except Exception as e:
@@ -101,7 +133,10 @@ async def search_model_api(data: SearchData):
     Recherche un vecteur dans le modèle spécifié.
     """
     try:
-        return search_model(data.name, data.vector)
+        if (data.neural_network_type == 'SimpleNN') :
+            return search_model_simple_nn(data.name, data.vector)
+        else:
+            return search_model(data.name, data.vector)
     except HTTPException as e:
         raise e
     except Exception as e:

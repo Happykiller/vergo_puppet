@@ -7,20 +7,11 @@ import numpy as np
 
 # Fonction pour normaliser les données entre 0 et 1 (Min-Max scaling)
 def min_max_normalize(data):
-    data = np.array(data)
-    min_val = np.min(data)
-    max_val = np.max(data)
-    if max_val == min_val:
-        return data  # Si min == max, éviter la division par zéro
-    return (data - min_val) / (max_val - min_val)
-
-# Fonction pour appliquer le padding sur un vecteur pour qu'il ait la même longueur que les autres
-def pad_vector(vector, size):
-    """
-    Applique du padding à un vecteur pour qu'il atteigne la taille spécifiée (size).
-    Remplit le reste avec des zéros.
-    """
-    return vector + [0] * (size - len(vector))
+    data = np.array(data, dtype=np.float32)
+    min_val = np.min(data, axis=0)  # Minimum pour chaque caractéristique
+    max_val = np.max(data, axis=0)  # Maximum pour chaque caractéristique
+    # Éviter la division par zéro si min == max
+    return (data - min_val) / (max_val - min_val + 1e-8)  # Ajout d'un petit terme pour éviter la division par 0
 
 # Définition du réseau de neurones SimpleNN amélioré avec plusieurs couches et du Dropout pour la régularisation
 class SimpleNN(nn.Module):
@@ -84,7 +75,7 @@ class HybridLoss(nn.Module):
         # Combinaison : 50% MSE et 50% (1 - similarité cosinus)
         return 0.5 * mse_loss + 0.5 * (1 - cos_sim.mean())  # Moyenne pour obtenir un scalaire
 
-# Fonction pour entraîner le modèle SimpleNN avec Early Stopping et padding
+# Fonction pour entraîner le modèle SimpleNN avec Early Stopping
 def train_model_nn(train_data, vector_size, epochs=3000, learning_rate=0.001, patience=10, improvement_threshold=0.00001):
     """
     Fonction d'entraînement du modèle SimpleNN :
@@ -96,7 +87,7 @@ def train_model_nn(train_data, vector_size, epochs=3000, learning_rate=0.001, pa
         # Initialisation des tailles
         input_size = vector_size  # Taille des vecteurs d'entrée
         hidden_size = 128  # Taille des couches cachées
-        output_size = vector_size  # Taille de sortie = taille d'entrée
+        output_size = 1  # La taille de sortie doit être 1 (pour prédire un prix unique)
 
         # Création du modèle SimpleNN
         model = SimpleNN(input_size, hidden_size, output_size)
@@ -106,13 +97,18 @@ def train_model_nn(train_data, vector_size, epochs=3000, learning_rate=0.001, pa
         # Optimiseur Adam avec un taux d'apprentissage initial
         optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
-        # Conversion des données en tenseurs après padding et normalisation
-        inputs_np = np.array([min_max_normalize(pad_vector(pair[0], vector_size)) for pair in train_data])
-        targets_np = np.array([min_max_normalize(pad_vector(pair[1], vector_size)) for pair in train_data])
+        logger.debug(f"train_data {train_data}")
 
-        # Création des tenseurs pour les entrées et les cibles
-        inputs = torch.Tensor(inputs_np)
-        targets = torch.Tensor(targets_np)
+        # Séparation des features (inputs) et des targets (prix)
+        features = np.array([x[0] for x in train_data], dtype=np.float32)  # Entrées
+        targets = np.array([x[1] for x in train_data], dtype=np.float32)  # Cibles (prix)
+
+        # Normalisation des features (input data)
+        features_normalized = min_max_normalize(features)
+
+        # Conversion en tenseurs
+        inputs_tensor = torch.tensor(features_normalized, dtype=torch.float32)  # Les entrées sous forme de tenseurs
+        targets_tensor = torch.tensor(targets, dtype=torch.float32).unsqueeze(1)  # Cibles, avec une dimension ajoutée
 
         # Liste pour stocker la perte à chaque époque
         losses = []
@@ -124,8 +120,8 @@ def train_model_nn(train_data, vector_size, epochs=3000, learning_rate=0.001, pa
         # Boucle d'entraînement
         for epoch in range(epochs):
             optimizer.zero_grad()  # Réinitialiser les gradients
-            outputs = model(inputs)  # Passer les entrées dans le modèle
-            loss = criterion(outputs, targets)  # Calculer la perte
+            outputs = model(inputs_tensor)  # Passer les entrées dans le modèle
+            loss = criterion(outputs, targets_tensor)  # Calculer la perte
             loss.backward()  # Calculer les gradients
             optimizer.step()  # Mettre à jour les poids
 
@@ -170,17 +166,31 @@ def train_model_nn(train_data, vector_size, epochs=3000, learning_rate=0.001, pa
     logger.info(f"Perte maximale: {max_loss}")
     logger.info(f"Perte finale après {len(losses)} epochs : {losses[-1]}")
 
-    return model, losses  # Retourner le modèle entraîné et les pertes
+    return model, losses
 
 # Fonction pour faire une prédiction avec le modèle SimpleNN
 def predict(model, input_vector):
     """
-    Fonction de prédiction :
-    - Prend un modèle SimpleNN et un vecteur d'entrée.
-    - Renvoie le vecteur de sortie prédit.
+    Fonction de prédiction avec normalisation des entrées.
     """
-    input_tensor = torch.Tensor(input_vector).unsqueeze(0)  # Ajouter une dimension batch (taille 1)
-    with torch.no_grad():  # Désactiver la calcul des gradients pendant la prédiction
-        output_vector = model(input_tensor)  # Passer le vecteur d'entrée dans le modèle
-    return output_vector.squeeze(0)  # Enlever la dimension batch pour obtenir un vecteur
+    try:
+        # Conversion de l'input en un numpy array et normalisation
+        input_array = np.array(input_vector, dtype=np.float32).reshape(1, -1)  # Ajouter une dimension batch
+        input_array_normalized = min_max_normalize(input_array)  # Normalisation des données
 
+        # Passer les données normalisées à travers le modèle
+        with torch.no_grad():  # Désactiver le calcul des gradients pour la prédiction
+            output_tensor = model(torch.tensor(input_array_normalized))
+
+        # Conversion du tenseur de sortie en une valeur Python standard (target_price)
+        predicted_price = output_tensor.detach().cpu().numpy().squeeze()
+
+        # Vérification que la sortie est bien un scalaire
+        if predicted_price.size == 1:
+            return float(predicted_price)  # Retourne la valeur prédite comme un float
+        else:
+            raise ValueError("La sortie du modèle n'est pas une valeur scalaire unique")
+    
+    except Exception as e:
+        logger.error(f"Erreur lors de la prédiction : {e}")
+        raise
