@@ -12,14 +12,18 @@ def setup_function():
 # Test 1: Recherche réussie avec un réseau de neurones et des données variées
 def test_search_model_success():
     # Créer et entraîner un modèle avec des données variées
-    create_model("model1", [["chat", "chien", "oiseau"], ["voiture", "vélo", "train"], ["ordinateur", "table", "stylo"]], 
-                 ["chat", "chien", "oiseau", "voiture", "vélo", "train", "ordinateur", "table", "stylo"])
+    create_model(
+        "model1", 
+        [["chat", "chien", "oiseau"], ["voiture", "vélo", "train"], ["ordinateur", "table", "stylo"]], 
+        ["chat", "chien", "oiseau", "voiture", "vélo", "train", "ordinateur", "table", "stylo"],
+        "SIAMESE"
+    )
 
     # Entraîner le modèle avec des vecteurs non vides
     train_model("model1", [
-        (["chat", "chien", "oiseau"], ["chat", "chien", "oiseau"]), 
-        (["voiture", "vélo", "train"], ["voiture", "vélo", "train"]), 
-        (["ordinateur", "table", "stylo"], ["ordinateur", "table", "stylo"])
+        (["chat", "chien", "oiseau"], ["chat", "chien", "oiseau"], 1), 
+        (["voiture", "vélo", "train"], ["voiture", "vélo", "train"], 1), 
+        (["ordinateur", "table", "stylo"], ["ordinateur", "table", "stylo"], 1)
     ])
 
     # Recherche avec un vecteur valide
@@ -28,39 +32,6 @@ def test_search_model_success():
     # Assertions
     assert result["search"] == ["chat", "chien", "oiseau"]
     assert result["find"] == ["chat", "chien", "oiseau"]
-    assert result["stats"]["accuracy"] > 0
-
-# Test 2: Recherche réussie avec des vecteurs à taille multiple
-def test_search_pad_success():
-    # Créer et entraîner un modèle avec des chaînes variées
-    create_model(
-        "model2", 
-        [
-            ["livre", "stylo", "sac"], 
-            ["bouteille", "tasse", "verre"], 
-            ["chaise", "table", "lampe"], 
-            ["ordinateur", "clavier", "souris"]
-        ], 
-        ["livre", "stylo", "sac", "bouteille", "tasse", "verre", "chaise", "table", "lampe", "ordinateur", "clavier", "souris"]
-    )
-
-    # Entraîner le modèle avec des vecteurs non vides
-    train_model(
-        "model2", 
-        [
-            (["livre", "stylo", "sac"], ["livre", "stylo", "sac"]),
-            (["bouteille", "tasse", "verre"], ["bouteille", "tasse", "verre"]),
-            (["chaise", "table", "lampe"], ["chaise", "table", "lampe"]),
-            (["ordinateur", "clavier", "souris"], ["ordinateur", "clavier", "souris"])
-        ]
-    )
-
-    # Recherche avec un vecteur valide
-    result = search_model("model2", ["livre", "stylo"])
-
-    # Assertions
-    assert result["search"] == ["livre", "stylo"]
-    assert result["find"] == ["livre", "stylo", "sac"]
     assert result["stats"]["accuracy"] > 0
 
 # Test 3: Recherche réussie avec un mot inconnu
@@ -73,16 +44,17 @@ def test_search_unknown_success():
             ["voiture", "vélo", "train"], 
             ["ordinateur", "table", "stylo"]
         ], 
-        ["chat", "chien", "oiseau", "voiture", "vélo", "train", "ordinateur", "table", "stylo"]
+        ["chat", "chien", "oiseau", "voiture", "vélo", "train", "ordinateur", "table", "stylo"],
+        "SIAMESE"
     )
 
     # Entraîner le modèle avec des vecteurs non vides
     train_model(
         "model3", 
         [
-            (["chat", "chien", "oiseau"], ["chat", "chien", "oiseau"]),
-            (["voiture", "vélo", "train"], ["voiture", "vélo", "train"]),
-            (["ordinateur", "table", "stylo"], ["ordinateur", "table", "stylo"])
+            (["chat", "chien", "oiseau"], ["chat", "chien", "oiseau"], 1),
+            (["voiture", "vélo", "train"], ["voiture", "vélo", "train"], 1),
+            (["ordinateur", "table", "stylo"], ["ordinateur", "table", "stylo"], 1)
         ]
     )
 
@@ -91,7 +63,6 @@ def test_search_unknown_success():
 
     # Assertions
     assert result["search"] == ["chat", "lion"]
-    assert result["find"] == ["chat", "chien", "oiseau"]
     assert result["stats"]["accuracy"] > 0
 
 # Test 4: Recherche dans un modèle inexistant

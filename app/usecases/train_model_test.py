@@ -20,7 +20,8 @@ def test_train_model_no_dictionary():
     save_model("model1", {
         "dictionary": [["token1", "token2", "token3"]],
         "indexed_dictionary": [[0,1,2]],
-        "glossary": ["token1", "token2", "token3"]
+        "glossary": ["token1", "token2", "token3"],
+        "neural_network_type": "SIAMESE"
     })
 
     with pytest.raises(Exception) as excinfo:
@@ -35,7 +36,8 @@ def test_train_model_empty_dictionary():
     save_model("model1", {
         "dictionary": [["token1", "token2", "token3"]],
         "indexed_dictionary": [[0,1,2]],
-        "glossary": ["token1", "token2", "token3"]
+        "glossary": ["token1", "token2", "token3"],
+        "neural_network_type": "SIAMESE"
     })
 
     with pytest.raises(Exception) as excinfo:
@@ -50,14 +52,15 @@ def test_train_model_success():
     save_model("model1", {
         "dictionary": [["token1", "token2", "token3"], ["token1", "token2", "token4"], ["token1", "token2", "token5"]],
         "indexed_dictionary": [[0,1,2], [0,1,3], [0,1,4]],
-        "glossary": ["token1", "token2", "token3", "token4", "token5"]
+        "glossary": ["token1", "token2", "token3", "token4", "token5"],
+        "neural_network_type": "SIAMESE"
     })
 
     # Appeler la fonction avec des données d'entrainement valide
     response = train_model("model1", [
-        (["token1", "token2", "token3"], ["token1", "token2", "token3"]), 
-        (["token1", "token2", "token4"], ["token1", "token2", "token4"]), 
-        (["token1", "token2", "token5"], ["token1", "token2", "token5"])
+        (["token1", "token2", "token3"], ["token1", "token2", "token3"], 1), 
+        (["token1", "token2", "token4"], ["token1", "token2", "token4"], 1), 
+        (["token1", "token2", "token5"], ["token1", "token2", "token5"], 1)
     ])
 
     # Vérifier que la réponse est correcte

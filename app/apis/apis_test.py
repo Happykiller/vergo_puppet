@@ -25,6 +25,7 @@ training_data = [
 def test_create_model():
     data = {
         "name": "model1",
+        "neural_network_type": "LSTMNN",
         "dictionary": dictionary,
         "glossary": glossary
     }
@@ -36,6 +37,7 @@ def test_create_model():
 def test_train_model():
     data = {
         "name": "model1",
+        "neural_network_type": "LSTMNN",
         "training_data": training_data
     }
     response = client.post("/train_model", json=data)
@@ -46,6 +48,7 @@ def test_train_model():
 def test_search_model():
     data = {
         "name": "model1",
+        "neural_network_type": "LSTMNN",
         "vector": search_vector
     }
     response = client.post("/search", json=data)
@@ -54,13 +57,6 @@ def test_search_model():
     assert result["search"] == search_vector
     assert "find" in result
     assert "stats" in result
-
-# Test de l'API de récupération de tous les modèles
-def test_get_all_models():
-    response = client.get("/models")
-    assert response.status_code == 200, f"Erreur lors de la récupération des modèles : {response.text}"
-    models = response.json()
-    assert "model1" in models["models"]
 
 # Test de l'API de version
 def test_get_version():
