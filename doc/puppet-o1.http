@@ -15,6 +15,543 @@ Content-Type: application/json
   "name": "puppet-o1",
   "neural_network_type": "SimpleNN",
   "training_data": [
+        {
+            "type": 4,
+            "surface": 98,
+            "pieces": 4,
+            "floor": 5,
+            "parking": 1,
+            "balcon": 0,
+            "ascenseur": 1,
+            "orientation": 6,
+            "transports": 1,
+            "neighborhood": 1,
+            "price": 215000
+        },
+        {
+            "type": 4,
+            "surface": 68,
+            "pieces": 4,
+            "floor": 5,
+            "parking": 1,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 0,
+            "transports": 1,
+            "neighborhood": 2,
+            "price": 130000
+        },
+        {
+            "type": 3,
+            "surface": 58,
+            "pieces": 3,
+            "floor": 0,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 1,
+            "orientation": 0,
+            "transports": 1,
+            "neighborhood": 6,
+            "price": 150000
+        },
+        {
+            "type": 7,
+            "surface": 18,
+            "pieces": 1,
+            "floor": 0,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 0,
+            "transports": 1,
+            "neighborhood": 7,
+            "price": 65000
+        },
+        {
+            "type": 5,
+            "surface": 127,
+            "pieces": 5,
+            "floor": 15,
+            "parking": 0,
+            "balcon": 1,
+            "ascenseur": 0,
+            "orientation": 0,
+            "transports": 1,
+            "neighborhood": 3,
+            "price": 270000
+        },
+        {
+            "type": 2,
+            "surface": 48,
+            "pieces": 2,
+            "floor": 2,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 0,
+            "transports": 1,
+            "neighborhood": 4,
+            "price": 159000
+        },
+        {
+            "type": 1,
+            "surface": 34,
+            "pieces": 1,
+            "floor": 0,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 0,
+            "transports": 1,
+            "neighborhood": 4,
+            "price": 100000
+        },
+        {
+            "type": 4,
+            "surface": 56,
+            "pieces": 4,
+            "floor": 0,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 0,
+            "transports": 1,
+            "neighborhood": 4,
+            "price": 160000
+        },
+        {
+            "type": 2,
+            "surface": 48,
+            "pieces": 2,
+            "floor": 0,
+            "parking": 0,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 5,
+            "transports": 1,
+            "neighborhood": 2,
+            "price": 160000
+        },
+        {
+            "type": 3,
+            "surface": 70,
+            "pieces": 3,
+            "floor": 2,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 3,
+            "transports": 1,
+            "neighborhood": 1,
+            "price": 220000
+        },
+        {
+            "type": 4,
+            "surface": 85,
+            "pieces": 4,
+            "floor": 3,
+            "parking": 1,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 7,
+            "transports": 1,
+            "neighborhood": 8,
+            "price": 250000
+        },
+        {
+            "type": 5,
+            "surface": 90,
+            "pieces": 5,
+            "floor": 4,
+            "parking": 1,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 0,
+            "transports": 1,
+            "neighborhood": 3,
+            "price": 300000
+        },
+        {
+            "type": 7,
+            "surface": 25,
+            "pieces": 1,
+            "floor": 5,
+            "parking": 0,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 0,
+            "transports": 1,
+            "neighborhood": 7,
+            "price": 80000
+        },
+        {
+            "type": 1,
+            "surface": 30,
+            "pieces": 1,
+            "floor": 1,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 1,
+            "orientation": 3,
+            "transports": 1,
+            "neighborhood": 9,
+            "price": 95000
+        },
+        {
+            "type": 3,
+            "surface": 65,
+            "pieces": 3,
+            "floor": 0,
+            "parking": 1,
+            "balcon": 1,
+            "ascenseur": 0,
+            "orientation": 5,
+            "transports": 1,
+            "neighborhood": 10,
+            "price": 180000
+        },
+        {
+            "type": 4,
+            "surface": 78,
+            "pieces": 4,
+            "floor": 5,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 1,
+            "orientation": 1,
+            "transports": 1,
+            "neighborhood": 2,
+            "price": 210000
+        },
+        {
+            "type": 5,
+            "surface": 110,
+            "pieces": 5,
+            "floor": 0,
+            "parking": 1,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 3,
+            "transports": 1,
+            "neighborhood": 3,
+            "price": 340000
+        },
+        {
+            "type": 2,
+            "surface": 54,
+            "pieces": 2,
+            "floor": 2,
+            "parking": 0,
+            "balcon": 1,
+            "ascenseur": 0,
+            "orientation": 0,
+            "transports": 1,
+            "neighborhood": 11,
+            "price": 140000
+        },
+        {
+            "type": 7,
+            "surface": 22,
+            "pieces": 1,
+            "floor": 4,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 1,
+            "transports": 1,
+            "neighborhood": 13,
+            "price": 75000
+        },
+        {
+            "type": 2,
+            "surface": 45,
+            "pieces": 2,
+            "floor": 1,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 2,
+            "transports": 1,
+            "neighborhood": 13,
+            "price": 145000
+        },{
+            "type": 4,
+            "surface": 80,
+            "pieces": 4,
+            "floor": 3,
+            "parking": 1,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 5,
+            "transports": 1,
+            "neighborhood": 3,
+            "price": 260000
+        },
+        {
+            "type": 3,
+            "surface": 60,
+            "pieces": 3,
+            "floor": 2,
+            "parking": 0,
+            "balcon": 1,
+            "ascenseur": 0,
+            "orientation": 4,
+            "transports": 1,
+            "neighborhood": 2,
+            "price": 170000
+        },{
+            "type": 5,
+            "surface": 120,
+            "pieces": 5,
+            "floor": 6,
+            "parking": 1,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 6,
+            "transports": 1,
+            "neighborhood": 3,
+            "price": 350000
+        },{
+            "type": 7,
+            "surface": 28,
+            "pieces": 1,
+            "floor": 4,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 1,
+            "transports": 1,
+            "neighborhood": 7,
+            "price": 85000
+        },
+        {
+            "type": 1,
+            "surface": 32,
+            "pieces": 1,
+            "floor": 2,
+            "parking": 0,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 3,
+            "transports": 1,
+            "neighborhood": 9,
+            "price": 105000
+        },
+        {
+            "type": 4,
+            "surface": 88,
+            "pieces": 4,
+            "floor": 5,
+            "parking": 1,
+            "balcon": 0,
+            "ascenseur": 1,
+            "orientation": 7,
+            "transports": 1,
+            "neighborhood": 8,
+            "price": 240000
+        },
+        {
+            "type": 2,
+            "surface": 52,
+            "pieces": 2,
+            "floor": 1,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 5,
+            "transports": 1,
+            "neighborhood": 11,
+            "price": 150000
+        },
+        {
+            "type": 3,
+            "surface": 68,
+            "pieces": 3,
+            "floor": 3,
+            "parking": 1,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 2,
+            "transports": 1,
+            "neighborhood": 2,
+            "price": 190000
+        },
+        {
+            "type": 5,
+            "surface": 100,
+            "pieces": 5,
+            "floor": 4,
+            "parking": 1,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 4,
+            "transports": 1,
+            "neighborhood": 3,
+            "price": 320000
+        },
+        {
+            "type": 7,
+            "surface": 20,
+            "pieces": 1,
+            "floor": 5,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 1,
+            "transports": 1,
+            "neighborhood": 13,
+            "price": 70000
+        },
+        {
+            "type": 1,
+            "surface": 35,
+            "pieces": 1,
+            "floor": 0,
+            "parking": 0,
+            "balcon": 1,
+            "ascenseur": 0,
+            "orientation": 6,
+            "transports": 1,
+            "neighborhood": 4,
+            "price": 95000
+        },
+        {
+            "type": 3,
+            "surface": 72,
+            "pieces": 3,
+            "floor": 2,
+            "parking": 1,
+            "balcon": 0,
+            "ascenseur": 0,
+            "orientation": 7,
+            "transports": 1,
+            "neighborhood": 12,
+            "price": 185000
+        },
+        {
+            "type": 2,
+            "surface": 55,
+            "pieces": 2,
+            "floor": 3,
+            "parking": 0,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 5,
+            "transports": 1,
+            "neighborhood": 2,
+            "price": 158000
+        },
+        {
+            "type": 4,
+            "surface": 90,
+            "pieces": 4,
+            "floor": 6,
+            "parking": 1,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 8,
+            "transports": 1,
+            "neighborhood": 3,
+            "price": 275000
+        },
+        {
+            "type": 5,
+            "surface": 115,
+            "pieces": 5,
+            "floor": 7,
+            "parking": 1,
+            "balcon": 0,
+            "ascenseur": 1,
+            "orientation": 2,
+            "transports": 1,
+            "neighborhood": 3,
+            "price": 360000
+        },
+        {
+            "type": 7,
+            "surface": 26,
+            "pieces": 1,
+            "floor": 1,
+            "parking": 0,
+            "balcon": 1,
+            "ascenseur": 0,
+            "orientation": 4,
+            "transports": 1,
+            "neighborhood": 7,
+            "price": 82000
+        },
+        {
+            "type": 2,
+            "surface": 49,
+            "pieces": 2,
+            "floor": 2,
+            "parking": 0,
+            "balcon": 0,
+            "ascenseur": 1,
+            "orientation": 3,
+            "transports": 1,
+            "neighborhood": 11,
+            "price": 152000
+        },
+        {
+            "type": 3,
+            "surface": 66,
+            "pieces": 3,
+            "floor": 3,
+            "parking": 0,
+            "balcon": 1,
+            "ascenseur": 0,
+            "orientation": 5,
+            "transports": 1,
+            "neighborhood": 2,
+            "price": 175000
+        },
+        {
+            "type": 4,
+            "surface": 82,
+            "pieces": 4,
+            "floor": 4,
+            "parking": 1,
+            "balcon": 1,
+            "ascenseur": 1,
+            "orientation": 1,
+            "transports": 1,
+            "neighborhood": 8,
+            "price": 255000
+        }
+    ]
+}
+
+###
+POST {{host}}/search
+Content-Type: application/json
+
+{
+    "name": "puppet-o1",
+    "neural_network_type": "SimpleNN",
+    "vector": {
+        "type":3,
+        "surface":70,
+        "pieces":3,
+        "floor":2,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":3,
+        "transports":1,
+        "neighborhood":1
+    }
+}
+
+
+###
+POST {{host}}/test
+Content-Type: application/json
+
+{
+  "name": "puppet-o1",
+  "neural_network_type": "SimpleNN",
+  "test_data": [
     {
         "type":4,
         "surface":98,
@@ -42,17 +579,17 @@ Content-Type: application/json
         "price":130000
     },
     {
-        "type":3,
-        "surface":58,
-        "pieces":3,
-        "floor":0,
-        "parking":0,
-        "balcon":0,
-        "ascenseur":1,
-        "orientation":0,
-        "transports":1,
-        "neighborhood":4,
-        "price":150000
+        "type": 4,
+        "surface": 95,
+        "pieces": 4,
+        "floor": 6,
+        "parking": 1,
+        "balcon": 1,
+        "ascenseur": 1,
+        "orientation": 6,
+        "transports": 1,
+        "neighborhood": 3,
+        "price": 280000
     },
     {
         "type":7,
@@ -81,17 +618,17 @@ Content-Type: application/json
         "price":270000
     },
     {
-        "type":2,
-        "surface":48,
-        "pieces":2,
-        "floor":2,
-        "parking":0,
-        "balcon":0,
-        "ascenseur":0,
-        "orientation":0,
-        "transports":1,
-        "neighborhood":4,
-        "price":159000
+        "type": 3,
+        "surface": 75,
+        "pieces": 3,
+        "floor": 2,
+        "parking": 1,
+        "balcon": 0,
+        "ascenseur": 0,
+        "orientation": 7,
+        "transports": 1,
+        "neighborhood": 12,
+        "price": 195000
     },
     {
         "type":1,
@@ -120,17 +657,17 @@ Content-Type: application/json
         "price":160000
     },
     {
-        "type":2,
-        "surface":48,
-        "pieces":2,
-        "floor":0,
-        "parking":0,
-        "balcon":1,
-        "ascenseur":1,
-        "orientation":5,
-        "transports":1,
-        "neighborhood":2,
-        "price":160000
+        "type": 2,
+        "surface": 50,
+        "pieces": 2,
+        "floor": 3,
+        "parking": 0,
+        "balcon": 1,
+        "ascenseur": 1,
+        "orientation": 4,
+        "transports": 1,
+        "neighborhood": 2,
+        "price": 155000
     },
     {
         "type":3,
@@ -146,25 +683,4 @@ Content-Type: application/json
         "price":220000
     }
   ]
-}
-
-###
-POST {{host}}/search
-Content-Type: application/json
-
-{
-    "name": "puppet-o1",
-    "neural_network_type": "SimpleNN",
-    "vector": {
-        "type":3,
-        "surface":70,
-        "pieces":3,
-        "floor":2,
-        "parking":0,
-        "balcon":0,
-        "ascenseur":0,
-        "orientation":3,
-        "transports":1,
-        "neighborhood":1
-    }
 }

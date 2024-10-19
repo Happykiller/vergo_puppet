@@ -1,269 +1,333 @@
-orientation_mapping = {
-    "Nord": 1,
-    "Nord-Est": 2,
-    "Est": 3,
-    "Sud-Est": 4,
-    "Sud": 5,
-    "Sud-Ouest": 6,
-    "Ouest": 7,
-    "Nord-Ouest": 8
-}
-
-type = {
-    "Appartement T1": 1,
-    "Appartement T2": 2,
-    "Appartement T3": 3,
-    "Appartement T4": 4,
-    "Appartement T5": 5,
-    "Appartement T6": 6,
-    "Studio": 7
-}
-
-transports = {
-    "Proche": 1
-}
-
-neighborhood = {
-    "Agrèable": 1,
-    "Résidentiel": 2,
-    "Haut standing": 3,
-    "Quartier": 4,
-    "Centre": 5
-}
-
+```json
 [
     {
-        "Type de bien":"Appartement T4",
-        "Superficie (m²)":98,
-        "Nombre de pièces":4,
-        "Étage":5,
-        "Garage":"Oui",
-        "Balcon":"Non précisé",
-        "Ascenseur":"Oui",
-        "Orientation":"Sud-Est",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Agrèable",
-        "Prix (€)":215000.0
+        "type": 4,
+        "surface": 98,
+        "pieces": 4,
+        "floor": 5,
+        "parking": 1,
+        "balcon": 0,
+        "ascenseur": 1,
+        "orientation": 6,
+        "transports": 1,
+        "neighborhood": 1,
+        "price": 215000
     },
     {
-        "Type de bien":"Appartement T4",
-        "Superficie (m²)":68,
-        "Nombre de pièces":4,
-        "Étage":5,
-        "Garage":"Oui",
-        "Balcon":"Oui",
-        "Ascenseur":"Oui",
-        "Orientation":"Non précisé",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Résidentiel",
-        "Prix (€)":130000.0
+        "type": 4,
+        "surface": 68,
+        "pieces": 4,
+        "floor": 5,
+        "parking": 1,
+        "balcon": 1,
+        "ascenseur": 1,
+        "orientation": 0,
+        "transports": 1,
+        "neighborhood": 2,
+        "price": 130000
     },
     {
-        "Type de bien":"Appartement T3",
-        "Superficie (m²)":58,
-        "Nombre de pièces":3,
-        "Étage":"Non précisé",
-        "Garage":"Non précisé",
-        "Balcon":"Non précisé",
-        "Ascenseur":"Oui",
-        "Orientation":"Non précisé",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Sécurisé",
-        "Prix (€)":150000.0
+        "type": 3,
+        "surface": 58,
+        "pieces": 3,
+        "floor": 0,
+        "parking": 0,
+        "balcon": 0,
+        "ascenseur": 1,
+        "orientation": 0,
+        "transports": 1,
+        "neighborhood": 6,
+        "price": 150000
     },
     {
-        "Type de bien":"Studio",
-        "Superficie (m²)":18,
-        "Nombre de pièces":1,
-        "Étage":"Non précisé",
-        "Garage":"Non précisé",
-        "Balcon":"Non précisé",
-        "Ascenseur":"Non précisé",
-        "Orientation":"Non précisé",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Hyper-centre",
-        "Prix (€)":65000.0
+        "type": 7,
+        "surface": 18,
+        "pieces": 1,
+        "floor": 0,
+        "parking": 0,
+        "balcon": 0,
+        "ascenseur": 0,
+        "orientation": 0,
+        "transports": 1,
+        "neighborhood": 7,
+        "price": 65000
     },
     {
-        "Type de bien":"Appartement T5",
-        "Superficie (m²)":127,
-        "Nombre de pièces":5,
-        "Étage":15,
-        "Garage":"Non précisé",
-        "Balcon":"Oui",
-        "Ascenseur":"Non précisé",
-        "Orientation":"Non précisé",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Haut standing",
-        "Prix (€)":270000.0
+        "type": 5,
+        "surface": 127,
+        "pieces": 5,
+        "floor": 15,
+        "parking": 0,
+        "balcon": 1,
+        "ascenseur": 0,
+        "orientation": 0,
+        "transports": 1,
+        "neighborhood": 3,
+        "price": 270000
     },
     {
-        "Type de bien":"Appartement T2",
-        "Superficie (m²)":48,
-        "Nombre de pièces":2,
-        "Étage":2,
-        "Garage":"Non précisé",
-        "Balcon":"Non précisé",
-        "Ascenseur":"Non précisé",
-        "Orientation":"Non précisé",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Championnet",
-        "Prix (€)":159000.0
+        "type": 2,
+        "surface": 48,
+        "pieces": 2,
+        "floor": 2,
+        "parking": 0,
+        "balcon": 0,
+        "ascenseur": 0,
+        "orientation": 0,
+        "transports": 1,
+        "neighborhood": 4,
+        "price": 159000
     },
     {
-        "Type de bien":"Appartement T1",
-        "Superficie (m²)":34,
-        "Nombre de pièces":1,
-        "Étage":"Non précisé",
-        "Garage":"Non précisé",
-        "Balcon":"Non précisé",
-        "Ascenseur":"Non précisé",
-        "Orientation":"Non précisé",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Boulevard Edouard Rey",
-        "Prix (€)":100000.0
+        "type": 1,
+        "surface": 34,
+        "pieces": 1,
+        "floor": 0,
+        "parking": 0,
+        "balcon": 0,
+        "ascenseur": 0,
+        "orientation": 0,
+        "transports": 1,
+        "neighborhood": 4,
+        "price": 100000
     },
     {
-        "Type de bien":"Appartement T4",
-        "Superficie (m²)":56,
-        "Nombre de pièces":4,
-        "Étage":"Non précisé",
-        "Garage":"Non précisé",
-        "Balcon":"Non précisé",
-        "Ascenseur":"Non précisé",
-        "Orientation":"Non précisé",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Proximité Gare",
-        "Prix (€)":160000.0
+        "type": 4,
+        "surface": 56,
+        "pieces": 4,
+        "floor": 0,
+        "parking": 0,
+        "balcon": 0,
+        "ascenseur": 0,
+        "orientation": 0,
+        "transports": 1,
+        "neighborhood": 4,
+        "price": 160000
     },
     {
-        "Type de bien":"Appartement T2",
-        "Superficie (m²)":48,
-        "Nombre de pièces":2,
-        "Étage":"Non précisé",
-        "Garage":"Non précisé",
-        "Balcon":"Oui",
-        "Ascenseur":"Oui",
-        "Orientation":"Sud",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Résidentiel",
-        "Prix (€)":160000.0
+        "type": 2,
+        "surface": 48,
+        "pieces": 2,
+        "floor": 0,
+        "parking": 0,
+        "balcon": 1,
+        "ascenseur": 1,
+        "orientation": 5,
+        "transports": 1,
+        "neighborhood": 2,
+        "price": 160000
     },
     {
-        "Type de bien":"Appartement T3",
-        "Superficie (m²)":70,
-        "Nombre de pièces":3,
-        "Étage":"2",
-        "Garage":"Non précisé",
-        "Balcon":"Non",
-        "Ascenseur":"Non précisé",
-        "Orientation":"Est",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Calme",
-        "Prix (€)":220000.0
+        "type": 3,
+        "surface": 70,
+        "pieces": 3,
+        "floor": 2,
+        "parking": 0,
+        "balcon": 0,
+        "ascenseur": 0,
+        "orientation": 3,
+        "transports": 1,
+        "neighborhood": 1,
+        "price": 220000
     },
     {
-        "Type de bien":"Appartement T4",
-        "Superficie (m²)":85,
-        "Nombre de pièces":4,
-        "Étage":"3",
-        "Garage":"Oui",
-        "Balcon":"Oui",
-        "Ascenseur":"Oui",
-        "Orientation":"Ouest",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Central",
-        "Prix (€)":250000.0
+        "type": 4,
+        "surface": 85,
+        "pieces": 4,
+        "floor": 3,
+        "parking": 1,
+        "balcon": 1,
+        "ascenseur": 1,
+        "orientation": 7,
+        "transports": 1,
+        "neighborhood": 8,
+        "price": 250000
     },
     {
-        "Type de bien":"Appartement T5",
-        "Superficie (m²)":90,
-        "Nombre de pièces":5,
-        "Étage":"4",
-        "Garage":"Oui",
-        "Balcon":"Non",
-        "Ascenseur":"Non précisé",
-        "Orientation":"Non précisé",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Haut standing",
-        "Prix (€)":300000.0
+        "type": 5,
+        "surface": 90,
+        "pieces": 5,
+        "floor": 4,
+        "parking": 1,
+        "balcon": 0,
+        "ascenseur": 0,
+        "orientation": 0,
+        "transports": 1,
+        "neighborhood": 3,
+        "price": 300000
     },
     {
-        "Type de bien":"Studio",
-        "Superficie (m²)":25,
-        "Nombre de pièces":1,
-        "Étage":"5",
-        "Garage":"Non",
-        "Balcon":"Oui",
-        "Ascenseur":"Oui",
-        "Orientation":"Non précisé",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Hyper-centre",
-        "Prix (€)":80000.0
+        "type": 7,
+        "surface": 25,
+        "pieces": 1,
+        "floor": 5,
+        "parking": 0,
+        "balcon": 1,
+        "ascenseur": 1,
+        "orientation": 0,
+        "transports": 1,
+        "neighborhood": 7,
+        "price": 80000
     },
     {
-        "Type de bien":"Appartement T1",
-        "Superficie (m²)":30,
-        "Nombre de pièces":1,
-        "Étage":"1",
-        "Garage":"Non",
-        "Balcon":"Non",
-        "Ascenseur":"Oui",
-        "Orientation":"Est",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Quartier dynamique",
-        "Prix (€)":95000.0
+        "type": 1,
+        "surface": 30,
+        "pieces": 1,
+        "floor": 1,
+        "parking": 0,
+        "balcon": 0,
+        "ascenseur": 1,
+        "orientation": 3,
+        "transports": 1,
+        "neighborhood": 9,
+        "price": 95000
     },
     {
-        "Type de bien":"Appartement T3",
-        "Superficie (m²)":65,
-        "Nombre de pièces":3,
-        "Étage":"Non précisé",
-        "Garage":"Oui",
-        "Balcon":"Oui",
-        "Ascenseur":"Non",
-        "Orientation":"Sud",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Proche commerces",
-        "Prix (€)":180000.0
+        "type": 3,
+        "surface": 65,
+        "pieces": 3,
+        "floor": 0,
+        "parking": 1,
+        "balcon": 1,
+        "ascenseur": 0,
+        "orientation": 5,
+        "transports": 1,
+        "neighborhood": 10,
+        "price": 180000
     },
     {
-        "Type de bien":"Appartement T4",
-        "Superficie (m²)":78,
-        "Nombre de pièces":4,
-        "Étage":"5",
-        "Garage":"Non précisé",
-        "Balcon":"Non précisé",
-        "Ascenseur":"Oui",
-        "Orientation":"Nord",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Résidentiel",
-        "Prix (€)":210000.0
+        "type": 4,
+        "surface": 78,
+        "pieces": 4,
+        "floor": 5,
+        "parking": 0,
+        "balcon": 0,
+        "ascenseur": 1,
+        "orientation": 1,
+        "transports": 1,
+        "neighborhood": 2,
+        "price": 210000
     },
     {
-        "Type de bien":"Appartement T5",
-        "Superficie (m²)":110,
-        "Nombre de pièces":5,
-        "Étage":"Non précisé",
-        "Garage":"Oui",
-        "Balcon":"Oui",
-        "Ascenseur":"Oui",
-        "Orientation":"Est",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Haut standing",
-        "Prix (€)":340000.0
+        "type": 5,
+        "surface": 110,
+        "pieces": 5,
+        "floor": 0,
+        "parking": 1,
+        "balcon": 1,
+        "ascenseur": 1,
+        "orientation": 3,
+        "transports": 1,
+        "neighborhood": 3,
+        "price": 340000
     },
     {
-        "Type de bien":"Appartement T2",
-        "Superficie (m²)":54,
-        "Nombre de pièces":2,
-        "Étage":"2",
-        "Garage":"Non",
-        "Balcon":"Oui",
-        "Ascenseur":"Non précisé",
-        "Orientation":"Non précisé",
-        "Distance des transports":"Proche",
-        "Qualité du quartier":"Quartier calme",
-        "Prix (€)":140000.0
+        "type": 2,
+        "surface": 54,
+        "pieces": 2,
+        "floor": 2,
+        "parking": 0,
+        "balcon": 1,
+        "ascenseur": 0,
+        "orientation": 0,
+        "transports": 1,
+        "neighborhood": 11,
+        "price": 140000
+    },
+    {
+        "type": 2,
+        "surface": 50,
+        "pieces": 2,
+        "floor": 3,
+        "parking": 0,
+        "balcon": 1,
+        "ascenseur": 1,
+        "orientation": 4,
+        "transports": 1,
+        "neighborhood": 2,
+        "price": 155000
+    },
+    {
+        "type": 3,
+        "surface": 75,
+        "pieces": 3,
+        "floor": 2,
+        "parking": 1,
+        "balcon": 0,
+        "ascenseur": 0,
+        "orientation": 7,
+        "transports": 1,
+        "neighborhood": 12,
+        "price": 195000
+    },
+    {
+        "type": 7,
+        "surface": 22,
+        "pieces": 1,
+        "floor": 4,
+        "parking": 0,
+        "balcon": 0,
+        "ascenseur": 0,
+        "orientation": 1,
+        "transports": 1,
+        "neighborhood": 13,
+        "price": 75000
+    },
+    {
+        "type": 4,
+        "surface": 95,
+        "pieces": 4,
+        "floor": 6,
+        "parking": 1,
+        "balcon": 1,
+        "ascenseur": 1,
+        "orientation": 6,
+        "transports": 1,
+        "neighborhood": 3,
+        "price": 280000
     }
 ]
+```
+
+**Remarques :**
+
+- **Mappings utilisés :**
+
+  - **Type de bien (`type`):**
+    - Appartement T1: 1
+    - Appartement T2: 2
+    - Appartement T3: 3
+    - Appartement T4: 4
+    - Appartement T5: 5
+    - Appartement T6: 6
+    - Studio: 7
+
+  - **Orientation (`orientation`):**
+    - Non précisé: 0
+    - Nord: 1
+    - Nord-Est: 2
+    - Est: 3
+    - Sud-Est: 4
+    - Sud: 5
+    - Sud-Ouest: 6
+    - Ouest: 7
+    - Nord-Ouest: 8
+
+  - **Balcon (`balcon`), Ascenseur (`ascenseur`), Parking (`parking`):**
+    - Oui: 1
+    - Non ou Non précisé: 0
+
+  - **Qualité du quartier (`neighborhood`):**
+    - Agréable: 1
+    - Résidentiel: 2
+    - Haut standing: 3
+    - Quartier: 4
+    - Centre: 5
+    - Sécurisé: 6
+    - Hyper-centre: 7
+    - Central: 8
+    - Quartier dynamique: 9
+    - Proche commerces: 10
+    - Quartier calme: 11
+    - Calme: 12
+    - Étudiant: 13

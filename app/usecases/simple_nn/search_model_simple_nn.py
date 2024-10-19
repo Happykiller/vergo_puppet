@@ -1,25 +1,43 @@
 from app.apis.models.simple_nn_search_data import SimpleNNSearchData
-from app.commons.commons import create_glossary_from_dictionary, create_indexed_glossary, pad_vector
-from app.machine_learning.neural_network_siamese import evaluate_similarity
 from app.repositories.memory import get_model
 from app.machine_learning.neural_network_simple import predict
-from app.machine_learning.neural_network_lstm import search_with_similarity
 from app.services.logger import logger
-from app.usecases.indices_to_tokens import indices_to_tokens
-from app.usecases.tokens_to_indices import tokens_to_indices
+from app.usecases.simple_nn.commons import process_input_data
 from fastapi import HTTPException # type: ignore
 import torch
+import joblib
 
 def search_model_simple_nn(name: str, search: SimpleNNSearchData):
     model = get_model(name)
-    if not model:
+    
+    if model is None or not model:
         raise HTTPException(status_code=404, detail="Model not found")
-
+    
     nn_model = model.get("nn_model", None)
-    if not nn_model:
-        raise HTTPException(status_code=400, detail="No neural network model found in the model")
-
-    transformed_data = [
+    if nn_model is None:
+        raise HTTPException(status_code=400, detail="Model not trained yet")
+    
+    # Charger l'encodeur, le scaler et les indices
+    encoder_filename = model.get("encoder_filename")
+    scaler_filename = model.get("scaler_filename")
+    indices_filename = model.get("indices_filename")
+    if not encoder_filename or not scaler_filename or not indices_filename:
+        raise HTTPException(status_code=400, detail="Missing encoder, scaler, or indices in the model")
+    
+    encoder = joblib.load(encoder_filename)
+    scaler = joblib.load(scaler_filename)
+    indices_info = joblib.load(indices_filename)
+    categorical_indices = indices_info["categorical_indices"]
+    numerical_indices = indices_info["numerical_indices"]
+    
+    # Récupérer les paramètres de normalisation des targets
+    targets_mean = model.get("targets_mean")
+    targets_std = model.get("targets_std")
+    if targets_mean is None or targets_std is None:
+        raise HTTPException(status_code=400, detail="Missing normalization parameters in the model")
+    
+    # Préparer les données d'entrée
+    input_data = [
         search.type,
         search.surface,
         search.pieces,
@@ -31,16 +49,11 @@ def search_model_simple_nn(name: str, search: SimpleNNSearchData):
         search.transports,
         search.neighborhood
     ]
-
-    # Récupérer le type de modèle (par défaut SimpleNN)
-    neural_network_type = model.get("neural_network_type", "SimpleNN")
-
-    logger.info(f"Type de machine learning utilisé pour la recherche {neural_network_type}")
-
-    # Utiliser le réseau de neurones SimpleNN pour prédire le vecteur le plus proche
-    predicted = predict(nn_model, transformed_data)
-
-    return {
-        "search": search,
-        "find": predicted
-    }
+    
+    # Transformer les données d'entrée
+    input_processed = process_input_data(input_data, encoder, scaler, categorical_indices, numerical_indices)
+    
+    # Prédiction
+    predicted = predict(nn_model, input_processed, targets_mean, targets_std)
+    
+    return {"predicted_price": predicted}

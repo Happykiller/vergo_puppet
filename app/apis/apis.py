@@ -1,6 +1,7 @@
 from app.apis.models.simple_nn_search_data import SimpleNNSearchData
 from app.usecases.mesure_siamese import mesure_siamese
 from app.usecases.simple_nn.create_model_simple_nn import create_model_simpleNN
+from app.usecases.simple_nn.mesure_simple_nn import mesure_simple_nn
 from app.usecases.simple_nn.search_model_simple_nn import search_model_simple_nn
 from app.usecases.simple_nn.train_model_simple_nn import train_model_simple_nn
 from fastapi import APIRouter, HTTPException  # type: ignore
@@ -39,10 +40,9 @@ class CreateModelData(BaseModel):
 class TrainModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à entraîner")
     neural_network_type: Optional[str] = Field(description="Type de réseau de neurones ('SimpleNN' ou 'LSTMNN' ou 'SIAMESE')")
-    # Le dernier membre (float) est maintenant optionnel
     training_data: Union[
         List[ Tuple[List[str], List[str]] ],
-        List[ Tuple[List[str], List[str], Optional[float]] ],
+        List[ Tuple[List[str], List[str], Optional[int]] ],
         List[ SimpleNNTrainingData ]
     ] = Field (
         ..., description="Liste de tuples (input, target) | (siamese1, siamese2, target) pour entraîner le modèle"
@@ -65,7 +65,11 @@ class TrainModelData(BaseModel):
 class TestModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à tester")
     neural_network_type: str = Field(..., description="Type de réseau de neurones ('SimpleNN', 'LSTMNN', 'SIAMESE')")
-    test_data: Union[List[Tuple[List[str], List[str]]], List[Tuple[List[str], List[str], float]]] = Field(..., description="Données de test")
+    test_data: Union[
+        List[ Tuple[List[str], List[str]] ],
+        List[ Tuple[List[str], List[str], Optional[int]] ],
+        List[ SimpleNNTrainingData ]
+    ] = Field(..., description="Données de test")
 
     def validate_test_data(cls, values):
         network_type = values.get('neural_network_type')
@@ -153,6 +157,8 @@ async def test(data: TestModelData):
     try:
         if (data.neural_network_type == 'SIAMESE') :
             return mesure_siamese(data.name, data.test_data)
+        elif (data.neural_network_type == 'SimpleNN') :
+            return mesure_simple_nn(data.name, data.test_data)
         else :
             raise HTTPException(status_code=400, detail="Model type not supported yet")
     except HTTPException as e:
