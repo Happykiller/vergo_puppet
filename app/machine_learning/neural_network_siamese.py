@@ -1,11 +1,9 @@
 # neural_network_siamese.py
-
-from app.usecases.tokens_to_indices import tokens_to_indices
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 import torch.optim as optim
 from typing import List, Tuple
+import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 import time  # Pour mesurer le temps d'entraînement
 from app.services.logger import logger  # Importation du logger personnalisé
