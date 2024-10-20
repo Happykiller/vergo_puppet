@@ -1,13 +1,11 @@
-from app.apis.models.simple_nn_training_data import SimpleNNTrainingData
-from app.repositories.memory import get_model, update_model
-from app.machine_learning.neural_network_simple import train_model_nn
-from app.usecases.simple_nn.commons import transform_data
-from fastapi import HTTPException  # type: ignore
-from typing import List, Tuple
-from app.services.logger import logger
-import numpy as np
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
 import joblib
+from typing import List
+from app.services.logger import logger
+from fastapi import HTTPException  # type: ignore
+from app.repositories.memory import get_model, update_model
+from app.usecases.simple_nn.simple_nn_commons import transform_data
+from app.machine_learning.neural_network_simple import train_model_nn
+from app.apis.models.simple_nn_training_data import SimpleNNTrainingData
 
 def train_model_simple_nn(name: str, training_data: List[SimpleNNTrainingData]):
     """
@@ -23,9 +21,7 @@ def train_model_simple_nn(name: str, training_data: List[SimpleNNTrainingData]):
     if training_data is None or len(training_data) == 0:
         raise HTTPException(status_code=400, detail="No training data provided or training data is empty")
     
-    # Vérifier le type de modèle à utiliser
-    neural_network_type = model.get("neural_network_type", "SimpleNN")  # Par défaut SimpleNN si non spécifié
-    logger.info(f"Type de machine learning utilisé pour l'entraînement {neural_network_type}")
+    logger.info(f"Type de machine learning utilisé pour l'entraînement SimpleNN")
     
     # Transformation des données
     features_processed, targets_standardized, encoder, scaler, targets_mean, targets_std, categorical_indices, numerical_indices = transform_data(training_data)

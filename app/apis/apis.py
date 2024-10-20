@@ -102,7 +102,7 @@ async def create_model_api(data: CreateModelData):
     """
     try:
         if (data.neural_network_type == 'SimpleNN') :
-            return create_model_simpleNN(data.name, data.neural_network_type)
+            return create_model_simpleNN(data.name)
         else:
             return create_model(data.name, data.dictionary, data.glossary, data.neural_network_type)
     except HTTPException as e:

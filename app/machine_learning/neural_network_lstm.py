@@ -1,19 +1,10 @@
+import time
 import torch
+import numpy as np
 import torch.nn as nn
 import torch.optim as optim
-import time
 from app.services.logger import logger
-import numpy as np
-from app.commons.commons import pad_vector
-
-# Fonction de normalisation min-max
-def min_max_normalize(data):
-    data = np.array(data)
-    min_val = np.min(data)
-    max_val = np.max(data)
-    if max_val == min_val:
-        return data
-    return (data - min_val) / (max_val - min_val)
+from app.commons.commons import min_max_normalize, pad_vector
 
 # Définition du réseau de neurones avec LSTM
 class LSTMNN(nn.Module):

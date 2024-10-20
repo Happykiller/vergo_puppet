@@ -1,5 +1,6 @@
 import pytest
-from app.commons.commons import pad_vector, create_glossary_from_training_data, create_glossary_from_dictionary, create_indexed_glossary, tokens_to_indices
+import numpy as np
+from app.commons.commons import min_max_normalize, pad_vector, create_glossary_from_training_data, create_glossary_from_dictionary, create_indexed_glossary, tokens_to_indices
 
 # Test de la fonction pad_vector
 def test_pad_vector():
@@ -44,3 +45,21 @@ def test_tokens_to_indices():
     expected = [1, 2, 0]  # "unknown" doit retourner l'index 0 correspondant à <PAD>
     assert result == expected, f"Expected {expected}, but got {result}"
 
+# Test de la fonction min_max_normalize
+def test_min_max_normalize():
+    data = [1, 2, 3, 4, 5]
+    result = min_max_normalize(data)
+    expected = [0.0, 0.25, 0.5, 0.75, 1.0]
+    assert np.allclose(result, expected), f"Expected {expected}, but got {result}"
+
+    # Cas où tous les éléments sont identiques
+    data_identical = [2, 2, 2]
+    result_identical = min_max_normalize(data_identical)
+    expected_identical = [2, 2, 2]  # Aucun changement si min == max
+    assert np.allclose(result_identical, expected_identical), f"Expected {expected_identical}, but got {result_identical}"
+
+    # Cas avec des données négatives
+    data_negative = [-5, -3, -1, 1, 3]
+    result_negative = min_max_normalize(data_negative)
+    expected_negative = [0.0, 0.25, 0.5, 0.75, 1.0]
+    assert np.allclose(result_negative, expected_negative), f"Expected {expected_negative}, but got {result_negative}"

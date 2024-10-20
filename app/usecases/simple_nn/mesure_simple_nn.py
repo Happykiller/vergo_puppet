@@ -1,8 +1,8 @@
 import joblib
-from app.machine_learning.neural_network_simple import predict
-from app.repositories.memory import get_model
 from app.services.logger import logger
-from app.usecases.simple_nn.commons import process_input_data
+from app.repositories.memory import get_model
+from app.machine_learning.neural_network_simple import predict
+from app.usecases.simple_nn.simple_nn_commons import process_input_data
 
 def mesure_simple_nn(name, test_data):
     try:

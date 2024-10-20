@@ -1,11 +1,9 @@
-from app.apis.models.simple_nn_search_data import SimpleNNSearchData
-from app.repositories.memory import get_model
-from app.machine_learning.neural_network_simple import predict
-from app.services.logger import logger
-from app.usecases.simple_nn.commons import process_input_data
-from fastapi import HTTPException # type: ignore
-import torch
 import joblib
+from app.repositories.memory import get_model
+from fastapi import HTTPException # type: ignore
+from app.machine_learning.neural_network_simple import predict
+from app.apis.models.simple_nn_search_data import SimpleNNSearchData
+from app.usecases.simple_nn.simple_nn_commons import process_input_data
 
 def search_model_simple_nn(name: str, search: SimpleNNSearchData):
     model = get_model(name)

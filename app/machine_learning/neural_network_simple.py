@@ -1,17 +1,8 @@
+import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
-import time
 from app.services.logger import logger
-import numpy as np
-
-# Fonction pour normaliser les données entre 0 et 1 (Min-Max scaling)
-def min_max_normalize(data):
-    data = np.array(data, dtype=np.float32)
-    min_val = np.min(data, axis=0)  # Minimum pour chaque caractéristique
-    max_val = np.max(data, axis=0)  # Maximum pour chaque caractéristique
-    # Éviter la division par zéro si min == max
-    return (data - min_val) / (max_val - min_val + 1e-8)  # Ajout d'un petit terme pour éviter la division par 0
 
 # Définition du réseau de neurones SimpleNN amélioré avec plusieurs couches et du Dropout pour la régularisation
 class SimpleNN(nn.Module):

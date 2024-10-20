@@ -307,4 +307,118 @@ The following APIs are specifically used when working with the SIAMESE model:
     }
     ```
 
-These APIs provide targeted functionalities to create, train, search, and test the SIAMESE model, focusing on evaluating similarity between input pairs.
+### SimpleNN Model
+
+The `SimpleNN` model is used for regression tasks, such as predicting property prices based on input features like surface area, number of rooms, floor, and neighborhood. The following APIs allow you to create, train, search, and test a `SimpleNN` model.
+
+#### APIs for SimpleNN Model
+
+The following APIs are used to create, train, search, and test the `SimpleNN` model.
+
+- **/create_model**: Creates a new `SimpleNN` model. Requires parameters such as `name` and `neural_network_type` set to `"SimpleNN"`.
+  - **Input Format**: JSON object containing `name` (str) and `neural_network_type` (`"SimpleNN"`).
+  - **Example**:
+    ```json
+    {
+      "name": "puppet-o1",
+      "neural_network_type": "SimpleNN"
+    }
+    ```
+
+- **/train_model**: Initiates training for the `SimpleNN` model using structured training data (e.g., real estate data).
+  - **Input Format**: JSON object containing `name` (str) and `training_data` (list of dictionaries with parameters like `type`, `surface`, `pieces`, `price`, etc.).
+  - **Example**:
+    ```json
+    {
+      "name": "puppet-o1",
+      "neural_network_type": "SimpleNN",
+      "training_data": [
+        {
+          "type": 4,
+          "surface": 98,
+          "pieces": 4,
+          "floor": 5,
+          "parking": 1,
+          "balcon": 0,
+          "ascenseur": 1,
+          "orientation": 6,
+          "transports": 1,
+          "neighborhood": 1,
+          "price": 215000
+        },
+        {
+          "type": 4,
+          "surface": 68,
+          "pieces": 4,
+          "floor": 5,
+          "parking": 1,
+          "balcon": 1,
+          "ascenseur": 1,
+          "orientation": 0,
+          "transports": 1,
+          "neighborhood": 2,
+          "price": 130000
+        }
+      ]
+    }
+    ```
+
+- **/search**: Searches using the trained `SimpleNN` model to predict a result based on an input vector.
+  - **Input Format**: JSON object containing `name` (str), `neural_network_type` (`"SimpleNN"`), and `vector` representing property characteristics (e.g., `type`, `surface`, `pieces`, etc.).
+  - **Example**:
+    ```json
+    {
+      "name": "puppet-o1",
+      "neural_network_type": "SimpleNN",
+      "vector": {
+        "type": 3,
+        "surface": 70,
+        "pieces": 3,
+        "floor": 2,
+        "parking": 0,
+        "balcon": 0,
+        "ascenseur": 0,
+        "orientation": 3,
+        "transports": 1,
+        "neighborhood": 1
+      }
+    }
+    ```
+
+- **/test**: Tests a `SimpleNN` model using test data and returns evaluation metrics (e.g., prediction accuracy).
+  - **Input Format**: JSON object containing `name` (str), `neural_network_type` (`"SimpleNN"`), and `test_data` (list of dictionaries similar to the training data).
+  - **Example**:
+    ```json
+    {
+      "name": "puppet-o1",
+      "neural_network_type": "SimpleNN",
+      "test_data": [
+        {
+          "type": 4,
+          "surface": 98,
+          "pieces": 4,
+          "floor": 5,
+          "parking": 1,
+          "balcon": 0,
+          "ascenseur": 1,
+          "orientation": 6,
+          "transports": 1,
+          "neighborhood": 1,
+          "price": 215000
+        },
+        {
+          "type": 4,
+          "surface": 68,
+          "pieces": 4,
+          "floor": 5,
+          "parking": 1,
+          "balcon": 1,
+          "ascenseur": 1,
+          "orientation": 0,
+          "transports": 1,
+          "neighborhood": 2,
+          "price": 130000
+        }
+      ]
+    }
+    ```

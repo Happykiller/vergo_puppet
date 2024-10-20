@@ -1,3 +1,4 @@
+import numpy as np
 from typing import Dict, List, Tuple
 
 def pad_vector(vector, max_length):
@@ -33,3 +34,12 @@ def create_indexed_glossary(glossary: List[str]) -> Dict[str, int]:
 def tokens_to_indices(tokens: List[str], word2idx: dict) -> List[int]:
     # Convertit chaque token en son indice dans le vocabulaire
     return [word2idx.get(token, 0) for token in tokens]
+
+# Fonction de normalisation min-max
+def min_max_normalize(data):
+    data = np.array(data)
+    min_val = np.min(data)
+    max_val = np.max(data)
+    if max_val == min_val:
+        return data
+    return (data - min_val) / (max_val - min_val)

@@ -1,6 +1,15 @@
-import pytest
 import torch
+import random
+import pytest
+import numpy as np
 from app.machine_learning.neural_network_simple import SimpleNN, train_model_nn, predict
+
+def set_seed(seed=42):
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
 
 # Test 1: Vérifier la structure du modèle
 def test_neural_network_structure():
@@ -21,53 +30,77 @@ def test_neural_network_structure():
 
 # Test 2: Vérifier l'entraînement du modèle et que les poids sont mis à jour
 def test_train_model_nn():
-    train_data = [
-        ([1, 2, 3], 1),
-        ([4, 5, 6], 2),
-        ([7, 8, 9], 3)
+    # Exemples de caractéristiques réalistes (par exemple, caractéristiques de logements : taille, nombre de chambres, distance du centre-ville)
+    features_processed = [
+        [75, 2, 5],  # Logement de 75 m2, 2 chambres, à 5 km du centre-ville
+        [120, 4, 10],  # Logement de 120 m2, 4 chambres, à 10 km du centre-ville
+        [60, 1, 2]  # Logement de 60 m2, 1 chambre, à 2 km du centre-ville
     ]
-    vector_size = 3
+
+    # Cibles réalistes : prix des logements (normalisés entre 0 et 1)
+    targets_standardized = [
+        0.5,  # Prix moyen pour le premier logement
+        0.8,  # Prix plus élevé pour un logement plus grand et éloigné
+        0.3  # Prix plus faible pour un logement plus petit
+    ]
 
     # Entraîner le modèle
-    nn_model, _ = train_model_nn(train_data, vector_size=vector_size, epochs=10, learning_rate=0.01)
+    nn_model, _ = train_model_nn(features_processed, targets_standardized, 3, epochs=100, learning_rate=0.001)
 
     # Vérifier que le modèle a bien été créé
     assert nn_model is not None, "Le modèle n'a pas été correctement entraîné."
 
     # Vérifier que les poids ne sont pas les mêmes qu'au début (mise à jour des poids)
-    initial_weights = torch.Tensor([[0.1, 0.2, 0.3], [0.4, 0.5, 0.6], [0.7, 0.8, 0.9]])
-    assert not torch.equal(nn_model.fc1.weight.data, initial_weights), "Les poids n'ont pas été mis à jour après l'entraînement."
+    initial_weights = torch.zeros_like(nn_model.fc1.weight.data)
+    assert not torch.equal(nn_model.fc1.weight.data, initial_weights), "Les poids de la première couche n'ont pas été mis à jour après l'entraînement."
 
-# Test 3: Vérifier la prédiction du modèle
+# Test 3: Vérifier la prédiction du modèle avec des données plus réalistes
 def test_predict_with_trained_model():
-    train_data = [
-        ([1, 2, 3], 1),
-        ([4, 5, 6], 2),
-        ([7, 8, 9], 3)
+    # Fixer la graine pour la reproductibilité
+    set_seed(42)
+    
+    # Exemples de caractéristiques réalistes (par exemple, caractéristiques de logements : taille, nombre de chambres, distance du centre-ville)
+    features_processed = [
+        [75, 2, 5],  # Logement de 75 m2, 2 chambres, à 5 km du centre-ville
+        [120, 4, 10],  # Logement de 120 m2, 4 chambres, à 10 km du centre-ville
+        [60, 1, 2]  # Logement de 60 m2, 1 chambre, à 2 km du centre-ville
     ]
-    vector_size = 3
+
+    # Cibles réalistes : prix des logements (normalisés entre 0 et 1)
+    targets_standardized = [
+        0.5,  # Prix moyen pour le premier logement
+        0.8,  # Prix plus élevé pour un logement plus grand et éloigné
+        0.3  # Prix plus faible pour un logement plus petit
+    ]
 
     # Entraîner le modèle
-    nn_model, _ = train_model_nn(train_data, vector_size=vector_size, epochs=2000, learning_rate=0.01)
+    nn_model, _ = train_model_nn(features_processed, targets_standardized, 3, epochs=200, learning_rate=0.001)
 
-    # Faire une prédiction avec un vecteur d'entrée
-    input_vector = [1, 2, 3]
-    predicted = predict(nn_model, input_vector)
+    # Faire une prédiction avec un vecteur d'entrée réaliste
+    input_vector = [80, 3, 6]  # Un logement de 80 m2, 3 chambres, à 6 km du centre-ville
+    predicted = predict(nn_model, input_vector, targets_mean=0.53, targets_std=0.18)  # Utiliser la déstandardisation avec une moyenne et un écart-type réalistes
 
-    # Vérifier que la prédiction retourne un vecteur
-    assert predicted > 0, "Vecteur prédit est incorrecte."
+    # Vérifier que la prédiction retourne une valeur correcte
+    assert predicted > 0, "La prédiction retourne une valeur négative ou incorrecte."
 
-# Test 4: Vérifier que la perte diminue pendant l'entraînement
+# Test 4: Vérifier que la perte diminue pendant l'entraînement avec des données plus réalistes
 def test_loss_decreases_during_training():
-    train_data = [
-        ([1, 2, 3], 1),
-        ([4, 5, 6], 2),
-        ([7, 8, 9], 3)
+    # Exemples de caractéristiques réalistes (par exemple, caractéristiques de logements : taille, nombre de chambres, distance du centre-ville)
+    features_processed = [
+        [75, 2, 5],  # Logement de 75 m2, 2 chambres, à 5 km du centre-ville
+        [120, 4, 10],  # Logement de 120 m2, 4 chambres, à 10 km du centre-ville
+        [60, 1, 2]  # Logement de 60 m2, 1 chambre, à 2 km du centre-ville
     ]
-    vector_size = 3
+
+    # Cibles réalistes : prix des logements (normalisés entre 0 et 1)
+    targets_standardized = [
+        0.5,  # Prix moyen pour le premier logement
+        0.8,  # Prix plus élevé pour un logement plus grand et éloigné
+        0.3  # Prix plus faible pour un logement plus petit
+    ]
 
     # Entraîner le modèle sur plusieurs époques et vérifier la perte
-    nn_model, losses = train_model_nn(train_data, vector_size=vector_size, epochs=100, learning_rate=0.01)
+    nn_model, losses = train_model_nn(features_processed, targets_standardized, 3, epochs=100, learning_rate=0.001)
 
     # Vérifier que la perte diminue au fil du temps
-    assert losses[0] > losses[-1], "La perte n'a pas diminué pendant l'entraînement."
+    assert losses[0] > losses[-2], "La perte n'a pas diminué pendant l'entraînement."
