@@ -59,6 +59,7 @@ Content-Type: application/json
 
 {
   "name": "puppet-o3",
+  "neural_network_type": "SIAMESE",
   "training_data": [
     [["dog", "cat", "bird"], ["dog", "cat", "bird"], 1.0],
     [["dog", "cat", "bird"], ["bird", "cat", "dog"], 0.9],
@@ -114,6 +115,7 @@ Content-Type: application/json
 
 {
   "name": "puppet-o3",
+  "neural_network_type": "SIAMESE",
   "vector": ["sit", "up"]
 }
 

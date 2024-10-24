@@ -1,4 +1,9 @@
+from app.apis.models.gru_training_data import GRUTrainingData
 from app.apis.models.simple_nn_search_data import SimpleNNSearchData
+from app.usecases.gru.create_model_gru import create_model_gru
+from app.usecases.gru.mesure_gru import mesure_gru
+from app.usecases.gru.search_model_gru import search_model_gru
+from app.usecases.gru.train_model_gru import train_model_gru
 from app.usecases.mesure_siamese import mesure_siamese
 from app.usecases.simple_nn.create_model_simple_nn import create_model_simpleNN
 from app.usecases.simple_nn.mesure_simple_nn import mesure_simple_nn
@@ -42,8 +47,9 @@ class TrainModelData(BaseModel):
     neural_network_type: Optional[str] = Field(description="Type de réseau de neurones ('SimpleNN' ou 'LSTMNN' ou 'SIAMESE')")
     training_data: Union[
         List[ Tuple[List[str], List[str]] ],
-        List[ Tuple[List[str], List[str], Optional[int]] ],
-        List[ SimpleNNTrainingData ]
+        List[ Tuple[List[str], List[str], float] ],
+        List[ SimpleNNTrainingData ],
+        List[ GRUTrainingData ]
     ] = Field (
         ..., description="Liste de tuples (input, target) | (siamese1, siamese2, target) pour entraîner le modèle"
     )
@@ -67,8 +73,9 @@ class TestModelData(BaseModel):
     neural_network_type: str = Field(..., description="Type de réseau de neurones ('SimpleNN', 'LSTMNN', 'SIAMESE')")
     test_data: Union[
         List[ Tuple[List[str], List[str]] ],
-        List[ Tuple[List[str], List[str], Optional[int]] ],
-        List[ SimpleNNTrainingData ]
+        List[ Tuple[List[str], List[str], float] ],
+        List[ SimpleNNTrainingData ],
+        List[ GRUTrainingData ]
     ] = Field(..., description="Données de test")
 
     def validate_test_data(cls, values):
@@ -103,6 +110,8 @@ async def create_model_api(data: CreateModelData):
     try:
         if (data.neural_network_type == 'SimpleNN') :
             return create_model_simpleNN(data.name)
+        elif (data.neural_network_type == 'GRU') :
+            return create_model_gru(data.name)
         else:
             return create_model(data.name, data.dictionary, data.glossary, data.neural_network_type)
     except HTTPException as e:
@@ -121,6 +130,8 @@ async def train_model_api(data: TrainModelData):
     try:
         if (data.neural_network_type == 'SimpleNN') :
             return train_model_simple_nn(data.name, data.training_data)
+        elif (data.neural_network_type == 'GRU') :
+            return train_model_gru(data.name, data.training_data)
         else:
             return train_model(data.name, data.training_data)
     except HTTPException as e:
@@ -139,7 +150,9 @@ async def search_model_api(data: SearchData):
     try:
         if (data.neural_network_type == 'SimpleNN') :
             return search_model_simple_nn(data.name, data.vector)
-        else:
+        elif (data.neural_network_type == 'GRU') :
+            return search_model_gru(data.name, data.vector)
+        else :
             return search_model(data.name, data.vector)
     except HTTPException as e:
         raise e
@@ -159,6 +172,8 @@ async def test(data: TestModelData):
             return mesure_siamese(data.name, data.test_data)
         elif (data.neural_network_type == 'SimpleNN') :
             return mesure_simple_nn(data.name, data.test_data)
+        elif (data.neural_network_type == 'GRU') :
+            return mesure_gru(data.name, data.test_data)
         else :
             raise HTTPException(status_code=400, detail="Model type not supported yet")
     except HTTPException as e:
