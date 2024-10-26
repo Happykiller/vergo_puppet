@@ -25,8 +25,7 @@
             "appel",
             "déblocage",
             "utilisateur",
-            "samy",
-            "[joseph]"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -89,79 +88,20 @@
             "technicien",
             "posséder",
             "jeton",
-            "[google]",
+            "google",
             "authenticator"
         ],
         "category":"gestion_compte"
     },
     {
-        "tokens":[
-            "effectuer",
-            "mise",
-            "place",
-            "client",
-            "couvivet",
-            "point",
-            "remonter",
-            "recherche",
-            "sélectionner",
-            "liste",
-            "filtre",
-            "vue",
-            "celer",
-            "changer",
-            "être",
-            "déplacer",
-            "mot",
-            "passer",
-            "coffre",
-            "fort",
-            "smartphone",
-            "[google]",
-            "connecter",
-            "impossible",
-            "glisser",
-            "page",
-            "accéder",
-            "mot",
-            "passer",
-            "configuration",
-            "[css]",
-            "client",
-            "utiliser",
-            "beaucoup",
-            "smartphone",
-            "consulter",
-            "site",
-            "[internet]",
-            "savoir",
-            "que",
-            "app",
-            "développement",
-            "petit",
-            "adaptation",
-            "[css]",
-            "page",
-            "sympa",
-            "dépanner",
-            "temporairement",
-            "voir",
-            "import",
-            "csv",
-            "mal",
-            "site",
-            "double",
-            "probablement",
-            "compte",
-            "[google]",
-            "te",
-            "il",
-            "possibiliter",
-            "suppression",
-            "multiple",
-            "damien"
-        ],
-        "category":"probleme_connexion"
+        "tokens": [
+          "appel",
+          "[name]",
+          "rattacher",
+          "coffr",
+          "ged"
+      ],
+      "category":"gestion_acces"
     },
     {
         "tokens":[
@@ -213,11 +153,9 @@
             "[service_k]",
             "client",
             "suivant",
-            "[new-e new0003]",
-            "new0003",
-            "[matteo]"
+            "[name]"
         ],
-        "category":"autre"
+        "category":"gestion_acces"
     },
     {
         "tokens":[
@@ -241,18 +179,22 @@
         "category":"autre"
     },
     {
-        "tokens":[
-            "pouvoir",
-            "vous",
-            "rajouter",
-            "[service_k]",
-            "client",
-            "suivant",
-            "[new-e new0003]",
-            "new0003",
-            "[matteo]"
-        ],
-        "category":"autre"
+      "tokens":[
+          "installer",
+          "extension",
+          "navigateur",
+          "renseigner",
+          "identifiant",
+          "message",
+          "indiquer",
+          "information",
+          "renseigner",
+          "mauvais",
+          "pouvoir",
+          "nous",
+          "sujet"
+      ],
+      "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -267,22 +209,20 @@
         "category":"gestion_acces"
     },
     {
-        "tokens":[
-            "renouvellement",
-            "licence",
-            "boitier",
-            "s170495625e8fe6",
-            "client",
-            "[tecniplast france]",
-            "france",
-            "licence",
-            "disponible",
-            "note",
-            "licence",
-            "mettre",
-            "jour",
-            "boitier",
-            "[name]"
+        "tokens": [
+          "renouvellement",
+          "licence",
+          "boitier",
+          "client",
+          "[name]",
+          "licence",
+          "disponible",
+          "note",
+          "licence",
+          "mettre",
+          "jour",
+          "boitier",
+          "[name]"
         ],
         "category":"autre"
     },
@@ -295,7 +235,7 @@
             "[name]",
             "coffre",
             "fort",
-            "omnysis"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -304,24 +244,20 @@
             "pouvoir",
             "créer",
             "client",
-            "altitude",
-            "vi",
-            "srl",
+            "[name]",
             "[service_k]",
-            "bon",
-            "[félix]"
+            "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
             "[name]",
-            "aujourd’hui",
+            "[date]",
             "[hours]",
             "support",
             "[service_k]",
             "[name]",
-            "colmar",
             "je",
             "aimer",
             "obtenir",

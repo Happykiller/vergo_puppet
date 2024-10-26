@@ -69,7 +69,7 @@ def remove_protected_tags(tokens: List[str]) -> List[str]:
     return cleaned_tokens
 
 def remove_unwanted(tokens: List[str]) -> List[str]:
-    unwanted_tokens = ["m’","s’", "-t", "qu", "-ce", "j’", "l’"]
+    unwanted_tokens = ["m’","s’", "-t", "qu", "-ce", "j’", "l’", "n’"]
     return [token for token in tokens if token.lower() not in unwanted_tokens]
 
 def remove_polite(text: str) -> str:

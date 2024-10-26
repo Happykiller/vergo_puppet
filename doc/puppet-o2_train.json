@@ -23,7 +23,7 @@
             "[outlook]",
             "parvenir",
             "connecter",
-            "[service_k].",
+            "[service_k]",
             "je",
             "avoir",
             "tester",
@@ -42,16 +42,16 @@
             "new",
             "alternant",
             "tech",
-            "[paris12]",
+            "[name]",
             "pouvoir",
             "creer",
-            "acce",
+            "access",
             "[name]",
             "se",
             "agir",
             "[name]"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -302,7 +302,7 @@
             "voir",
             "dossier",
             "client",
-            "[service_k].",
+            "[service_k]",
             "création",
             "devoir",
             "être",
@@ -312,7 +312,7 @@
             "principal",
             "coté"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -513,7 +513,7 @@
             "client",
             "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -707,20 +707,18 @@
     {
         "tokens":[
             "tout",
-            "manqu",
-            "client",
+            "manquer",
             "client",
             "ce",
             "être",
-            "vitre",
-            "verre",
+            "[name]",
             "pouvoir",
             "créer",
             "diponible",
             "[name]",
             "[group]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -876,7 +874,7 @@
             "supprimer",
             "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -923,7 +921,7 @@
             "hier",
             "fin",
             "accéder",
-            "[service_k].",
+            "[service_k]",
             "site",
             "inaccessible",
             "pouvoir",
@@ -1071,7 +1069,7 @@
             "chrome",
             "alternatif"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -1081,12 +1079,12 @@
             "réception",
             "mail",
             "création",
-            "banqu",
+            "banque",
             "client",
             "itineraire",
             "emploi"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -1426,7 +1424,7 @@
             "rôle",
             "intervenant"
         ],
-        "category":"droit_intervenant"
+        "category":"gestion_acces"
     },
     {
         "tokens":[
@@ -1459,7 +1457,7 @@
             "possibiliter",
             "rajouter"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -1468,7 +1466,7 @@
             "banque",
             "[name]"
         ],
-        "category":"autre"
+        "category":"gestion_acces"
     },
     {
         "tokens":[
@@ -1552,8 +1550,7 @@
             "suite",
             "intervention",
             "auprès",
-            "cassandra",
-            "gros",
+            "[name]",
             "permettre",
             "désinstaller",
             "version",
@@ -1567,7 +1564,7 @@
             "créer",
             "conflit"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -1576,12 +1573,11 @@
             "suite",
             "intervention",
             "auprès",
-            "camille",
-            "makridis",
+            "[name]",
             "permettre",
             "accès",
             "hp",
-            "partner",
+            "[name]",
             "extension",
             "bloquer",
             "soumission",
@@ -1613,33 +1609,30 @@
             "[name]",
             "[group]",
             "grand",
-            "[paris]",
+            "[name]",
             "terminer"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
             "pouvoir",
             "créer",
             "client",
-            "altitude",
-            "vi",
-            "srl",
+            "[name]",
             "[service_k]",
-            "bon",
-            "[félix]"
+            "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
             "sujet",
             "[service_k]",
             "client",
-            "ecovitre",
+            "[name]",
             "agence",
-            "[villeneuve-d'ascq savoir]",
+            "[name]",
             "savoir",
             "[name]",
             "sophie",
@@ -1649,8 +1642,7 @@
             "donner",
             "accès",
             "admin",
-            "davy",
-            "nameis"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -1665,7 +1657,7 @@
             "ne",
             "arriver",
             "accéder",
-            "[service_k].",
+            "[service_k]",
             "je",
             "essayer",
             "connecter",
@@ -1692,7 +1684,7 @@
             "souhaiter",
             "utiliser",
             "extension",
-            "franchiser",
+            "franchise",
             "créer",
             "mot",
             "passe",
@@ -1704,7 +1696,6 @@
     },
     {
         "tokens":[
-            "flanc",
             "[name]",
             "ne",
             "arriver",
@@ -1719,16 +1710,14 @@
         "tokens":[
             "ticket",
             "nom",
-            "languer",
-            "abdel",
+            "[name]",
             "être",
             "me",
             "être",
             "mot",
             "passe",
             "serveur",
-            "aiad",
-            "coffr",
+            "coffre",
             "dossier",
             "vide",
             "contacter",
@@ -1745,7 +1734,7 @@
             "accès",
             "connecter",
             "serveur",
-            "vappli-2020",
+            "[name]",
             "mot",
             "passe",
             "inscrire",
@@ -1764,25 +1753,14 @@
             "accès",
             "coffre",
             "[service_k]",
-            "[toulouse]",
+            "[name]",
             "ouest",
             "ensemble",
             "technicien",
             "concerner",
-            "[name]",
-            "[mathieu tallineau]",
-            "tallineau",
-            "stéphane",
-            "marrec",
-            "sylvain",
-            "pierru",
-            "[name]",
-            "name",
-            "caillot",
-            "retour",
-            "bon"
+            "[name]"
         ],
-        "category":"support_technique"
+        "category":"gestion_acces"
     },
     {
         "tokens":[
@@ -1805,16 +1783,13 @@
             "bloquer",
             "connexion",
             "[name]",
-            "n’",
             "arriver",
             "utiliser",
             "[service_k]",
-            "n’",
             "arriver",
             "connecter",
             "techdata",
-            "exemple",
-            "[☹]"
+            "exemple"
         ],
         "category":"probleme_connexion"
     },
@@ -1824,21 +1799,20 @@
             "mail",
             "création",
             "client",
-            "ecovitre",
+            "[name]",
             "résoudre"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
             "client",
-            "couvivet",
+            "[name]",
             "pouvoir",
             "modifier",
             "adresse",
             "mail",
-            "arnord",
-            "dozot",
+            "[name]",
             "[mail]",
             "ne",
             "avoir",
@@ -1847,7 +1821,7 @@
             "voir",
             "utilisateur",
             "[service_k]",
-            "couvivet"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -1856,8 +1830,7 @@
             "mail",
             "création",
             "client",
-            "[med]",
-            "expertise-[name]",
+            "[name]",
             "utilisateur",
             "[name]"
         ],
@@ -1871,7 +1844,7 @@
             "réinitialisation",
             "mdp"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -1909,30 +1882,25 @@
             "vous",
             "mettre",
             "client",
-            "petit",
-            "botte",
+            "[name]",
             "[service_k]",
             "vous",
             "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
-            "[mail]",
-            "[mail]",
-            "[mail]",
-            "[mail]",
             "[mail]",
             "devoir",
             "accè",
             "[group]",
             "grand",
-            "[paris]",
+            "[name]",
             "[group]",
-            "[paris]"
+            "[name]"
         ],
-        "category":"autre"
+        "category":"gestion_acces"
     },
     {
         "tokens":[
@@ -1946,11 +1914,9 @@
             "[name]",
             "accès",
             "vente",
-            "maelle.bacot",
-            "mialy.randriarimanga",
-            "arnaud.monin",
+            "[name]",
             "technique",
-            "desire.arra"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -1975,7 +1941,7 @@
             "équipe",
             "outil"
         ],
-        "category":"support_technique"
+        "category":"gestion_acces"
     },
     {
         "tokens":[
@@ -1990,7 +1956,7 @@
             "se",
             "effectuer"
         ],
-        "category":"autre"
+        "category":"support_technique"
     },
     {
         "tokens":[
@@ -2016,7 +1982,7 @@
             "nouveau",
             "utilisateur",
             "client",
-            "partner",
+            "[name]",
             "création",
             "je",
             "avoir",
@@ -2029,7 +1995,6 @@
     },
     {
         "tokens":[
-            "coucou",
             "pouvoir",
             "vous",
             "créer",
@@ -2042,7 +2007,7 @@
             "plaisir",
             "dispo"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -2051,10 +2016,8 @@
             "entrer",
             "code",
             "otp",
-            "[name]dan",
-            "[champs otp rouge]",
+            "[name]",
             "otp",
-            "rouge",
             "valider"
         ],
         "category":"probleme_connexion"
@@ -2069,7 +2032,7 @@
             "prochain",
             "version"
         ],
-        "category":"autre"
+        "category":"support_technique"
     },
     {
         "tokens":[
@@ -2118,7 +2081,7 @@
             "coffre",
             "fort",
             "nommer",
-            "fortalicia",
+            "[name]",
             "se",
             "avérer",
             "vide",
@@ -2131,7 +2094,7 @@
             "essai",
             "contacter",
             "accompagner",
-            "n'[name]",
+            "[name]",
             "me",
             "appeler",
             "[phone]",
@@ -2200,7 +2163,7 @@
             "ajouter",
             "monde"
         ],
-        "category":"support_technique"
+        "category":"gestion_acces"
     },
     {
         "tokens":[
@@ -2212,7 +2175,7 @@
             "[name]",
             "[service_k]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -2300,12 +2263,10 @@
             "vous",
             "intégrer",
             "client",
-            "[cte pack]",
-            "pack",
-            "cte0002",
+            "[name]",
             "[service_k]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -2350,8 +2311,6 @@
             "[group]",
             "extension",
             "rien",
-            "n’",
-            "[☹]",
             "bon"
         ],
         "category":"probleme_connexion"
@@ -2488,7 +2447,7 @@
             "arriver",
             "connecter",
             "identifiant",
-            "[group]."
+            "[group]"
         ],
         "category":"probleme_connexion"
     },
@@ -2505,7 +2464,7 @@
             "otp",
             "microsoft"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -2537,7 +2496,7 @@
             "double",
             "authen",
             "inventaire",
-            "shd",
+            "[name]",
             "production",
             "[service_k]",
             "ad",
@@ -2552,7 +2511,7 @@
             "clair",
             "[name]"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -2576,7 +2535,7 @@
             "il",
             "débloquer"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -2634,7 +2593,7 @@
             "[service_k]",
             "[name]"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -2734,7 +2693,7 @@
             "normal",
             "réponse"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -2748,26 +2707,26 @@
             "mettre",
             "place",
             "synchro",
-            "[azuread]",
+            "[name]",
             "interne",
             "oui",
             "exister",
             "il",
             "procédure"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
             "pouvoir",
             "vous",
-            "[reset mfa]",
-            "mfer",
+            "reset",
+            "mfa",
             "[service_k]",
             "compte",
             "[mail]"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -2916,7 +2875,7 @@
             "hotel",
             "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -3000,14 +2959,14 @@
             "[name]",
             "client",
             "[name]",
-            "partner",
+            "[name]",
             "pb",
             "falloir",
             "réinitialiser",
             "mdp",
             "[name]"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -3072,14 +3031,14 @@
         "category":"gestion_acces"
     },
     {
-        "tokens":[
+        "tokens": [
             "appel",
             "[name]",
             "rattacher",
-            "coffr",
+            "coffre",
             "ged"
         ],
-        "category":"autre"
+        "category":"gestion_acces"
     },
     {
         "tokens":[
@@ -3103,25 +3062,23 @@
             "vous",
             "revenir",
             "solution",
-            "[félix]"
+            "[name]"
         ],
         "category":"probleme_connexion"
     },
     {
         "tokens":[
             "client",
-            "pk",
-            "conseil",
-            "nice",
+            "[name]",
             "ne",
             "exister",
             "console",
             "pouvoir",
             "faire",
-            "necessair",
+            "necessaire",
             "bcp"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -3144,17 +3101,9 @@
             "contrat",
             "trouver",
             "pas",
-            "lycée",
-            "professionnel",
-            "priver",
-            "[name]",
-            "mfr",
-            "chargey",
-            "gray",
-            "rh",
-            "thermolaquage"
+            "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -3165,20 +3114,9 @@
             "fort",
             "[group]",
             "grand",
-            "[paris]",
+            "[name]",
             "personne",
             "suivant",
-            "anis",
-            "barreau",
-            "[mail]",
-            "[name]",
-            "[mail]",
-            "[name]",
-            "[mail]",
-            "[name]",
-            "[mail]",
-            "[name]",
-            "[mail]",
             "[name]",
             "[mail]"
         ],
@@ -3203,7 +3141,7 @@
             "besoin",
             "petit",
             "assistance",
-            "aliou"
+            "[name]"
         ],
         "category":"probleme_connexion"
     },
@@ -3223,7 +3161,7 @@
             "nous",
             "sujet"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -3231,19 +3169,15 @@
             "[service_k]",
             "dossier",
             "client",
-            "[auriga]",
+            "[name]",
             "exister",
             "crm",
-            "[group].",
+            "[group]",
             "pouvoir",
             "vérifier",
-            "côté",
-            "se",
-            "il",
-            "pler",
-            "[matthieu]"
+            "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -3253,9 +3187,9 @@
             "accer",
             "pouvoir",
             "faire",
-            "necessair"
+            "necessaire"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -3264,7 +3198,7 @@
             "accès",
             "nouveau",
             "alternant",
-            "fortalicia"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -3274,7 +3208,7 @@
             "fort",
             "partie",
             "[group]",
-            "[amiens]",
+            "[name]",
             "malheureusement",
             "discussion",
             "collègue",
@@ -3283,28 +3217,28 @@
             "dossier",
             "[group]",
             "grand",
-            "[paris]",
+            "[name]",
             "[courneuve]",
             "dossier",
             "[group]",
-            "[amiens]",
+            "[name]",
             "migrer",
             "donnée",
             "trouver",
             "[group]",
             "grand",
-            "[paris]",
+            "[name]",
             "[group]",
-            "[amiens]",
+            "[name]",
             "donner",
             "accès",
             "client",
-            "[amiens]",
+            "[name]",
             "trouver",
             "dossier",
             "[group]",
             "grand",
-            "[paris]",
+            "[name]",
             "dérrangement",
             "[name]"
         ],
@@ -3313,7 +3247,7 @@
     {
         "tokens":[
             "client",
-            "partner",
+            "[name]",
             "falloir",
             "accès",
             "info",
@@ -3353,7 +3287,7 @@
             "reconnaître",
             "pouvoir",
             "faire",
-            "necessair"
+            "necessaire"
         ],
         "category":"gestion_acces"
     },
@@ -3362,12 +3296,12 @@
             "accès",
             "base",
             "donnée",
-            "amien",
+            "[name]",
             "[service_k]",
             "donnée",
             "visible",
             "dossier",
-            "[amiens]"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -3377,12 +3311,11 @@
             "retrouver",
             "client",
             "mairie",
-            "[saint gilles 50180]",
-            "gille",
+            "[name]",
             "faire",
             "synchro"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -3407,7 +3340,7 @@
             "web",
             "[service_k]",
             "portail",
-            "[group].",
+            "[group]",
             "je",
             "avoir",
             "essayer",
@@ -3461,12 +3394,12 @@
             "arrivée",
             "agence",
             "[group]",
-            "[amiens]",
+            "[name]",
             "falloir",
             "pouvoir",
             "accès",
             "ressource",
-            "[amiens]",
+            "[name]",
             "actuellement",
             "ressource",
             "[service_k]",
@@ -3480,7 +3413,7 @@
             "renvoyer",
             "mail",
             "utilisateur",
-            "partner",
+            "[name]",
             "[name]",
             "lebihan",
             "[name]",
@@ -3535,12 +3468,8 @@
         "tokens":[
             "suite",
             "mail",
-            "camille",
-            "gicquel",
-            "[le mans sud]",
-            "mans",
-            "sud",
-            "franchiser",
+            "[name]",
+            "franchise",
             "connecter",
             "extension",
             "communication",
@@ -3556,8 +3485,7 @@
             "rajouter",
             "compte",
             "client",
-            "cim0002",
-            "voreppe",
+            "[name]",
             "[service_k]",
             "se",
             "il",
@@ -3574,7 +3502,7 @@
             "agence",
             "principal"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -3667,7 +3595,7 @@
             "vous",
             "créer"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -3745,33 +3673,23 @@
             "être",
             "réinitialiser"
         ],
-        "category":"autre"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
             "créer",
             "[name]",
-            "admin",
-            "se",
-            "il",
-            "pler",
-            "[name]",
-            "[mail_service]",
-            "[name]",
-            "[mail_service]",
-            "[name]"
+            "[mail_service]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
-        "tokens":[
+        "tokens": [
             "renouvellement",
             "licence",
             "boitier",
-            "s170495625e8fe6",
             "client",
-            "[tecniplast france]",
-            "france",
+            "[name]",
             "licence",
             "disponible",
             "note",
