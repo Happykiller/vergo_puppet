@@ -18,7 +18,7 @@
         "tokens":[
             "modification",
             "mot",
-            "passer",
+            "passe",
             "session",
             "[outlook]",
             "parvenir",
@@ -29,24 +29,24 @@
             "tester",
             "ancien",
             "mot",
-            "passer",
+            "passe",
             "fonctionner",
             "non",
             "[mail]",
-            "damien"
+            "[name]"
         ],
         "category":"probleme_connexion"
     },
     {
         "tokens":[
             "new",
-            "alterner",
+            "alternant",
             "tech",
             "[paris12]",
             "pouvoir",
             "creer",
             "acce",
-            "kaly",
+            "[name]",
             "se",
             "agir",
             "[name]"
@@ -153,7 +153,7 @@
             "connexion",
             "[rds]",
             "[name]",
-            "aujourd’hui",
+            "[date]",
             "[hours]",
             "support",
             "[service_k]",
@@ -165,7 +165,7 @@
     {
         "tokens":[
             "[name]",
-            "aujourd’hui",
+            "[date]",
             "[hours]",
             "support",
             "[service_k]",
@@ -179,7 +179,7 @@
             "importer",
             "mdp",
             "navigateur",
-            "edg",
+            "edge",
             "format",
             ".csv",
             "fichier",
@@ -217,7 +217,7 @@
     {
         "tokens":[
             "[name]",
-            "aujourd’hui",
+            "[date]",
             "[hours]",
             "support",
             "[service_k]",
@@ -262,7 +262,7 @@
     },
     {
         "tokens":[
-            "[name].",
+            "[name]",
             "[date]",
             "[hours]",
             "support",
@@ -271,16 +271,14 @@
             "renseignement",
             "import",
             "mot",
-            "passer",
+            "passe",
             "content",
-            "j’",
+            "je",
             "avoir",
-            "l’",
             "on",
             "pouvoir",
             "importer",
             "partir",
-            "[name]",
             "[name]",
             "être",
             "il",
@@ -355,9 +353,7 @@
             "synchro",
             "[service_k]",
             "[ms365]",
-            "bon",
-            "a+",
-            "[seb]"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -393,9 +389,8 @@
             "coffre",
             "rappeler",
             "voir",
-            "[ca]",
             "[phone]",
-            "[name]."
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -405,14 +400,12 @@
             "vous",
             "créer",
             "client",
-            "crh0002",
-            "[c136]",
-            "rh",
+            "[name]",
             "[service_k]",
             "[group]",
-            "vendome"
+            "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -432,12 +425,11 @@
             "rappeler",
             "[phone]"
         ],
-        "category":"autre"
+        "category":"gestion_acces"
     },
     {
         "tokens":[
-            "-----mail",
-            "------",
+            "mail",
             "suite",
             "nouveau",
             "news",
@@ -445,7 +437,7 @@
             "[service_k]",
             "accessible",
             "partout",
-            "j’",
+            "je",
             "essayer",
             "connecter",
             "extension",
@@ -461,10 +453,9 @@
             "extension",
             "dédier",
             "[group]",
-            "j’",
+            "je",
             "en",
             "déduire",
-            "qu’",
             "il",
             "spécial",
             "nous",
@@ -481,7 +472,6 @@
             "client",
             "coffre",
             "[service]",
-            "------",
             "problème",
             "résoudre",
             "dossier",
@@ -491,7 +481,7 @@
             "semaine",
             "prochain",
             "bon",
-            "[alex]"
+            "[name]"
         ],
         "category":"probleme_connexion"
     },
@@ -521,10 +511,7 @@
             "pouvoir",
             "créer",
             "client",
-            "[tesmer nicolas]",
-            "nicola",
-            "vous",
-            "[nicolas]"
+            "[name]"
         ],
         "category":"autre"
     },
@@ -539,7 +526,7 @@
             "csv",
             "[service_k]",
             "retour",
-            "[nicholas]"
+            "[name]"
         ],
         "category":"import_fichier"
     },
@@ -553,7 +540,7 @@
             "[service_k]",
             "suivre",
             "recommendation",
-            "[utf-8 case vides max]",
+            "utf",
             "case",
             "vide",
             "max",
@@ -566,8 +553,6 @@
             "noter",
             "télécharger",
             "csv",
-            "[url]",
-            "[url]",
             "[url]"
         ],
         "category":"support_technique"
@@ -626,7 +611,7 @@
             "connecter",
             "rentrer",
             "code",
-            "[mfa]",
+            "mfa",
             "charge",
             "revenir",
             "page",
@@ -643,29 +628,29 @@
             "navigateur",
             "pareil",
             "idée",
-            "[william]"
+            "[name]"
         ],
         "category":"probleme_connexion"
     },
     {
         "tokens":[
-            "j’",
+            "je",
             "avoir",
             "renseigner",
             "url",
-            "j’",
+            "je",
             "utiliser",
             "extension",
             "erreur",
             "utilisateur",
             "mot",
-            "passer",
+            "passe",
             "incorrect",
-            "manuellement",
+            "[name]",
             "identifiant",
             "marche"
         ],
-        "category":"gestion_compte"
+        "category":"probleme_connexion"
     },
     {
         "tokens":[
@@ -674,10 +659,9 @@
             "client",
             "new",
             "[service_k]",
-            "sage",
-            "[new0003]"
+            "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -732,11 +716,9 @@
             "verre",
             "pouvoir",
             "créer",
-            "diponibl",
-            "camille",
-            "gicquel",
-            "[group]",
-            "sud"
+            "diponible",
+            "[name]",
+            "[group]"
         ],
         "category":"autre"
     },
@@ -772,7 +754,7 @@
             "collaborateur",
             "[name]",
             "accès",
-            "kalidyan",
+            "[service_k]",
             "fois",
             "info",
             "identifiant",
@@ -791,17 +773,13 @@
             "vous",
             "réinitialiser",
             "mot",
-            "passer",
-            "isl",
+            "passe",
             "collaborateur",
             "[name]",
             "ouvrir",
             "droit",
             "[service_k]",
-            "[avignon]",
-            "martigues",
-            "[name]",
-            "[name]."
+            "[name]"
         ],
         "category":"gestion_compte"
     },
@@ -813,8 +791,7 @@
             "[service_k]",
             "connecter",
             "compte",
-            "[microsoft]",
-            "[ca]",
+            "microsoft",
             "utilisateur",
             "ne",
             "exister",
@@ -833,7 +810,7 @@
             "ne",
             "arriver",
             "connecter",
-            "[kalidyan firefox]",
+            "[service_k]",
             "firefox",
             "savoir",
             "chrome",
@@ -853,7 +830,7 @@
             "compte",
             "client",
             "groupe",
-            "[jti contact]",
+            "[name]",
             "contact",
             "client",
             "téléphone",
@@ -897,8 +874,7 @@
             "[name]",
             "user",
             "supprimer",
-            "solene",
-            "laura"
+            "[name]"
         ],
         "category":"autre"
     },
@@ -922,24 +898,21 @@
             "avoir",
             "besoin",
             "technicien",
-            "[avignon]",
+            "[name]",
             "avoir",
             "accès",
             "[service_k]",
             "agence",
-            "[avignon martigues]",
-            "martigue",
+            "[name]",
             "je",
             "avoir",
             "besoin",
             "technicien",
-            "martigue",
             "avoir",
             "accès",
             "[service_k]",
             "agence",
-            "[avignon martigues]",
-            "martigue"
+            "[name]"
         ],
         "category":"support_technique"
     },
@@ -961,7 +934,7 @@
             "ne",
             "arriver",
             "mot",
-            "passer"
+            "passe"
         ],
         "category":"probleme_connexion"
     },
@@ -977,7 +950,7 @@
             "pouvoir",
             "rappeler",
             "sujet",
-            "miguel"
+            "[name]"
         ],
         "category":"probleme_connexion"
     },
@@ -1094,7 +1067,7 @@
             "automatiquement",
             "instantanément",
             "utiliser",
-            "edg",
+            "edge",
             "chrome",
             "alternatif"
         ],
@@ -1128,7 +1101,6 @@
             "ci",
             "joint",
             "dernier",
-            "[maj keepass]",
             "keepass"
         ],
         "category":"probleme_connexion"
@@ -1154,14 +1126,8 @@
             "pouvoir",
             "créer",
             "accès",
-            "rieux",
-            "aurélien",
             "[name]",
-            "[service_k]",
-            "se",
-            "il",
-            "pler",
-            "beaucoup"
+            "[service_k]"
         ],
         "category":"gestion_acces"
     },
@@ -1175,10 +1141,7 @@
             "franchise",
             "accorder",
             "accès",
-            "abdelhakim",
-            "el",
-            "gadir",
-            "[name]."
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -1195,8 +1158,7 @@
             "droit",
             "urgence",
             "souci",
-            "[pca simplivity]",
-            "simplivity",
+            "[name]",
             "prod"
         ],
         "category":"gestion_acces"
@@ -1223,7 +1185,7 @@
             "avoir",
             "accès",
             "retour",
-            "nicholas"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -1245,7 +1207,7 @@
             "urgent",
             "problème",
             "résoudre",
-            "manu"
+            "[name]"
         ],
         "category":"autre"
     },
@@ -1270,7 +1232,7 @@
         "tokens":[
             "perdre",
             "accès",
-            "kalidyan",
+            "[service_k]",
             "ce",
             "être",
             "bloquer",
@@ -1320,8 +1282,7 @@
             "être",
             "problème",
             "général",
-            "[name].",
-            "manu"
+            "[name]"
         ],
         "category":"probleme_connexion"
     },
@@ -1380,16 +1341,16 @@
             "authentification",
             "compte",
             "admin",
-            "[microsoft]",
+            "microsoft",
             "client",
             "[service_k]",
             "cas",
             "utiliser",
             "[service_k]",
             "place",
-            "[microsoft]",
+            "microsoft",
             "authenticator",
-            "pierre-françoi",
+            "[name]",
             "[phone]"
         ],
         "category":"gestion_compte"
@@ -1405,7 +1366,7 @@
             "être",
             "pourrai",
             "rappeler",
-            "[timothée]"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -1448,7 +1409,6 @@
             "[name]",
             "coffre",
             "[service]",
-            "[service]",
             "commerce"
         ],
         "category":"gestion_acces"
@@ -1460,14 +1420,13 @@
             "suite",
             "e-mail",
             "[group]",
-            "[montpellier]",
-            "ouest",
+            "[name]",
             "modification",
             "[name]",
             "rôle",
-            "intervenir"
+            "intervenant"
         ],
-        "category":"autre"
+        "category":"droit_intervenant"
     },
     {
         "tokens":[
@@ -1488,7 +1447,7 @@
     {
         "tokens":[
             "client",
-            "clarteis",
+            "[name]",
             "numéro",
             "sage",
             "[name]",
@@ -1507,10 +1466,6 @@
             "ajout",
             "interventant",
             "banque",
-            "mairi",
-            "marseillan",
-            "[name]",
-            "zekri",
             "[name]"
         ],
         "category":"autre"
@@ -1528,7 +1483,7 @@
             "[adresse mail]",
             "mail",
             "mot",
-            "passer"
+            "passe"
         ],
         "category":"gestion_compte"
     },
@@ -1537,7 +1492,6 @@
             "je",
             "avoir",
             "problème",
-            "vaec",
             "je",
             "essayer",
             "connecter",
@@ -1643,8 +1597,7 @@
             "appel",
             "téléphonique",
             "ajout",
-            "[sarah chaabane coffre]",
-            "chaabane",
+            "[name]",
             "coffre",
             "[group]",
             "info",
@@ -1657,7 +1610,7 @@
             "création",
             "client",
             "final",
-            "parme",
+            "[name]",
             "[group]",
             "grand",
             "[paris]",
@@ -1697,7 +1650,7 @@
             "accès",
             "admin",
             "davy",
-            "alexis"
+            "nameis"
         ],
         "category":"gestion_acces"
     },
@@ -1717,7 +1670,7 @@
             "essayer",
             "connecter",
             "compte",
-            "[microsoft]",
+            "microsoft",
             "url",
             "[url_product_xefi]",
             "je",
@@ -1742,7 +1695,7 @@
             "franchiser",
             "créer",
             "mot",
-            "passer",
+            "passe",
             "[service_k]",
             "problème",
             "régler"
@@ -1772,7 +1725,7 @@
             "me",
             "être",
             "mot",
-            "passer",
+            "passe",
             "serveur",
             "aiad",
             "coffr",
@@ -1794,7 +1747,7 @@
             "serveur",
             "vappli-2020",
             "mot",
-            "passer",
+            "passe",
             "inscrire",
             "[service_k]",
             "faires",
@@ -1824,7 +1777,7 @@
             "sylvain",
             "pierru",
             "[name]",
-            "alex",
+            "name",
             "caillot",
             "retour",
             "bon"
@@ -1837,12 +1790,12 @@
             "[service_k]",
             "reconnaître",
             "mot",
-            "passer",
+            "passe",
             "pouvoir",
             "on",
             "reinitialiser",
             "mot",
-            "passer"
+            "passe"
         ],
         "category":"gestion_compte"
     },
@@ -1927,19 +1880,17 @@
             "adresse",
             "mail",
             "utilisateur",
-            "secretaire.couvivet",
+            "[name]",
             "espace",
             "pouvoir",
             "mettre",
             "adresse",
             "envoyer",
             "mot",
-            "passer",
+            "passe",
             "[mail]",
             "vous",
-            "[nicolas]",
-            "0032",
-            "02"
+            "[name]"
         ],
         "category":"gestion_compte"
     },
@@ -1948,7 +1899,7 @@
             "téléphone",
             "réinitialisation",
             "mot",
-            "passer"
+            "passe"
         ],
         "category":"gestion_compte"
     },
@@ -1962,7 +1913,6 @@
             "botte",
             "[service_k]",
             "vous",
-            "--",
             "[name]"
         ],
         "category":"autre"
@@ -2006,8 +1956,7 @@
     },
     {
         "tokens":[
-            "[sarah chaabane]",
-            "chaabane",
+            "[name]",
             "[mail]",
             "support",
             "[service_k]",
@@ -2024,13 +1973,7 @@
             "fichier",
             "salaire",
             "équipe",
-            "outil",
-            "[sarah]",
-            "envoyer",
-            "partir",
-            "[outlook ios mail]",
-            "mail",
-            "envoyer"
+            "outil"
         ],
         "category":"support_technique"
     },
@@ -2094,7 +2037,6 @@
             "client",
             "sas",
             "[name]",
-            "[name]",
             "ce",
             "être",
             "plaisir",
@@ -2109,7 +2051,7 @@
             "entrer",
             "code",
             "otp",
-            "kalydan",
+            "[name]dan",
             "[champs otp rouge]",
             "otp",
             "rouge",
@@ -2185,7 +2127,6 @@
             "me",
             "aider",
             "[name]",
-            "--",
             "je",
             "essai",
             "contacter",
@@ -2195,7 +2136,6 @@
             "appeler",
             "[phone]",
             "plaisir",
-            "--",
             "[name]"
         ],
         "category":"gestion_acces"
@@ -2214,8 +2154,7 @@
     },
     {
         "tokens":[
-            "[valerie hojnacki]",
-            "hojnacki",
+            "[name]",
             "[mail]",
             "envoyer",
             "mardi",
@@ -2226,27 +2165,10 @@
             "[mail_service]",
             "[name]",
             "[mail]",
-            "cc",
-            "[name]",
-            "[mail]",
-            "[name]",
-            "[mail]",
-            "benjamin",
-            "stock",
-            "[mail]",
-            "[name]",
-            "lacinga",
-            "[mail]",
-            "[name]",
-            "[mail]",
-            "[name]",
-            "[mail]",
-            "[name]",
-            "[mail]",
             "objet",
             "ajout",
             "collaborateur",
-            "j’",
+            "je",
             "espérer",
             "support",
             "[service_k]",
@@ -2255,7 +2177,6 @@
             "vous",
             "vérifier",
             "[name]",
-            "lacinga",
             "technique",
             "[name]",
             "commerce",
@@ -2288,8 +2209,7 @@
             "créeér",
             "client",
             "sas",
-            "aurum",
-            "adama",
+            "[name]",
             "[service_k]"
         ],
         "category":"autre"
@@ -2301,7 +2221,7 @@
             "compte",
             "fonctionner",
             "authentification",
-            "[microsoft]",
+            "microsoft",
             "login",
             "utilisateur",
             "ne",
@@ -2332,7 +2252,7 @@
             "afficher",
             "liste",
             "mot",
-            "passer",
+            "passe",
             "correspondre",
             "faible",
             "moyen",
@@ -2358,7 +2278,7 @@
             "négatif",
             "page",
             "bel",
-            "damien"
+            "[name]"
         ],
         "category":"gestion_compte"
     },
@@ -2405,13 +2325,13 @@
             "[mail]",
             "[mail_service]",
             "conter",
-            "j’",
+            "je",
             "essayer",
             "connecter",
             "extension",
             "chrom",
             "fonctionner",
-            "j’",
+            "je",
             "avoir",
             "message",
             "identifier",
@@ -2472,9 +2392,6 @@
             "info",
             "payer",
             "ajouter",
-            "[sarah chaabane - ajouter]",
-            "chaabane",
-            "ajouter",
             "[name]",
             "enlever",
             "[name]"
@@ -2487,17 +2404,9 @@
             "vous",
             "créer",
             "client",
-            "aupera",
-            "eanm",
-            "[fdv foyers cunlhat]",
-            "foyer",
-            "cunlhat",
-            "se",
-            "il",
-            "pler",
-            "bon"
+            "[name]"
         ],
-        "category":"autre"
+        "category":"creation_client"
     },
     {
         "tokens":[
@@ -2509,11 +2418,7 @@
             "[service_k]",
             "utilisateur",
             "[name]",
-            "[group]",
-            "[chartres]",
-            "se",
-            "il",
-            "plaire"
+            "[group]"
         ],
         "category":"gestion_acces"
     },
@@ -2524,7 +2429,7 @@
             "avoir",
             "accès",
             "client",
-            "alfidi",
+            "[name]",
             "[service_k]"
         ],
         "category":"gestion_acces"
@@ -2532,7 +2437,7 @@
     {
         "tokens":[
             "[group]",
-            "[vichy]",
+            "[name]",
             "partie",
             "agence",
             "propre",
@@ -2541,30 +2446,24 @@
             "droit",
             "[service_k]",
             "[name]",
-            "[name]",
             "que",
             "il",
             "accéder",
             "ensemble",
             "agence",
-            "vichy",
+            "[name]",
             "accès",
             "coffre",
             "lier",
             "ad",
-            "[conseille]",
+            "conseille",
             "faire",
             "demande",
-            "[dsi]",
+            "dsi",
             "ajouter",
             "groupe",
             "correspondre",
-            "[cn]",
-            "ou",
-            "technique",
-            "ou",
-            "groupe",
-            "ou=[group],dc=[group],dcriv",
+            "dn",
             "fois",
             "ajouter",
             "synchronisation",
@@ -2573,7 +2472,6 @@
             "accéder",
             "coffre",
             "agence",
-            "après-midi",
             "[name]"
         ],
         "category":"gestion_acces"
@@ -2601,10 +2499,10 @@
             "il",
             "cler",
             "secrète",
-            "[otp]",
+            "otp",
             "savoir",
             "configurer",
-            "[otp microsoft]",
+            "otp",
             "microsoft"
         ],
         "category":"autre"
@@ -2644,7 +2542,7 @@
             "[service_k]",
             "ad",
             "[group]",
-            "[microsoft]",
+            "microsoft",
             "évidement",
             "dispo",
             "demande",
@@ -2652,7 +2550,7 @@
             "être",
             "suffisamment",
             "clair",
-            "[morgan]"
+            "[name]"
         ],
         "category":"autre"
     },
@@ -2665,8 +2563,7 @@
             "coffre",
             "franchise",
             "[mail]",
-            "[name]",
-            "n.dhaoui"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -2689,8 +2586,7 @@
             "coffre",
             "lso",
             "lyon",
-            "abdel",
-            "languer"
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -2736,11 +2632,7 @@
             "donner",
             "acce",
             "[service_k]",
-            "abdel",
-            "languer",
-            "se",
-            "il",
-            "pler"
+            "[name]"
         ],
         "category":"autre"
     },
@@ -2791,9 +2683,7 @@
             "echange",
             "mail",
             "[name]",
-            "[name].",
             "ajout",
-            "[name]",
             "[name]",
             "coffre",
             "info",
@@ -2809,7 +2699,7 @@
             "mdp",
             "connecter",
             "[service_k]",
-            "[microsoft]"
+            "microsoft"
         ],
         "category":"probleme_connexion"
     },
@@ -2822,7 +2712,7 @@
             "téléphonique",
             "réinitialisation",
             "mot",
-            "passer",
+            "passe",
             "renvoi",
             "identifiant",
             "dl",
@@ -2924,7 +2814,6 @@
             "suite",
             "échange",
             "mail",
-            "[name]",
             "[name]"
         ],
         "category":"autre"
@@ -3025,10 +2914,7 @@
             "créer",
             "client",
             "hotel",
-            "franc",
-            "bois",
-            "vous",
-            "[nicolas]"
+            "[name]"
         ],
         "category":"autre"
     },
@@ -3037,13 +2923,12 @@
             "agence",
             "[name]",
             "client",
-            "[help partners pb]",
-            "partner",
+            "[name]",
             "pb",
             "falloir",
             "réinitialiser",
             "mdp",
-            "[name].",
+            "[name]",
             "bug",
             "réinitialisation",
             "mdp",
@@ -3077,11 +2962,10 @@
             "compte",
             "non",
             "plus",
-            "[ca]",
             "fonctionner",
             "portail",
             "connecter",
-            "[microsoft]",
+            "microsoft",
             "ne",
             "avoir",
             "coffre",
@@ -3099,7 +2983,6 @@
             "e-mail",
             "part",
             "[name]",
-            "[name]",
             "ajout",
             "[name]",
             "azoulay",
@@ -3116,13 +2999,13 @@
             "agence",
             "[name]",
             "client",
-            "[help partners pb]",
+            "[name]",
             "partner",
             "pb",
             "falloir",
             "réinitialiser",
             "mdp",
-            "[name]."
+            "[name]"
         ],
         "category":"autre"
     },
@@ -3147,7 +3030,7 @@
             "avoir",
             "mettre",
             "service",
-            "kalidian",
+            "[service_k]",
             "jamais",
             "me",
             "en",
@@ -3155,21 +3038,17 @@
             "ne",
             "arriver",
             "connecter",
-            "[ca]",
             "bloquer",
             "niveau",
             "authenticator",
-            "pierre-françoi"
+            "[name]"
         ],
         "category":"probleme_connexion"
     },
     {
         "tokens":[
             "ajouter",
-            "carine",
-            "ayral",
-            "ternisien",
-            "coffre",
+            "[name]",
             "coffre"
         ],
         "category":"gestion_acces"
@@ -3179,7 +3058,6 @@
             "tout",
             "collègue",
             "[name]",
-            "[name]",
             "ne",
             "avoir",
             "accès",
@@ -3187,8 +3065,7 @@
             "mettre",
             "droit",
             "disponible",
-            "camille",
-            "gicquel",
+            "[name]",
             "[group]",
             "sud"
         ],
@@ -3197,11 +3074,10 @@
     {
         "tokens":[
             "appel",
-            "fatima",
-            "mendili",
+            "[name]",
             "rattacher",
             "coffr",
-            "[ged]"
+            "ged"
         ],
         "category":"autre"
     },
@@ -3387,7 +3263,7 @@
             "donner",
             "accès",
             "nouveau",
-            "alterner",
+            "alternant",
             "fortalicia"
         ],
         "category":"gestion_acces"
@@ -3448,8 +3324,7 @@
             "il",
             "falloir",
             "créer",
-            "[name]",
-            "[name]."
+            "[name]"
         ],
         "category":"gestion_acces"
     },
@@ -3607,7 +3482,6 @@
             "utilisateur",
             "partner",
             "[name]",
-            "[name]",
             "lebihan",
             "[name]",
             "adresse",
@@ -3625,7 +3499,7 @@
             "mettre",
             "place",
             "mot",
-            "passer"
+            "passe"
         ],
         "category":"gestion_compte"
     },
@@ -3643,13 +3517,10 @@
             "[group]",
             "lso",
             "[group]",
-            "vendome",
+            "[name]",
             "[group]",
             "[presqu'ile]",
             "ile",
-            "[name]",
-            "[name]",
-            "[name]",
             "[name]",
             "benjamin",
             "laveur",
@@ -3775,7 +3646,6 @@
     {
         "tokens":[
             "[name]",
-            "[name]",
             "pouvoir",
             "rajouter",
             "[name]",
@@ -3866,12 +3736,11 @@
             "être",
             "vous",
             "[name]",
-            "[name]",
             "[reset]",
             "portail",
             "besoin",
-            "[reset kalytdian]",
-            "kalytdian",
+            "[reset [name]tdian]",
+            "[name]tdian",
             "2fa",
             "être",
             "réinitialiser"
@@ -3890,7 +3759,6 @@
             "[mail_service]",
             "[name]",
             "[mail_service]",
-            "[name]",
             "[name]"
         ],
         "category":"autre"
