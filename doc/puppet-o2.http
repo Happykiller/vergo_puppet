@@ -25,30 +25,13 @@ Content-Type: application/json
       "ticket",
       "créer",
       "suite",
-      "échange",
-      "mails",
-      "lucile",
-      "delbarre",
-      "pouvoir",
-      "rajouterr",
-      "emma",
-      "georges",
+      "e-mail",
+      "création",
+      "utilisateur",
       "coffre",
-      "citer",
-      "objet",
-      "<ENTREPRISE>",
-      "lucile",
-      "emma",
-      "emma",
-      "bien",
-      "ajouté",
-      "coffre",
-      "<COMPANY>",
-      "bonne",
-      "matiné",
-      "<NAME>",
-      "<ENTREPRISE>"
-    ]
+      "banque",
+      "sarl"
+  ]
 }
 
 ###
