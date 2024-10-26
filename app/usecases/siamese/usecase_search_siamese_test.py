@@ -1,8 +1,8 @@
 import pytest
-from app.usecases.create_model import create_model
-from app.usecases.train_model import train_model
-from app.usecases.search import search_model
 from app.repositories.memory import models
+from app.usecases.siamese.usecase_create_siamese import create_model_siamese
+from app.usecases.siamese.usecase_search_siamese import search_model_siamese
+from app.usecases.siamese.usecase_train_siamese import train_model_siamese
 from fastapi import HTTPException # type: ignore
 
 # Fonction de configuration pour réinitialiser la mémoire avant chaque test
@@ -12,7 +12,7 @@ def setup_function():
 # Test 1: Recherche réussie avec un réseau de neurones et des données variées
 def test_search_model_success():
     # Créer et entraîner un modèle avec des données variées
-    create_model(
+    create_model_siamese(
         "model1", 
         [["chat", "chien", "oiseau"], ["voiture", "vélo", "train"], ["ordinateur", "table", "stylo"]], 
         ["chat", "chien", "oiseau", "voiture", "vélo", "train", "ordinateur", "table", "stylo"],
@@ -20,14 +20,14 @@ def test_search_model_success():
     )
 
     # Entraîner le modèle avec des vecteurs non vides
-    train_model("model1", [
+    train_model_siamese("model1", [
         (["chat", "chien", "oiseau"], ["chat", "chien", "oiseau"], 1), 
         (["voiture", "vélo", "train"], ["voiture", "vélo", "train"], 1), 
         (["ordinateur", "table", "stylo"], ["ordinateur", "table", "stylo"], 1)
     ])
 
     # Recherche avec un vecteur valide
-    result = search_model("model1", ["chat", "chien", "oiseau"])
+    result = search_model_siamese("model1", ["chat", "chien", "oiseau"])
 
     # Assertions
     assert result["search"] == ["chat", "chien", "oiseau"]
@@ -37,7 +37,7 @@ def test_search_model_success():
 # Test 3: Recherche réussie avec un mot inconnu
 def test_search_unknown_success():
     # Créer et entraîner un modèle avec des chaînes variées
-    create_model(
+    create_model_siamese(
         "model3", 
         [
             ["chat", "chien", "oiseau"], 
@@ -49,7 +49,7 @@ def test_search_unknown_success():
     )
 
     # Entraîner le modèle avec des vecteurs non vides
-    train_model(
+    train_model_siamese(
         "model3", 
         [
             (["chat", "chien", "oiseau"], ["chat", "chien", "oiseau"], 1),
@@ -59,7 +59,7 @@ def test_search_unknown_success():
     )
 
     # Recherche avec un vecteur contenant un token inconnu
-    result = search_model("model3", ["chat", "lion"])
+    result = search_model_siamese("model3", ["chat", "lion"])
 
     # Assertions
     assert result["search"] == ["chat", "lion"]
@@ -69,7 +69,7 @@ def test_search_unknown_success():
 def test_search_model_not_found():
     # Essayer de faire une recherche sur un modèle qui n'existe pas
     with pytest.raises(HTTPException) as excinfo:
-        search_model("model_not_exist", ["chat", "chien"])
+        search_model_siamese("model_not_exist", ["chat", "chien"])
     
     assert excinfo.value.status_code == 404
     assert str(excinfo.value.detail) == "Model not found"
@@ -77,14 +77,14 @@ def test_search_model_not_found():
 # Test 5: Recherche avec un réseau de neurones non entraîné
 def test_search_model_no_nn_model():
     # Créer un modèle sans entraîner le réseau de neurones
-    create_model("model4", [["chat", "chien"], ["oiseau", "poisson"], ["voiture", "train"]], ["chat", "chien", "oiseau", "poisson", "voiture", "train"])
+    create_model_siamese("model4", [["chat", "chien"], ["oiseau", "poisson"], ["voiture", "train"]], ["chat", "chien", "oiseau", "poisson", "voiture", "train"])
     
     # Enregistrer indexed_dictionary sans réseau de neurones
     models["model4"]["indexed_dictionary"] = [[0, 1], [2, 3], [4, 5]]
 
     # Vérifier que la recherche renvoie une erreur
     with pytest.raises(HTTPException) as excinfo:
-        search_model("model4", ["chat", "chien"])
+        search_model_siamese("model4", ["chat", "chien"])
     
     assert excinfo.value.status_code == 400
     assert str(excinfo.value.detail) == "No neural network model found in the model"

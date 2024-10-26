@@ -1,12 +1,15 @@
 from app.apis.models.gru_training_data import GRUTrainingData
 from app.apis.models.model_tokenize_data import ModelTokenizeData
 from app.apis.models.simple_nn_search_data import SimpleNNSearchData
+from app.usecases.siamese.usecase_create_siamese import create_model_siamese
+from app.usecases.siamese.usecase_search_siamese import search_model_siamese
+from app.usecases.siamese.usecase_train_siamese import train_model_siamese
 from app.usecases.usecase_tokenize import usecase_tokenize
 from app.usecases.gru.usecase_create_gru import create_model_gru
 from app.usecases.gru.usecase_mesure_gru import mesure_gru
 from app.usecases.gru.usecase_search_gru import search_model_gru
 from app.usecases.gru.usecase_train_gru import train_model_gru
-from app.usecases.mesure_siamese import mesure_siamese
+from app.usecases.siamese.usecase_mesure_siamese import mesure_siamese
 from app.usecases.simple_nn.create_model_simple_nn import create_model_simpleNN
 from app.usecases.simple_nn.mesure_simple_nn import mesure_simple_nn
 from app.usecases.simple_nn.search_model_simple_nn import search_model_simple_nn
@@ -15,9 +18,6 @@ from fastapi import APIRouter, HTTPException  # type: ignore
 from pydantic import BaseModel, Field
 from app.apis.models.simple_nn_training_data import SimpleNNTrainingData
 from typing import List, Optional, Tuple, Union
-from app.usecases.create_model import create_model
-from app.usecases.train_model import train_model
-from app.usecases.search import search_model
 from app.usecases.getall_model import get_all_models_usecase
 from app.services.logger import logger
 from app.version import __version__
@@ -118,8 +118,10 @@ async def create_model_api(data: CreateModelData):
             return create_model_simpleNN(data.name)
         elif (data.neural_network_type == 'GRU') :
             return create_model_gru(data.name)
+        elif (data.neural_network_type == 'SIAMESE') :
+            return create_model_siamese(data.name, data.dictionary, data.glossary, data.neural_network_type)
         else:
-            return create_model(data.name, data.dictionary, data.glossary, data.neural_network_type)
+            raise HTTPException(status_code=500, detail=f"Neural network unkown : {data.neural_network_type}")
     except HTTPException as e:
         raise e
     except Exception as e:
@@ -138,8 +140,10 @@ async def train_model_api(data: TrainModelData):
             return train_model_simple_nn(data.name, data.training_data)
         elif (data.neural_network_type == 'GRU') :
             return train_model_gru(data.name, data.training_data)
+        elif (data.neural_network_type == 'SIAMESE') :
+            return train_model_siamese(data.name, data.training_data)
         else:
-            return train_model(data.name, data.training_data)
+            raise HTTPException(status_code=500, detail=f"Neural network unkown : {data.neural_network_type}")
     except HTTPException as e:
         raise e
     except Exception as e:
@@ -158,8 +162,10 @@ async def search_model_api(data: SearchData):
             return search_model_simple_nn(data.name, data.vector)
         elif (data.neural_network_type == 'GRU') :
             return search_model_gru(data.name, data.vector)
+        elif (data.neural_network_type == 'SIAMESE') :
+            return search_model_siamese(data.name, data.vector)
         else :
-            return search_model(data.name, data.vector)
+            raise HTTPException(status_code=500, detail=f"Neural network unkown : {data.neural_network_type}")
     except HTTPException as e:
         raise e
     except Exception as e:

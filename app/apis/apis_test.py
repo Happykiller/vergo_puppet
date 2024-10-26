@@ -25,7 +25,7 @@ training_data = [
 def test_create_model():
     data = {
         "name": "model1",
-        "neural_network_type": "LSTMNN",
+        "neural_network_type": "SIAMESE",
         "dictionary": dictionary,
         "glossary": glossary
     }
@@ -37,7 +37,7 @@ def test_create_model():
 def test_train_model():
     data = {
         "name": "model1",
-        "neural_network_type": "LSTMNN",
+        "neural_network_type": "SIAMESE",
         "training_data": training_data
     }
     response = client.post("/train_model", json=data)
@@ -48,7 +48,7 @@ def test_train_model():
 def test_search_model():
     data = {
         "name": "model1",
-        "neural_network_type": "LSTMNN",
+        "neural_network_type": "SIAMESE",
         "vector": search_vector
     }
     response = client.post("/search", json=data)

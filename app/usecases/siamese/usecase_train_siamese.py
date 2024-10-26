@@ -8,7 +8,7 @@ from fastapi import HTTPException  # type: ignore
 from typing import List, Tuple
 from app.services.logger import logger
 
-def train_model(name: str, training_data: List[Tuple[List[str], List[str], float]]):
+def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str], float]]):
     """
     Entraîne le modèle avec des paires (input, target).
     :param name: Nom du modèle

@@ -1,15 +1,14 @@
-from app.commons.commons import create_glossary_from_dictionary, create_indexed_glossary, pad_vector
+from app.commons.commons import create_indexed_glossary, pad_vector
 from app.machine_learning.neural_network_siamese import evaluate_similarity
 from app.repositories.memory import get_model
 from app.machine_learning.neural_network_simple import predict
 from app.machine_learning.neural_network_lstm import search_with_similarity
 from app.services.logger import logger
-from app.usecases.indices_to_tokens import indices_to_tokens
 from app.usecases.tokens_to_indices import tokens_to_indices
 from fastapi import HTTPException # type: ignore
 import torch
 
-def search_model(name: str, search: list):
+def search_model_siamese(name: str, search: list):
     model = get_model(name)
     if not model:
         raise HTTPException(status_code=404, detail="Model not found")

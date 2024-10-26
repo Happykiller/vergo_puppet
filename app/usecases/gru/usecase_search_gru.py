@@ -1,8 +1,8 @@
-from app.usecases.gru.usecase_commons_gru import process_input
 from typing import List
 from app.repositories.memory import get_model
-from fastapi import HTTPException
+from fastapi import HTTPException  # type: ignore
 from app.machine_learning.nn_gru import predict
+from app.usecases.gru.usecase_commons_gru import process_input
 
 def search_model_gru(name: str, vector: List[str]):
     """

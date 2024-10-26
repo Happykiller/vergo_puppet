@@ -1,6 +1,6 @@
 import pytest
-from app.usecases.train_model import train_model
 from app.repositories.memory import models, save_model
+from app.usecases.siamese.usecase_train_siamese import train_model_siamese
 
 # Réinitialiser la mémoire avant chaque test
 def setup_function():
@@ -9,7 +9,7 @@ def setup_function():
 # Test 1: Vérifier qu'une erreur 404 est levée si le modèle n'existe pas
 def test_train_model_not_found():
     with pytest.raises(Exception) as excinfo:
-        train_model("model1", [["token1", "token2", "token3"]]) # Modèle non existant
+        train_model_siamese("model1", [["token1", "token2", "token3"]]) # Modèle non existant
     
     assert excinfo.value.status_code == 404 # Vérifie que l'erreur est 404
     assert str(excinfo.value.detail) == "Model not found"
@@ -25,7 +25,7 @@ def test_train_model_no_dictionary():
     })
 
     with pytest.raises(Exception) as excinfo:
-        train_model("model1", None)
+        train_model_siamese("model1", None)
     
     assert excinfo.value.status_code == 400
     assert str(excinfo.value.detail) == "No training data provided"
@@ -41,7 +41,7 @@ def test_train_model_empty_dictionary():
     })
 
     with pytest.raises(Exception) as excinfo:
-        train_model("model1", [])
+        train_model_siamese("model1", [])
     
     assert excinfo.value.status_code == 400
     assert str(excinfo.value.detail) == "Training data is empty"
@@ -57,7 +57,7 @@ def test_train_model_success():
     })
 
     # Appeler la fonction avec des données d'entrainement valide
-    response = train_model("model1", [
+    response = train_model_siamese("model1", [
         (["token1", "token2", "token3"], ["token1", "token2", "token3"], 1), 
         (["token1", "token2", "token4"], ["token1", "token2", "token4"], 1), 
         (["token1", "token2", "token5"], ["token1", "token2", "token5"], 1)

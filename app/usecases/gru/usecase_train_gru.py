@@ -1,10 +1,10 @@
-from app.machine_learning.nn_gru import train_gru
 from typing import List, Dict
+from collections import Counter
 from app.services.logger import logger
-from fastapi import HTTPException
+from app.machine_learning.nn_gru import train_gru
+from fastapi import HTTPException  # type: ignore
 from app.repositories.memory import get_model, update_model
 from app.apis.models.gru_training_data import GRUTrainingData
-from collections import Counter
 
 def train_model_gru(name: str, training_data: List[GRUTrainingData]):
     """
