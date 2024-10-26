@@ -1,0 +1,14 @@
+## Fichier : docker-compose.yml
+version: '3.8'
+
+services:
+  vergo_back:
+    image: vergo_back
+    container_name: vergo_back
+    ports:
+      - '3003:3000'
+    restart: always
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    volumes:
+      - ./images:/usr/src/app/images
