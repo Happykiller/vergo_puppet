@@ -166,3 +166,4 @@ best_model.pth
 *.joblib
 puppet-o2_brut.json
 tokenize_regex.json
+*.pkl

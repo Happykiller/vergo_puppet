@@ -1,0 +1,45 @@
+###
+POST {{host}}/create_model
+Content-Type: application/json
+
+{
+  "name": "puppet-o4",
+  "neural_network_type": "LSTM"
+}
+
+###
+POST {{host}}/train_model
+Content-Type: application/json
+
+< ./puppet-o4_train.json
+
+
+###
+POST {{host}}/search
+Content-Type: application/json
+
+{
+  "name": "puppet-o4",
+  "neural_network_type": "LSTM",
+  "vector": {
+    "time": "2023-10-28T12:00:00.000",
+    "dwpt": 10.0,
+    "rhum": 70.0,
+    "prcp": 0.0,
+    "wdir": 180.0,
+    "wspd": 5.0,
+    "pres": 1015.0,
+    "coco": 2
+  }
+}
+
+###
+POST {{host}}/test
+Content-Type: application/json
+
+< ./puppet-o4_test.json
+
+
+###
+GET {{host}}/create_data_puppet-o4
+Content-Type: application/json

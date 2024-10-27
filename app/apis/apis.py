@@ -1,9 +1,15 @@
 from app.apis.models.gru_training_data import GRUTrainingData
+from app.apis.models.weather_data_model import WeatherData, WeatherDataSearch
 from app.apis.models.model_tokenize_data import ModelTokenizeData
 from app.apis.models.simple_nn_search_data import SimpleNNSearchData
+from app.usecases.lstm.usecase_mesure_lstm import mesure_lstm
+from app.usecases.lstm.usecase_search_lstm import search_lstm
+from app.usecases.lstm.usecase_train_lstm import train_lstm
+from app.usecases.lstm.usecase_create_lstm import create_lstm
 from app.usecases.siamese.usecase_create_siamese import create_model_siamese
 from app.usecases.siamese.usecase_search_siamese import search_model_siamese
 from app.usecases.siamese.usecase_train_siamese import train_model_siamese
+from app.usecases.usecase_create_data_puppeto4 import usecase_create_data_puppeto4
 from app.usecases.usecase_tokenize import usecase_tokenize
 from app.usecases.gru.usecase_create_gru import create_model_gru
 from app.usecases.gru.usecase_mesure_gru import mesure_gru
@@ -48,10 +54,10 @@ class TrainModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à entraîner")
     neural_network_type: Optional[str] = Field(description="Type de réseau de neurones ('SimpleNN' ou 'LSTMNN' ou 'SIAMESE')")
     training_data: Union[
-        List[ Tuple[List[str], List[str]] ],
-        List[ Tuple[List[str], List[str], float] ],
-        List[ SimpleNNTrainingData ],
-        List[ GRUTrainingData ]
+        List[ WeatherData ], #lstm
+        List[ Tuple[List[str], List[str], float] ], #siamese
+        List[ SimpleNNTrainingData ], #simple
+        List[ GRUTrainingData ] #GRU
     ] = Field (
         ..., description="Liste de tuples (input, target) | (siamese1, siamese2, target) pour entraîner le modèle"
     )
@@ -74,10 +80,10 @@ class TestModelData(BaseModel):
     name: str = Field(..., description="Nom du modèle à tester")
     neural_network_type: str = Field(..., description="Type de réseau de neurones ('SimpleNN', 'LSTMNN', 'SIAMESE')")
     test_data: Union[
-        List[ Tuple[List[str], List[str]] ],
-        List[ Tuple[List[str], List[str], float] ],
-        List[ SimpleNNTrainingData ],
-        List[ GRUTrainingData ]
+        List[ Tuple[List[str], List[str], float] ], #siamese
+        List[ SimpleNNTrainingData ], #simple
+        List[ GRUTrainingData ], #gru
+        List[ WeatherData ], #lstm
     ] = Field(..., description="Données de test")
 
     def validate_test_data(cls, values):
@@ -99,8 +105,9 @@ class SearchData(BaseModel):
     name: str = Field(..., description="Nom du modèle dans lequel effectuer la recherche")
     neural_network_type: str = Field(..., description="Type de réseau de neurones ('SimpleNN', 'LSTMNN', 'SIAMESE')")
     vector: Union[
-        List[str],
-        SimpleNNSearchData
+        List[str], #SIAMESE #GRU
+        SimpleNNSearchData, #SimpleNN,
+        WeatherDataSearch #LSTM
     ] = Field(..., description="Liste de tokens représentant le vecteur à rechercher")
 
 # Schéma pour la tokenization
@@ -120,6 +127,8 @@ async def create_model_api(data: CreateModelData):
             return create_model_gru(data.name)
         elif (data.neural_network_type == 'SIAMESE') :
             return create_model_siamese(data.name, data.dictionary, data.glossary, data.neural_network_type)
+        if (data.neural_network_type == 'LSTM') :
+            return create_lstm(data.name)
         else:
             raise HTTPException(status_code=500, detail=f"Neural network unkown : {data.neural_network_type}")
     except HTTPException as e:
@@ -142,6 +151,8 @@ async def train_model_api(data: TrainModelData):
             return train_model_gru(data.name, data.training_data)
         elif (data.neural_network_type == 'SIAMESE') :
             return train_model_siamese(data.name, data.training_data)
+        if (data.neural_network_type == 'LSTM') :
+            return train_lstm(data.name, data.training_data)
         else:
             raise HTTPException(status_code=500, detail=f"Neural network unkown : {data.neural_network_type}")
     except HTTPException as e:
@@ -164,6 +175,8 @@ async def search_model_api(data: SearchData):
             return search_model_gru(data.name, data.vector)
         elif (data.neural_network_type == 'SIAMESE') :
             return search_model_siamese(data.name, data.vector)
+        if (data.neural_network_type == 'LSTM') :
+            return search_lstm(data.name, data.vector)
         else :
             raise HTTPException(status_code=500, detail=f"Neural network unkown : {data.neural_network_type}")
     except HTTPException as e:
@@ -186,6 +199,8 @@ async def test(data: TestModelData):
             return mesure_simple_nn(data.name, data.test_data)
         elif (data.neural_network_type == 'GRU') :
             return mesure_gru(data.name, data.test_data)
+        if (data.neural_network_type == 'LSTM') :
+            return mesure_lstm(data.name, data.test_data)
         else :
             raise HTTPException(status_code=400, detail="Model type not supported yet")
     except HTTPException as e:
@@ -224,3 +239,7 @@ async def get_version():
     Retourne la version actuelle de l'application.
     """
     return {"version": __version__}
+
+@router.get("/create_data_puppet-o4")
+async def get_version():
+    return usecase_create_data_puppeto4()

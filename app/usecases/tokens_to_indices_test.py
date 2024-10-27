@@ -1,5 +1,4 @@
 import pytest
-from typing import List, Optional
 
 # Importer la fonction que nous voulons tester
 from app.usecases.tokens_to_indices import tokens_to_indices

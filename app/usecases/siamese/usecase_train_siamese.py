@@ -1,8 +1,6 @@
 from app.commons.commons import create_glossary_from_training_data
 from app.machine_learning.neural_network_siamese import train_siamese_model_nn
 from app.repositories.memory import get_model, update_model
-from app.machine_learning.neural_network_simple import train_model_nn
-from app.machine_learning.neural_network_lstm import train_lstm_model_nn
 from app.usecases.tokens_to_indices import tokens_to_indices
 from fastapi import HTTPException  # type: ignore
 from typing import List, Tuple
@@ -34,54 +32,19 @@ def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str
     logger.info(f"Type de machine learning utilisé pour l'entrainement {neural_network_type}")
 
     # Entraîner le réseau de neurones en fonction du type de modèle
-    if neural_network_type == "SimpleNN":
-        # Trouver la taille maximale des vecteurs dans le dictionnaire
-        max_dictionary_size = max(len(vector) for vector in indexed_dictionary)
+    training_glossary = create_glossary_from_training_data(training_data)
+    training_word2idx = {word: idx for idx, word in enumerate(training_glossary)}
+    
+    transformed_data = []
+    for source_tokens, target_tokens, score in training_data:
+        source_indices = tokens_to_indices(source_tokens, training_word2idx)
+        target_indices = tokens_to_indices(target_tokens, training_word2idx)
+        transformed_data.append((source_indices, target_indices, score))
 
-        # Transformer chaque paire de tokens en indices
-        indexed_training_data = [
-            (tokens_to_indices(input_seq, model["glossary"]), tokens_to_indices(target_seq, model["glossary"]))
-            for input_seq, target_seq in training_data
-        ]
-
-        # Trouver la taille maximale des vecteurs
-        max_input_size = max(len(pair[0]) for pair in indexed_training_data)
-        max_target_size = max(len(pair[1]) for pair in indexed_training_data)
-        max_size = max(max_input_size, max_target_size, max_dictionary_size)
-
-        nn_model, _ = train_model_nn(indexed_training_data, max_size)
-    elif neural_network_type == "LSTMNN":
-        # Trouver la taille maximale des vecteurs dans le dictionnaire
-        max_dictionary_size = max(len(vector) for vector in indexed_dictionary)
-
-        # Transformer chaque paire de tokens en indices
-        indexed_training_data = [
-            (tokens_to_indices(input_seq, model["glossary"]), tokens_to_indices(target_seq, model["glossary"]))
-            for input_seq, target_seq in training_data
-        ]
-
-        # Trouver la taille maximale des vecteurs
-        max_input_size = max(len(pair[0]) for pair in indexed_training_data)
-        max_target_size = max(len(pair[1]) for pair in indexed_training_data)
-        max_size = max(max_input_size, max_target_size, max_dictionary_size)
-
-        nn_model, _ = train_lstm_model_nn(indexed_training_data, max_size)
-    elif neural_network_type == "SIAMESE":
-        training_glossary = create_glossary_from_training_data(training_data)
-        training_word2idx = {word: idx for idx, word in enumerate(training_glossary)}
-       
-        transformed_data = []
-        for source_tokens, target_tokens, score in training_data:
-            source_indices = tokens_to_indices(source_tokens, training_word2idx)
-            target_indices = tokens_to_indices(target_tokens, training_word2idx)
-            transformed_data.append((source_indices, target_indices, score))
-
-        vocab_size = len(model["glossary"])+1
-        
-        # Entraîner le modèle
-        nn_model, _ = train_siamese_model_nn(transformed_data, vocab_size)
-    else:
-        raise HTTPException(status_code=400, detail="Invalid model type")
+    vocab_size = len(model["glossary"])+1
+    
+    # Entraîner le modèle
+    nn_model, _ = train_siamese_model_nn(transformed_data, vocab_size)
 
     # Enregistrer le modèle de réseau de neurones entraîné
     update_model(name, {"nn_model": nn_model})

@@ -4,3 +4,5 @@ pydantic
 torch
 httpx
 numpy
+meteostat 
+pandas
