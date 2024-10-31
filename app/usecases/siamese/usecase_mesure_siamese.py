@@ -3,6 +3,7 @@ from app.machine_learning.neural_network_siamese import evaluate_similarity
 from app.repositories.memory import get_model
 from app.services.logger import logger
 from app.usecases.tokens_to_indices import tokens_to_indices
+from fastapi import HTTPException # type: ignore
 
 def mesure_siamese(name, test_data):
     try:
@@ -10,8 +11,15 @@ def mesure_siamese(name, test_data):
         correct_predictions = 0
         total_tests = len(test_data)
         model = get_model(name)
+        if not model:
+            raise Exception("Model not found")
+
         glossary = model.get("glossary", [])
         nn_model = model.get("nn_model", None)
+        if not nn_model:
+            raise Exception("Model not completed")
+
+
         word2idx = create_indexed_glossary(glossary)
         for vector1, vector2, expected_similarity in test_data:
             vector1_indices = tokens_to_indices(vector1, word2idx)

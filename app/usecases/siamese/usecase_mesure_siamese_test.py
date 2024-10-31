@@ -10,6 +10,7 @@ from app.usecases.siamese.usecase_mesure_siamese import mesure_siamese
 def test_mesure_siamese_success(mock_logger, mock_get_model, mock_create_indexed_glossary, mock_evaluate_similarity):
     # Mock des données du modèle
     mock_get_model.return_value = {
+        "name": "test_siamese_model",
         "nn_model": MagicMock(),
         "glossary": ["dog", "cat", "bird"]
     }
@@ -40,11 +41,11 @@ def test_mesure_siamese_model_not_found(mock_logger, mock_get_model):
     test_data = [(["dog"], ["cat"], 0.5)]
     
     # Vérifier qu'une exception est levée si le modèle est introuvable
-    with pytest.raises(Exception, match="Modèle non trouvé"):
+    with pytest.raises(Exception, match="Model not found"):
         mesure_siamese("unknown_model", test_data)
     
     # Vérifier que l'erreur a été loggée
-    mock_logger.error.assert_called_once_with("Une erreur s'est produite pendant test_siamese : Modèle non trouvé")
+    mock_logger.error.assert_called_once_with("Une erreur s'est produite pendant test_siamese : Model not found")
 
 # Test 3 : Erreur si le modèle ne contient pas de nn_model ou de glossaire
 @patch('app.usecases.siamese.usecase_mesure_siamese.get_model', return_value={"glossary": ["dog", "cat", "bird"]})
@@ -54,11 +55,11 @@ def test_mesure_siamese_incomplete_model_data(mock_logger, mock_get_model):
     test_data = [(["dog"], ["cat"], 0.5)]
     
     # Vérifier qu'une exception est levée si nn_model est manquant
-    with pytest.raises(Exception, match="Données du modèle incomplètes"):
+    with pytest.raises(Exception, match="Model not completed"):
         mesure_siamese("test_siamese_model", test_data)
     
     # Vérifier que l'erreur a été loggée
-    mock_logger.error.assert_called_once_with("Une erreur s'est produite pendant test_siamese : Données du modèle incomplètes")
+    mock_logger.error.assert_called_once_with("Une erreur s'est produite pendant test_siamese : Model not completed")
 
 # Test 4 : Log des détails de la prédiction
 @patch('app.usecases.siamese.usecase_mesure_siamese.evaluate_similarity')

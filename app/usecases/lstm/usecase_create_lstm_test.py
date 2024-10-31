@@ -4,8 +4,8 @@ from fastapi import HTTPException  # type: ignore
 from app.usecases.lstm.usecase_create_lstm import create_lstm
 
 # Test lorsque le modèle est créé avec succès
-@patch('app.usecases.lstm.create_model_lstm.save_model')
-@patch('app.usecases.lstm.create_model_lstm.model_exists', return_value=False)  # Simuler que le modèle n'existe pas
+@patch('app.usecases.lstm.usecase_create_lstm.save_model')
+@patch('app.usecases.lstm.usecase_create_lstm.model_exists', return_value=False)  # Simuler que le modèle n'existe pas
 def test_create_lstm_success(mock_model_exists, mock_save_model):
     model_name = "test_model"
     
@@ -13,13 +13,13 @@ def test_create_lstm_success(mock_model_exists, mock_save_model):
     response = create_lstm(model_name)
     
     # Vérifier que la fonction save_model a bien été appelée
-    mock_save_model.assert_called_once_with(model_name, {"neural_network_type": "SimpleNN"})
+    mock_save_model.assert_called_once_with(model_name, {"neural_network_type": "LSTM"})
     
     # Vérifier la réponse
     assert response == {"status": "model created", "model_name": model_name}
 
 # Test lorsque le modèle existe déjà
-@patch('app.usecases.lstm.create_model_lstm.model_exists', return_value=True)  # Simuler que le modèle existe déjà
+@patch('app.usecases.lstm.usecase_create_lstm.model_exists', return_value=True)  # Simuler que le modèle existe déjà
 def test_create_lstm_model_already_exists(mock_model_exists):
     model_name = "existing_model"
     
@@ -32,8 +32,8 @@ def test_create_lstm_model_already_exists(mock_model_exists):
     assert exc_info.value.detail == "Model already exists"
 
 # Test lorsque le modèle est sauvegardé avec les bonnes données
-@patch('app.usecases.lstm.create_model_lstm.model_exists', return_value=False)  # Simuler que le modèle n'existe pas
-@patch('app.usecases.lstm.create_model_lstm.save_model')  # Simuler l'enregistrement du modèle
+@patch('app.usecases.lstm.usecase_create_lstm.model_exists', return_value=False)  # Simuler que le modèle n'existe pas
+@patch('app.usecases.lstm.usecase_create_lstm.save_model')  # Simuler l'enregistrement du modèle
 def test_create_lstm_save_called_with_correct_data(mock_save_model, mock_model_exists):
     model_name = "new_model"
     
@@ -42,7 +42,7 @@ def test_create_lstm_save_called_with_correct_data(mock_save_model, mock_model_e
     
     # Vérifier que save_model a été appelé avec les bons arguments
     expected_model_data = {
-        "neural_network_type": "SimpleNN"
+        "neural_network_type": "LSTM"
     }
     mock_save_model.assert_called_once_with(model_name, expected_model_data)
     

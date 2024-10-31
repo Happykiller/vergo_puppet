@@ -14,11 +14,11 @@ dictionary = [
 glossary = ["token1", "token2", "token3", "token4", "token5"]
 search_vector = ["token1", "token2", "token3"]
 training_data = [
-    [["token1", "token2", "token3"], ["token2", "token3", "token4"]],
-    [["token1", "token2", "token4"], ["token2", "token4", "token5"]],
-    [["token1", "token4"], ["token4", "token5"]],
-    [["token1", "token2", "token5"], ["token2", "token5", "token1"]],
-    [["token1", "token2", "token3", "token4"], ["token2", "token3", "token4", "token5"]]
+    [["token1", "token2", "token3"], ["token2", "token3", "token4"], 0.66],
+    [["token1", "token2", "token4"], ["token2", "token4", "token5"], 0.33],
+    [["token1", "token4"], ["token4", "token5"], 0],
+    [["token1", "token2", "token5"], ["token2", "token5", "token1"], 0.5],
+    [["token1", "token2", "token3", "token4"], ["token2", "token3", "token4", "token5"], 0.75]
 ]
 
 # Test de l'API de création de modèle
