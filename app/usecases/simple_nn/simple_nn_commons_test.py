@@ -1,15 +1,15 @@
 import pytest
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
-from app.apis.models.simple_nn_training_data import SimpleNNTrainingData
+from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 from app.usecases.simple_nn.simple_nn_commons import process_input_data, transform_data
 
 # Test de la fonction transform_data
 def test_transform_data():
-    # Données d'exemple pour les tests, ajustées avec des entiers comme attendu par SimpleNNTrainingData
+    # Données d'exemple pour les tests, ajustées avec des entiers comme attendu par SimpleNNTrainingModelData
     training_data = [
-        SimpleNNTrainingData(type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, orientation=1, transports=1, neighborhood=8, price=350000),
-        SimpleNNTrainingData(type=2, surface=150, pieces=5, floor=0, parking=2, balcon=1, ascenseur=0, orientation=2, transports=0, neighborhood=5, price=550000)
+        SimpleNNTrainingModelData(type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, orientation=1, transports=1, neighborhood=8, price=350000),
+        SimpleNNTrainingModelData(type=2, surface=150, pieces=5, floor=0, parking=2, balcon=1, ascenseur=0, orientation=2, transports=0, neighborhood=5, price=550000)
     ]
     
     # Exécution de la transformation

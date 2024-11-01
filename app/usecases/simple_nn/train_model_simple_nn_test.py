@@ -1,6 +1,6 @@
 import pytest
 from unittest.mock import patch, MagicMock
-from app.apis.models.simple_nn_training_data import SimpleNNTrainingData
+from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 from app.usecases.simple_nn.train_model_simple_nn import train_model_simple_nn
 
 # Test du bon déroulement de l'entraînement
@@ -30,8 +30,8 @@ def test_train_model_simple_nn_success(mock_get_model, mock_transform_data, mock
 
     # Créer des données de test
     training_data = [
-        SimpleNNTrainingData(type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, orientation=1, transports=1, neighborhood=8, price=350000),
-        SimpleNNTrainingData(type=2, surface=100, pieces=4, floor=1, parking=1, balcon=1, ascenseur=0, orientation=2, transports=2, neighborhood=6, price=450000)
+        SimpleNNTrainingModelData(type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, orientation=1, transports=1, neighborhood=8, price=350000),
+        SimpleNNTrainingModelData(type=2, surface=100, pieces=4, floor=1, parking=1, balcon=1, ascenseur=0, orientation=2, transports=2, neighborhood=6, price=450000)
     ]
 
     # Appeler la fonction train_model_simple_nn
@@ -50,7 +50,7 @@ def test_train_model_simple_nn_success(mock_get_model, mock_transform_data, mock
 @patch('app.usecases.simple_nn.train_model_simple_nn.get_model', return_value=None)
 def test_train_model_simple_nn_model_not_found(mock_get_model):
     training_data = [
-        SimpleNNTrainingData(type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, orientation=1, transports=1, neighborhood=8, price=350000)
+        SimpleNNTrainingModelData(type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, orientation=1, transports=1, neighborhood=8, price=350000)
     ]
 
     # Vérifier qu'une exception est levée si le modèle est introuvable

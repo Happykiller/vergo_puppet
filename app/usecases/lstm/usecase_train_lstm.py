@@ -2,14 +2,14 @@ import joblib
 import numpy as np
 import pandas as pd
 from typing import List
-from app.apis.models.weather_data import WeatherData
+from app.apis.models.weather_model_data import WeatherModelData
 from app.machine_learning.nn_lstm import train_nn_lstm
 from app.services.logger import logger
 from app.usecases.lstm.usecase_commons_lstm import prepare_sequences, preprocess_data
 from fastapi import HTTPException  # type: ignore
 from app.repositories.memory import get_model, update_model
 
-def train_lstm(name: str, training_data: List[WeatherData]):
+def train_lstm(name: str, training_data: List[WeatherModelData]):
     """
     Entraîne le modèle avec des données d'entraînement fournies.
     :param name: Nom du modèle

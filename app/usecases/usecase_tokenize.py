@@ -3,8 +3,7 @@ import json
 import spacy
 from typing import List
 
-from app.usecases.gru.usecase_mesure_gru import logger
-from app.apis.models.model_tokenize_data import ModelTokenizeData
+from app.apis.models.tokenize_model_data import ModelTokenizeData
 
 # Charger le modèle français
 nlp = spacy.load("fr_core_news_md")

@@ -1,9 +1,9 @@
+import json
 import pytest
 import tempfile
-import json
 from unittest.mock import patch, MagicMock
 from app.usecases.usecase_tokenize import usecase_tokenize
-from app.apis.models.model_tokenize_data import ModelTokenizeData
+from app.apis.models.tokenize_model_data import ModelTokenizeData
 
 # Données de test pour la fonction
 test_data = [

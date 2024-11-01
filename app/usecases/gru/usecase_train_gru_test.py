@@ -1,7 +1,7 @@
 import pytest
 from fastapi import HTTPException  # type: ignore
 from unittest.mock import patch, MagicMock
-from app.apis.models.gru_training_data import GRUTrainingData
+from app.apis.models.gru_training_model_data import GRUTrainingModelData
 from app.usecases.gru.usecase_train_gru import train_model_gru
 
 # Test du bon déroulement de l'entraînement
@@ -27,8 +27,8 @@ def test_train_model_gru_success(mock_get_model, mock_build_vocab, mock_build_ca
 
     # Créer des données d'entraînement pour les tests
     training_data = [
-        GRUTrainingData(category="cat1", tokens=["hello", "world"]),
-        GRUTrainingData(category="cat2", tokens=["another", "sentence"])
+        GRUTrainingModelData(category="cat1", tokens=["hello", "world"]),
+        GRUTrainingModelData(category="cat2", tokens=["another", "sentence"])
     ]
 
     # Appeler la fonction train_model_gru
@@ -45,7 +45,7 @@ def test_train_model_gru_success(mock_get_model, mock_build_vocab, mock_build_ca
 def test_train_model_gru_model_not_found(mock_get_model):
     # Créer des données d'entraînement pour le test
     training_data = [
-        GRUTrainingData(category="cat1", tokens=["hello", "world"])
+        GRUTrainingModelData(category="cat1", tokens=["hello", "world"])
     ]
 
     # Vérifier qu'une exception est levée si le modèle est introuvable

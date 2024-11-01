@@ -1,13 +1,13 @@
+import joblib
 import numpy as np
 import pandas as pd
-from app.apis.models.weather_data import WeatherDataSearch
 from app.repositories.memory import get_model
-from app.machine_learning.nn_lstm import predict_nn_lstm
-from app.usecases.lstm.usecase_commons_lstm import inverse_transform_predictions, preprocess_input_data
 from fastapi import HTTPException # type: ignore
-import joblib
+from app.machine_learning.nn_lstm import predict_nn_lstm
+from app.apis.models.weather_model_data import WeatherSearchModelData
+from app.usecases.lstm.usecase_commons_lstm import inverse_transform_predictions, preprocess_input_data
 
-def search_lstm(name: str, input_data: WeatherDataSearch):
+def search_lstm(name: str, input_data: WeatherSearchModelData):
     """
     Utilise le modèle LSTM pour prédire la température à partir des données fournies.
     :param name: Nom du modèle

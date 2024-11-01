@@ -3,9 +3,9 @@ from app.services.logger import logger
 from app.repositories.memory import get_model
 from app.machine_learning.nn_gru import predict
 from app.usecases.gru.usecase_commons_gru import process_input
-from app.apis.models.gru_training_data import GRUTrainingData
+from app.apis.models.gru_training_model_data import GRUTrainingModelData
 
-def mesure_gru(name: str, test_data: List[GRUTrainingData]):
+def mesure_gru(name: str, test_data: List[GRUTrainingModelData]):
     """
     Mesure les performances du modèle GRU sur les données de test fournies.
     :param name: Nom du modèle.

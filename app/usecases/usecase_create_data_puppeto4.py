@@ -1,5 +1,4 @@
 from datetime import datetime
-import pandas as pd
 from meteostat import Point, Hourly  # type: ignore
 
 def usecase_create_data_puppeto4():

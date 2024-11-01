@@ -4,9 +4,9 @@ from app.services.logger import logger
 from app.machine_learning.nn_gru import train_gru
 from fastapi import HTTPException  # type: ignore
 from app.repositories.memory import get_model, update_model
-from app.apis.models.gru_training_data import GRUTrainingData
+from app.apis.models.gru_training_model_data import GRUTrainingModelData
 
-def train_model_gru(name: str, training_data: List[GRUTrainingData]):
+def train_model_gru(name: str, training_data: List[GRUTrainingModelData]):
     """
     Entraîne le modèle GRU avec les données d'entraînement fournies.
     :param name: Nom du modèle.
@@ -75,7 +75,7 @@ def train_model_gru(name: str, training_data: List[GRUTrainingData]):
     
     return {"status": "Entraînement terminé", "model_name": name}
 
-def build_vocab(training_data: List[GRUTrainingData]):
+def build_vocab(training_data: List[GRUTrainingModelData]):
     """
     Construit le vocabulaire à partir des données d'entraînement.
     :param training_data: Liste des données d'entraînement.
@@ -89,7 +89,7 @@ def build_vocab(training_data: List[GRUTrainingData]):
     idx2word = {idx: word for word, idx in word2idx.items()}
     return word2idx, idx2word
 
-def build_category_mapping(training_data: List[GRUTrainingData]):
+def build_category_mapping(training_data: List[GRUTrainingModelData]):
     """
     Construit le mapping entre les catégories et les indices.
     :param training_data: Liste des données d'entraînement.
@@ -100,7 +100,7 @@ def build_category_mapping(training_data: List[GRUTrainingData]):
     idx2category = {idx: category for category, idx in category2idx.items()}
     return category2idx, idx2category
 
-def prepare_sequences(training_data: List[GRUTrainingData], word2idx: Dict[str, int], category2idx: Dict[str, int], max_seq_length: int):
+def prepare_sequences(training_data: List[GRUTrainingModelData], word2idx: Dict[str, int], category2idx: Dict[str, int], max_seq_length: int):
     """
     Prépare les séquences et les labels pour l'entraînement.
     :param training_data: Liste des données d'entraînement.

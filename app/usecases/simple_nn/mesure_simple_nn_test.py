@@ -2,7 +2,7 @@ import pytest
 from unittest.mock import patch, MagicMock
 from fastapi import HTTPException  # type: ignore
 from app.usecases.simple_nn.mesure_simple_nn import mesure_simple_nn
-from app.apis.models.simple_nn_training_data import SimpleNNTrainingData
+from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 
 # Test du bon fonctionnement de mesure_simple_nn avec des données de test valides
 @patch('app.usecases.simple_nn.mesure_simple_nn.predict')
@@ -36,7 +36,7 @@ def test_mesure_simple_nn_success(mock_get_model, mock_joblib_load, mock_process
 
     # Préparer les données de test
     test_data = [
-        SimpleNNTrainingData(
+        SimpleNNTrainingModelData(
             type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, 
             orientation=1, transports=1, neighborhood=8, price=360000
         )
@@ -56,7 +56,7 @@ def test_mesure_simple_nn_model_not_trained(mock_get_model):
 
     # Préparer les données de test
     test_data = [
-        SimpleNNTrainingData(
+        SimpleNNTrainingModelData(
             type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, 
             orientation=1, transports=1, neighborhood=8, price=360000
         )
@@ -79,7 +79,7 @@ def test_mesure_simple_nn_missing_files(mock_get_model):
 
     # Préparer les données de test
     test_data = [
-        SimpleNNTrainingData(
+        SimpleNNTrainingModelData(
             type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, 
             orientation=1, transports=1, neighborhood=8, price=360000
         )
@@ -112,7 +112,7 @@ def test_mesure_simple_nn_missing_normalization_parameters(mock_joblib_load, moc
 
     # Préparer les données de test
     test_data = [
-        SimpleNNTrainingData(
+        SimpleNNTrainingModelData(
             type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, 
             orientation=1, transports=1, neighborhood=8, price=360000
         )

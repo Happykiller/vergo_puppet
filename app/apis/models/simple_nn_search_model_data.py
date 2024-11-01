@@ -1,6 +1,6 @@
 from pydantic import BaseModel, Field
 
-class SimpleNNSearchData(BaseModel):
+class SimpleNNSearchModelData(BaseModel):
     type: int = Field(..., description="Type de la propriété")
     surface: int = Field(..., description="Surface de la propriété en m²")
     pieces: int = Field(..., description="Nombre de pièces")

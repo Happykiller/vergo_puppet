@@ -29,7 +29,7 @@ class WeatherCode(IntEnum):
     OTHER7 = 22 # Autre
     OTHER8 = 23 # Autre
 
-class WeatherData(BaseModel):
+class WeatherModelData(BaseModel):
     time: datetime = Field(..., description="Horodatage de l'observation")
     temp: Optional[float] = Field(None, description="Température en degrés Celsius")
     dwpt: Optional[float] = Field(None, description="Point de rosée en degrés Celsius")
@@ -43,7 +43,7 @@ class WeatherData(BaseModel):
     tsun: Optional[float] = Field(None, description="Durée totale d'ensoleillement en minutes")
     coco: Optional[WeatherCode] = Field(None, description="Code de condition météorologique")
 
-class WeatherDataSearch(BaseModel):
+class WeatherSearchModelData(BaseModel):
     time: datetime = Field(..., description="Horodatage de l'observation")
     dwpt: Optional[float] = Field(None, description="Point de rosée en degrés Celsius")
     rhum: Optional[float] = Field(None, description="Humidité relative en pourcentage")

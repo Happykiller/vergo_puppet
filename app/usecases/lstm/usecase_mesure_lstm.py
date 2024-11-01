@@ -3,14 +3,14 @@ import numpy as np
 from app.services.logger import logger
 from app.repositories.memory import get_model
 from app.machine_learning.nn_lstm import predict_nn_lstm
-from app.apis.models.weather_data import WeatherData
+from app.apis.models.weather_model_data import WeatherModelData
 from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error
 from app.usecases.lstm.usecase_commons_lstm import inverse_transform_predictions, preprocess_input_data
 from typing import List
 import pandas as pd
 
 
-def mesure_lstm(name: str, test_data: List[WeatherData]):
+def mesure_lstm(name: str, test_data: List[WeatherModelData]):
     try:
         # Vérifier que le modèle existe
         model = get_model(name)

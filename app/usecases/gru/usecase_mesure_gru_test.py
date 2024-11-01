@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from app.usecases.gru.usecase_mesure_gru import mesure_gru
-from app.apis.models.gru_training_data import GRUTrainingData
+from app.apis.models.gru_training_model_data import GRUTrainingModelData
 
 # Test du succès de la mesure des performances
 @patch('app.usecases.gru.usecase_mesure_gru.logger')
@@ -25,8 +25,8 @@ def test_mesure_gru_success(mock_get_model, mock_process_input, mock_predict, mo
     
     # Créer des données de test
     test_data = [
-        GRUTrainingData(category="cat1", tokens=["hello"]),
-        GRUTrainingData(category="cat2", tokens=["hello", "world"])
+        GRUTrainingModelData(category="cat1", tokens=["hello"]),
+        GRUTrainingModelData(category="cat2", tokens=["hello", "world"])
     ]
 
     # Appeler la fonction mesure_gru
@@ -41,12 +41,11 @@ def test_mesure_gru_success(mock_get_model, mock_process_input, mock_predict, mo
 @patch('app.usecases.gru.usecase_mesure_gru.logger')
 def test_mesure_gru_model_not_trained(mock_logger, mock_get_model):
     # Créer des données de test
-    test_data = [GRUTrainingData(category="cat1", tokens=["hello"])]
+    test_data = [GRUTrainingModelData(category="cat1", tokens=["hello"])]
 
     # Vérifier qu'une exception est levée si le modèle n'est pas entraîné
     with pytest.raises(Exception, match="Modèle non entraîné"):
         mesure_gru("test_gru_model", test_data)
-    
     # Vérifier que l'erreur a été loggée
     mock_logger.error.assert_called_once_with("Une erreur s'est produite pendant la mesure : Modèle non entraîné")
 
@@ -55,7 +54,7 @@ def test_mesure_gru_model_not_trained(mock_logger, mock_get_model):
 @patch('app.usecases.gru.usecase_mesure_gru.logger')
 def test_mesure_gru_incomplete_model_data(mock_logger, mock_get_model):
     # Créer des données de test
-    test_data = [GRUTrainingData(category="cat1", tokens=["hello"])]
+    test_data = [GRUTrainingModelData(category="cat1", tokens=["hello"])]
 
     # Vérifier qu'une exception est levée si les données du modèle sont incomplètes
     with pytest.raises(Exception, match="Données du modèle incomplètes"):
@@ -84,8 +83,8 @@ def test_mesure_gru_unknown_category_in_test_data(mock_get_model, mock_process_i
 
     # Créer des données de test avec une catégorie inconnue
     test_data = [
-        GRUTrainingData(category="cat1", tokens=["hello"]),
-        GRUTrainingData(category="unknown_cat", tokens=["world"])
+        GRUTrainingModelData(category="cat1", tokens=["hello"]),
+        GRUTrainingModelData(category="unknown_cat", tokens=["world"])
     ]
 
     # Appeler la fonction mesure_gru

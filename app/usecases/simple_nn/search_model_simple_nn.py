@@ -2,10 +2,10 @@ import joblib
 from app.repositories.memory import get_model
 from fastapi import HTTPException # type: ignore
 from app.machine_learning.neural_network_simple import predict
-from app.apis.models.simple_nn_search_data import SimpleNNSearchData
+from app.apis.models.simple_nn_search_model_data import SimpleNNSearchModelData
 from app.usecases.simple_nn.simple_nn_commons import process_input_data
 
-def search_model_simple_nn(name: str, search: SimpleNNSearchData):
+def search_model_simple_nn(name: str, search: SimpleNNSearchModelData):
     model = get_model(name)
     
     if model is None or not model:

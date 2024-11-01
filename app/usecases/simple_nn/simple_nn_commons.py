@@ -1,4 +1,4 @@
-from app.apis.models.simple_nn_training_data import SimpleNNTrainingData
+from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 from fastapi import HTTPException  # type: ignore
 from typing import List, Tuple
 from app.services.logger import logger
@@ -33,7 +33,7 @@ def process_input_data(input_data, encoder, scaler, categorical_indices, numeric
     
     return input_processed
 
-def transform_data(training_data: List[SimpleNNTrainingData]):
+def transform_data(training_data: List[SimpleNNTrainingModelData]):
     """
     Transforme les données d'entraînement en features et targets, avec encodage One-Hot pour les variables catégorielles.
     """

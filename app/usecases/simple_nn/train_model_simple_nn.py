@@ -5,9 +5,9 @@ from fastapi import HTTPException  # type: ignore
 from app.repositories.memory import get_model, update_model
 from app.usecases.simple_nn.simple_nn_commons import transform_data
 from app.machine_learning.neural_network_simple import train_model_nn
-from app.apis.models.simple_nn_training_data import SimpleNNTrainingData
+from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 
-def train_model_simple_nn(name: str, training_data: List[SimpleNNTrainingData]):
+def train_model_simple_nn(name: str, training_data: List[SimpleNNTrainingModelData]):
     """
     Entraîne le modèle avec des données d'entraînement fournies.
     :param name: Nom du modèle

@@ -1,7 +1,7 @@
 import pytest
 from unittest.mock import patch, MagicMock
 from fastapi import HTTPException  # type: ignore
-from app.apis.models.simple_nn_search_data import SimpleNNSearchData
+from app.apis.models.simple_nn_search_model_data import SimpleNNSearchModelData
 from app.usecases.simple_nn.search_model_simple_nn import search_model_simple_nn
 
 # Test du bon déroulement de la recherche avec un modèle SimpleNN
@@ -30,7 +30,7 @@ def test_search_model_simple_nn_success(mock_get_model, mock_predict, mock_jobli
     mock_predict.return_value = 350000
 
     # Créer des données de recherche fictives
-    search_data = SimpleNNSearchData(
+    search_data = SimpleNNSearchModelData(
         type=1,
         surface=100,
         pieces=4,
@@ -55,7 +55,7 @@ def test_search_model_simple_nn_success(mock_get_model, mock_predict, mock_jobli
 # Test lorsque le modèle est introuvable
 @patch('app.usecases.simple_nn.search_model_simple_nn.get_model', return_value=None)
 def test_search_model_simple_nn_model_not_found(mock_get_model):
-    search_data = SimpleNNSearchData(
+    search_data = SimpleNNSearchModelData(
         type=1,
         surface=100,
         pieces=4,
@@ -89,7 +89,7 @@ def test_search_model_simple_nn_model_not_trained(mock_get_model):
         "targets_std": 0.2
     }
 
-    search_data = SimpleNNSearchData(
+    search_data = SimpleNNSearchModelData(
         type=1,
         surface=100,
         pieces=4,
@@ -123,7 +123,7 @@ def test_search_model_simple_nn_missing_files(mock_get_model):
         "targets_std": 0.2
     }
 
-    search_data = SimpleNNSearchData(
+    search_data = SimpleNNSearchModelData(
         type=1,
         surface=100,
         pieces=4,
@@ -166,7 +166,7 @@ def test_search_model_simple_nn_missing_normalization_parameters(mock_get_model,
     ]
 
     # Créer les données de recherche fictives
-    search_data = SimpleNNSearchData(
+    search_data = SimpleNNSearchModelData(
         type=1,
         surface=100,
         pieces=4,
