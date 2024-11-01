@@ -97,7 +97,7 @@ def train_gru(vocab_size, num_classes, sequences, labels):
             total_loss += loss.item()
         avg_loss = total_loss / len(dataloader)
         losses.append(avg_loss)
-        logger.info(f"Époque {epoch+1}/{num_epochs}, Perte moyenne: {avg_loss:.4f}")
+        logger.debug(f"Époque {epoch+1}/{num_epochs}, Perte moyenne: {avg_loss:.4f}")
         
         # Vérification de l'amélioration
         if avg_loss < best_loss:

@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-from app.apis.models.weather_data_model import WeatherDataSearch
+from app.apis.models.weather_data import WeatherDataSearch
 from app.repositories.memory import get_model
 from app.machine_learning.nn_lstm import predict_nn_lstm
 from app.usecases.lstm.usecase_commons_lstm import inverse_transform_predictions, preprocess_input_data

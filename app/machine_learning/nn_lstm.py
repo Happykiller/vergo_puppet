@@ -60,7 +60,7 @@ def train_nn_lstm(X_train, y_train, epochs=20, learning_rate=0.001, patience=10)
             patience_counter += 1
         
         if (epoch + 1) % 5 == 0:
-            logger.info(f"Époque {epoch+1}/{epochs}, Perte: {loss.item():.6f}")
+            logger.debug(f"Époque {epoch+1}/{epochs}, Perte: {loss.item():.6f}")
 
         # Vérification de la patience
         if patience_counter >= patience:

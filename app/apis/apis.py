@@ -1,5 +1,5 @@
 from app.apis.models.gru_training_data import GRUTrainingData
-from app.apis.models.weather_data_model import WeatherData, WeatherDataSearch
+from app.apis.models.weather_data import WeatherData, WeatherDataSearch
 from app.apis.models.model_tokenize_data import ModelTokenizeData
 from app.apis.models.simple_nn_search_data import SimpleNNSearchData
 from app.usecases.lstm.usecase_mesure_lstm import mesure_lstm

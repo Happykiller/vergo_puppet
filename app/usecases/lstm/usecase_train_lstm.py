@@ -2,7 +2,7 @@ import joblib
 import numpy as np
 import pandas as pd
 from typing import List
-from app.apis.models.weather_data_model import WeatherData
+from app.apis.models.weather_data import WeatherData
 from app.machine_learning.nn_lstm import train_nn_lstm
 from app.services.logger import logger
 from app.usecases.lstm.usecase_commons_lstm import prepare_sequences, preprocess_data

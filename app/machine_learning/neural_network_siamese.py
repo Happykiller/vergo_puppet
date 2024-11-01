@@ -178,7 +178,7 @@ def train_siamese_model_nn(
         # Calcul de la perte moyenne pour l'époque
         avg_loss = total_loss / len(train_loader)
         losses.append(avg_loss)  # Ajout de la perte moyenne à la liste des pertes
-        logger.info(f"Époque {epoch+1}/{num_epochs}, Perte moyenne : {avg_loss:.4f}")
+        logger.debug(f"Époque {epoch+1}/{num_epochs}, Perte moyenne : {avg_loss:.4f}")
 
         # Vérification pour l'early stopping
         if avg_loss < best_loss:

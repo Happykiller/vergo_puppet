@@ -6,3 +6,4 @@ httpx
 numpy
 meteostat 
 pandas
+spacy

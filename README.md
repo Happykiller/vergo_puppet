@@ -20,10 +20,9 @@ pip install --no-cache-dir --upgrade pip && \
   pip install --no-cache-dir -r requirements.txt
 ```
 
-Install spacy
+Install spacy dependencies
 
 ```sh
-python3 -m pip install spacy
 python3 -m spacy download fr_core_news_md
 ```
 

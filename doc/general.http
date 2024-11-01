@@ -1,0 +1,7 @@
+###
+GET {{host}}/models
+Content-Type: application/json
+
+###
+GET {{host}}/version
+Content-Type: application/json
