@@ -1,110 +1,111 @@
+#app\usecases\siamese\usecase_create_siamese_test.py
 import pytest
 from app.repositories.memory import models
 from fastapi import HTTPException  # type: ignore
 from app.usecases.siamese.usecase_create_siamese import create_model_siamese
 
 def setup_function():
-    """Réinitialise la mémoire avant chaque test"""
+    """Reset the memory before each test."""
     models.clear()
 
-# Test de création d'un modèle avec succès
+# Test for successful model creation
 def test_create_model_siamese_success():
-    # Teste la création d'un modèle avec un dictionnaire et un glossaire valides
+    # Test creating a model with a valid dictionary and glossary
     result = create_model_siamese("model1", [["token1", "token2"], ["token1", "token3"]], ["token1", "token2", "token3"])
     
-    # Vérifie que le résultat est comme attendu
+    # Verify the result is as expected
     assert result == {"status": "model created", "model_name": "model1"}
     
-    # Vérifie que le modèle a bien été enregistré dans la mémoire
+    # Verify the model was saved in memory
     assert "model1" in models
     
-    # Vérifie que le dictionnaire original est enregistré correctement
+    # Verify the original dictionary is saved correctly
     assert models["model1"]["dictionary"] == [["token1", "token2"], ["token1", "token3"]]
     
-    # Vérifie que le dictionnaire indexé a été correctement généré
+    # Verify the indexed dictionary was generated correctly
     assert models["model1"]["indexed_dictionary"] == [[2, 3], [2, 4]]
 
-# Test de tentative de création d'un modèle déjà existant
+# Test for attempting to create a model that already exists
 def test_create_model_siamese_already_exists():
-    # Crée un premier modèle
+    # Create the first model
     create_model_siamese("model1", [["token1", "token2"], ["token1", "token3"]], ["token1", "token2", "token3"])
     
-    # Tente de créer un modèle avec le même nom, ce qui devrait lever une exception
+    # Attempt to create a model with the same name, which should raise an exception
     with pytest.raises(HTTPException) as excinfo:
         create_model_siamese("model1", [["token1", "token2"]], ["token1", "token2", "token3"])
     
-    # Vérifie que l'exception levée contient le bon message
+    # Verify the raised exception contains the correct message
     assert str(excinfo.value.detail) == "Model already exists"
 
-# Test de création d'un modèle avec un dictionnaire None
+# Test for creating a model with a None dictionary
 def test_create_model_dictionary_none():
-    # Vérifie que la fonction lève une exception si le dictionnaire est None
+    # Verify the function raises an exception if the dictionary is None
     with pytest.raises(HTTPException) as excinfo:
         create_model_siamese("model1", None, ["token1", "token2", "token3"])
     
-    # Vérifie que le message d'erreur est correct
+    # Verify the error message is correct
     assert excinfo.value.status_code == 400
     assert str(excinfo.value.detail) == "Dictionary cannot be None"
 
-# Test de création d'un modèle avec un glossaire None
+# Test for creating a model with a None glossary
 def test_create_model_glossary_none():
-    # Vérifie que la fonction lève une exception si le glossaire est None
+    # Verify the function raises an exception if the glossary is None
     with pytest.raises(HTTPException) as excinfo:
         create_model_siamese("model1", [["token1", "token2"]], None)
     
-    # Vérifie que le message d'erreur est correct
+    # Verify the error message is correct
     assert excinfo.value.status_code == 400
     assert str(excinfo.value.detail) == "Glossary cannot be None"
 
-# Test de création d'un modèle avec un dictionnaire vide
+# Test for creating a model with an empty dictionary
 def test_create_model_dictionary_empty():
-    # Vérifie que la fonction lève une exception si le dictionnaire est vide
+    # Verify the function raises an exception if the dictionary is empty
     with pytest.raises(HTTPException) as excinfo:
         create_model_siamese("model1", [], ["token1", "token2", "token3"])
     
-    # Vérifie que le message d'erreur est correct
+    # Verify the error message is correct
     assert excinfo.value.status_code == 400
     assert str(excinfo.value.detail) == "Dictionary cannot be empty"
 
-# Test de création d'un modèle avec un glossaire vide
+# Test for creating a model with an empty glossary
 def test_create_model_glossary_empty():
-    # Vérifie que la fonction lève une exception si le glossaire est vide
+    # Verify the function raises an exception if the glossary is empty
     with pytest.raises(HTTPException) as excinfo:
         create_model_siamese("model1", [["token1", "token2"]], [])
     
-    # Vérifie que le message d'erreur est correct
+    # Verify the error message is correct
     assert excinfo.value.status_code == 400
     assert str(excinfo.value.detail) == "Glossary cannot be empty"
 
-# Test de création d'un modèle avec des tokens non reconnus
+# Test for creating a model with unrecognized tokens
 def test_create_model_with_unknown_tokens():
-    # Vérifie que la fonction traite correctement les tokens non trouvés dans le glossaire
+    # Verify the function correctly handles tokens not found in the glossary
     result = create_model_siamese("model1", [["token1", "token2", "tokenX"]], ["token1", "token2", "token3"])
     
-    # Vérifie que le modèle est bien créé
+    # Verify the model is created successfully
     assert result == {"status": "model created", "model_name": "model1"}
     
-    # Vérifie que le dictionnaire indexé contient None pour le token "tokenX"
+    # Verify the indexed dictionary contains None for the "tokenX"
     assert models["model1"]["indexed_dictionary"] == [[2, 3, 1]]
 
-# Test de création d'un modèle avec un glossaire contenant des doublons
+# Test for creating a model with a glossary containing duplicates
 def test_create_model_no_duplicates_in_glossary():
-    # Vérifie que la première occurrence d'un token est utilisée pour l'indexation
+    # Verify the first occurrence of a token is used for indexing
     result = create_model_siamese("model1", [["token1", "token2"]], ["token1", "token2", "token1", "token3"])
     
-    # Vérifie que le modèle est bien créé
+    # Verify the model is created successfully
     assert result == {"status": "model created", "model_name": "model1"}
     
-    # Vérifie que le dictionnaire indexé n'utilise que la première occurrence de "token1"
+    # Verify the indexed dictionary only uses the first occurrence of "token1"
     assert models["model1"]["indexed_dictionary"] == [[2, 3]]
 
-# Test de création d'un modèle avec des sous-listes vides dans le dictionnaire
+# Test for creating a model with empty sublists in the dictionary
 def test_create_model_empty_token_lists():
-    # Vérifie que les sous-listes vides dans le dictionnaire sont correctement gérées
+    # Verify empty sublists in the dictionary are correctly handled
     result = create_model_siamese("model1", [[], ["token1", "token2"], []], ["token1", "token2", "token3"])
     
-    # Vérifie que le modèle est bien créé
+    # Verify the model is created successfully
     assert result == {"status": "model created", "model_name": "model1"}
     
-    # Vérifie que les sous-listes vides restent vides dans le dictionnaire indexé
+    # Verify that the empty sublists remain empty in the indexed dictionary
     assert models["model1"]["indexed_dictionary"] == [[], [2, 3], []]

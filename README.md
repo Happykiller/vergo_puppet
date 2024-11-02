@@ -9,8 +9,10 @@ AI for Vergo service
 3. [Running Tests](#running-tests)
 4. [APIs Overview](#apis-overview)
 5. [Machine Learning](#machine-learning)
-   - [SIAMESE Model](#siamese-model)
-
+   - [Puppet-o1 (Simple Model)](#puppet-o1)
+   - [Puppet-o2 (GRU Model)](#puppet-o2)
+   - [Puppet-o3 (SIAMESE Model)](#puppet-o3)
+   - [Puppet-o4 (LSTM Model)](#puppet-o4)
 ## Installation
 
 To install dependencies, run:
@@ -254,13 +256,13 @@ curl -X GET http://localhost/api/version
 
 ## Machine Learning
 
-### SIAMESE Model
+### Puppet-o1 (SIAMESE Model)
 
 The SIAMESE model is a type of neural network architecture used primarily for tasks involving similarity, such as comparing two inputs to determine how similar they are. This model is particularly useful for problems such as facial recognition, signature verification, or any scenario where the goal is to identify how closely two inputs match.
 
 The SIAMESE model helps in various applications by providing reliable similarity scoring, which can be leveraged for identity verification, product recommendations, and more. The model learns to generate embedding vectors for each input, which can then be compared using a similarity measure, such as cosine similarity.
 
-#### APIs for SIAMESE Model
+#### APIs for Puppet-o1
 
 The following APIs are specifically used when working with the SIAMESE model:
 
@@ -313,11 +315,11 @@ The following APIs are specifically used when working with the SIAMESE model:
     }
     ```
 
-### SimpleNN Model
+### Puppet-o2 (SimpleNN Model)
 
 The `SimpleNN` model is used for regression tasks, such as predicting property prices based on input features like surface area, number of rooms, floor, and neighborhood. The following APIs allow you to create, train, search, and test a `SimpleNN` model.
 
-#### APIs for SimpleNN Model
+#### APIs for Puppet-o2
 
 The following APIs are used to create, train, search, and test the `SimpleNN` model.
 

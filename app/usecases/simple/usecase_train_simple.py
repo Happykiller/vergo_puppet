@@ -1,18 +1,21 @@
+#app\usecases\simple\usecase_train_simple.py
 import joblib
 from typing import List
 from app.services.logger import logger
 from fastapi import HTTPException  # type: ignore
+from app.neural_network.nn_simple import train_model_nn
 from app.repositories.memory import get_model, update_model
-from app.usecases.simple_nn.simple_nn_commons import transform_data
-from app.machine_learning.neural_network_simple import train_model_nn
+from app.usecases.simple.usecase_commons_simple import transform_data
 from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 
 def train_model_simple_nn(name: str, training_data: List[SimpleNNTrainingModelData]):
     """
-    Entraîne le modèle avec des données d'entraînement fournies.
-    :param name: Nom du modèle
-    :param training_data: Liste des données d'entraînement
+    Train the SimpleNN model with the provided training data.
+    :param name: Model name
+    :param training_data: List of training data
+    :return: Status of training
     """
+    # Retrieve the model configuration
     model = get_model(name)
     
     if model is None or not model:
@@ -21,24 +24,24 @@ def train_model_simple_nn(name: str, training_data: List[SimpleNNTrainingModelDa
     if training_data is None or len(training_data) == 0:
         raise HTTPException(status_code=400, detail="No training data provided or training data is empty")
     
-    logger.info(f"Type de machine learning utilisé pour l'entraînement SimpleNN")
+    logger.info("Machine learning type used for training: SimpleNN")
     
-    # Transformation des données
+    # Transform the data
     features_processed, targets_standardized, encoder, scaler, targets_mean, targets_std, categorical_indices, numerical_indices = transform_data(training_data)
     
-    # Récupérer la taille des features
+    # Determine the input size for the neural network
     input_size = features_processed.shape[1]
     
-    # Entraîner le réseau de neurones
+    # Train the neural network
     nn_model, losses = train_model_nn(features_processed, targets_standardized, input_size)
     
-    # Enregistrer l'encodeur, le scaler et les paramètres de normalisation des targets
+    # Save the encoder, scaler, and target normalization parameters
     encoder_filename = f"{name}_encoder.joblib"
     scaler_filename = f"{name}_scaler.joblib"
     joblib.dump(encoder, encoder_filename)
     joblib.dump(scaler, scaler_filename)
     
-    # Enregistrer les indices
+    # Save categorical and numerical indices
     indices_info = {
         "categorical_indices": categorical_indices,
         "numerical_indices": numerical_indices
@@ -46,7 +49,7 @@ def train_model_simple_nn(name: str, training_data: List[SimpleNNTrainingModelDa
     indices_filename = f"{name}_indices.joblib"
     joblib.dump(indices_info, indices_filename)
     
-    # Enregistrer le modèle de réseau de neurones entraîné
+    # Update the model with the trained neural network and additional metadata
     update_model(name, {
         "nn_model": nn_model,
         "encoder_filename": encoder_filename,
@@ -57,4 +60,3 @@ def train_model_simple_nn(name: str, training_data: List[SimpleNNTrainingModelDa
     })
     
     return {"status": "training completed", "model_name": name}
-

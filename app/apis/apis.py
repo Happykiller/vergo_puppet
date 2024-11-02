@@ -18,14 +18,14 @@ from app.usecases.gru.usecase_train_gru import train_model_gru
 from app.usecases.gru.usecase_create_gru import create_model_gru
 from app.usecases.gru.usecase_search_gru import search_model_gru
 from app.apis.models.tokenize_model_data import TokenizeModelData
-from app.usecases.simple_nn.mesure_simple_nn import mesure_simple_nn
+from app.usecases.simple.usecase_mesure_simple import mesure_simple_nn
 from app.usecases.siamese.usecase_mesure_siamese import mesure_siamese
 from app.usecases.siamese.usecase_train_siamese import train_model_siamese
 from app.usecases.siamese.usecase_create_siamese import create_model_siamese
 from app.usecases.siamese.usecase_search_siamese import search_model_siamese
-from app.usecases.simple_nn.train_model_simple_nn import train_model_simple_nn
-from app.usecases.simple_nn.create_model_simple_nn import create_model_simpleNN
-from app.usecases.simple_nn.search_model_simple_nn import search_model_simple_nn
+from app.usecases.simple.usecase_train_simple import train_model_simple_nn
+from app.usecases.simple.usecase_create_simple import create_model_simpleNN
+from app.usecases.simple.usecase_search_simple import search_model_simple_nn
 from app.usecases.usecase_create_data_puppeto4 import usecase_create_data_puppeto4
 
 # Initialisation du routeur

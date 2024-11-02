@@ -4,15 +4,14 @@ from fastapi import HTTPException  # type: ignore
 
 from app.services.logger import logger
 from app.repositories.memory import get_model, update_model
-from app.usecases.tokens_to_indices import tokens_to_indices
-from app.machine_learning.neural_network_siamese import train_siamese_model_nn
-from app.usecases.siamese.usecase_commons_siamese import create_glossary_from_training_data
+from app.neural_network.nn_siamese import train_siamese_model_nn
+from app.usecases.siamese.usecase_commons_siamese import create_glossary_from_training_data, tokens_to_indices
 
 def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str], float]]):
     """
-    Entraîne le modèle avec des paires (input, target).
-    :param name: Nom du modèle
-    :param training_data: Liste de tuples (input, target) où input et target sont des listes de tokens
+    Trains the model with pairs (input, target).
+    :param name: Name of the model
+    :param training_data: List of tuples (input, target) where input and target are lists of tokens
     """
     model = get_model(name)
 
@@ -29,11 +28,11 @@ def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str
     if not indexed_dictionary:
         raise HTTPException(status_code=400, detail="No vectors available in the model")
     
-    # Vérifier le type de modèle à utiliser
-    neural_network_type = model.get("neural_network_type", "SimpleNN")  # Par défaut SimpleNN si non spécifié
-    logger.info(f"Type de machine learning utilisé pour l'entrainement {neural_network_type}")
+    # Check the neural network type to use
+    neural_network_type = model.get("neural_network_type", "SimpleNN")  # Default to SimpleNN if not specified
+    logger.info(f"Machine learning type used for training: {neural_network_type}")
 
-    # Entraîner le réseau de neurones en fonction du type de modèle
+    # Train the neural network according to the specified model type
     training_glossary = create_glossary_from_training_data(training_data)
     training_word2idx = {word: idx for idx, word in enumerate(training_glossary)}
     
@@ -43,12 +42,12 @@ def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str
         target_indices = tokens_to_indices(target_tokens, training_word2idx)
         transformed_data.append((source_indices, target_indices, score))
 
-    vocab_size = len(model["glossary"])+1
+    vocab_size = len(model["glossary"]) + 1
     
-    # Entraîner le modèle
+    # Train the model
     nn_model, _ = train_siamese_model_nn(transformed_data, vocab_size)
 
-    # Enregistrer le modèle de réseau de neurones entraîné
+    # Save the trained neural network model
     update_model(name, {"nn_model": nn_model})
 
     return {"status": "training completed", "model_name": name}

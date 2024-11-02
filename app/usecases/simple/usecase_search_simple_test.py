@@ -1,15 +1,16 @@
+#app\usecases\simple\usecase_search_simple_test.py
 import pytest
 from unittest.mock import patch, MagicMock
 from fastapi import HTTPException  # type: ignore
 from app.apis.models.simple_nn_search_model_data import SimpleNNSearchModelData
-from app.usecases.simple_nn.search_model_simple_nn import search_model_simple_nn
+from app.usecases.simple.usecase_search_simple import search_model_simple_nn
 
-# Test du bon déroulement de la recherche avec un modèle SimpleNN
-@patch('app.usecases.simple_nn.search_model_simple_nn.joblib.load')
-@patch('app.usecases.simple_nn.search_model_simple_nn.predict')
-@patch('app.usecases.simple_nn.search_model_simple_nn.get_model')
+# Test successful search with a SimpleNN model
+@patch('app.usecases.simple.usecase_search_simple.joblib.load')
+@patch('app.usecases.simple.usecase_search_simple.predict')
+@patch('app.usecases.simple.usecase_search_simple.get_model')
 def test_search_model_simple_nn_success(mock_get_model, mock_predict, mock_joblib_load):
-    # Simuler le modèle renvoyé par get_model
+    # Mock model returned by get_model
     mock_get_model.return_value = {
         "nn_model": MagicMock(),
         "encoder_filename": "encoder.pkl",
@@ -19,17 +20,17 @@ def test_search_model_simple_nn_success(mock_get_model, mock_predict, mock_jobli
         "targets_std": 0.2
     }
 
-    # Simuler le chargement des fichiers encoder, scaler, et indices
+    # Simulate loading encoder, scaler, and indices files
     mock_joblib_load.side_effect = [
-        MagicMock(),  # Simuler l'encodeur
-        MagicMock(),  # Simuler le scaler
-        {"categorical_indices": [0, 1], "numerical_indices": [2, 3]}  # Simuler les indices
+        MagicMock(),  # Mock encoder
+        MagicMock(),  # Mock scaler
+        {"categorical_indices": [0, 1], "numerical_indices": [2, 3]}  # Mock indices
     ]
 
-    # Simuler la prédiction du modèle
+    # Mock model prediction
     mock_predict.return_value = 350000
 
-    # Créer des données de recherche fictives
+    # Create dummy search data
     search_data = SimpleNNSearchModelData(
         type=1,
         surface=100,
@@ -43,17 +44,17 @@ def test_search_model_simple_nn_success(mock_get_model, mock_predict, mock_jobli
         neighborhood=8
     )
 
-    # Appeler la fonction search_model_simple_nn
+    # Call the search_model_simple_nn function
     result = search_model_simple_nn("test_model", search_data)
 
-    # Vérifier que la fonction predict a été appelée avec les bons arguments
+    # Verify that the predict function was called with the correct arguments
     mock_predict.assert_called_once()
 
-    # Vérifier le résultat de la recherche
+    # Check the search result
     assert result == {"predicted_price": 350000}
 
-# Test lorsque le modèle est introuvable
-@patch('app.usecases.simple_nn.search_model_simple_nn.get_model', return_value=None)
+# Test when the model is not found
+@patch('app.usecases.simple.usecase_search_simple.get_model', return_value=None)
 def test_search_model_simple_nn_model_not_found(mock_get_model):
     search_data = SimpleNNSearchModelData(
         type=1,
@@ -68,18 +69,18 @@ def test_search_model_simple_nn_model_not_found(mock_get_model):
         neighborhood=8
     )
 
-    # Vérifier qu'une exception HTTP 404 est levée si le modèle est introuvable
+    # Check that an HTTP 404 exception is raised if the model is not found
     with pytest.raises(HTTPException) as exc_info:
         search_model_simple_nn("unknown_model", search_data)
     
-    # Vérifier que l'exception est bien une HTTPException avec le statut 404
+    # Confirm the exception is HTTPException with status 404
     assert exc_info.value.status_code == 404
     assert exc_info.value.detail == "Model not found"
 
-# Test lorsque le modèle n'est pas encore entraîné
-@patch('app.usecases.simple_nn.search_model_simple_nn.get_model')
+# Test when the model is not yet trained
+@patch('app.usecases.simple.usecase_search_simple.get_model')
 def test_search_model_simple_nn_model_not_trained(mock_get_model):
-    # Simuler un modèle sans nn_model
+    # Mock a model without nn_model
     mock_get_model.return_value = {
         "nn_model": None,
         "encoder_filename": "encoder.pkl",
@@ -102,18 +103,18 @@ def test_search_model_simple_nn_model_not_trained(mock_get_model):
         neighborhood=8
     )
 
-    # Vérifier qu'une exception HTTP 400 est levée si le modèle n'est pas encore entraîné
+    # Check that an HTTP 400 exception is raised if the model is not yet trained
     with pytest.raises(HTTPException) as exc_info:
         search_model_simple_nn("test_model", search_data)
 
-    # Vérifier que l'exception est bien une HTTPException avec le statut 400
+    # Confirm the exception is HTTPException with status 400
     assert exc_info.value.status_code == 400
     assert exc_info.value.detail == "Model not trained yet"
 
-# Test lorsque les fichiers d'encodeur, scaler ou indices manquent
-@patch('app.usecases.simple_nn.search_model_simple_nn.get_model')
+# Test when encoder, scaler, or indices files are missing
+@patch('app.usecases.simple.usecase_search_simple.get_model')
 def test_search_model_simple_nn_missing_files(mock_get_model):
-    # Simuler un modèle sans encodeur, scaler ou indices
+    # Mock a model without encoder, scaler, or indices
     mock_get_model.return_value = {
         "nn_model": MagicMock(),
         "encoder_filename": None,
@@ -136,19 +137,19 @@ def test_search_model_simple_nn_missing_files(mock_get_model):
         neighborhood=8
     )
 
-    # Vérifier qu'une exception HTTP 400 est levée si les fichiers manquent
+    # Check that an HTTP 400 exception is raised if files are missing
     with pytest.raises(HTTPException) as exc_info:
         search_model_simple_nn("test_model", search_data)
 
-    # Vérifier que l'exception est bien une HTTPException avec le statut 400
+    # Confirm the exception is HTTPException with status 400
     assert exc_info.value.status_code == 400
     assert exc_info.value.detail == "Missing encoder, scaler, or indices in the model"
 
-# Test lorsque les paramètres de normalisation des targets manquent
-@patch('app.usecases.simple_nn.search_model_simple_nn.joblib.load')  # Simuler le chargement de joblib.load
-@patch('app.usecases.simple_nn.search_model_simple_nn.get_model')
+# Test when target normalization parameters are missing
+@patch('app.usecases.simple.usecase_search_simple.joblib.load')  # Simulate joblib.load
+@patch('app.usecases.simple.usecase_search_simple.get_model')
 def test_search_model_simple_nn_missing_normalization_parameters(mock_get_model, mock_joblib_load):
-    # Simuler un modèle sans paramètres de normalisation
+    # Mock a model without target normalization parameters
     mock_get_model.return_value = {
         "nn_model": MagicMock(),
         "encoder_filename": "encoder.pkl",
@@ -158,14 +159,14 @@ def test_search_model_simple_nn_missing_normalization_parameters(mock_get_model,
         "targets_std": None
     }
 
-    # Simuler le chargement des fichiers d'encodeur, scaler, et indices avec joblib.load
+    # Simulate loading of encoder, scaler, and indices with joblib.load
     mock_joblib_load.side_effect = [
-        MagicMock(),  # Simuler l'encodeur
-        MagicMock(),  # Simuler le scaler
-        {"categorical_indices": [0, 1], "numerical_indices": [2, 3]}  # Simuler les indices
+        MagicMock(),  # Mock encoder
+        MagicMock(),  # Mock scaler
+        {"categorical_indices": [0, 1], "numerical_indices": [2, 3]}  # Mock indices
     ]
 
-    # Créer les données de recherche fictives
+    # Create dummy search data
     search_data = SimpleNNSearchModelData(
         type=1,
         surface=100,
@@ -179,10 +180,10 @@ def test_search_model_simple_nn_missing_normalization_parameters(mock_get_model,
         neighborhood=8
     )
 
-    # Vérifier qu'une exception HTTP 400 est levée si les paramètres de normalisation manquent
+    # Check that an HTTP 400 exception is raised if normalization parameters are missing
     with pytest.raises(HTTPException) as exc_info:
         search_model_simple_nn("test_model", search_data)
 
-    # Vérifier que l'exception est bien une HTTPException avec le statut 400
+    # Confirm the exception is HTTPException with status 400
     assert exc_info.value.status_code == 400
     assert exc_info.value.detail == "Missing normalization parameters in the model"

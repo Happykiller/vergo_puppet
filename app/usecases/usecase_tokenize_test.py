@@ -5,12 +5,17 @@ from unittest.mock import patch, MagicMock
 from app.usecases.usecase_tokenize import usecase_tokenize
 from app.apis.models.tokenize_model_data import ModelTokenizeData
 
-# Données de test pour la fonction
+# Test data for the function
 test_data = [
     ModelTokenizeData(description="Jean Dupont a signalé un problème.", incidentId="42")
 ]
 
 def setup_regex_test_file():
+    """
+    Create a temporary JSON file for regex patterns used in tests.
+    This file will contain patterns to delete specific polite phrases.
+    :return: The file path to the temporary regex patterns JSON.
+    """
     temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.json', mode='w')
     regex_patterns = [
         {"regex": "\\bbonjour\\b", "op": "DELETE"},
@@ -20,55 +25,65 @@ def setup_regex_test_file():
     temp_file.close()
     return temp_file.name
 
-# Utilisez ce chemin dans vos tests
+# Use this path in your tests
 regex_filepath = setup_regex_test_file()
 
-# Test : Succès de la tokenisation avec toutes les étapes de traitement
+# Test: Full tokenization process success with all processing steps
 @patch("app.usecases.usecase_tokenize.load_regex_patterns")
 @patch("app.usecases.usecase_tokenize.anonymize_names")
 @patch("app.usecases.usecase_tokenize.nlp")
 def test_usecase_tokenize_full_process(mock_nlp, mock_anonymize_names, mock_load_regex_patterns):
-    # Configurer le mock pour anonymize_names
+    """
+    Test the complete tokenization flow including regex replacement,
+    name anonymization, and token extraction.
+    """
+    # Configure mock for anonymize_names to replace names with the anonymized tag
     mock_anonymize_names.return_value = "[no_process][name][/no_process]"
 
-    # Configurer le mock pour load_regex_patterns
+    # Configure mock for load_regex_patterns to replace 'problème' with 'issue'
     mock_load_regex_patterns.return_value = [{"regex": r"\bproblème\b", "op": "REPLACE", "str": "issue"}]
 
-    # Simuler la sortie du modèle spacy pour la tokenisation
+    # Simulate the output of the spaCy model for tokenization
     doc_mock = MagicMock()
     token0 = MagicMock(lemma_="[no_process][name][/no_process]", label_="NOUN")
     token1 = MagicMock(lemma_="signaler", pos_="VERB")
     token2 = MagicMock(lemma_="issue", pos_="NOUN")
-    doc_mock.__iter__.return_value = [token0,token1, token2]
+    doc_mock.__iter__.return_value = [token0, token1, token2]
     mock_nlp.return_value = doc_mock
 
-    # Appeler la fonction de tokenisation
+    # Call the tokenization function
     result = usecase_tokenize(test_data, regex_filepath)
 
-    # Vérifier le résultat attendu
+    # Verify the expected result
     expected_result = [{"tokens": ["[name]", "signaler", "issue"]}]
     assert result == expected_result, f"Expected {expected_result} but got {result}"
 
-# Test : Vérifier la suppression des stopwords
+# Test: Verify stopword removal
 @patch("app.usecases.usecase_tokenize.remove_stopwords")
 def test_usecase_tokenize_remove_stopwords(mock_remove_stopwords):
-    # Simuler la suppression des stopwords
+    """
+    Test the stopword removal process within the tokenization function.
+    """
+    # Mock stopword removal to remove the word "je"
     mock_remove_stopwords.side_effect = lambda text: text.replace("je", "")
     
-    # Appeler la fonction
+    # Call the function
     result = usecase_tokenize(test_data, regex_filepath)
     
-    # Vérifier que les stopwords ont bien été supprimés
-    assert "je" not in result[0]["tokens"], "Les stopwords n'ont pas été supprimés correctement."
+    # Check that stopwords have been removed correctly
+    assert "je" not in result[0]["tokens"], "Stopwords were not removed correctly."
 
-# Test : Vérifier la suppression des mots de politesse
+# Test: Verify polite phrase removal
 @patch("app.usecases.usecase_tokenize.remove_polite")
 def test_usecase_tokenize_remove_polite(mock_remove_polite):
-    # Simuler la suppression des mots de politesse
+    """
+    Test the polite phrase removal process in the tokenization function.
+    """
+    # Mock polite phrase removal to remove "Bonjour"
     mock_remove_polite.side_effect = lambda text: text.replace("Bonjour", "")
     
-    # Appeler la fonction
+    # Call the function
     result = usecase_tokenize(test_data, regex_filepath)
     
-    # Vérifier que les mots de politesse ont bien été supprimés
-    assert "Bonjour" not in result[0]["tokens"], "Les mots de politesse n'ont pas été supprimés correctement."
+    # Check that polite phrases have been removed correctly
+    assert "Bonjour" not in result[0]["tokens"], "Polite phrases were not removed correctly."

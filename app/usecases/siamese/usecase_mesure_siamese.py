@@ -1,17 +1,16 @@
 #app\usecases\siamese\usecase_mesure_siamese.py
-from fastapi import HTTPException # type: ignore
-
 from app.services.logger import logger
 from app.repositories.memory import get_model
-from app.usecases.tokens_to_indices import tokens_to_indices
-from app.machine_learning.neural_network_siamese import evaluate_similarity
-from app.usecases.siamese.usecase_commons_siamese import create_indexed_glossary
+from app.neural_network.nn_siamese import evaluate_similarity
+from app.usecases.siamese.usecase_commons_siamese import create_indexed_glossary, tokens_to_indices
 
 def mesure_siamese(name, test_data):
     try:
         total_error = 0
         correct_predictions = 0
         total_tests = len(test_data)
+        
+        # Retrieve the model
         model = get_model(name)
         if not model:
             raise Exception("Model not found")
@@ -21,27 +20,37 @@ def mesure_siamese(name, test_data):
         if not nn_model:
             raise Exception("Model not completed")
 
-
+        # Create index mapping for glossary terms
         word2idx = create_indexed_glossary(glossary)
+        
+        # Iterate through test data
         for vector1, vector2, expected_similarity in test_data:
+            # Convert token lists to indices
             vector1_indices = tokens_to_indices(vector1, word2idx)
             vector2_indices = tokens_to_indices(vector2, word2idx)
+            
+            # Evaluate similarity
             predicted_similarity = evaluate_similarity(nn_model, vector1_indices, vector2_indices)
             error = abs(predicted_similarity - expected_similarity)
             total_error += error
-            # Considérer la prédiction correcte si la différence est inférieure à un seuil (par exemple 0.1)
+            
+            # Consider the prediction correct if the error is below a threshold (e.g., 0.1)
             if error <= 0.1:
                 correct_predictions += 1
-            # Utiliser le logger pour les sorties
-            logger.info(f"Requête: {vector1}, Image: {vector2}")
-            logger.info(f"Similarité attendue: {expected_similarity*100}%, Similarité donnée par le modèle: {predicted_similarity*100:.2f}%, Erreur: {error*100:.2f}%")
+            
+            # Log the output details
+            logger.info(f"Query: {vector1}, Image: {vector2}")
+            logger.info(f"Expected similarity: {expected_similarity*100}%, Model similarity: {predicted_similarity*100:.2f}%, Error: {error*100:.2f}%")
+        
+        # Calculate average error and accuracy as a percentage
         avg_error = total_error / total_tests
-        # Exprimer avg_error en pourcentage de précision
-        precision_percentage = (1 - avg_error) * 100  # Plus avg_error est faible, plus la précision est élevée
-        # Afficher le nombre de prédictions correctes sur le nombre total d'essais
-        logger.info(f"Nombre de prédictions correctes: {correct_predictions}/{total_tests}")
-        logger.info(f"Précision moyenne du modèle sur le jeu de test: {precision_percentage:.2f}%")
+        precision_percentage = (1 - avg_error) * 100  # Lower avg_error corresponds to higher accuracy
+        
+        # Log the number of correct predictions out of the total test cases
+        logger.info(f"Correct predictions: {correct_predictions}/{total_tests}")
+        logger.info(f"Model average accuracy on the test set: {precision_percentage:.2f}%")
+    
     except Exception as e:
-        # Gestion des erreurs générales
-        logger.error(f"Une erreur s'est produite pendant test_siamese : {str(e)}")
-        raise Exception(f"Une erreur s'est produite pendant test_siamese : {str(e)}")
+        # General error handling
+        logger.error(f"An error occurred during siamese testing: {str(e)}")
+        raise Exception(f"An error occurred during siamese testing: {str(e)}")

@@ -1,81 +1,86 @@
+#app\usecases\lstm\usecase_mesure_lstm.py
 import joblib
 import numpy as np
+import pandas as pd
+from typing import List
 from app.services.logger import logger
 from app.repositories.memory import get_model
-from app.machine_learning.nn_lstm import predict_nn_lstm
+from app.neural_network.nn_lstm import predict_nn_lstm
 from app.apis.models.weather_model_data import WeatherModelData
 from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error
 from app.usecases.lstm.usecase_commons_lstm import inverse_transform_predictions, preprocess_input_data
-from typing import List
-import pandas as pd
-
 
 def mesure_lstm(name: str, test_data: List[WeatherModelData]):
+    """
+    Measures the performance of the LSTM model on the provided test data.
+    :param name: Name of the model.
+    :param test_data: List of test data samples.
+    :return: A dictionary with performance metrics.
+    """
     try:
-        # Vérifier que le modèle existe
+        # Verify that the model exists
         model = get_model(name)
         nn_model = model.get("nn_model", None)
         if nn_model is None:
-            raise Exception("Le modèle n'a pas encore été entraîné")
+            raise Exception("The model has not been trained yet")
         
-        # Charger le scaler et l'encodeur
+        # Load scaler and encoder
         scaler = joblib.load(f'{name}_scaler.pkl')
         target_scaler = joblib.load(f'{name}_target_scaler.pkl')
         coco_encoder = joblib.load(f'{name}_coco_encoder.pkl')
         
-        # Définir la longueur de séquence utilisée lors de l'entraînement
-        sequence_length = 24  # Ajuster si nécessaire
+        # Define the sequence length used during training
+        sequence_length = 24  # Adjust if necessary
 
-        # Listes pour stocker les valeurs réelles et prédites
+        # Lists to store actual and predicted values
         y_true_list = []
         y_pred_list = []
         
-        # Boucler sur chaque échantillon de données de test
+        # Loop through each test sample
         for data in test_data:
-            # Extraire la valeur réelle de 'temp'
+            # Extract the actual 'temp' value
             y_true = data.temp
             
-            # Préparer les données d'entrée (sans 'temp')
+            # Prepare input data (excluding 'temp')
             data_dict = data.dict()
-            data_dict.pop('temp', None)  # Supprimer 'temp' des données d'entrée
+            data_dict.pop('temp', None)  # Remove 'temp' from input data
             df_input = pd.DataFrame([data_dict])
             
-            # Prétraiter les données d'entrée
+            # Preprocess the input data
             df_processed = preprocess_input_data(df_input, scaler, coco_encoder)
             
-            # Créer une séquence en dupliquant l'entrée pour atteindre la longueur nécessaire
+            # Create a sequence by duplicating the input to reach the required length
             input_sequence = np.repeat(df_processed.values, sequence_length, axis=0)
             input_sequence = np.expand_dims(input_sequence, axis=0)  # Shape: (1, sequence_length, num_features)
             
-            # Faire la prédiction
+            # Make the prediction
             prediction_normalized = predict_nn_lstm(nn_model, input_sequence)
             
-            # Inverser la normalisation de la prédiction
+            # Invert the normalization of the prediction
             prediction_inverse = inverse_transform_predictions(prediction_normalized, target_scaler)[0]
             
-            # Ajouter les valeurs à la liste
+            # Add values to the lists
             y_true_list.append(y_true)
             y_pred_list.append(prediction_inverse)
         
-        # Convertir les listes en tableaux numpy
+        # Convert lists to numpy arrays
         y_true_array = np.array(y_true_list)
         y_pred_array = np.array(y_pred_list)
         
-        # Calculer les métriques de performance
+        # Calculate performance metrics
         mae = mean_absolute_error(y_true_array, y_pred_array)
-        mape = mean_absolute_percentage_error(y_true_array, y_pred_array) * 100  # En pourcentage
+        mape = mean_absolute_percentage_error(y_true_array, y_pred_array) * 100  # In percentage
         
-        # Afficher les résultats
-        logger.info(f"Erreur absolue moyenne (MAE) sur le jeu de test: {mae:.2f}")
-        logger.info(f"Erreur absolue moyenne en pourcentage (MAPE) sur le jeu de test: {mape:.2f}%")
+        # Log the results
+        logger.info(f"Mean Absolute Error (MAE) on the test set: {mae:.2f}")
+        logger.info(f"Mean Absolute Percentage Error (MAPE) on the test set: {mape:.2f}%")
         
-        # Retourner les métriques
+        # Return the metrics
         return {
             "mae": mae,
             "mape": mape,
-            "nombre_de_tests": len(y_pred_list)
+            "test_count": len(y_pred_list)
         }
     except Exception as e:
-        logger.error(f"Une erreur s'est produite pendant la mesure : {str(e)}")
-        raise Exception(f"Une erreur s'est produite pendant la mesure : {str(e)}")
-
+        logger.error(f"An error occurred during measurement: {str(e)}")
+        raise Exception(f"An error occurred during measurement: {str(e)}")

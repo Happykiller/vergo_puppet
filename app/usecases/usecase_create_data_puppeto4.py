@@ -1,41 +1,48 @@
+#app\usecases\usecase_create_data_puppeto4.py
 from datetime import datetime
 from meteostat import Point, Hourly  # type: ignore
 
 def usecase_create_data_puppeto4():
-  # Définir la période souhaitée
-  start = datetime(2018, 1, 1)
-  end = datetime(2024, 10, 1)
+    """
+    Fetches and saves hourly weather data for Grenoble from 2018 to 2024.
+    Data is collected from Meteostat and saved as a JSON file with key weather indicators.
+    """
 
-  # Définir la localisation de Grenoble
-  grenoble = Point(45.1885, 5.7245)
+    # Define the desired time period
+    start = datetime(2018, 1, 1)
+    end = datetime(2024, 10, 1)
 
-  # Récupérer les données horaires
-  data = Hourly(grenoble, start, end)
-  data = data.fetch()
+    # Define the location for Grenoble using coordinates
+    grenoble = Point(45.1885, 5.7245)
 
-  # Réinitialiser l'index pour obtenir 'time' comme colonne
-  data = data.reset_index()
+    # Retrieve hourly weather data for the specified location and time range
+    data = Hourly(grenoble, start, end)
+    data = data.fetch()
 
-  # Convertir le DataFrame en JSON
-  json_data = data.to_json(orient='records', date_format='iso')
+    # Reset index to convert 'time' from index to a column in the DataFrame
+    data = data.reset_index()
 
-  # Sauvegarder les données JSON dans un fichier
-  with open('grenoble_weather_data.json', 'w') as f:
-      f.write(json_data)
+    # Convert the DataFrame to JSON format with ISO date formatting
+    json_data = data.to_json(orient='records', date_format='iso')
 
-  #time : Horodatage de l'observation.
-  #temp : Température en degrés Celsius.
-  #dwpt : Point de rosée en degrés Celsius.
-  #rhum : Humidité relative en pourcentage.
-  #prcp : Précipitations en millimètres.
-  #snow : Chute de neige en millimètres.
-  #wdir : Direction du vent en degrés.
-  #wspd : Vitesse du vent en km/h.
-  #wpgt : Rafale de vent maximale en km/h.
-  #pres : Pression atmosphérique en hPa.
-  #tsun : Durée d'ensoleillement en minutes.
-  #coco : Code de condition météorologique.
+    # Save the JSON data to a file
+    with open('grenoble_weather_data.json', 'w') as f:
+        f.write(json_data)
 
-  print("Les données ont été sauvegardées dans 'grenoble_weather_data.json'")
+    # Metadata for the JSON fields
+    # time : Timestamp of the observation.
+    # temp : Temperature in degrees Celsius.
+    # dwpt : Dew point in degrees Celsius.
+    # rhum : Relative humidity in percentage.
+    # prcp : Precipitation in millimeters.
+    # snow : Snowfall in millimeters.
+    # wdir : Wind direction in degrees.
+    # wspd : Wind speed in km/h.
+    # wpgt : Max wind gust in km/h.
+    # pres : Atmospheric pressure in hPa.
+    # tsun : Sunshine duration in minutes.
+    # coco : Weather condition code.
+
+    print("Data has been saved to 'grenoble_weather_data.json'")
     
-  return True
+    return True

@@ -1,14 +1,8 @@
-## Fichier : docker-compose.yml
-version: '3.8'
-
+#docker-compose.prod.yml
 services:
-  vergo_back:
-    image: vergo_back
-    container_name: vergo_back
+  vergo_puppet:
+    image: vergo_puppet
+    container_name: vergo_puppet
     ports:
-      - '3003:3000'
+      - "8000:8000"
     restart: always
-    extra_hosts:
-      - 'host.docker.internal:host-gateway'
-    volumes:
-      - ./images:/usr/src/app/images

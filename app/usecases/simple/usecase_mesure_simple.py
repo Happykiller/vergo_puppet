@@ -1,8 +1,9 @@
+#app\usecases\simple\usecase_mesure_simple.py
 import joblib
 from app.services.logger import logger
 from app.repositories.memory import get_model
-from app.machine_learning.neural_network_simple import predict
-from app.usecases.simple_nn.simple_nn_commons import process_input_data
+from app.neural_network.nn_simple import predict
+from app.usecases.simple.usecase_commons_simple import process_input_data
 
 def mesure_simple_nn(name, test_data):
     try:
@@ -15,7 +16,7 @@ def mesure_simple_nn(name, test_data):
         if nn_model is None:
             raise Exception("Model not trained yet")
         
-        # Charger l'encodeur, le scaler et les indices
+        # Load encoder, scaler, and indices
         encoder_filename = model.get("encoder_filename")
         scaler_filename = model.get("scaler_filename")
         indices_filename = model.get("indices_filename")
@@ -28,14 +29,14 @@ def mesure_simple_nn(name, test_data):
         categorical_indices = indices_info["categorical_indices"]
         numerical_indices = indices_info["numerical_indices"]
         
-        # Récupérer les paramètres de normalisation des targets
+        # Retrieve normalization parameters for targets
         targets_mean = model.get("targets_mean")
         targets_std = model.get("targets_std")
         if targets_mean is None or targets_std is None:
             raise Exception("Missing normalization parameters in the model")
         
         for data in test_data:
-            # Préparer les données d'entrée
+            # Prepare input data
             input_data = [
                 data.type,
                 data.surface,
@@ -50,32 +51,32 @@ def mesure_simple_nn(name, test_data):
             ]
             expected = data.price
             
-            # Transformer les données d'entrée
+            # Transform input data
             input_processed = process_input_data(input_data, encoder, scaler, categorical_indices, numerical_indices)
             
-            # Prédiction
+            # Prediction
             predicted = predict(nn_model, input_processed, targets_mean, targets_std)
             
-            # Calcul de l'erreur
+            # Calculate error
             error = abs(predicted - expected)
             percentage_error = (error / expected) * 100
             total_error += error
             total_percentage_error += percentage_error
             
-            # Considérer la prédiction correcte si l'erreur est inférieure ou égale à 10% du prix réel
+            # Consider prediction correct if error is within 10% of the actual price
             if percentage_error <= 10:
                 correct_predictions += 1
             
-            # Utiliser le logger pour les sorties
-            logger.info(f"Requête: {input_data}")
-            logger.info(f"Prix attendu: {expected}€, Prix donné par le modèle: {predicted:.2f}€, Erreur: {error:.2f}€, Erreur en %: {percentage_error:.2f}%")
+            # Log output
+            logger.info(f"Request: {input_data}")
+            logger.info(f"Expected price: {expected}€, Model price: {predicted:.2f}€, Error: {error:.2f}€, Percentage error: {percentage_error:.2f}%")
         
         avg_error = total_error / total_tests
         avg_percentage_error = total_percentage_error / total_tests
-        # Afficher le nombre de prédictions correctes sur le nombre total d'essais
-        logger.info(f"Nombre de prédictions correctes: {correct_predictions}/{total_tests}")
-        logger.info(f"Erreur absolue moyenne (MAE) sur le jeu de test: {avg_error:.2f}€")
-        logger.info(f"Erreur absolue moyenne en pourcentage (MAPE) sur le jeu de test: {avg_percentage_error:.2f}%")
+        # Log the number of correct predictions out of the total test cases
+        logger.info(f"Number of correct predictions: {correct_predictions}/{total_tests}")
+        logger.info(f"Mean Absolute Error (MAE) on the test set: {avg_error:.2f}€")
+        logger.info(f"Mean Absolute Percentage Error (MAPE) on the test set: {avg_percentage_error:.2f}%")
     except Exception as e:
-        logger.error(f"Une erreur s'est produite pendant la mesure : {str(e)}")
-        raise Exception(f"Une erreur s'est produite pendant la mesure : {str(e)}")
+        logger.error(f"An error occurred during measurement: {str(e)}")
+        raise Exception(f"An error occurred during measurement: {str(e)}")

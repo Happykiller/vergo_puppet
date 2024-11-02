@@ -1,36 +1,46 @@
+#app\usecases\gru\usecase_search_gru.py
 from typing import List
 from app.repositories.memory import get_model
 from fastapi import HTTPException  # type: ignore
-from app.machine_learning.nn_gru import predict
+from app.neural_network.nn_gru import predict
 from app.usecases.gru.usecase_commons_gru import process_input
 
 def search_model_gru(name: str, vector: List[str]):
     """
-    Utilise le modèle GRU pour prédire la catégorie d'une nouvelle séquence de tokens.
-    :param name: Nom du modèle.
-    :param vector: Liste de tokens représentant la séquence à classer.
-    :return: Catégorie prédite.
+    Uses the GRU model to predict the category of a new sequence of tokens.
+    :param name: Name of the model.
+    :param vector: List of tokens representing the sequence to classify.
+    :return: Predicted category.
     """
+    # Retrieve model data from memory
     model_data = get_model(name)
     
+    # Check if the model data is found
     if model_data is None or not model_data:
-        raise HTTPException(status_code=404, detail="Modèle non trouvé")
+        # Raise a 404 error if the model is not found
+        raise HTTPException(status_code=404, detail="Model not found")
     
+    # Extract the neural network model from the data
     nn_model = model_data.get("nn_model", None)
     if nn_model is None:
-        raise HTTPException(status_code=400, detail="Modèle non entraîné")
+        # Raise a 400 error if the model is not trained
+        raise HTTPException(status_code=400, detail="Model not trained")
     
+    # Retrieve word-to-index and index-to-category mappings
     word2idx = model_data.get("word2idx", None)
     idx2category = model_data.get("idx2category", None)
     if word2idx is None or idx2category is None:
-        raise HTTPException(status_code=400, detail="Données du modèle incomplètes")
+        # Raise a 400 error if essential model data is incomplete
+        raise HTTPException(status_code=400, detail="Model data incomplete")
     
-    # Préparer la séquence d'entrée
+    # Process the input sequence using the word-to-index mapping
     input = process_input(vector, word2idx)
 
-    # Charger le modèle avec les hyperparamètres appropriés
+    # Make a prediction using the GRU model
     predicted_idx = predict(nn_model, input)
 
+    # Map the predicted index to the corresponding category
     predicted_category = idx2category[predicted_idx]
     
+    # Return the predicted category in a dictionary
     return {"category": predicted_category}

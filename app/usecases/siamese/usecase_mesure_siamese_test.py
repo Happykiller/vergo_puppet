@@ -1,88 +1,89 @@
+#app\usecases\siamese\usecase_mesure_siamese_test.py
 import pytest
 from unittest.mock import patch, MagicMock
 from app.usecases.siamese.usecase_mesure_siamese import mesure_siamese
 
-# Test 1 : Succès de la mesure avec des données de test valides
+# Test 1: Successful measurement with valid test data
 @patch('app.usecases.siamese.usecase_mesure_siamese.evaluate_similarity')
 @patch('app.usecases.siamese.usecase_mesure_siamese.create_indexed_glossary')
 @patch('app.usecases.siamese.usecase_mesure_siamese.get_model')
 @patch('app.usecases.siamese.usecase_mesure_siamese.logger')
 def test_mesure_siamese_success(mock_logger, mock_get_model, mock_create_indexed_glossary, mock_evaluate_similarity):
-    # Mock des données du modèle
+    # Mock model data
     mock_get_model.return_value = {
         "name": "test_siamese_model",
         "nn_model": MagicMock(),
         "glossary": ["dog", "cat", "bird"]
     }
     
-    # Simuler le glossaire indexé et la fonction d'évaluation
+    # Simulate indexed glossary and similarity function
     mock_create_indexed_glossary.return_value = {"dog": 0, "cat": 1, "bird": 2}
-    mock_evaluate_similarity.side_effect = [1.0, 0.7, 0.4]  # Similarités simulées
+    mock_evaluate_similarity.side_effect = [1.0, 0.7, 0.4]  # Mocked similarities
     
-    # Données de test
+    # Test data
     test_data = [
         (["dog"], ["dog"], 1.0),
         (["cat"], ["bird"], 0.7),
         (["dog"], ["cat"], 0.4)
     ]
     
-    # Appeler la fonction mesure_siamese
+    # Call mesure_siamese function
     mesure_siamese("test_siamese_model", test_data)
     
-    # Vérifier que les logs incluent le nombre de prédictions correctes et la précision
-    mock_logger.info.assert_any_call("Nombre de prédictions correctes: 3/3")
-    mock_logger.info.assert_any_call("Précision moyenne du modèle sur le jeu de test: 100.00%")
+    # Check that logs include the number of correct predictions and accuracy
+    mock_logger.info.assert_any_call("Correct predictions: 3/3")
+    mock_logger.info.assert_any_call("Model average accuracy on the test set: 100.00%")
 
-# Test 2 : Erreur si le modèle n'est pas trouvé
+# Test 2: Error if the model is not found
 @patch('app.usecases.siamese.usecase_mesure_siamese.get_model', return_value=None)
 @patch('app.usecases.siamese.usecase_mesure_siamese.logger')
 def test_mesure_siamese_model_not_found(mock_logger, mock_get_model):
-    # Données de test
+    # Test data
     test_data = [(["dog"], ["cat"], 0.5)]
     
-    # Vérifier qu'une exception est levée si le modèle est introuvable
+    # Check that an exception is raised if the model is not found
     with pytest.raises(Exception, match="Model not found"):
         mesure_siamese("unknown_model", test_data)
     
-    # Vérifier que l'erreur a été loggée
-    mock_logger.error.assert_called_once_with("Une erreur s'est produite pendant test_siamese : Model not found")
+    # Verify that the error was logged
+    mock_logger.error.assert_called_once_with("An error occurred during siamese testing: Model not found")
 
-# Test 3 : Erreur si le modèle ne contient pas de nn_model ou de glossaire
+# Test 3: Error if the model lacks nn_model or glossary
 @patch('app.usecases.siamese.usecase_mesure_siamese.get_model', return_value={"glossary": ["dog", "cat", "bird"]})
 @patch('app.usecases.siamese.usecase_mesure_siamese.logger')
 def test_mesure_siamese_incomplete_model_data(mock_logger, mock_get_model):
-    # Données de test
+    # Test data
     test_data = [(["dog"], ["cat"], 0.5)]
     
-    # Vérifier qu'une exception est levée si nn_model est manquant
+    # Check that an exception is raised if nn_model is missing
     with pytest.raises(Exception, match="Model not completed"):
         mesure_siamese("test_siamese_model", test_data)
     
-    # Vérifier que l'erreur a été loggée
-    mock_logger.error.assert_called_once_with("Une erreur s'est produite pendant test_siamese : Model not completed")
+    # Verify that the error was logged
+    mock_logger.error.assert_called_once_with("An error occurred during siamese testing: Model not completed")
 
-# Test 4 : Log des détails de la prédiction
+# Test 4: Logs prediction details
 @patch('app.usecases.siamese.usecase_mesure_siamese.evaluate_similarity')
 @patch('app.usecases.siamese.usecase_mesure_siamese.create_indexed_glossary')
 @patch('app.usecases.siamese.usecase_mesure_siamese.get_model')
 @patch('app.usecases.siamese.usecase_mesure_siamese.logger')
 def test_mesure_siamese_logs_predictions(mock_logger, mock_get_model, mock_create_indexed_glossary, mock_evaluate_similarity):
-    # Mock des données du modèle
+    # Mock model data
     mock_get_model.return_value = {
         "nn_model": MagicMock(),
         "glossary": ["dog", "cat", "bird"]
     }
     
-    # Simuler le glossaire indexé et les similarités prédites
+    # Simulate indexed glossary and predicted similarity
     mock_create_indexed_glossary.return_value = {"dog": 0, "cat": 1, "bird": 2}
-    mock_evaluate_similarity.side_effect = [0.95]  # Similarité simulée
+    mock_evaluate_similarity.side_effect = [0.95]  # Mocked similarity
 
-    # Données de test
+    # Test data
     test_data = [(["dog"], ["cat"], 1.0)]
     
-    # Appeler la fonction mesure_siamese
+    # Call mesure_siamese function
     mesure_siamese("test_siamese_model", test_data)
     
-    # Vérifier que les logs de requêtes et des prédictions sont appelés
-    mock_logger.info.assert_any_call("Requête: ['dog'], Image: ['cat']")
-    mock_logger.info.assert_any_call("Similarité attendue: 100.0%, Similarité donnée par le modèle: 95.00%, Erreur: 5.00%")
+    # Check that logs for requests and predictions were called
+    mock_logger.info.assert_any_call("Query: ['dog'], Image: ['cat']")
+    mock_logger.info.assert_any_call("Expected similarity: 100.0%, Model similarity: 95.00%, Error: 5.00%")
