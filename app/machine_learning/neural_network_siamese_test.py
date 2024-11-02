@@ -4,12 +4,8 @@ import pytest
 import random
 import numpy as np
 from app.usecases.tokens_to_indices import tokens_to_indices
-from app.commons.commons import create_glossary_from_dictionary, create_glossary_from_training_data
-from app.machine_learning.neural_network_siamese import (
-    SiameseLSTM,
-    train_siamese_model_nn,
-    evaluate_similarity
-)
+from app.machine_learning.neural_network_siamese import SiameseLSTM, train_siamese_model_nn, evaluate_similarity
+from app.usecases.siamese.usecase_commons_siamese import create_glossary_from_dictionary, create_glossary_from_training_data
 
 def set_seed(seed=42):
     random.seed(seed)

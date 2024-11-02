@@ -1,9 +1,11 @@
-from app.commons.commons import create_indexed_glossary
-from app.machine_learning.neural_network_siamese import evaluate_similarity
-from app.repositories.memory import get_model
-from app.services.logger import logger
-from app.usecases.tokens_to_indices import tokens_to_indices
+#app\usecases\siamese\usecase_search_siamese.py
 from fastapi import HTTPException # type: ignore
+
+from app.services.logger import logger
+from app.repositories.memory import get_model
+from app.usecases.tokens_to_indices import tokens_to_indices
+from app.machine_learning.neural_network_siamese import evaluate_similarity
+from app.usecases.siamese.usecase_commons_siamese import create_indexed_glossary
 
 def search_model_siamese(name: str, search: list):
     model = get_model(name)

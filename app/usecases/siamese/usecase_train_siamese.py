@@ -1,10 +1,12 @@
-from app.commons.commons import create_glossary_from_training_data
-from app.machine_learning.neural_network_siamese import train_siamese_model_nn
+#app\usecases\siamese\usecase_train_siamese.py
+from typing import List, Tuple
+from fastapi import HTTPException  # type: ignore
+
+from app.services.logger import logger
 from app.repositories.memory import get_model, update_model
 from app.usecases.tokens_to_indices import tokens_to_indices
-from fastapi import HTTPException  # type: ignore
-from typing import List, Tuple
-from app.services.logger import logger
+from app.machine_learning.neural_network_siamese import train_siamese_model_nn
+from app.usecases.siamese.usecase_commons_siamese import create_glossary_from_training_data
 
 def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str], float]]):
     """

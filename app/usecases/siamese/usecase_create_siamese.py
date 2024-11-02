@@ -1,9 +1,9 @@
-from app.repositories.memory import model_exists, save_model
-from fastapi import HTTPException  # type: ignore
+#app\usecases\siamese\usecase_create_siamese.py
 from typing import List
-from app.services.logger import logger
+from fastapi import HTTPException  # type: ignore
 
-# Importer la fonction de conversion
+from app.services.logger import logger
+from app.repositories.memory import model_exists, save_model
 from app.usecases.tokens_to_indices import tokens_to_indices  # Ajuster le chemin si nécessaire
 
 def create_model_siamese(name: str, dictionary: List[List[str]], glossary: List[str], neural_network_type="SimpleNN"):
