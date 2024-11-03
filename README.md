@@ -1,6 +1,6 @@
 # Vergo Puppet
 
-AI for Vergo service
+AI for the Vergo service
 
 ## Table of Contents
 
@@ -9,11 +9,12 @@ AI for Vergo service
 3. [Running Tests](#running-tests)
 4. [APIs Overview](#apis-overview)
 5. [Machine Learning](#machine-learning)
-   - [Puppet-o1 (Simple Model)](#puppet-o1)
-   - [Puppet-o2 (GRU Model)](#puppet-o2)
-   - [Puppet-o3 (SIAMESE Model)](#puppet-o3)
-   - [Puppet-o4 (LSTM Model)](#puppet-o4)
-## Installation
+   - [Puppet-o1 (Simple Model)](#puppet-o1-simple-model)
+   - [Puppet-o2 (GRU Model)](#puppet-o2-gru-model)
+   - [Puppet-o3 (SIAMESE Model)](#puppet-o3-siamese-model)
+   - [Puppet-o4 (LSTM Model)](#puppet-o4-lstm-model)
+
+# Installation
 
 To install dependencies, run:
 
@@ -28,7 +29,7 @@ Install spacy dependencies
 python3 -m spacy download fr_core_news_md
 ```
 
-## Development Server
+# Development Server
 
 To start the development server, use:
 
@@ -36,7 +37,7 @@ To start the development server, use:
 uvicorn app.main:app --reload
 ```
 
-## Running Tests
+# Running Tests
 
 To install pytest, run:
 
@@ -56,36 +57,33 @@ To run focused tests (marked with `@pytest.mark.focus`):
 pytest tests/test_search.py -m focus -s
 ```
 
-## APIs Overview
+# APIs Overview
 
 The following APIs are available in the Vergo service, providing functionalities for model management, training, searching, and testing. The functionality depends on the model type (e.g., SIAMESE).
 
-### ✉️ Model Management APIs
+## ✉️ Model Management APIs
 
-#### ✨ Creation of a Model
+### ✨ Creating a Model
 
-This endpoint allows the creation of a new model by specifying key parameters, such as the model name, neural network type, dictionary, and glossary. It facilitates the management of different models that can be used for training and searching.
+This endpoint allows the creation of a new model by specifying key parameters, such as the model name, neural network type, dictionary, and glossary.
 
-<details>
-<summary>📝 <code>POST</code> <code><b>/create_model</b></code> <code>(Create a new model)</code></summary>
+**Method**: `POST` `/create_model`
 
 #### Parameters
 
-| Name              | Optional | Type          | Description                                                                                |
-|-------------------|----------|---------------|--------------------------------------------------------------------------------------------|
-| 🆔 name            | Required | string        | Name of the model to be created.                                                            |
-| 🧠 neural_network_type | Required | string   | Type of neural network to create, such as `"SIAMESE"`.                                      |
-| 📖 dictionary      | Required | list of lists | List of training pairs to use for building the model.                                       |
-| 📚 glossary        | Required | list of strings | A list of all terms used across the dictionary entries.                                    |
+- **name** *(string, required)*: Name of the model to create.
+- **neural_network_type** *(string, required)*: Type of neural network to create, e.g., `"SIAMESE"`.
+- **dictionary** *(list of lists, required)*: List of training pairs to use for building the model.
+- **glossary** *(list of strings, required)*: A list of all terms used across the dictionary entries.
 
 #### Responses
 
-| 📊 HTTP Code | 📄 Content Type       | 📝 Response                                                                 |
-|--------------|----------------------|------------------------------------------------------------------------------|
-| `201`        | `application/json`   | `{"message": "Model created successfully", "model_id": "model1"}`  |
-| `400`        | `application/json`   | `{"error": "Missing or invalid parameter"}`                             |
+| HTTP Code | Content Type        | Response                                                        |
+|-----------|---------------------|-----------------------------------------------------------------|
+| `201`     | `application/json`  | `{"message": "Model created successfully", "model_id": "model1"}` |
+| `400`     | `application/json`  | `{"error": "Missing or invalid parameter"}`                     |
 
-##### 🛠️ Example CURL
+**Example CURL**
 
 ```bash
 curl -X POST http://localhost/api/create_model \
@@ -98,30 +96,25 @@ curl -X POST http://localhost/api/create_model \
   }'
 ```
 
-</details>
-
-#### ✨ Training a Model
+### ✨ Training a Model
 
 This endpoint initiates training for a specified model using the provided training data.
 
-<details>
-<summary>📝 <code>POST</code> <code><b>/train_model</b></code> <code>(Train an existing model)</code></summary>
+**Method**: `POST` `/train_model`
 
 #### Parameters
 
-| Name              | Optional | Type          | Description                                                                                |
-|-------------------|----------|---------------|--------------------------------------------------------------------------------------------|
-| 🆔 name            | Required | string        | Name of the model to be trained.                                                            |
-| 🏋️‍♂️ training_data | Required | list of tuples | Training pairs consisting of input sequences and similarity scores.                          |
+- **name** *(string, required)*: Name of the model to be trained.
+- **training_data** *(list of tuples, required)*: Training pairs consisting of input sequences and similarity scores.
 
 #### Responses
 
-| 📊 HTTP Code | 📄 Content Type       | 📝 Response                                                                 |
-|--------------|----------------------|------------------------------------------------------------------------------|
-| `200`        | `application/json`   | `{"message": "Model trained successfully"}`                              |
-| `400`        | `application/json`   | `{"error": "Invalid training data"}`                                     |
+| HTTP Code | Content Type        | Response                                      |
+|-----------|---------------------|-----------------------------------------------|
+| `200`     | `application/json`  | `{"message": "Model trained successfully"}`   |
+| `400`     | `application/json`  | `{"error": "Invalid training data"}`          |
 
-##### 🛠️ Example CURL
+**Example CURL**
 
 ```bash
 curl -X POST http://localhost/api/train_model \
@@ -135,32 +128,27 @@ curl -X POST http://localhost/api/train_model \
   }'
 ```
 
-</details>
+## 🔍 Searching and Testing APIs
 
-### 🔍 Searching and Testing APIs
-
-#### ✨ Searching with a Model
+### ✨ Searching with a Model
 
 This endpoint allows clients to search using the trained model to retrieve relevant results or similarity scores based on the input query.
 
-<details>
-<summary>📝 <code>POST</code> <code><b>/search</b></code> <code>(Search using a model)</code></summary>
+**Method**: `POST` `/search`
 
 #### Parameters
 
-| Name              | Optional | Type          | Description                                                                                |
-|-------------------|----------|---------------|--------------------------------------------------------------------------------------------|
-| 🆔 name            | Required | string        | Name of the model to be used for the search.                                               |
-| 🔍 vector          | Required | list of strings | Input vector used to search for similar results.                                          |
+- **name** *(string, required)*: Name of the model to use for the search.
+- **vector** *(list of strings, required)*: Input vector used to search for similar results.
 
 #### Responses
 
-| 📊 HTTP Code | 📄 Content Type       | 📝 Response                                                                 |
-|--------------|----------------------|------------------------------------------------------------------------------|
-| `200`        | `application/json`   | `{"results": [...]}`                                                       |
-| `400`        | `application/json`   | `{"error": "Invalid vector format"}`                                     |
+| HTTP Code | Content Type        | Response                              |
+|-----------|---------------------|---------------------------------------|
+| `200`     | `application/json`  | `{"results": [...]}`                  |
+| `400`     | `application/json`  | `{"error": "Invalid vector format"}`  |
 
-##### 🛠️ Example CURL
+**Example CURL**
 
 ```bash
 curl -X POST http://localhost/api/search \
@@ -171,31 +159,26 @@ curl -X POST http://localhost/api/search \
   }'
 ```
 
-</details>
-
-#### ✨ Testing a Model
+### ✨ Testing a Model
 
 This endpoint is used to test a specified model using the provided test data and return evaluation metrics.
 
-<details>
-<summary>📝 <code>POST</code> <code><b>/test</b></code> <code>(Test a model)</code></summary>
+**Method**: `POST` `/test`
 
 #### Parameters
 
-| Name              | Optional | Type          | Description                                                                                |
-|-------------------|----------|---------------|--------------------------------------------------------------------------------------------|
-| 🆔 name            | Required | string        | Name of the model to be tested.                                                             |
-| 🔄 neural_network_type | Required | string   | Type of neural network (e.g., `"SIAMESE"`).                                                 |
-| 🧪 test_data       | Required | list of tuples | Test data consisting of input pairs and expected similarity scores.                         |
+- **name** *(string, required)*: Name of the model to test.
+- **neural_network_type** *(string, required)*: Type of neural network (e.g., `"SIAMESE"`).
+- **test_data** *(list of tuples, required)*: Test data consisting of input pairs and expected similarity scores.
 
 #### Responses
 
-| 📊 HTTP Code | 📄 Content Type       | 📝 Response                                                                 |
-|--------------|----------------------|------------------------------------------------------------------------------|
-| `200`        | `application/json`   | `{"evaluation": {"accuracy": 0.95}}`                                      |
-| `400`        | `application/json`   | `{"error": "Invalid test data"}`                                         |
+| HTTP Code | Content Type        | Response                                |
+|-----------|---------------------|-----------------------------------------|
+| `200`     | `application/json`  | `{"evaluation": {"accuracy": 0.95}}`    |
+| `400`     | `application/json`  | `{"error": "Invalid test data"}`        |
 
-##### 🛠️ Example CURL
+**Example CURL**
 
 ```bash
 curl -X POST http://localhost/api/test \
@@ -210,64 +193,305 @@ curl -X POST http://localhost/api/test \
   }'
 ```
 
-</details>
-
 ### ✨ Listing Models
 
 Provides a list of all models that are currently available in the system.
 
-<details>
-<summary>📝 <code>GET</code> <code><b>/models</b></code> <code>(List available models)</code></summary>
+**Method**: `GET` `/models`
 
 #### Responses
 
-| 📊 HTTP Code | 📄 Content Type       | 📝 Response                                                                 |
-|--------------|----------------------|------------------------------------------------------------------------------|
-| `200`        | `application/json`   | `{"models": ["model1", "model2"]}`                                      |
+| HTTP Code | Content Type        | Response                             |
+|-----------|---------------------|--------------------------------------|
+| `200`     | `application/json`  | `{"models": ["model1", "model2"]}`   |
 
-##### 🛠️ Example CURL
+**Example CURL**
 
 ```bash
 curl -X GET http://localhost/api/models
 ```
 
-</details>
-
 ### ✨ API Version
 
 Retrieves the current version of the API in use.
 
-<details>
-<summary>📝 <code>GET</code> <code><b>/version</b></code> <code>(Get API version)</code></summary>
+**Method**: `GET` `/version`
 
 #### Responses
 
-| 📊 HTTP Code | 📄 Content Type       | 📝 Response                                                                 |
-|--------------|----------------------|------------------------------------------------------------------------------|
-| `200`        | `application/json`   | `{"version": "1.0.0"}`                                                  |
+| HTTP Code | Content Type        | Response                     |
+|-----------|---------------------|------------------------------|
+| `200`     | `application/json`  | `{"version": "1.0.0"}`       |
 
-##### 🛠️ Example CURL
+**Example CURL**
 
 ```bash
 curl -X GET http://localhost/api/version
 ```
 
-</details>
+# Machine Learning
 
-## Machine Learning
+## Puppet-o1 (Simple Model)
 
-### Puppet-o1 (SIAMESE Model)
+The `SimpleNN` model is used for regression tasks, such as predicting property prices based on input features like surface area, number of rooms, floor, and neighborhood.
 
-The SIAMESE model is a type of neural network architecture used primarily for tasks involving similarity, such as comparing two inputs to determine how similar they are. This model is particularly useful for problems such as facial recognition, signature verification, or any scenario where the goal is to identify how closely two inputs match.
+### APIs for Puppet-o1
 
-The SIAMESE model helps in various applications by providing reliable similarity scoring, which can be leveraged for identity verification, product recommendations, and more. The model learns to generate embedding vectors for each input, which can then be compared using a similarity measure, such as cosine similarity.
+- **/create_model**: Creates a new `SimpleNN` model.
+  - **Example**:
+    ```json
+    {
+      "name": "puppet-o1",
+      "neural_network_type": "SimpleNN"
+    }
+    ```
 
-#### APIs for Puppet-o1
+- **/train_model**: Trains the `SimpleNN` model using structured training data.
+  - **Example**:
+    ```json
+    {
+      "name": "puppet-o1",
+      "neural_network_type": "SimpleNN",
+      "training_data": [
+        {
+          "type": 4,
+          "surface": 98,
+          "pieces": 4,
+          "floor": 5,
+          "parking": 1,
+          "balcony": 0,
+          "elevator": 1,
+          "orientation": 6,
+          "transports": 1,
+          "neighborhood": 1,
+          "price": 215000
+        },
+        {
+          "type": 4,
+          "surface": 68,
+          "pieces": 4,
+          "floor": 5,
+          "parking": 1,
+          "balcony": 1,
+          "elevator": 1,
+          "orientation": 0,
+          "transports": 1,
+          "neighborhood": 2,
+          "price": 130000
+        }
+      ]
+    }
+    ```
 
-The following APIs are specifically used when working with the SIAMESE model:
+- **/search**: Uses the trained `SimpleNN` model to predict a result based on an input vector.
+  - **Example**:
+    ```json
+    {
+      "name": "puppet-o1",
+      "neural_network_type": "SimpleNN",
+      "vector": {
+        "type": 3,
+        "surface": 70,
+        "pieces": 3,
+        "floor": 2,
+        "parking": 0,
+        "balcony": 0,
+        "elevator": 0,
+        "orientation": 3,
+        "transports": 1,
+        "neighborhood": 1
+      }
+    }
+    ```
 
-- **/create_model**: Creates a new SIAMESE model. Requires parameters such as `name`, `dictionary`, `glossary`, and `neural_network_type` set to `"SIAMESE"`.
-  - **Input Format**: JSON object containing `name` (str), `dictionary` (list of list of strings), `glossary` (list of strings), and `neural_network_type` (`"SIAMESE"`).
+- **/test**: Tests the `SimpleNN` model using test data and returns evaluation metrics.
+  - **Example**:
+    ```json
+    {
+      "name": "puppet-o1",
+      "neural_network_type": "SimpleNN",
+      "test_data": [
+        {
+          "type": 4,
+          "surface": 98,
+          "pieces": 4,
+          "floor": 5,
+          "parking": 1,
+          "balcony": 0,
+          "elevator": 1,
+          "orientation": 6,
+          "transports": 1,
+          "neighborhood": 1,
+          "price": 215000
+        },
+        {
+          "type": 4,
+          "surface": 68,
+          "pieces": 4,
+          "floor": 5,
+          "parking": 1,
+          "balcony": 1,
+          "elevator": 1,
+          "orientation": 0,
+          "transports": 1,
+          "neighborhood": 2,
+          "price": 130000
+        }
+      ]
+    }
+    ```
+
+## Puppet-o2 (GRU Model)
+
+The GRU (Gated Recurrent Unit) model is a type of recurrent neural network used primarily for sequence classification tasks, such as determining the category of a given sequence of tokens.
+
+### APIs for Puppet-o2
+
+- **/create_model**: Creates a new GRU model.
+
+  - **Example**:
+
+    ```json
+    {
+      "name": "puppet-o2",
+      "neural_network_type": "GRU"
+    }
+    ```
+
+- **/train_model**: Trains the GRU model using labeled training data to learn classification tasks.
+
+  - **Example**:
+
+    ```json
+    {
+      "name": "puppet-o2",
+      "neural_network_type": "GRU",
+      "training_data": [
+        {
+          "tokens": [
+            "ne",
+            "arriver",
+            "connecter",
+            "[service_k]",
+            "me",
+            "activer",
+            "compte"
+          ],
+          "category": "probleme_connexion"
+        },
+        {
+          "tokens": [
+            "modification",
+            "mot",
+            "passe",
+            "session",
+            "[outlook]",
+            "parvenir",
+            "connecter",
+            "[service_k]",
+            "je",
+            "avoir",
+            "tester",
+            "ancien",
+            "mot",
+            "passe",
+            "fonctionner",
+            "non",
+            "[mail]",
+            "[name]"
+          ],
+          "category": "probleme_connexion"
+        }
+      ]
+    }
+    ```
+
+- **/search**: Uses the GRU model to predict the category of a given input sequence.
+
+  - **Example**:
+
+    ```json
+    {
+      "name": "puppet-o2",
+      "neural_network_type": "GRU",
+      "vector": [
+        "ticket",
+        "créer",
+        "suite",
+        "e-mail",
+        "création",
+        "utilisateur",
+        "coffre",
+        "banque",
+        "sarl"
+      ]
+    }
+    ```
+
+- **/test**: Tests the GRU model with specific inputs to evaluate the model's performance.
+
+  - **Example**:
+
+    ```json
+    {
+      "name": "puppet-o2",
+      "neural_network_type": "GRU",
+      "test_data": [
+        {
+          "tokens": [
+            "après-midi",
+            "impossible",
+            "accéder",
+            "mot",
+            "passer",
+            "stocker",
+            "[service_k]",
+            "voir",
+            "image",
+            "joindre"
+          ],
+          "category": "gestion_compte"
+        },
+        {
+          "tokens": [
+            "ticket",
+            "créer",
+            "suite",
+            "appel",
+            "déblocage",
+            "utilisateur",
+            "[name]"
+          ],
+          "category": "gestion_acces"
+        }
+      ]
+    }
+    ```
+
+- **/tokenize**: Tokenizes raw text data to prepare it for training or classification.
+
+  - **Example**:
+
+    ```json
+    {
+      "data": [
+        {
+          "description": "Bonjour, je n'arrive pas à me connecter à service, est-il possible de m'activer le compte. Merci"
+        },
+        {
+          "description": "Bonjour, depuis la modification de mon mot de passe de session Outlook, je ne parviens plus à me connecter à [service_k]. J'ai testé avec l'ancien mot de passe mais cela ne fonctionne pas non plus!"
+        }
+      ]
+    }
+    ```
+
+## Puppet-o3 (SIAMESE Model)
+
+The SIAMESE model is a type of neural network architecture used primarily for tasks involving similarity, such as comparing two inputs to determine how similar they are.
+
+### APIs for Puppet-o3
+
+- **/create_model**: Creates a new SIAMESE model.
   - **Example**:
     ```json
     {
@@ -278,8 +502,7 @@ The following APIs are specifically used when working with the SIAMESE model:
     }
     ```
 
-- **/train_model**: Initiates training for the SIAMESE model using pairs of data to learn similarity relationships.
-  - **Input Format**: JSON object containing `name` (str) and `training_data` (list of tuples), where each tuple contains two lists of tokens (`siamese1`, `siamese2`) and optionally a similarity score (float).
+- **/train_model**: Trains the SIAMESE model using pairs of data to learn similarity relationships.
   - **Example**:
     ```json
     {
@@ -292,7 +515,6 @@ The following APIs are specifically used when working with the SIAMESE model:
     ```
 
 - **/search**: Searches using the SIAMESE model to find the similarity between the given input vector and existing data.
-  - **Input Format**: JSON object containing `name` (str) and `vector` (list of strings).
   - **Example**:
     ```json
     {
@@ -302,7 +524,6 @@ The following APIs are specifically used when working with the SIAMESE model:
     ```
 
 - **/test**: Tests the SIAMESE model with specific pairs of inputs to evaluate the model's performance.
-  - **Input Format**: JSON object containing `name` (str), `neural_network_type` (`"SIAMESE"`), and `test_data` (list of tuples), where each tuple contains two lists of tokens and a similarity score (float).
   - **Example**:
     ```json
     {
@@ -315,118 +536,121 @@ The following APIs are specifically used when working with the SIAMESE model:
     }
     ```
 
-### Puppet-o2 (SimpleNN Model)
+## Puppet-o4 (LSTM Model)
 
-The `SimpleNN` model is used for regression tasks, such as predicting property prices based on input features like surface area, number of rooms, floor, and neighborhood. The following APIs allow you to create, train, search, and test a `SimpleNN` model.
+The LSTM (Long Short-Term Memory) model is a type of recurrent neural network used primarily for sequence prediction tasks, such as forecasting future values based on time-series data.
 
-#### APIs for Puppet-o2
+### APIs for Puppet-o4
 
-The following APIs are used to create, train, search, and test the `SimpleNN` model.
-
-- **/create_model**: Creates a new `SimpleNN` model. Requires parameters such as `name` and `neural_network_type` set to `"SimpleNN"`.
-  - **Input Format**: JSON object containing `name` (str) and `neural_network_type` (`"SimpleNN"`).
+- **/create_model**: Creates a new LSTM model.
   - **Example**:
     ```json
     {
-      "name": "puppet-o1",
-      "neural_network_type": "SimpleNN"
+      "name": "puppet-o4",
+      "neural_network_type": "LSTM"
     }
     ```
 
-- **/train_model**: Initiates training for the `SimpleNN` model using structured training data (e.g., real estate data).
-  - **Input Format**: JSON object containing `name` (str) and `training_data` (list of dictionaries with parameters like `type`, `surface`, `pieces`, `price`, etc.).
+- **/train_model**: Trains the LSTM model using historical time-series data.
   - **Example**:
     ```json
     {
-      "name": "puppet-o1",
-      "neural_network_type": "SimpleNN",
+      "name": "puppet-o4",
+      "neural_network_type": "LSTM",
       "training_data": [
         {
-          "type": 4,
-          "surface": 98,
-          "pieces": 4,
-          "floor": 5,
-          "parking": 1,
-          "balcon": 0,
-          "ascenseur": 1,
-          "orientation": 6,
-          "transports": 1,
-          "neighborhood": 1,
-          "price": 215000
+          "time": "2018-01-01T00:00:00.000",
+          "temp": 5.4,
+          "dwpt": 5.0,
+          "rhum": 97.0,
+          "prcp": null,
+          "snow": null,
+          "wdir": 50.0,
+          "wspd": 16.6,
+          "wpgt": null,
+          "pres": 1016.0,
+          "tsun": null,
+          "coco": null
         },
         {
-          "type": 4,
-          "surface": 68,
-          "pieces": 4,
-          "floor": 5,
-          "parking": 1,
-          "balcon": 1,
-          "ascenseur": 1,
-          "orientation": 0,
-          "transports": 1,
-          "neighborhood": 2,
-          "price": 130000
+          "time": "2018-01-01T01:00:00.000",
+          "temp": 7.7,
+          "dwpt": 5.5,
+          "rhum": 86.0,
+          "prcp": 2.0,
+          "snow": null,
+          "wdir": 150.0,
+          "wspd": 11.2,
+          "wpgt": null,
+          "pres": 1018.3,
+          "tsun": null,
+          "coco": null
         }
       ]
     }
     ```
 
-- **/search**: Searches using the trained `SimpleNN` model to predict a result based on an input vector.
-  - **Input Format**: JSON object containing `name` (str), `neural_network_type` (`"SimpleNN"`), and `vector` representing property characteristics (e.g., `type`, `surface`, `pieces`, etc.).
+- **/search**: Uses the LSTM model to predict future values based on input features.
   - **Example**:
     ```json
     {
-      "name": "puppet-o1",
-      "neural_network_type": "SimpleNN",
+      "name": "puppet-o4",
+      "neural_network_type": "LSTM",
       "vector": {
-        "type": 3,
-        "surface": 70,
-        "pieces": 3,
-        "floor": 2,
-        "parking": 0,
-        "balcon": 0,
-        "ascenseur": 0,
-        "orientation": 3,
-        "transports": 1,
-        "neighborhood": 1
+        "time": "2024-10-28T12:00:00.000",
+        "dwpt": 10.0,
+        "rhum": 70.0,
+        "prcp": 0.0,
+        "wdir": 180.0,
+        "wspd": 5.0,
+        "pres": 1015.0,
+        "coco": 2
       }
     }
     ```
 
-- **/test**: Tests a `SimpleNN` model using test data and returns evaluation metrics (e.g., prediction accuracy).
-  - **Input Format**: JSON object containing `name` (str), `neural_network_type` (`"SimpleNN"`), and `test_data` (list of dictionaries similar to the training data).
+- **/test**: Tests the LSTM model with specific inputs to evaluate the model's performance.
   - **Example**:
     ```json
     {
-      "name": "puppet-o1",
-      "neural_network_type": "SimpleNN",
+      "name": "puppet-o4",
+      "neural_network_type": "LSTM",
       "test_data": [
         {
-          "type": 4,
-          "surface": 98,
-          "pieces": 4,
-          "floor": 5,
-          "parking": 1,
-          "balcon": 0,
-          "ascenseur": 1,
-          "orientation": 6,
-          "transports": 1,
-          "neighborhood": 1,
-          "price": 215000
+          "time": "2021-02-24T00:00:00.000",
+          "temp": 6.3,
+          "dwpt": 5.4,
+          "rhum": 94.0,
+          "prcp": 0.0,
+          "snow": null,
+          "wdir": 0.0,
+          "wspd": 0.0,
+          "wpgt": null,
+          "pres": 1037.6,
+          "tsun": null,
+          "coco": null
         },
         {
-          "type": 4,
-          "surface": 68,
-          "pieces": 4,
-          "floor": 5,
-          "parking": 1,
-          "balcon": 1,
-          "ascenseur": 1,
-          "orientation": 0,
-          "transports": 1,
-          "neighborhood": 2,
-          "price": 130000
+          "time": "2023-04-30T22:00:00.000",
+          "temp": 12.8,
+          "dwpt": 11.8,
+          "rhum": 95.0,
+          "prcp": 0.0,
+          "snow": null,
+          "wdir": 30.0,
+          "wspd": 3.6,
+          "wpgt": null,
+          "pres": 1016.4,
+          "tsun": null,
+          "coco": 3.0
         }
       ]
     }
+    ```
+
+- **/create_data_puppet-o4**: Fetches and saves hourly weather data for Grenoble from 2018 to 2024.
+    Data is collected from Meteostat and saved as a JSON file with key weather indicators.
+  - **Example**:
+    ```bash
+    GET {{host}}/create_data_puppet-o4
     ```

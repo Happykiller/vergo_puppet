@@ -1,20 +1,24 @@
-#Dockerfile
-# Utiliser une image Python comme base
+# Use a Python base image
 FROM python:3.10-slim
 
-# Définir le répertoire de travail
+# Set the working directory
 WORKDIR /app
 
-# Copier les fichiers du projet dans le container
-COPY . /app
-COPY requirements.txt /app
+# Copy the requirements file first (for caching purposes)
+COPY requirements.txt /app/requirements.txt
 
-# Installer les dépendances
+# Install dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Exposer le port sur lequel l'application va tourner
+# Download the spaCy model
+RUN python -m spacy download fr_core_news_md
+
+# Copy the rest of the project files
+COPY . /app
+
+# Expose the port the app runs on
 EXPOSE 8000
 
-# Lancer l'application
+# Run the application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

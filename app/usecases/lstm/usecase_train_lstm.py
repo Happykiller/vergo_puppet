@@ -17,10 +17,8 @@ def train_lstm(name: str, training_data: List[WeatherModelData]):
     :param training_data: List of training data.
     """
     model = get_model(name)
-    
     if model is None or not model:
         raise HTTPException(status_code=404, detail="Model not found")
-    
     if training_data is None or len(training_data) == 0:
         raise HTTPException(status_code=400, detail="No training data provided or training data is empty")
     
@@ -35,11 +33,6 @@ def train_lstm(name: str, training_data: List[WeatherModelData]):
     # Preparing data for training
     X_train, y_train = prepare_sequences(df_processed, y_temp_scaled)
 
-    # Save preprocessing objects
-    joblib.dump(scaler, f'{name}_scaler.pkl')
-    joblib.dump(target_scaler, f'{name}_target_scaler.pkl')
-    joblib.dump(coco_encoder, f'{name}_coco_encoder.pkl')
-
     # Check for NaNs in X_train and y_train
     if np.isnan(X_train).any():
         logger.error("X_train contains NaN values. Training aborted.")
@@ -47,6 +40,11 @@ def train_lstm(name: str, training_data: List[WeatherModelData]):
     if np.isnan(y_train).any():
         logger.error("y_train contains NaN values. Training aborted.")
         raise ValueError("y_train contains NaN values.")
+
+    # Save preprocessing objects
+    joblib.dump(scaler, f'{name}_scaler.pkl')
+    joblib.dump(target_scaler, f'{name}_target_scaler.pkl')
+    joblib.dump(coco_encoder, f'{name}_coco_encoder.pkl')
 
     # Model training
     nn_model = train_nn_lstm(X_train, y_train)

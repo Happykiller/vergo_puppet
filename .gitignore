@@ -168,3 +168,4 @@ puppet-o2_brut.json
 tokenize_regex.json
 *.pkl
 interfaces
+grenoble_weather_data.json
