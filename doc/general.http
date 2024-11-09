@@ -5,3 +5,12 @@ Content-Type: application/json
 ###
 GET {{host}}/version
 Content-Type: application/json
+
+### Test du endpoint sécurisé
+POST {{host}}/secure_endpoint
+Authorization: Bearer {{token}}
+
+Content-Type: application/json
+
+### Corps de la requête
+{}

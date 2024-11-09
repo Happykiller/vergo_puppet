@@ -11,3 +11,5 @@ pytest==8.3.3
 pytest-mock==3.14.0
 joblib==1.4.2
 scikit-learn==1.5.2
+python-dotenv==1.0.1
+pyjwt==2.9.0

@@ -122,7 +122,6 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
 .venv
 env/
 venv/
@@ -169,3 +168,5 @@ tokenize_regex.json
 *.pkl
 interfaces
 grenoble_weather_data.json
+vergo_puppet.tar
+.env.local

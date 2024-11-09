@@ -5,6 +5,6 @@ services:
     container_name: vergo_puppet
     build: .
     ports:
-      - "8000:8000"
+      - "3004:8000"
     volumes:
       - .:/app

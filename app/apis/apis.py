@@ -1,5 +1,9 @@
 #app\apis\apis.py
-from fastapi import APIRouter, HTTPException  # type: ignore
+import os
+import jwt
+from dotenv import load_dotenv
+from fastapi.security import OAuth2PasswordBearer # type: ignore
+from fastapi import Depends, APIRouter, HTTPException # type: ignore
 
 from app.version import __version__
 from app.services.logger import logger
@@ -162,3 +166,44 @@ async def get_version():
     Returns the current application version.
     """
     return {"version": __version__}
+
+# Instantiate OAuth2
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+
+# Token verification function (verify_access_token)
+def verify_access_token(token: str = Depends(oauth2_scheme)):
+    # Load the .env file
+    load_dotenv(".env")
+
+    # Load the .env.local file if present (override values if override=True)
+    load_dotenv(".env.local", override=True)
+
+    # Example of accessing an environment variable
+    SECRET_KEY = os.getenv("SECRET_KEY")
+
+    if not SECRET_KEY:
+        raise HTTPException(status_code=500, detail="Secret key not found")
+
+    try:
+        # Decode the token
+        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail="Token has expired")
+    except jwt.InvalidTokenError:
+        raise HTTPException(status_code=401, detail="Invalid token")
+
+    # Return the decoded payload
+    return payload
+
+# Example implementation of a secure endpoint
+@router.post("/secure_endpoint")
+async def secure_endpoint(payload: dict = Depends(verify_access_token)):
+    """
+    Example of a secure endpoint using JWT
+    """
+    try:
+        # Logic for your secure endpoint
+        logger.debug(f"payload: {payload}")
+        return {"message": "Secured endpoint accessed"}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="An error occurred")

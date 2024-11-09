@@ -4,5 +4,5 @@ services:
     image: vergo_puppet
     container_name: vergo_puppet
     ports:
-      - "8000:8000"
+      - "3004:8000"
     restart: always
