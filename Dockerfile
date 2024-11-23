@@ -5,11 +5,11 @@ FROM python:3.10-slim
 WORKDIR /app
 
 # Copy the requirements file first (for caching purposes)
-COPY requirements.txt /app/requirements.txt
+COPY requirements-prod.txt /app/requirements-prod.txt
 
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
+    pip install --no-cache-dir -r requirements-prod.txt
 
 # Download the spaCy model
 RUN python -m spacy download fr_core_news_md

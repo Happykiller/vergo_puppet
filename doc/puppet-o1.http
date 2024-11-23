@@ -1,5 +1,6 @@
 ###
 POST {{host}}/create_model
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -9,12 +10,14 @@ Content-Type: application/json
 
 ###
 POST {{host}}/train_model
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 < ./puppet-o1_train.json
 
 ###
 POST {{host}}/search
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
@@ -37,6 +40,7 @@ Content-Type: application/json
 
 ###
 POST {{host}}/test
+Authorization: Bearer {{token}}
 Content-Type: application/json
 
 < ./puppet-o1_test.json

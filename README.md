@@ -654,3 +654,7 @@ The LSTM (Long Short-Term Memory) model is a type of recurrent neural network us
     ```bash
     GET {{host}}/create_data_puppet-o4
     ```
+
+# History
+
+* 24/11/23 0.5.0 : Secure JWT

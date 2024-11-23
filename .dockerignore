@@ -1,0 +1,31 @@
+.vscode
+*.tar
+.vscode
+
+# Ignorer les dossiers inutiles
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorer les outils et configurations locales
+*.pytest_cache/
+*.vscode/
+.idea/
+.DS_Store
+
+# Ignorer les fichiers de documentation
+doc/
+README.md
+
+# Ignorer les fichiers Git
+.git/
+.gitignore
+
+# Ignorer les tests (si non nécessaires dans l'image)
+tests/
+*.test.py
+*_test.py
+
+# Ignorer les logs
+logs/
+*.log
