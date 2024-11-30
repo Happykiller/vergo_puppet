@@ -6,6 +6,14 @@ Content-Type: application/json
 < ./puppet-o3_create.json
 
 ###
+PATCH {{host}}/update_model
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+< ./puppet-o3_create.json
+
+
+###
 POST {{host}}/train_model
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -21,6 +29,20 @@ Content-Type: application/json
   "name": "puppet-o3",
   "neural_network_type": "SIAMESE",
   "vector": ["sit", "up"]
+}
+
+###
+POST {{host}}/prepare_cache
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "puppet-o3",
+  "neural_network_type": "SIAMESE",
+  "search_vectors": [
+    ["sit", "up"],
+    ["push", "up"]
+  ]
 }
 
 ### 

@@ -5,8 +5,8 @@ from app.services.logger import logger
 from app.repositories.memory import model_exists, save_model
 from app.usecases.siamese.usecase_commons_siamese import tokens_to_indices
 
-def create_model_siamese(name: str, dictionary: List[List[str]], glossary: List[str], neural_network_type="SimpleNN"):
-    logger.info(f"Machine learning type used for model creation: {neural_network_type}")
+def create_model_siamese(name: str, dictionary: List[List[str]], glossary: List[str]):
+    logger.info(f"Machine learning type used for model creation: SIAMESE")
 
     if model_exists(name):
         raise HTTPException(status_code=400, detail="Model already exists")
@@ -36,7 +36,6 @@ def create_model_siamese(name: str, dictionary: List[List[str]], glossary: List[
         "dictionary": dictionary,
         "indexed_dictionary": indexed_dictionary,  # Dictionary transformed with indices
         "glossary": glossary,  # Original glossary
-        "neural_network_type": neural_network_type  # Recorded model type
     }
     save_model(name, model_data)
 

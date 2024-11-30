@@ -1,6 +1,8 @@
 #app\repositories\memory.py
 # Simulated in-memory database for storing models
 models = {}
+# Buffer for caching search results
+search_buffer = {}
 
 def save_model(name: str, data: dict):
     """
@@ -40,3 +42,31 @@ def get_all_models():
     :return: A dictionary containing all models.
     """
     return models
+
+def save_search_result(model_name: str, search_query: str, result: dict):
+    """
+    Save a search result to the buffer.
+    :param model_name: Name of the model used for the search.
+    :param search_query: Search query as a stringified representation of the input.
+    :param result: Result of the search.
+    """
+    if model_name not in search_buffer:
+        search_buffer[model_name] = {}
+    search_buffer[model_name][search_query] = result
+
+def get_search_result(model_name: str, search_query: str):
+    """
+    Retrieve a search result from the buffer.
+    :param model_name: Name of the model used for the search.
+    :param search_query: Search query as a stringified representation of the input.
+    :return: Cached result if available, otherwise None.
+    """
+    return search_buffer.get(model_name, {}).get(search_query)
+
+def clear_search_buffer(model_name: str):
+    """
+    Clear the search buffer for a specific model.
+    :param model_name: Name of the model whose buffer needs clearing.
+    """
+    if model_name in search_buffer:
+        del search_buffer[model_name]

@@ -1,7 +1,9 @@
 # app\apis\apis_test.py
 import pytest
-from fastapi.testclient import TestClient   # type: ignore  # Import FastAPI test client to simulate HTTP requests
 from app.main import app
+from app.repositories.memory import save_model
+from fastapi.testclient import TestClient # type: ignore 
+from app.generate_token import create_token
 
 # Initialize test client for making requests to the API
 client = TestClient(app)
@@ -21,6 +23,10 @@ training_data = [
     [["token1", "token2", "token5"], ["token2", "token5", "token1"], 0.5],
     [["token1", "token2", "token3", "token4"], ["token2", "token3", "token4", "token5"], 0.75]
 ]
+# Génération d'un token JWT pour un utilisateur fictif
+token = create_token(user_id="test_user")
+# Envoi de la requête avec l'en-tête Authorization
+headers = {"Authorization": f"Bearer {token}"}
 
 # Test for the model creation API
 def test_create_model():
@@ -32,11 +38,31 @@ def test_create_model():
         "glossary": glossary
     }
     # Send POST request to /create_model endpoint
-    response = client.post("/create_model", json=data)
+    response = client.post("/create_model", json=data, headers=headers)
     # Assert that the response is successful (status code 200)
     assert response.status_code == 200, f"Error during model creation: {response.text}"
     # Verify that the expected response structure and content are returned
     assert response.json() == {"status": "model created", "model_name": "model1"}
+
+def test_update_model():
+    # Data for updating the model
+    update_data = {
+        "name": "model1",
+        "neural_network_type": "SIAMESE",
+        "dictionary": dictionary,
+        "glossary": glossary
+    }
+
+    # Send a PATCH request to the /update_model endpoint
+    response = client.patch("/update_model", json=update_data, headers=headers)
+    
+    # Assert that the response is successful (status code 200)
+    assert response.status_code == 200, f"Error during model update: {response.text}"
+    
+    # Validate the response content
+    response_data = response.json()
+    assert response_data["status"] == "model updated"
+    assert response_data["model_name"] == "model1"
 
 # Test for the model training API
 def test_train_model():
@@ -47,11 +73,37 @@ def test_train_model():
         "training_data": training_data
     }
     # Send POST request to /train_model endpoint
-    response = client.post("/train_model", json=data)
+    response = client.post("/train_model", json=data, headers=headers)
     # Assert that the response is successful (status code 200)
     assert response.status_code == 200, f"Error during model training: {response.text}"
     # Verify that the response indicates training has completed
     assert "training completed" in response.json()["status"]
+
+def test_prepare_cache_with_results():
+    # Input data
+    data = {
+        "name": "model1",
+        "neural_network_type": "SIAMESE",
+        "search_vectors": [["token1", "token2"], ["token3", "token4"]]
+    }
+
+    # Send request to the /prepare_cache endpoint
+    response = client.post("/prepare_cache", json=data, headers=headers)
+    assert response.status_code == 200, f"Error during cache preparation: {response.text}"
+    response_data = response.json()
+
+    # Validate response structure and results
+    assert response_data["status"] == "cache prepared"
+    assert response_data["model_name"] == "model1"
+    assert response_data["vectors_processed"] == 2
+    assert len(response_data["results"]) == 2
+
+    # Validate individual results
+    assert response_data["results"][0]["search_vector"] == ["token1", "token2"]
+    assert "result" in response_data["results"][0]
+
+    assert response_data["results"][1]["search_vector"] == ["token3", "token4"]
+    assert "result" in response_data["results"][1]
 
 # Test for the model search API
 def test_search_model():
@@ -62,7 +114,7 @@ def test_search_model():
         "vector": search_vector
     }
     # Send POST request to /search endpoint
-    response = client.post("/search", json=data)
+    response = client.post("/search", json=data, headers=headers)
     # Assert that the response is successful (status code 200)
     assert response.status_code == 200, f"Error during model search: {response.text}"
     # Verify response includes expected search output structure

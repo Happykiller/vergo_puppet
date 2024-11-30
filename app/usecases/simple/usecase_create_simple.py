@@ -3,7 +3,7 @@ from app.services.logger import logger
 from fastapi import HTTPException  # type: ignore
 from app.repositories.memory import model_exists, save_model
 
-def create_model_simpleNN(name: str):
+def create_model_simple_nn(name: str):
     logger.info("Machine learning type used for creating 'SimpleNN' model")
 
     if model_exists(name):

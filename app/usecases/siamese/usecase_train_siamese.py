@@ -3,8 +3,8 @@ from typing import List, Tuple
 from fastapi import HTTPException  # type: ignore
 
 from app.services.logger import logger
-from app.repositories.memory import get_model, update_model
 from app.neural_network.nn_siamese import train_siamese_model_nn
+from app.repositories.memory import clear_search_buffer, get_model, update_model
 from app.usecases.siamese.usecase_commons_siamese import create_glossary_from_training_data, tokens_to_indices
 
 def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str], float]]):
@@ -49,5 +49,8 @@ def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str
 
     # Save the trained neural network model
     update_model(name, {"nn_model": nn_model})
+
+    # Clear the search buffer for the model
+    clear_search_buffer(name)
 
     return {"status": "training completed", "model_name": name}

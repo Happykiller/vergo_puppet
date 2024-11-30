@@ -4,9 +4,17 @@ from fastapi import HTTPException  # type: ignore
 from app.services.logger import logger
 from app.repositories.memory import get_model
 from app.neural_network.nn_siamese import evaluate_similarity
+from app.repositories.memory import get_model, save_search_result, get_search_result
 from app.usecases.siamese.usecase_commons_siamese import create_indexed_glossary, tokens_to_indices
 
 def search_model_siamese(name: str, search: list):
+    # Vérification du buffer
+    search_query = str(search)  # Transforme la requête en une chaîne unique pour le cache
+    cached_result = get_search_result(name, search_query)
+    if cached_result:
+        logger.info(f"Returning cached result for search query: {search_query}")
+        return cached_result
+
     # Retrieve the model
     model = get_model(name)
     if not model:
@@ -46,10 +54,15 @@ def search_model_siamese(name: str, search: list):
     accuracy = similarities[0][1]
     find = similarities[0][0]
 
-    return {
+    result = {
         "search": search,
         "find": find,
         "stats": {
             "accuracy": accuracy
         }
     }
+
+    # Save the result in the buffer
+    save_search_result(name, search_query, result)
+
+    return result

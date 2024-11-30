@@ -16,8 +16,7 @@ def test_search_model_success():
     create_model_siamese(
         "model1", 
         [["cat", "dog", "bird"], ["car", "bike", "train"], ["computer", "table", "pen"]], 
-        ["cat", "dog", "bird", "car", "bike", "train", "computer", "table", "pen"],
-        "SIAMESE"
+        ["cat", "dog", "bird", "car", "bike", "train", "computer", "table", "pen"]
     )
 
     # Train the model with non-empty vectors
@@ -45,8 +44,7 @@ def test_search_unknown_success():
             ["car", "bike", "train"], 
             ["computer", "table", "pen"]
         ], 
-        ["cat", "dog", "bird", "car", "bike", "train", "computer", "table", "pen"],
-        "SIAMESE"
+        ["cat", "dog", "bird", "car", "bike", "train", "computer", "table", "pen"]
     )
 
     # Train the model with non-empty vectors

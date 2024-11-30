@@ -1,20 +1,24 @@
 #app\apis\apis.py
 import os
+from typing import List
 import jwt
 from dotenv import load_dotenv
+from app.apis.models.prepare_cache_data import PrepareCacheData
+from app.usecases.siamese.prepare_cache_siamese import prepare_cache
 from fastapi.security import OAuth2PasswordBearer # type: ignore
 from fastapi import Depends, APIRouter, HTTPException # type: ignore
 
 from app.version import __version__
 from app.services.logger import logger
-from app.apis.models.train_model_data import TrainModelData
 from app.apis.models.test_model_data import TestModelData
 from app.usecases.usecase_tokenize import usecase_tokenize
 from app.usecases.gru.usecase_mesure_gru import mesure_gru
+from app.apis.models.train_model_data import TrainModelData
 from app.usecases.lstm.usecase_train_lstm import train_lstm
 from app.usecases.getall_model import get_all_models_usecase
 from app.apis.models.create_model_data import CreateModelData
 from app.apis.models.search_model_data import SearchModelData
+from app.apis.models.update_model_data import UpdateModelData
 from app.usecases.lstm.usecase_create_lstm import create_lstm
 from app.usecases.lstm.usecase_mesure_lstm import mesure_lstm
 from app.usecases.lstm.usecase_search_lstm import search_lstm
@@ -25,11 +29,12 @@ from app.apis.models.tokenize_model_data import TokenizeModelData
 from app.usecases.simple.usecase_mesure_simple import mesure_simple_nn
 from app.usecases.siamese.usecase_mesure_siamese import mesure_siamese
 from app.usecases.siamese.usecase_train_siamese import train_model_siamese
+from app.usecases.simple.usecase_train_simple import train_model_simple_nn
+from app.usecases.simple.usecase_create_simple import create_model_simple_nn
+from app.usecases.simple.usecase_search_simple import search_model_simple_nn
+from app.usecases.siamese.usecase_update_siamese import update_model_siamese
 from app.usecases.siamese.usecase_create_siamese import create_model_siamese
 from app.usecases.siamese.usecase_search_siamese import search_model_siamese
-from app.usecases.simple.usecase_train_simple import train_model_simple_nn
-from app.usecases.simple.usecase_create_simple import create_model_simpleNN
-from app.usecases.simple.usecase_search_simple import search_model_simple_nn
 from app.usecases.usecase_create_data_puppeto4 import usecase_create_data_puppeto4
 
 # Initialisation du routeur
@@ -73,11 +78,11 @@ async def create_model_api(data: CreateModelData, payload: dict = Depends(verify
     logger.debug(f"payload: {payload}")
     try:
         if data.neural_network_type == 'SimpleNN':
-            return create_model_simpleNN(data.name)
+            return create_model_simple_nn(data.name)
         elif data.neural_network_type == 'GRU':
             return create_model_gru(data.name)
         elif data.neural_network_type == 'SIAMESE':
-            return create_model_siamese(data.name, data.dictionary, data.glossary, data.neural_network_type)
+            return create_model_siamese(data.name, data.dictionary, data.glossary)
         elif data.neural_network_type == 'LSTM':
             return create_lstm(data.name)
         else:
@@ -87,6 +92,26 @@ async def create_model_api(data: CreateModelData, payload: dict = Depends(verify
     except Exception as e:
         logger.error(f"Error occurred during model creation: {str(e)}")
         raise HTTPException(status_code=500, detail=f"An error occurred during model creation: {str(e)}")
+
+# API to update a model
+@router.patch("/update_model")
+async def update_model_api(data: UpdateModelData, payload: dict = Depends(verify_access_token)):
+    """
+    Update existing model.
+    """
+    logger.debug(f"payload: {payload}")
+    try:
+        if data.neural_network_type == 'SIAMESE':
+            if not data.dictionary or not data.glossary:
+                raise HTTPException(status_code=400, detail="Both dictionary and glossary must be provided for SIAMESE model")
+            return update_model_siamese(data.name, data.dictionary, data.glossary)
+        else:
+            raise HTTPException(status_code=400, detail=f"Model type '{data.neural_network_type}' not supported for update")
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        logger.error(f"Error occurred during model update: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"An error occurred during model update: {str(e)}")
 
 # API to train a model
 @router.post("/train_model")
@@ -112,6 +137,25 @@ async def train_model_api(data: TrainModelData, payload: dict = Depends(verify_a
     except Exception as e:
         logger.error(f"Error occurred during training: {str(e)}")
         raise HTTPException(status_code=500, detail=f"An error occurred during training: {str(e)}")
+
+# API to prepare seaching engine
+@router.post("/prepare_cache")
+async def prepare_cache_api(data: PrepareCacheData, payload: dict = Depends(verify_access_token)):
+    """
+    Prepares the search cache for a model by precomputing results for a collection of search vectors.
+    """
+    logger.debug(f"payload: {payload}")
+    try:
+        if data.neural_network_type == 'SIAMESE':
+            return prepare_cache(data.name, data.search_vectors)
+        else:
+            raise HTTPException(status_code=400, detail=f"Model type '{data.neural_network_type}' is not supported for cache preparation")
+
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        logger.error(f"Error occurred during cache preparation: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"An error occurred during cache preparation: {str(e)}")
 
 # API to search a vector within a model
 @router.post("/search")
