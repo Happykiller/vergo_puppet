@@ -1,9 +1,9 @@
 # app\apis\apis_test.py
 import pytest
 from app.main import app
-from app.repositories.memory import save_model
-from fastapi.testclient import TestClient # type: ignore 
 from app.generate_token import create_token
+from app.repositories.memory import save_model, models
+from fastapi.testclient import TestClient # type: ignore 
 
 # Initialize test client for making requests to the API
 client = TestClient(app)
@@ -43,26 +43,6 @@ def test_create_model():
     assert response.status_code == 200, f"Error during model creation: {response.text}"
     # Verify that the expected response structure and content are returned
     assert response.json() == {"status": "model created", "model_name": "model1"}
-
-def test_update_model():
-    # Data for updating the model
-    update_data = {
-        "name": "model1",
-        "neural_network_type": "SIAMESE",
-        "dictionary": dictionary,
-        "glossary": glossary
-    }
-
-    # Send a PATCH request to the /update_model endpoint
-    response = client.patch("/update_model", json=update_data, headers=headers)
-    
-    # Assert that the response is successful (status code 200)
-    assert response.status_code == 200, f"Error during model update: {response.text}"
-    
-    # Validate the response content
-    response_data = response.json()
-    assert response_data["status"] == "model updated"
-    assert response_data["model_name"] == "model1"
 
 # Test for the model training API
 def test_train_model():
@@ -122,6 +102,26 @@ def test_search_model():
     assert result["search"] == search_vector
     assert "find" in result  # Check for presence of a 'find' key in the response
     assert "stats" in result # Check for presence of a 'stats' key in the response
+
+def test_update_model():
+    # Data for updating the model
+    update_data = {
+        "name": "model1",
+        "neural_network_type": "SIAMESE",
+        "dictionary": dictionary,
+        "glossary": glossary
+    }
+
+    # Send a PATCH request to the /update_model endpoint
+    response = client.patch("/update_model", json=update_data, headers=headers)
+    
+    # Assert that the response is successful (status code 200)
+    assert response.status_code == 200, f"Error during model update: {response.text}"
+    
+    # Validate the response content
+    response_data = response.json()
+    assert response_data["status"] == "model updated"
+    assert response_data["model_name"] == "model1"
 
 # Test for the API version endpoint
 def test_get_version():

@@ -657,4 +657,5 @@ The LSTM (Long Short-Term Memory) model is a type of recurrent neural network us
 
 # History
 
-* 24/11/23 0.5.0 : Secure JWT
+* 2024/11/23 0.5.0 : Secure JWT
+* 2024/11/30 0.6.0 : Add update and prepare
