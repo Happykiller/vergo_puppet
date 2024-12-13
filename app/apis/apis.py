@@ -1,10 +1,7 @@
 #app\apis\apis.py
 import os
-from typing import List
 import jwt
 from dotenv import load_dotenv
-from app.apis.models.prepare_cache_data import PrepareCacheData
-from app.usecases.siamese.prepare_cache_siamese import prepare_cache
 from fastapi.security import OAuth2PasswordBearer # type: ignore
 from fastapi import Depends, APIRouter, HTTPException # type: ignore
 
@@ -17,15 +14,17 @@ from app.apis.models.train_model_data import TrainModelData
 from app.usecases.lstm.usecase_train_lstm import train_lstm
 from app.usecases.getall_model import get_all_models_usecase
 from app.apis.models.create_model_data import CreateModelData
-from app.apis.models.search_model_data import SearchModelData
 from app.apis.models.update_model_data import UpdateModelData
 from app.usecases.lstm.usecase_create_lstm import create_lstm
 from app.usecases.lstm.usecase_mesure_lstm import mesure_lstm
 from app.usecases.lstm.usecase_search_lstm import search_lstm
+from app.apis.models.search_model_data import SearchModelData
 from app.usecases.gru.usecase_train_gru import train_model_gru
+from app.apis.models.prepare_cache_data import PrepareCacheData
 from app.usecases.gru.usecase_create_gru import create_model_gru
 from app.usecases.gru.usecase_search_gru import search_model_gru
 from app.apis.models.tokenize_model_data import TokenizeModelData
+from app.usecases.siamese.prepare_cache_siamese import prepare_cache
 from app.usecases.simple.usecase_mesure_simple import mesure_simple_nn
 from app.usecases.siamese.usecase_mesure_siamese import mesure_siamese
 from app.usecases.siamese.usecase_train_siamese import train_model_siamese
@@ -35,7 +34,9 @@ from app.usecases.simple.usecase_search_simple import search_model_simple_nn
 from app.usecases.siamese.usecase_update_siamese import update_model_siamese
 from app.usecases.siamese.usecase_create_siamese import create_model_siamese
 from app.usecases.siamese.usecase_search_siamese import search_model_siamese
+from app.apis.models.search_multi_brut_model_data import SearchBrutMultiModelData
 from app.usecases.usecase_create_data_puppeto4 import usecase_create_data_puppeto4
+from app.usecases.gru.usecase_search_multi_brut_gru import search_multi_brut_model_gru
 
 # Initialisation du routeur
 router = APIRouter()
@@ -181,6 +182,26 @@ async def search_model_api(data: SearchModelData, payload: dict = Depends(verify
     except Exception as e:
         logger.error(f"Error occurred during search: {str(e)}")
         raise HTTPException(status_code=500, detail=f"An error occurred during search: {str(e)}")
+    
+# API to search a vector within a model
+@router.post("/search_brut_multi")
+async def search_brut_multi_model_api(data: SearchBrutMultiModelData, payload: dict = Depends(verify_access_token)):
+    """
+    Searches for multi input within the specified model.
+    """
+    # Logic for your secure endpoint
+    logger.debug(f"payload: {payload}")
+    try:
+        if data.neural_network_type == 'GRU':
+            logger.info(f"search_brut_multi: {data}")
+            return search_multi_brut_model_gru(data.name, data.documents)
+        else:
+            raise HTTPException(status_code=500, detail=f"Unknown neural network type: {data.neural_network_type}")
+    except HTTPException as e:
+        raise e
+    except Exception as e:
+        logger.error(f"Error occurred during search multi brut: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"An error occurred during search multi brut: {str(e)}")
 
 # API to test a model
 @router.post("/test")

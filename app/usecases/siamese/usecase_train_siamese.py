@@ -29,8 +29,7 @@ def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str
         raise HTTPException(status_code=400, detail="No vectors available in the model")
     
     # Check the neural network type to use
-    neural_network_type = model.get("neural_network_type", "SimpleNN")  # Default to SimpleNN if not specified
-    logger.info(f"Machine learning type used for training: {neural_network_type}")
+    logger.info(f"Machine learning type used for training: SIAMESE")
 
     # Train the neural network according to the specified model type
     training_glossary = create_glossary_from_training_data(training_data)

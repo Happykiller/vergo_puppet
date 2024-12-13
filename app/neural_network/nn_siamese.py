@@ -101,7 +101,7 @@ def train_siamese_model_nn(
     vocab_size: int,
     embedding_dim: int = 128,
     hidden_dim: int = 256,
-    num_epochs: int = 200,
+    num_epochs: int = 1000,
     learning_rate: float = 0.001,
     batch_size: int = 32,
     patience: int = 10
@@ -141,7 +141,7 @@ def train_siamese_model_nn(
 
         avg_loss = total_loss / len(train_loader)
         losses.append(avg_loss)
-        logger.debug(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {avg_loss:.4f}")
+        logger.debug(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {avg_loss:.8f}")
 
         if avg_loss < best_loss:
             best_loss = avg_loss
@@ -162,7 +162,7 @@ def train_siamese_model_nn(
     logger.info("Training complete.")
     logger.info(f"Total epochs: {total_epochs}")
     logger.info(f"Total training time: {total_time:.2f} seconds")
-    logger.info(f"Final average loss: {final_loss:.4f}")
+    logger.info(f"Final average loss: {final_loss:.8f}")
     logger.info(f"Total model parameters: {num_parameters}")
 
     return model, losses

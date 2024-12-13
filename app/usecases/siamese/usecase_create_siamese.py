@@ -26,10 +26,18 @@ def create_model_siamese(name: str, dictionary: List[List[str]], glossary: List[
     # Add a blank entry at the beginning of the glossary
     glossary = [""] + ["UNK"] + glossary
 
+    # Track tokens not in glossary
+    tokens_not_in_glossary = set()
+
     # Transform each list of tokens into a list of indices
-    indexed_dictionary = [
-        tokens_to_indices(tokens, glossary) for tokens in dictionary
-    ]
+    indexed_dictionary = []
+    for tokens in dictionary:
+        indices = tokens_to_indices(tokens, glossary)
+        indexed_dictionary.append(indices)
+
+        # Identify tokens not mapped to known indices
+        unknown_tokens = [token for token, index in zip(tokens, indices) if index == glossary.index("UNK")]
+        tokens_not_in_glossary.update(unknown_tokens)
 
     # Save the model with the glossary and indexed dictionary
     model_data = {
@@ -39,4 +47,9 @@ def create_model_siamese(name: str, dictionary: List[List[str]], glossary: List[
     }
     save_model(name, model_data)
 
-    return {"status": "model created", "model_name": name}
+    # Return response with missing tokens
+    return {
+        "status": "model created",
+        "model_name": name,
+        "missing_tokens": list(tokens_not_in_glossary)  # List of tokens not in the glossary
+    }

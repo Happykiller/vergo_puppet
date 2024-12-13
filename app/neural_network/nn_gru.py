@@ -53,6 +53,7 @@ def train_gru(vocab_size, num_classes, sequences, labels):
     :param num_classes: Number of target classes.
     :param sequences: Training sequences tensor.
     :param labels: Corresponding labels tensor.
+    :return: Trained model and training statistics.
     """
     start_time = time.time()
     losses = []  # List to store the loss for each epoch
@@ -64,9 +65,9 @@ def train_gru(vocab_size, num_classes, sequences, labels):
     # Model hyperparameters
     embedding_dim = 128  # Embedding dimension
     hidden_dim = 256     # GRU hidden state dimension
-    num_epochs = 20      # Number of training epochs
+    num_epochs = 100      # Number of training epochs
     batch_size = 16      # Batch size for updates
-    learning_rate = 0.0005  # Learning rate for stable convergence
+    learning_rate = 0.0001  # Learning rate for stable convergence
     dropout_rate = 0.5   # Dropout rate for regularization
 
     # Initialize the GRU model with Dropout
@@ -98,7 +99,7 @@ def train_gru(vocab_size, num_classes, sequences, labels):
             total_loss += loss.item()
         avg_loss = total_loss / len(dataloader)
         losses.append(avg_loss)
-        logger.debug(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {avg_loss:.4f}")
+        logger.debug(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {avg_loss:.8f}")
         
         # Early stopping check
         if avg_loss < best_loss:
@@ -121,15 +122,30 @@ def train_gru(vocab_size, num_classes, sequences, labels):
     total_training_time = time.time() - start_time
     total_parameters = sum(p.numel() for p in model.parameters())
 
+    # Prepare training report
+    training_stats = {
+        "total_training_time": total_training_time,
+        "total_parameters": total_parameters,
+        "min_loss": min(losses),
+        "max_loss": max(losses),
+        "final_loss": losses[-1] if losses else None,
+        "epochs_run": len(losses),
+        "early_stopping_triggered": epochs_without_improvement >= patience,
+        "best_loss": best_loss,
+    }
+
     # Log training statistics
-    min_loss = min(losses)
-    max_loss = max(losses)
     logger.info(f"Total training time: {total_training_time:.2f} seconds")
     logger.info(f"Total parameters: {total_parameters}")
-    logger.info(f"Max loss: {max_loss}")
-    logger.info(f"Min loss: {min_loss}")
+    logger.info(f"Max loss: {training_stats['max_loss']}")
+    logger.info(f"Min loss: {training_stats['min_loss']}")
+    logger.info(f"Final loss: {training_stats['final_loss']}")
+    logger.info(f"Epochs run: {training_stats['epochs_run']}")
+    if training_stats["early_stopping_triggered"]:
+        logger.info("Early stopping was triggered.")
+    logger.info(f"Best loss: {training_stats['best_loss']}")
 
-    return model
+    return model, training_stats
         
 def predict(nn_model, input):
     """

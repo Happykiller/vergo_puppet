@@ -1,7 +1,12 @@
 {
   "rest-client.environmentVariables": {
     "local": {
-      "host": "http://localhost:8000"
+      "host": "http://localhost:8000",
+      "token": ""
+    },
+    "puppet.happykiller.net": {
+      "host": "https://puppet.happykiller.net",
+      "token": ""
     }
   }
 }

@@ -9,6 +9,7 @@ def mesure_siamese(name, test_data):
         total_error = 0
         correct_predictions = 0
         total_tests = len(test_data)
+        detailed_results = []
         
         # Retrieve the model
         model = get_model(name)
@@ -35,8 +36,19 @@ def mesure_siamese(name, test_data):
             total_error += error
             
             # Consider the prediction correct if the error is below a threshold (e.g., 0.1)
-            if error <= 0.1:
+            is_correct = error <= 0.1
+            if is_correct:
                 correct_predictions += 1
+
+            # Add details of the current test case to the results
+            detailed_results.append({
+                "query": vector1,
+                "image": vector2,
+                "expected_similarity": expected_similarity,
+                "predicted_similarity": predicted_similarity,
+                "error": error,
+                "is_correct": is_correct,
+            })
             
             # Log the output details
             logger.info(f"Query: {vector1}, Image: {vector2}")
@@ -45,10 +57,22 @@ def mesure_siamese(name, test_data):
         # Calculate average error and accuracy as a percentage
         avg_error = total_error / total_tests
         precision_percentage = (1 - avg_error) * 100  # Lower avg_error corresponds to higher accuracy
+
+        # Generate final report
+        report = {
+            "model_name": name,
+            "total_tests": total_tests,
+            "correct_predictions": correct_predictions,
+            "accuracy_percentage": precision_percentage,
+            "average_error": avg_error,
+            "detailed_results": detailed_results,
+        }
         
         # Log the number of correct predictions out of the total test cases
         logger.info(f"Correct predictions: {correct_predictions}/{total_tests}")
         logger.info(f"Model average accuracy on the test set: {precision_percentage:.2f}%")
+
+        return report
     
     except Exception as e:
         # General error handling

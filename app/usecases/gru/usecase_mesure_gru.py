@@ -13,6 +13,7 @@ def mesure_gru(name: str, test_data: List[GRUTrainingModelData]):
     :param test_data: A list of test data instances.
     """
     try:
+        result = []
         # Retrieve model data from the in-memory repository
         model_data = get_model(name)
         nn_model = model_data.get("nn_model", None)
@@ -54,7 +55,8 @@ def mesure_gru(name: str, test_data: List[GRUTrainingModelData]):
             y_pred.append(predicted_idx)
             
             # Check if the prediction is correct
-            if predicted_category == expected_category:
+            is_correct = predicted_category == expected_category
+            if is_correct:
                 correct_predictions += 1
             else:
                 total_error += 1
@@ -62,11 +64,32 @@ def mesure_gru(name: str, test_data: List[GRUTrainingModelData]):
             # Log individual prediction results
             logger.info(f"Request: {tokens}")
             logger.info(f"Expected category: {expected_category}, Predicted category: {predicted_category}")
+
+            # Add detailed result for this test case
+            result.append({
+                "tokens": tokens,
+                "expected_category": expected_category,
+                "predicted_category": predicted_category,
+                "is_correct": is_correct
+            })
         
         # Summarize performance results
         logger.info(f"Number of correct predictions: {correct_predictions}/{total_tests}")
         accuracy = correct_predictions / total_tests * 100
         logger.info(f"Model accuracy rate: {accuracy:.2f}%")
+
+        # Append summary to the result
+        summary = {
+            "total_tests": total_tests,
+            "correct_predictions": correct_predictions,
+            "total_error": total_error,
+            "accuracy": accuracy
+        }
+        
+        return {
+            "summary": summary,
+            "detailed_results": result
+        }
     except Exception as e:
         logger.error(f"An error occurred during measurement: {str(e)}")
         raise Exception(f"An error occurred during measurement: {str(e)}")

@@ -64,7 +64,8 @@ def train_model_gru(name: str, training_data: List[GRUTrainingModelData]):
 
     # Train the model
     logger.info("Training model...")
-    model = train_gru(vocab_size, num_classes, sequences, labels)
+    # Train the model and retrieve statistics
+    model, training_stats = train_gru(vocab_size, num_classes, sequences, labels)
     
     # Save trained model, mappings, and hyperparameters
     model_data = {
@@ -77,7 +78,11 @@ def train_model_gru(name: str, training_data: List[GRUTrainingModelData]):
     }
     update_model(name, model_data)
     
-    return {"status": "Training complete", "model_name": name}
+    return {
+        "status": "Training complete",
+        "model_name": name,
+        "training_stats": training_stats
+    }
 
 def build_vocab(training_data: List[GRUTrainingModelData]):
     """

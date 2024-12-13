@@ -38,6 +38,30 @@ Content-Type: application/json
 }
 
 ###
+POST {{host}}/search_brut_multi
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "puppet-o2",
+  "neural_network_type": "GRU",
+  "documents": [
+    {
+      "incidentId": "1",
+      "description": "Hello,\n\nNous avons un new alternant au tech a paris12, pourriez vous le creer les acces pour kaly ?\nIl s'agit de Terry Bourillon \n\nMerci"
+    },
+    {
+      "incidentId": "2",
+      "description": "Hello !\n\nUn compte client à été crée sur le CRM, mais je ne vois pas le dossier client sur Kalydian.  \nLa création doit-être automatique ou bien je doit créer le dossier principal de mon coté ? \n\nMerci !!!! :) "
+    },
+    {
+      "incidentId": "3",
+      "description": "Salut\r\n\r\nNous allons proposer Kalydian à un client qui a plusieurs site\r\nJe voulais savoir comment se faisait la création des coffres\r\nest ce que l'on peut synchro Kalydian avec le Tenant MS365?\r\n\r\nMerci\r\n\r\nBonne journée\r\n\r\nA+\r\n\r\nSeb"
+    }
+  ]
+}
+
+###
 POST {{host}}/test
 Authorization: Bearer {{token}}
 Content-Type: application/json
