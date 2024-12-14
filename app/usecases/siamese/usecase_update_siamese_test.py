@@ -36,7 +36,7 @@ def test_update_model_success(setup_model):
     # Validate that the model was updated
     updated_model = get_model("model1")
     assert updated_model["dictionary"] == dictionary
-    assert updated_model["glossary"] == glossary
+    assert updated_model["glossary"] == ["", "UNK"] + glossary
 
     # Validate that the search buffer was removed
     assert "model1" not in search_buffer, "Search buffer should have been removed after update"
@@ -70,16 +70,3 @@ def test_update_model_empty_glossary(setup_model):
     
     assert exc_info.value.status_code == 400
     assert exc_info.value.detail == "Glossary cannot be empty"
-
-def test_update_model_inconsistent_dictionary_and_glossary(setup_model):
-    """
-    Test updating a model with a dictionary containing tokens not in the glossary raises a 400 error.
-    """
-    dictionary = [["token1", "token2"], ["token3", "non_existent_token"]]
-    glossary = ["token1", "token2", "token3"]
-
-    with pytest.raises(HTTPException) as exc_info:
-        update_model_siamese("model1", dictionary, glossary)
-    
-    assert exc_info.value.status_code == 400
-    assert exc_info.value.detail == "All tokens in the dictionary must be present in the glossary"

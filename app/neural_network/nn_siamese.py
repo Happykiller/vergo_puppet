@@ -118,13 +118,6 @@ def train_siamese_model_nn(
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device)
 
-    # Load pre-existing weights if available
-    if os.path.exists(best_model_path):
-        logger.info(f"Loading pre-existing model weights from {best_model_path}")
-        model.load_state_dict(torch.load(best_model_path))
-    else:
-        logger.info("No pre-existing model found. Starting training from scratch.")
-
     best_loss = float('inf')
     patience_counter = 0
     losses = []

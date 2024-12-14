@@ -24,7 +24,7 @@ def test_train_model_gru_success(mock_get_model, mock_build_vocab, mock_build_ca
     mock_prepare_sequences.return_value = (MagicMock(), MagicMock())  # sequences, labels
 
     # Mock the GRU model training
-    mock_train_gru.return_value = MagicMock()  # nn_model
+    mock_train_gru.return_value = (MagicMock(), {"final_loss": 0.1, "epochs_run": 5})
 
     # Create test training data
     training_data = [
@@ -39,7 +39,11 @@ def test_train_model_gru_success(mock_get_model, mock_build_vocab, mock_build_ca
     mock_update_model.assert_called_once()
 
     # Check the return value to confirm training completion
-    assert result == {"status": "Training complete", "model_name": "test_gru_model"}
+    assert result == {
+        "status": "Training complete",
+        "model_name": "test_gru_model",
+        "training_stats": {"final_loss": 0.1, "epochs_run": 5}
+    }
 
 # Test when the specified model cannot be found
 @patch('app.usecases.gru.usecase_train_gru.get_model', return_value=None)

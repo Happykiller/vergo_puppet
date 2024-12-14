@@ -14,7 +14,11 @@ def test_create_model_siamese_success():
     result = create_model_siamese("model1", [["token1", "token2"], ["token1", "token3"]], ["token1", "token2", "token3"])
     
     # Verify the result is as expected
-    assert result == {"status": "model created", "model_name": "model1"}
+    assert result == {
+        "status": "model created",
+        "model_name": "model1",
+        "missing_tokens": []
+    }
     
     # Verify the model was saved in memory
     assert "model1" in models
@@ -83,7 +87,11 @@ def test_create_model_with_unknown_tokens():
     result = create_model_siamese("model1", [["token1", "token2", "tokenX"]], ["token1", "token2", "token3"])
     
     # Verify the model is created successfully
-    assert result == {"status": "model created", "model_name": "model1"}
+    assert result == {
+        "status": "model created",
+        "model_name": "model1",
+        "missing_tokens": ["tokenX"]
+    }
     
     # Verify the indexed dictionary contains None for the "tokenX"
     assert models["model1"]["indexed_dictionary"] == [[2, 3, 1]]
@@ -94,7 +102,11 @@ def test_create_model_no_duplicates_in_glossary():
     result = create_model_siamese("model1", [["token1", "token2"]], ["token1", "token2", "token1", "token3"])
     
     # Verify the model is created successfully
-    assert result == {"status": "model created", "model_name": "model1"}
+    assert result == {
+        "status": "model created",
+        "model_name": "model1",
+        "missing_tokens": []
+    }
     
     # Verify the indexed dictionary only uses the first occurrence of "token1"
     assert models["model1"]["indexed_dictionary"] == [[2, 3]]
@@ -105,7 +117,11 @@ def test_create_model_empty_token_lists():
     result = create_model_siamese("model1", [[], ["token1", "token2"], []], ["token1", "token2", "token3"])
     
     # Verify the model is created successfully
-    assert result == {"status": "model created", "model_name": "model1"}
+    assert result == {
+        "status": "model created",
+        "model_name": "model1",
+        "missing_tokens": []
+    }
     
     # Verify that the empty sublists remain empty in the indexed dictionary
     assert models["model1"]["indexed_dictionary"] == [[], [2, 3], []]

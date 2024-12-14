@@ -31,8 +31,8 @@ def test_mesure_siamese_success(mock_logger, mock_get_model, mock_create_indexed
     mesure_siamese("test_siamese_model", test_data)
     
     # Check that logs include the number of correct predictions and accuracy
-    mock_logger.info.assert_any_call("Correct predictions: 3/3")
-    mock_logger.info.assert_any_call("Model average accuracy on the test set: 100.00%")
+    mock_logger.info.assert_any_call("Prediction accuracy: 100.00% (3/3)")
+    mock_logger.info.assert_any_call("Average similarity precision: 100.00%")
 
 # Test 2: Error if the model is not found
 @patch('app.usecases.siamese.usecase_mesure_siamese.get_model', return_value=None)

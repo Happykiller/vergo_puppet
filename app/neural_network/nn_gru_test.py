@@ -41,7 +41,7 @@ def test_train_gru():
     labels = [0, 1, 2]
 
     # Train the model
-    model = train_gru(vocab_size, num_classes, sequences, labels)
+    model, _ = train_gru(vocab_size, num_classes, sequences, labels)
 
     # Check that the model has been trained
     assert model is not None, "GRU model was not trained correctly"
@@ -58,7 +58,7 @@ def test_predict_with_trained_gru():
     labels = [0, 1, 2]
 
     # Train the model
-    model = train_gru(vocab_size, num_classes, sequences, labels)
+    model, _ = train_gru(vocab_size, num_classes, sequences, labels)
 
     # Make a prediction
     input_sequence = [1, 2, 3, 4, 0, 0]

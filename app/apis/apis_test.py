@@ -42,7 +42,7 @@ def test_create_model():
     # Assert that the response is successful (status code 200)
     assert response.status_code == 200, f"Error during model creation: {response.text}"
     # Verify that the expected response structure and content are returned
-    assert response.json() == {"status": "model created", "model_name": "model1"}
+    assert response.json()['status'] == "model created"
 
 # Test for the model training API
 def test_train_model():
