@@ -1,4 +1,5 @@
 #app\neural_network\nn_siamese.py
+import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -104,7 +105,8 @@ def train_siamese_model_nn(
     num_epochs: int = 1000,
     learning_rate: float = 0.001,
     batch_size: int = 32,
-    patience: int = 10
+    patience: int = 10,
+    best_model_path: str = 'best_model.pth'
 ):
     dataset = SimilarityDataset(training_data)
     train_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
@@ -115,6 +117,13 @@ def train_siamese_model_nn(
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device)
+
+    # Load pre-existing weights if available
+    if os.path.exists(best_model_path):
+        logger.info(f"Loading pre-existing model weights from {best_model_path}")
+        model.load_state_dict(torch.load(best_model_path))
+    else:
+        logger.info("No pre-existing model found. Starting training from scratch.")
 
     best_loss = float('inf')
     patience_counter = 0
@@ -142,11 +151,12 @@ def train_siamese_model_nn(
         avg_loss = total_loss / len(train_loader)
         losses.append(avg_loss)
         logger.debug(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {avg_loss:.8f}")
+        logger.debug(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {avg_loss:.8f}")
 
         if avg_loss < best_loss:
             best_loss = avg_loss
             patience_counter = 0
-            torch.save(model.state_dict(), 'best_model.pth')
+            torch.save(model.state_dict(), best_model_path)
         else:
             patience_counter += 1
             if patience_counter >= patience:
@@ -159,13 +169,27 @@ def train_siamese_model_nn(
     final_loss = losses[-1]
     num_parameters = sum(p.numel() for p in model.parameters() if p.requires_grad)
 
+    # Reload the best model before returning
+    logger.info("Reloading the best model with lowest loss.")
+    model.load_state_dict(torch.load(best_model_path))
+
     logger.info("Training complete.")
     logger.info(f"Total epochs: {total_epochs}")
     logger.info(f"Total training time: {total_time:.2f} seconds")
     logger.info(f"Final average loss: {final_loss:.8f}")
+    logger.info(f"Best loss: {best_loss:.8f}")
     logger.info(f"Total model parameters: {num_parameters}")
 
-    return model, losses
+    report = {
+        "total_epochs": total_epochs,
+        "possible_epochs": num_epochs,
+        "total_time": total_time,
+        "final_loss": final_loss,
+        "best_loss": best_loss,
+        "num_parameters": num_parameters
+    }
+
+    return model, report
 
 # Function to evaluate similarity between two sequences with the trained model
 def evaluate_similarity(

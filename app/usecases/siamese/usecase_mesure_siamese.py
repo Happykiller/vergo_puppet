@@ -9,7 +9,8 @@ def mesure_siamese(name, test_data):
         total_error = 0
         correct_predictions = 0
         total_tests = len(test_data)
-        detailed_results = []
+        similarity_precision = []
+        details = []
         
         # Retrieve the model
         model = get_model(name)
@@ -33,44 +34,50 @@ def mesure_siamese(name, test_data):
             # Evaluate similarity
             predicted_similarity = evaluate_similarity(nn_model, vector1_indices, vector2_indices)
             error = abs(predicted_similarity - expected_similarity)
-            total_error += error
+
+            # Record similarity precision as a percentage
+            precision = (1 - error) * 100  # Precision as 100% when no error
+            similarity_precision.append(precision)
             
-            # Consider the prediction correct if the error is below a threshold (e.g., 0.1)
+            # Check if prediction is correct
             is_correct = error <= 0.1
             if is_correct:
                 correct_predictions += 1
-
-            # Add details of the current test case to the results
-            detailed_results.append({
-                "query": vector1,
-                "image": vector2,
+            
+            # Store detailed results for each test case
+            details.append({
+                "vector1": vector1,
+                "vector2": vector2,
                 "expected_similarity": expected_similarity,
                 "predicted_similarity": predicted_similarity,
                 "error": error,
-                "is_correct": is_correct,
+                "precision_percentage": precision,
+                "is_correct": is_correct
             })
             
             # Log the output details
             logger.info(f"Query: {vector1}, Image: {vector2}")
             logger.info(f"Expected similarity: {expected_similarity*100}%, Model similarity: {predicted_similarity*100:.2f}%, Error: {error*100:.2f}%")
         
-        # Calculate average error and accuracy as a percentage
-        avg_error = total_error / total_tests
-        precision_percentage = (1 - avg_error) * 100  # Lower avg_error corresponds to higher accuracy
+        # Calculate metrics
+        prediction_accuracy = (correct_predictions / total_tests) * 100
+        avg_similarity_precision = sum(similarity_precision) / total_tests
 
-        # Generate final report
+        # Compile the report
         report = {
             "model_name": name,
             "total_tests": total_tests,
             "correct_predictions": correct_predictions,
-            "accuracy_percentage": precision_percentage,
-            "average_error": avg_error,
-            "detailed_results": detailed_results,
+            "prediction_accuracy_percentage": prediction_accuracy,
+            "avg_similarity_precision_percentage": avg_similarity_precision,
+            "details": details
         }
         
-        # Log the number of correct predictions out of the total test cases
-        logger.info(f"Correct predictions: {correct_predictions}/{total_tests}")
-        logger.info(f"Model average accuracy on the test set: {precision_percentage:.2f}%")
+        # Log summary details
+        logger.info("---------------------")
+        logger.info(f"Prediction accuracy: {prediction_accuracy:.2f}% ({correct_predictions}/{total_tests})")
+        logger.info(f"Average similarity precision: {avg_similarity_precision:.2f}%")
+
 
         return report
     

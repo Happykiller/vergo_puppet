@@ -44,7 +44,7 @@ def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str
     vocab_size = len(model["glossary"]) + 1
     
     # Train the model
-    nn_model, _ = train_siamese_model_nn(transformed_data, vocab_size)
+    nn_model, report = train_siamese_model_nn(transformed_data, vocab_size)
 
     # Save the trained neural network model
     update_model(name, {"nn_model": nn_model})
@@ -52,4 +52,8 @@ def train_model_siamese(name: str, training_data: List[Tuple[List[str], List[str
     # Clear the search buffer for the model
     clear_search_buffer(name)
 
-    return {"status": "training completed", "model_name": name}
+    return {
+        "status": "training completed",
+        "model_name": name,
+        "training_report": report
+    }

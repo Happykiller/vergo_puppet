@@ -4,8 +4,8 @@
   "test_data": [
     [["air", "squat"], ["air", "squat"], 1.0],
     [["push", "up"], ["push", "up"], 1.0],
-    [["man", "push", "up"], ["woman", "push", "up"], 0.85],
-    [["man", "squat", "dumbbell"], ["woman", "squat", "dumbbell"], 0.85],
+    [["man", "push", "up"], ["woman", "push", "up"], 0.66],
+    [["man", "squat", "dumbbell"], ["woman", "squat", "dumbbell"], 0.66],
     [["jump", "squat"], ["squat", "jump"], 0.9],
     [["mountain", "climber"], ["mountain", "climber"], 1.0],
     [["man", "dumbbell", "bicep", "curl"], ["woman", "dumbbell", "bicep", "curl"], 0.85],
