@@ -236,8 +236,6 @@ async def get_all_models_api(payload: dict = Depends(verify_access_token)):
     """
     # Logic for your secure endpoint
     logger.debug(f"payload: {payload}")
-    # Logic for your secure endpoint
-    logger.debug(f"payload: {payload}")
     try:
         return get_all_models_usecase()
     except Exception as e:

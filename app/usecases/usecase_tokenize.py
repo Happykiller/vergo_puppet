@@ -1,3 +1,4 @@
+# app\usecases\usecase_tokenize.py
 import re
 import json
 import spacy
@@ -98,7 +99,7 @@ def remove_unwanted(tokens: List[str]) -> List[str]:
     :param tokens: List of tokens to filter.
     :return: Filtered list of tokens.
     """
-    unwanted_tokens = ["m’", "s’", "-t", "qu", "-ce", "j’", "l’", "n’"]
+    unwanted_tokens = ["m’", "s’", "-t", "qu", "-ce", "j’", "l’", "n’", "qu’", "jusqu’", "c’"]
     return [token for token in tokens if token.lower() not in unwanted_tokens]
 
 def remove_polite(text: str) -> str:
@@ -110,7 +111,7 @@ def remove_polite(text: str) -> str:
     polite_phrases = [
         "bonjour", "merci", "cordialement", "désolé", "dérrangement",
         "salutations", "remerciement", "salut", "aide", "svp", "hello",
-        "respectueusement", "bien", "avance", "bon", "journée"
+        "respectueusement", "bien", "avance", "bon", "journée", "remercier"
     ]
 
     # Regex pattern to detect all polite words
@@ -123,6 +124,34 @@ def remove_polite(text: str) -> str:
     cleaned_text = re.sub(r"\s+", " ", cleaned_text).strip()
     
     return cleaned_text
+
+def extract_corrected_tokens(doc):
+    """
+    Extract tokens with corrected lemmatization from a spaCy document.
+    :param doc: spaCy document.
+    :return: List of corrected lemmatized tokens.
+    """
+    lemma_corrections = {
+        "bloqu": "bloquer",
+        "essai": "essayer",  # Add other common corrections here
+    }
+
+    tokens = []
+
+    # Track entity positions to avoid duplicates
+    ent_positions = {ent.start for ent in doc.ents}
+
+    for i, token in enumerate(doc):
+        # Check if token is part of an entity
+        if i in ent_positions:
+            for ent in doc.ents:
+                if ent.start == i:
+                    tokens.append(f"[{ent.text}]")
+        elif token.pos_ not in {"DET", "PUNCT", "SPACE", "SYM", "ADP", "X", "NUM"} and len(token.lemma_) > 1:
+            lemma = token.lemma_
+            corrected_lemma = lemma_corrections.get(lemma, lemma)
+            tokens.append(corrected_lemma)
+    return tokens
 
 def usecase_tokenize(data: List[ModelTokenizeData], regex_filepath: str = 'tokenize_regex.json'):
     """
@@ -153,22 +182,8 @@ def usecase_tokenize(data: List[ModelTokenizeData], regex_filepath: str = 'token
         # Process text with spaCy
         doc = nlp(description_processed)
 
-        # Extract and transform tokens and entities
-        filtered_tokens = []
-
-        # Track entity positions to avoid duplicates
-        ent_positions = {ent.start for ent in doc.ents}
-
-        for i, token in enumerate(doc):
-            # Check if token is part of an entity
-            if i in ent_positions:
-                # Add the full entity with its label if relevant
-                for ent in doc.ents:
-                    if ent.start == i:
-                        filtered_tokens.append(f"[{ent.text}]")
-            elif token.pos_ not in {"DET", "PUNCT", "SPACE", "SYM", "ADP", "X", "NUM"} and len(token.lemma_) > 1:
-                # Add the lemma for non-entity tokens and exclusions
-                filtered_tokens.append(token.lemma_)
+        # 
+        filtered_tokens = extract_corrected_tokens(doc)
 
         # Remove protected tags from tokens
         filtered_tokens_final = remove_protected_tags(filtered_tokens)
@@ -177,10 +192,10 @@ def usecase_tokenize(data: List[ModelTokenizeData], regex_filepath: str = 'token
         filtered_tokens_final = remove_unwanted(filtered_tokens_final)
 
         result.append({
-            # 'id': item.incidentId, 
-            # 'source': item.description,
-            # 'source_processed': description_processed,
-            # 'filtered_tokens': filtered_tokens,
+            'id': item.incidentId, 
+            'source': item.description,
+            'source_processed': description_processed,
+            'filtered_tokens': filtered_tokens,
             'tokens': filtered_tokens_final
         })
 

@@ -3,6 +3,7 @@ from typing import List
 from app.services.logger import logger
 from app.repositories.memory import get_model
 from app.neural_network.nn_gru import predict
+from fastapi import HTTPException  # type: ignore
 from app.usecases.gru.usecase_commons_gru import process_input
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 
@@ -13,12 +14,20 @@ def mesure_gru(name: str, test_data: List[GRUTrainingModelData]):
     :param test_data: A list of test data instances.
     """
     try:
-        result = []
         # Retrieve model data from the in-memory repository
         model_data = get_model(name)
+
+        # Check if the model data is found
+        if model_data is None or not model_data:
+            # Raise a error if the model is not found
+            raise HTTPException(status_code=404, detail="Model not found")
+
+        # Extract the neural network model from the data
         nn_model = model_data.get("nn_model", None)
         if nn_model is None:
-            raise Exception("Model is not trained")
+            raise HTTPException(status_code=400, detail="Model is not trained")
+        
+        result = []
         
         # Retrieve dictionaries for token and category mapping
         word2idx = model_data.get("word2idx", None)
@@ -90,6 +99,10 @@ def mesure_gru(name: str, test_data: List[GRUTrainingModelData]):
             "summary": summary,
             "detailed_results": result
         }
+    
+    except HTTPException as e:
+        logger.error(f"An error occurred during measurement: {str(e)}")
+        raise e
     except Exception as e:
         logger.error(f"An error occurred during measurement: {str(e)}")
         raise Exception(f"An error occurred during measurement: {str(e)}")

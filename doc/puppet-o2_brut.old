@@ -1,0 +1,2004 @@
+{
+  "data": [
+    {
+      "incidentId": "a251f160-c305-4f57-9201-60cf8b8c593f",
+      "etat": "Première connexion",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS782 7351 565 058",
+      "statusName": "En attente client",
+      "description": "bonjour, je n'arrive pas a me connecter a Kalydian, est il possible de m'activer le compte . merci\n\n--- Thomyris,\n\nBonjour,\n\nTon compte est bien activé, j'ai vu que tu es parvenu à te connecter une première fois.\nN'hésite pas à revenir vers nous si tu as d'autre questions \n\nJoachim\n\n------  jeudi 24 octobre 2024 11:30  |  Olivier BOUCHARD  ------\nBonjour Joachim, \n\nen fait je ne peux pas creer de dossier, ou autre\n\n\n--- Thomyris,\n\nEs-tu disponible pour un support, afin que je puisse comprendre quelle peut être l'origine du problème ?\n\n7252\nJoachim\n\n--- Thomyris,\n\nTu devrais avoir un coffre pour mettre les mots de passe accessible que par toi. Est-ce que tu as besoin d'avoir accès à d'autres coffres ?\n\nJoachim",
+      "ownerName": "Nabil MOUTAKI",
+      "creationDate": "2024-10-24T09:09:22Z"
+    },
+    {
+      "incidentId": "1cd1c275-92d9-4ba5-b1ea-2b27af7a06ea",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS782 2531 564 094   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, depuis la modification de mon mot de passe de session outlook , je ne parviens plus à me connecter à Kalydian.\r\nJ'ai testé avec l'ancien mot de passe mais cela ne fonctionne pas non plus !\r\nMerci pour votre aide : d.dupuis@xefi.be\r\nDamien\r\n\r\n--- Thomyris\r\n\r\nBonjour, \r\n\r\nJe viens de débloquer ton compte, tu devrais pouvoir te reconnecter.\r\n\r\nBonne journée\r\n\r\n------  mercredi 23 octobre 2024 16:22  |  Chimay IT  ------\r\n\r\nCa marche. Merci\r\n\r\n",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-23T11:13:44Z"
+    },
+    {
+      "incidentId": "13d1ee86-1491-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS782 0541 563 696   ",
+      "statusName": "Problème résolu",
+      "description": "Hello,\n\nNous avons un new alternant au tech a paris12, pourriez vous le creer les acces pour kaly ?\nIl s'agit de Terry Bourillon \n\nMerci",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-23T08:58:03Z"
+    },
+    {
+      "incidentId": "f80ddad4-2e87-4feb-8222-3c05d36699e8",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS781 8211 563 230   ",
+      "statusName": "Problème résolu",
+      "description": "Concernant Kalydian, nous venons de vendre la solution à un client et nous avons plusieurs questions :\r\n1. Est il possible pour l'agence d'administrer les utilisateurs et le coffres communs (gestions des droits) ?\r\n2. Si non à la question 1, faut il toujours contacter Thomyris en cas de départ/arrivée d'un collab client\r\n3. Est il possible d'avoir un compte pour accéder au contenu d'un coffre commun que le client souhaite partager avec nous sans empiéter sur les licences client ?\r\n\r\nMerci pour vos réponses :)\r\n\r\nSébastien Delorme\r\n06 66 22 86 13",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-22T15:47:57Z"
+    },
+    {
+      "incidentId": "0aecbbe6-5790-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS781 4501 562 488   ",
+      "statusName": "Problème résolu",
+      "description": "Salut,\n\nUne remarque nous a été faite de la part du client FINANCIERE VCM (BASTIDE).\n\nIl utilise l'extension chrome, il a été deconnecté et impossible de se reconnecter depuis l'extension.\n\nApres de multiples tentatives, il se connecte en direct sur le site et le site lui demande de modifier son mot de passe suite expiration.\n\nCe serait bien, selon lui, d'avoir un message d'expiration du mot de passe, soit en avertissement quelques jours avant, soit dans l'extension.\n\nMerci",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-22T10:27:58Z"
+    },
+    {
+      "incidentId": "408b4743-effc-4d2f-a362-8d4bbe69c4c8",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS781 1351 561 858   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, \nj'ai un pbm de connexion à kalydian - merci de me rappeler au 0582956180 - Kathy ORIENTE \n\n----------------\n\nCB - Vu au téléphone avec Alexandra\nConnexion OK\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-10-22T08:37:49Z"
+    },
+    {
+      "incidentId": "53a605b9-b236-48dc-b0a6-71fbf22fb0fd",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS781 0851 561 758   ",
+      "statusName": "Problème résolu",
+      "description": "bonjour,\nje n'arrive plus a me connecter a Kalydian : je rentre mes codes / MDP / DA et ca me met votre connexion a expiré.\ntester depuis l'extranet ou directement sur le nouveau lien, meme résultat. merci de votre aide\n\n------------------------\nCB - Appel & retour par mail\nRecontacter Laurent cet après-midi \n\nMail  : \nJe te contacte suite à ton ticket de connexion expirée sur Kalydian.\nSur quel navigateur t’e connectes*tu ? \n\nNous avons constaté ce problème sur Firefox et Safari. \nL’incident est en cours de résolution de notre côté, à savoir que suite aux demandes du groupe nous garantissons un fonctionnement optimal sur Chrome et Edge.\n\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-10-22T08:05:36Z"
+    },
+    {
+      "incidentId": "81c60c64-1545-4780-ad2a-843e0a9db3e1",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS781 0201 561 628   ",
+      "statusName": "Problème résolu",
+      "description": "[KALYDIAN]\nBonjour,\nJe souhaite créer une autre catégorie qu exploitation, une catégorie Gestion et peut être une autre Commerce puis être capable de gérer les droits utilisateurs pour ces catégories, est-ce possible ? \n\n-----------------\n\nBonjour,\n\nLes coffres ont été créés.\nDès que les utilisateurs seront connectés à Kalydian, ils devront nous contacter pour être ajoutés à ces nouveaux coffres.\n\nMerci à toi,\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-10-22T07:15:31Z"
+    },
+    {
+      "incidentId": "b4339aff-c18f-ef11-97bb-00155d0879e2",
+      "etat": "Problème de réseaux",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS780 9901 561 568   ",
+      "statusName": "Problème résolu",
+      "description": "Connexion hors rds\nAbdrahim BAKHTAOUI\nAujourd’hui, 14:24\nSupport Kalydian\nBonjour,\n\n \n\nJe ne peux acceder hors rds via https://kalydian.xefi.fr/\n\n \n\nMerci",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-21T16:34:46Z"
+    },
+    {
+      "incidentId": "5a5a1939-c18f-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS780 9841 561 556   ",
+      "statusName": "Problème résolu",
+      "description": "Jerome BUISSON\nAujourd’hui, 12:28\nSupport Kalydian;\nAlexandre FAURE\nCe message a été envoyé avec une importance haute.\nBonjour Kalydian,\n\n \n\nIl me semble avoir bien importé mes MDP depuis mon navigateur EDGE au format .CSV du fichier d’importation proposé.\n\n \n\nMon coffre s’est donc créé visiblement correctement.\n\n \n\nCPENDANT, et prenons l’exemple du site TD SYNNEX, lorsque je clique sur le picto KAYDIAN celui-ci me demande de m’y connecter et mes identifiants (dont je suis sûr, à 100% !) ne sont pas reconnus.\n\n \n\nY a-t-il une astuce au travers de laquelle je suis passé ?\n\n \n\nMerci pour votre aide en retour",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-21T16:29:14Z"
+    },
+    {
+      "incidentId": "ac7a1287-c08f-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS780 9821 561 552",
+      "statusName": "Problème résolu",
+      "description": "Denis BUI\nAujourd’hui, 11:23\nSupport Kalydian\nBonjour,\n\n \n\nJe suis Denis de XEFI Colmar et je vous contacte car j'aimerais obtenir l'accès au coffre de Colmar. Actuellement, lorsque je tente de me connecter, un message s'affiche indiquant : \"Il n'y a pas de coffre disponible, ou une erreur est survenue. Si le problème persiste, veuillez contacter votre administrateur.\"\n\n \n\nJe vous serais reconnaissant de bien vouloir vérifier ce problème ou m'indiquer la marche à suivre pour accéder au coffre.\n\n \n\nMerci par avance pour votre assistance.\n\n ",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-21T16:24:16Z"
+    },
+    {
+      "incidentId": "6556e79e-bf8f-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS780 9781 561 544",
+      "statusName": "Problème résolu",
+      "description": "From: Jean-Philippe SOUBEYRE\nWhen: ven. 18/10, 16:58\nTo: Support Kalydian\nObject: renseignement import Mot de passe\nContent: \nBonjour,\n\n\nJ’ai vu que l’on pouvez importer a partir de keepass et Lockself\n\n \n\nEst-il possible de créer un fichier csv et de l’importer dans kalydian et quel sont les champs à renseigner.\n\n \n\nmerci",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-21T16:17:52Z"
+    },
+    {
+      "incidentId": "373c7968-ba8f-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS780 9351 561 458   ",
+      "statusName": "En attente Prestataire",
+      "description": "Hello !\n\nUn compte client à été crée sur le CRM, mais je ne vois pas le dossier client sur Kalydian.  \nLa création doit-être automatique ou bien je doit créer le dossier principal de mon coté ? \n\nMerci !!!! :) ",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-21T15:40:28Z"
+    },
+    {
+      "incidentId": "82c51cc8-f724-4384-85ca-fb2c36408636",
+      "etat": "Connexion firefox",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS780 7291 561 046",
+      "statusName": "Résolu",
+      "description": "Bonjour,\n\nNous avons un souci avec Kalydian, quand on se connecte, on a instantanément la session qui se ferme avec \"Votre session a expiré.\"\n\n\nDepuis le RDS tech, ça fonctionne sans problème.\n\nOn a tous le problème à l'agence de Saint-Claude.\n\nPouvez-vous regarder ?\n\nMerci,\nHugo\n\n--- Thomyris\n\nBonjour,\n\nLe problème est lié à votre navigateur actuel. En passant sur Chrome, vous ne devriez plus rencontrer de difficultés.\n\nBonne journée !\n\nJoachim\n\n",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-21T13:19:26Z"
+    },
+    {
+      "incidentId": "19876564-5c9a-43b4-95a1-4d3b49748a23",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS780 6491 560 886   ",
+      "statusName": "Problème résolu",
+      "description": "Salut\r\n\r\nNous allons proposer Kalydian à un client qui a plusieurs site\r\nJe voulais savoir comment se faisait la création des coffres\r\nest ce que l'on peut synchro Kalydian avec le Tenant MS365?\r\n\r\nMerci\r\n\r\nBonne journée\r\n\r\nA+\r\n\r\nSeb",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-21T11:32:59Z"
+    },
+    {
+      "incidentId": "781861cd-119b-40ed-87f4-b829a8193bd9",
+      "etat": "Réinitialisation QR code",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS780 3541 560 296   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, suite à un changement de téléphone je n'ai plus accès à la double authentification Kalydian.\n\nPouvez-vous remettre ma double authentification ? \n\n---\n\nThomyris\n\nBonjour,\n\nLe QR code d'Hélène GRAFF a été réinitialisé. À la prochaine connexion, un nouveau QR code sera affiché pour générer les futurs codes de connexion.\n\nBonne semaine !\n\nJoachim",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-21T08:51:15Z"
+    },
+    {
+      "incidentId": "3d5f6211-ed06-4b50-86d9-65830b0d8ba3",
+      "etat": "passer role intervenant",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS779 9621 559 512   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nIl semblerait que je ne soit toujours pas intervenant sur les entreprises \"SVAE\" & \"Jpec Consulting\". \nEn effet je ne peux toujours pas crée d'utilisateurs pour les deux ni même de nouveau coffre. \n\nSi possible de me rappeler pour voir ca : 09 54 01 08 34\n\nMerci par avance,\nJohan Lopez.\n\n----- Thomyris -----\n\nHello,\n\nvu au téléphone, rapel : pour vos clients Aller bien sur kaliadian.COM\n\nBonne journée\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-18T12:39:53Z"
+    },
+    {
+      "incidentId": "a6d186d0-2f8d-ef11-97bb-00155d0879e2",
+      "etat": "OPS",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS779 8561 559 300",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nPouvez-vous créer le client CRH0002  : C136 RH dans Kalydian ? pour Xefi Vendome.\n\nMerci.\n\n\n-------- Thomyris -----\n\nSalut, \n\nProcédure envoyer, ça sera effectif début de semaine prochaine.\n\nBonne journée\nAlex\n\n--- f.rosito ---\nFait",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-10-18T10:03:18Z"
+    },
+    {
+      "incidentId": "2f1f29c4-fde3-43cc-a446-7d1f5cc54ba2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS779 7401 559 068",
+      "statusName": "Problème résolu",
+      "description": "Problème sur Kalydian, remplissage automatique a moitié fonctionnel, extension qui affiche mal les identifiants et pleins d'autres problèmes. \n\nSi possible de me rappeler 09 54 01 08 34\n\n\n----- Thomyris -------\n\nHello, \n\nMerci pour ton retour, voici la liste des corrections / améliorations que je rajoute au projet :\n\nAutocomplétions non fonctionnel sur les sites suivant :  \n- Amazon \n- Nike \n- Rexel (fournisseur elec) \n- Sonepar connect \n\n\nfonction Utiliser mots de passe récent mis en avant \n\nfonction Supprimé plusieurs mot de passe a la fois\n\nBonne journée\nAlex\n ",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-18T08:56:25Z"
+    },
+    {
+      "incidentId": "34030692-258d-ef11-97bb-00155d0879e2",
+      "etat": "find l'ext xefi + dossier client ops erreur ?",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS779 7321 559 052   ",
+      "statusName": "Problème résolu",
+      "description": "--------Mail ------\n\nSalut,\nJe fais suite à la nouvelle News du 11/10 : KALYDIAN EST DÉSORMAIS ACCESSIBLE DE PARTOUT !\nJ’essaie de me connecter avec l’extension pour chrome. Il m’indique que l’utilisateur est inconnu.\nEn relisant la News, est marqué « Téléchargez la nouvelle extension dédiée à XEFI ». J’en déduis qu’il y en a une de spécial pour nous. Où trouve-t-on l’extension dédiée à XEFI ?\nMerci !\n\n+ \n\ndossier client ne remonte pas dans la synchro \n\nnom du client + coffre \n\n------- Thomyris ------\n\nHello,\n\nProblème résolu les dossiers devrait apparaitre début de semaine prochaine\n\nBonne journée,\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-18T08:49:58Z"
+    },
+    {
+      "incidentId": "f788419e-faab-46fa-ab7b-eb9fb9ace51f",
+      "etat": "Problème de connexion, mauvais mot de passe",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS779 4301 558 448",
+      "statusName": "Problème résolu",
+      "description": "Kalidian problème de connexion id et password\n\n\n\n------- Support Kalydian --------\n\nBonjour,\n\n\nProbleme concernant l'identification\n\nPour rappelle :\n-identifiant: jm.vignasse\n-mdp: celui pour ce connecter a outlook\n\nComme vu au téléphone problème réglé\n\nje te souhaite une bonne soirée\n\nCordialement\n\nSauvinet Lucas",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-17T14:37:20Z"
+    },
+    {
+      "incidentId": "8142b276-818c-ef11-97bb-00155d0879e2",
+      "etat": "création client ?",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS779 3311 558 250   ",
+      "statusName": "Résolu",
+      "description": "Salut \n\nPouvez-vous créer le compte CIBLES GESTION dans KALYDIAN\n\nMerci \n\n\n\n----- Thomyris ------\n\nHello,\n\nj'ai envoyer la demande pour la création, ça sera fait avant la fin de semaine.\n\nBonne journée,\nAlex.\n\n--- f.rosito ----\nFait",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-10-17T13:15:15Z"
+    },
+    {
+      "incidentId": "b525988f-dae0-4901-84da-799efcf0ef5f",
+      "etat": "création client ?",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS779 1951 557 978",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nPourriez vous créer mon client Tesmer Nicolas dans Kalydian ?\nMerci à vous,\nNicolas\n\n\n----- Thomyris -----\n\nHello,\n\nTa demande a été prise en compte ça sera fait avant la fin de semaine\n\nBonne journée,\nAlex\n\n---- f.rosito ---\nFait",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-10-17T10:38:57Z"
+    },
+    {
+      "incidentId": "28280857-b4ed-42f8-a6a4-08157ebb911b",
+      "etat": "import csv",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS779 0991 557 786   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, \n\nEst-il possible d'avoir une assistance pour l'import d'un fichier csv dans Kalydian ?\n\nMerci d'avance pour votre retour.\n\nCordialement.\n\nNicholas\n\n------- Thomyris -------\n\nHello,\n\nAprès réflexion, le système de Kalydian est conçu autour des \"coffres\" dans lesquels on importe les mots de passe, plutôt que d'être centré sur les utilisateurs.\nCela signifie que l'importation de groupes ou l'ajout automatique d'utilisateurs lors de l'importation ne serait pas faisable dans ce contexte.\n\nBonne journée\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-17T09:35:34Z"
+    },
+    {
+      "incidentId": "c72ca6ef-84a6-45ef-b5d1-b6614dc2d787",
+      "etat": "import csv",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS779 0391 557 666   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, \n\nj'avais ouvert un ticket pour une erreur d'importation sur kalydian, nous avons suivi les recommendations, en UTF-8 pas de case vides et max 200 lignes, cependant l'importation CSV ne fonctionne toujours pas. \n\n\nvoici les liens nota pour télécharger les CSV : \n\nhttps://nota.xefi.com/file/69669a95$186ce470\nhttps://nota.xefi.com/file/8ed9b3d5$d65a612a\nhttps://nota.xefi.com/file/cfe9ce6c$b0f47942\n\n\n-------- Thomyris ------\n\nSalut,\n\nSuite à l'appel avec Johan, nous avons vu ensemble comment procéder. Voyez ensemble pour être sûrs que l'encodage soit correct.\nPour ce qui est des mots de passe qui retournent une erreur, relevez-les manuellement, car il est possible que le mot de passe ne soit pas pris en compte au moment de l'importation.\n\nBonne journée,\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-17T09:01:41Z"
+    },
+    {
+      "incidentId": "08849881-d48b-ef11-97bb-00155d0879e2",
+      "etat": "user not exist",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS778 8111 557 210   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJe n'arrive plus à accéder à mon compte Kalydian.\nEst il possible de remédier à ce problème ?\n\nJ'ai le message \"L'utilisateur n'existe pas\"\n\nMerci d'avance,\nCordialement,\nRobin GURET\n\n\n----- Thomyris -------\n\nHello,\n\nJ'ai essayé de te joindre par téléphone afin d'être sûr que le problème est réglé, mais ça n'a pas fonctionné.\n\nJe t'ai débloqué et réactivé ton compte, tu peux à nouveau te connecter.\n\nSi cela ne fonctionne pas, n'hésite pas à recréer un ticket.\n\nBonne journée,\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-16T16:37:12Z"
+    },
+    {
+      "incidentId": "ffe5d0ca-78a1-4346-8fb4-03e3a21d6cb0",
+      "etat": "coffre indisponible",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS778 7891 557 166   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\r\n\r\nQuand j'ouvre Kalydian j'ai l'erreur suivante :\r\n\"Il n'y a pas de coffre disponible, ou une erreur est survenue. Si le problème persiste, veuillez contacter votre administrateur.\"\r\n\r\nPourriez-vous regarder ?\r\n\r\nMerci\r\nCosta Aymeric",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-10-16T16:10:18Z"
+    },
+    {
+      "incidentId": "6d7c17b6-213f-4069-9169-625dc71b4bb6",
+      "etat": "probleme connexion",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS778 5261 556 640   ",
+      "statusName": "Problème résolu",
+      "description": "Salut ! \n\nJe n'arrive plus à accéder à Kalydian, je me connecte, je rentre mon code mfa, ça charge et ça revient sur la page de connexion avec une erreur \"Votre session a expiré\". J'ai essayé en nav privée/autre navigateur mais toujours pareil.\n\nUne idée ? :)\n\nWilliam.\n\n------ Thomyris ---------\n\nHello, \n\nTu as utilisé quel navigateur exactement ?\n\n\nAlex\n\n------  mercredi 16 octobre 2024 15:16  |  XEFI LANNION CONTACT  ------\nSalut Alex ! \n\nFirefox & Chrome ...\nJe viens de réessayer sur chrome et ça fonctionne ! Je vais vider mon cache ! :)\n\nBonne journée à toi ! :)\n\n------- Thomyris --------\n\nSalut,\n\nTu as dû comprendre le problème : suite à une mise à jour, Firefox ne fonctionne plus.\nÀ savoir que le groupe recommande et supporte uniquement Chrome et Edge. Donc, si le système ne fonctionne pas sur d'autres navigateurs, merci de nous le signaler. Cependant, la résolution du problème peut prendre un certain temps car cela n'est pas forcément dans nos priorités.\n\nBonne idée pour le cache !\n\nJe te préconise donc d'utiliser Chrome le temps que nous résolvions ce problème, et je clos le ticket.\n\nBonne journée,\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-16T10:49:11Z"
+    },
+    {
+      "incidentId": "599bb418-9f8b-ef11-97bb-00155d0879e2",
+      "etat": "injection non fonctionnel",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS778 4841 556 556   ",
+      "statusName": "Problème résolu",
+      "description": " j’ai renseigné les URL mais quand j’utilise l’extension : erreur « utilisateur ou mot de passe incorrect », quand je le fais manuellement avec les mêmes identifiants ça marche\n\n\n----- Thomyris ------\n\nSuite a notre appel, j'ai essayé aussi de mon coté et j'ai la même erreur.\nJ'ouvre une anomalie de notre coté en attendant je t'invite a te connecter en rentrant des id a la main d'ici la prochaine correction.\nJe clôture donc le ticket merci pour ton retour.\n\nBonne Journée,\nAlex\n",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-16T10:14:56Z"
+    },
+    {
+      "incidentId": "e5e67902-908b-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS778 3111 556 210",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nPouvez-vous rajouter dans Kalydian le client suivant:\nNEW-E\nNEW0003\nMerci,\nMatteo\n\n\n------ Thomyris------\n\nHello,\n\nSauf erreur de ma part, un ticket a déjà été créé à ce sujet.\nNos équipes sont dessus, cela sera fait prochainement.\n\nBonne journée,\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-16T08:27:01Z"
+    },
+    {
+      "incidentId": "b66169ac-0a8b-ef11-97bb-00155d0879e2",
+      "etat": "OPS a faire",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS778 1901 555 968",
+      "statusName": "Problème résolu",
+      "description": "Bonjour , pouvez vous créer le client NEW E sur Kalydian : n SAGE :  NEW0003 .\n\nMerci \n\n-------Thomyris-------\n\nHello,\n\nje transfert la demande a la personne qui gére les OPS, ça sera fait avant la fin de semaine.\n\nBonne soirée,\nAlex\n\n----- f.rosito ----\nC'est fait, à dispo et au plaisir.\nCdlt",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-10-15T16:32:25Z"
+    },
+    {
+      "incidentId": "f4985863-078b-ef11-97bb-00155d0879e2",
+      "etat": "manque des accès",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS778 1751 555 938   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, \n\nJe constate depuis plusieurs jours que Kalydian ne m'affiche pas les accès serveur, firewall, office pour beaucoup de client malgré que j'ai possède les accès. \n\nMerci d'avance bonne journée à vous. \n\n------ Thomyris ----\n\nHello,\n\nJe clôture ce ticket en l'absence d'éléments me permettant de chercher d'où peut provenir le souci.\nSi le problème récidive, n'hésite pas à rouvrir un ticket et à passer un coup de téléphone pour que l'on voie ça.\n\nBonne journée,\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-15T16:08:52Z"
+    },
+    {
+      "incidentId": "ea4da8c5-14e6-4ac9-9866-983465f8308e",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS778 0841 555 756",
+      "statusName": "Problème résolu",
+      "description": "Salut, il m'est impossible de me connecter a Kalydian, lorsque je me connecte, ça me déconnecte quasi instantanément en me mettant session expirée.\nSi possible de me rappeler pour voir ça, merci ! \n09 54 01 08 34\n\n------ Thomyris -------\n\nHello,\n\nComme vu au téléphone, une mise à jour récente a créé ce problème sur Firefox.\nCependant, la consigne du groupe recommande d'utiliser Chrome ou Edge comme navigateurs, sur lesquels Kalydian n'a pas ce problème.\n\nEn attendant que le problème soit résolu (pour une durée indéterminée), je te conseille de passer sur l'un des deux navigateurs.\n\nBonne journée,\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-15T14:51:07Z"
+    },
+    {
+      "incidentId": "cbef675d-92c8-45a9-8f98-cdd7c87cf2de",
+      "etat": "création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS777 8471 555 282   ",
+      "statusName": "Résolu",
+      "description": "Salut a tous,\n\nIl me manque un client dans KALYDIAN le client c'est VITRES et VERRE, pouvez vous le créer svp ?\n\nMerci d'avance,\nRestant diponible,\n\nCamille GICQUEL\nXEFI LE MANS SUD\n\n------Thomyris ------\n\nhello,\n\nNous avons bien prit en compte ton ticket, la personne en charge d'ajouter les clients s'en occupe, \nIl sera traité avant la fin de semaine.\n\nBonne journée\nAlex\n\n---- f.rosito ---\nBonjour,\n\nLe dossier client \"VIT0001 VITRES ET VERRE\" a été créer dans le coffre \"XEFI Le Mans Sud\"\n\nAu plaisir et à disposition",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-10-15T10:33:49Z"
+    },
+    {
+      "incidentId": "3919db93-e18b-4bf2-a28e-37e1a24437f6",
+      "etat": "csv import pb",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS777 4121 554 412   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, \n\nLorsque j'essaye d'importer un CSV dans kalydian cela ne fonctionne pas et j'ai une erreur qui apparait pourtant le fichier est au bon format\n\n------Thomyris-------\n\nHello, \n\npeut-tu m'envoyer le message d'erreur ? \n\n\nAlex\n\n-------------\n\n\n------  mardi 15 octobre 2024 09:01  |  CONTACT  ------\n\nHello, \n\nLe message d'erreur me dit de vérifier si le fichier étais a jour, \nvoici le lien nota pour télécharger le fichier si tu as besoin de tester : https://nota.xefi.com/file/bbb0f59e$8e50f123\n\nest ce que le fait qu'il n'y ai rien dans la colonne OTP pose problème ? \n\n\n--------Thomyris ------\n\nHello,\n\nSuite au coup de téléphone à l'agence,\nLe fichier étant trop lourd, la requête prend trop de temps à revenir, ce qui crée une erreur. C'est un problème sur lequel nous allons nous pencher.\nEn tout cas, comme solution, je te propose de faire trois choses :\n\n1. Découpe le fichier par tranches de 200 comptes afin que la requête soit plus rapide. (donc importe le en 2-3 fichiers)\n2. Ouvre le fichier avec le bloc-notes et enregistre-le bien en UTF-8.\n3. Vérifie bien que tous les comptes aient un mot de passe (champ obligatoire), car il y en a un qui n'en a pas.\n\nJe clôture le ticket. Si besoin, n'hésite pas à passer un coup de téléphone.\nBonne journée,\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-14T15:18:18Z"
+    },
+    {
+      "incidentId": "bd720efd-348a-ef11-97bb-00155d0879e2",
+      "etat": "accès coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS777 3891 554 366",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nPouvez-vous m'accorder accès aux coffres des franchises ?\n\nCordialement,\n\n-------- Thomyris ---------\n\n\nbonne journée\nAlex\n\n------ f.rosito -----\nL’opération de rattachement des collaborateurs au groupe AD a été effectuée avec succès. Ils font désormais partie du groupe suivant :\nCN=ACC_ALL_KALYDIAN,OU=ACC_OUTILS,OU=Groupes,OU=XEFI,DC=xefi,DC=priv, ce qui leur confère les privilèges nécessaires sur les coffres franchise.\n",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-10-14T15:02:55Z"
+    },
+    {
+      "incidentId": "7f9cbc63-c122-476c-ad95-ddecd65c3aa0",
+      "etat": "sessions expirée",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS777 1771 553 942   ",
+      "statusName": "Problème résolu",
+      "description": "Impossible d'accéder à Kalydian. Message \"votre session a expiré\" après avoir entré la double authentification.\n\n\n----- Thomyris------\n\nHello,\n\nSuite à une migration de kalydian.xefi.fr par la DSI, nous rencontrons un problème d'invalidation de session sur firefox.\nActuellement nous garantissons une couverture complète de Kalydian sur Chrome et Edge uniquement, mais concernant Firefox les devops sont sur le coup, nous ferons en sorte de stabiliser la solution.\n\nDésolé pour la gêne occasionnée,\nAlex\n\n\n---------------------",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-14T12:57:00Z"
+    },
+    {
+      "incidentId": "8a38be3c-ff89-ef11-97bb-00155d0879e2",
+      "etat": "connection firefox",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS776 8581 553 304   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nC'est pour le collaborateur Kamlesh BALLOO d'IDCOM, pour son accès Kalidyan\n\nUne fois les info identifiants renseignés, ça lui dit accès expiré\n\nPourriez-vous vérifier cela svp\n\nMerci :)\n\n----------------------------------\n\nBonjour,\n\nSuite à une migration de kalydian.xefi.fr par la DSI, nous rencontrons un problème d'invalidation de session sur firefox.\nActuellement nous garantissons une couverture complète de Kalydian sur Chrome et Edge uniquement, mais concernant Firefox les devops sont sur le coup, nous ferons en sorte de stabiliser la solution.\n\nBelle journée,\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-14T08:38:06Z"
+    },
+    {
+      "incidentId": "372b1856-8ab9-40fa-8558-efeb092b5493",
+      "etat": "1er connexion kalydian",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS776 8531 553 294   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nPourriez-vous réinitialiser le mot de passe de ISL de mon collaborateur Jean-françois BOURDAREAU ? \nEt ouvrir les droits KALYDIAN de Avignon et Martigues de Jean-François BOURDAREAU ?\n\nMerci.\nCordialement.\nFrédéric.\n\n---------DSI--------\nHello,\n\nC'est ok pour ISL.\n\nJe transfère à Thomyris.\n\nBonne journée \n\n---------Thomyris------------\n\nHello,\n\nSuite à la création du compte il a été ajouté automatiquement a Avignon et je l'ai ajouté au coffre de Martigues.\n\nbonne journée,\nAlex",
+      "ownerName": "Alexandre MOREAU",
+      "creationDate": "2024-10-14T08:36:27Z"
+    },
+    {
+      "incidentId": "144a33ad-dc87-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS776 6641 552 916   ",
+      "statusName": "Résolu",
+      "description": "Bonjour,\n\nJ'ai pas d'accès à Kalydian, même en me connectant avec mon compte Microsoft. Ca me dire que l'utilisateur n'existe pas. C'est possible de m'en créer un svp ?\n\n---- THOMYRIS ----\n\nBonjour Chloé,\n\nEst-ce que tu te connectes bien sur https://kalydian.xefi.fr/ ?\nL’url kalydian.com est la solution que nous vendons à nos clients finaux, tu n’as pas de compte dessus.\n\nSi tu as un compte AD fonctionnel, tu pourras te connecter automatiquement par le formulaire de connexion. Il te faudra paramétrer une double authentification.\n\nJe reste disponible pour tous renseignements,\nBien cordialement,\nLydie RECH - THOMYRIS",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-11T15:25:42Z"
+    },
+    {
+      "incidentId": "e44ccd9f-cf87-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS776 5801 552 748   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à appel : déblocage utilisateur Samy Joseph",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-11T13:52:12Z"
+    },
+    {
+      "incidentId": "0221f76d-d653-412c-b498-26b238c614d9",
+      "etat": "pb connexion session",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS776 4751 552 538   ",
+      "statusName": "Résolu",
+      "description": "Bonjour a tous,\n\nJe n'arrive plus a me connecter a kalidyan via firefox et su chrome je suis déconnecté toutes les 2 minutes,\n\npouvez vous faire quelque chose ?\n\n----- THOMYRIS -----\n\nBonjour Florent,\n\nSuite à une migration de la DSI l'accès a Kalydian est instable, nous sommes en contact avec la DSI pour stabiliser la connexion.\nIls travaillent en ce moment-même dessus car nous avons des interruptions de service actuellement, je reviens vers toi quand ça c'est rétabli.\n\nBien cordialement,\nLydie RECH - THOMYRIS\n\n\n---- THOMYRIS ----\n\nBonjour Florent,\n\nLa stabilisation des sessions sera mise en prod au plus tôt à la prochaine version de Kalydian, la 2.10.0, qui arrivera au cours des prochaines semaines.\n\nBien à toi,\nLydie RECH - THOMYRIS",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-11T11:05:08Z"
+    },
+    {
+      "incidentId": "f44829f5-2ba3-40c5-81a4-f6761d3adc82",
+      "etat": "création client final",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS776 4391 552 466   ",
+      "statusName": "Problème résolu",
+      "description": "N° Sage: GRO0032\nCompte client : GROUPE JTI\nContact client : -\nTéléphone contact : 0296505717\nDescription : Bonjour Le client a souscrit Kalydian et je voulais savoir comment crée les différents compte du client car je n'ai pas trouver de procédure\n\nPourriez vous me rappeler ou m'envoyé la procédures a suivre \n\nmerci d'avance \n\n---- THOMYRIS ----\n\nBonjour,\n\nJe t'ai envoyé un email pour te transmettre la fiche navette afin de renseigner les informations du client pour créer leurs comptes et coffres, et organiser un atelier démo du rôle intervenant pour te permettre d'administrer directement tes clients.\n\nBien cordialement\n\n---- THOMYRIS ----\n\nDémo terminée :)",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-11T10:27:33Z"
+    },
+    {
+      "incidentId": "3f342f61-70f5-4ef9-a669-ca919a355458",
+      "etat": "suppression utilisateur",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS776 3651 552 318   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, \n\nJ'ai un PB sur l'interface Kalydian d'un client, j'aimerai supprimer 2 user si vous pouvez voir cela\n\nclient : SVAE\nuser a supprimer : \n- Solene \n- Laura\n\n\n---- THOMYRIS ----\n\nBonjour,\n\nVu par CT : comptes désactivés et OPS créée pour retirer ces comptes, tu peux créer les nouveaux.\n\nBonne journée",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-11T09:42:38Z"
+    },
+    {
+      "incidentId": "07d561c0-31fe-4ff3-a996-2843d48aabd4",
+      "etat": "pb connexion firefox",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS776 2021 551 992   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour\nje n arrive pas à me connecte à kalydian. A chaque fois, le site me dit \"votre session a expiré\".\nbonne journée\n\n----- THOMYRIS -----\n\nBonjour,\n\nSuite à une migration de kalydian.xefi.fr par la DSI, nous rencontrons un problème d'invalidation de session sur firefox en effet.\nActuellement nous garantissons une couverture complète de Kalydian sur Chrome et Edge uniquement, mais concernant Firefox les devops sont sur le coup, nous ferons en sorte de stabiliser la solution.\n\nBelle journée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-11T08:06:44Z"
+    },
+    {
+      "incidentId": "61dba7a5-42ae-4d29-befc-aced75eb66f5",
+      "etat": "ajout utilisateurs à coffres",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 7771 551 142   ",
+      "statusName": "Problème résolu",
+      "description": "KALYDIAN\nBonjour,\nJ'ai besoin que les techniciens d'AVIGNON aient accès au KALYDIAN des agences AVIGNON et MARTIGUES\nJ'ai également besoin que les techniciens de MARTIGUES aient accès au KALYDIAN des agences AVIGNON et MARTIGUES\n\n---- THOMYRIS ----\n\nBonjour Patrice,\n\nJ'ai attaché les techniciens de Martigues et Avignon existants sur Kalydian aux deux coffres de vos agences, c'est tout bon.\nSi un technicien se connecte pour la 1e fois et qu'il a besoin d'être rattaché à l'un ou l'autre des coffres, n'hésitez pas.\n\nBelle journée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-10T10:55:07Z"
+    },
+    {
+      "incidentId": "b3bf5c99-e486-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 6961 550 980   ",
+      "statusName": "Résolu",
+      "description": "\nNous n'arrivons plus depuis hier en fin de journée à accéder à kalydian.\n\nLe site est inaccessible.\n\nPouvez-vous nous faire un retour sur l'origine de ce problème, car nous n'arrivons plus à avoir accès à nos mots de passe ?\n",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-10T09:49:46Z"
+    },
+    {
+      "incidentId": "a1a7b2d1-366a-4c39-9191-586ebb9f07bf",
+      "etat": "connexion firefox",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 6941 550 976   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nIl m'est impossible de me connecter à Kalydian depuis hier en fin de journée.\nPourriez vous me rappeler à ce sujet?\nMerci\nMiguel\n\n---- THOMYRIS ---\n\nSuite CT, redirection connexion sur Chrome, en attendant résolution DSI sur Firefox",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-10T09:48:40Z"
+    },
+    {
+      "incidentId": "fcc4ac83-d6ff-4f3c-9147-92a8fc99eeed",
+      "etat": "1e connexion utilisateur",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 6801 550 948   ",
+      "statusName": "Problème résolu",
+      "description": "Je n'ai pas accès à Kalydian (utilisateur n'existe pas)\n\n---- THOMYRIS ----\n\nBonjour Nathan, \n\n•\tEst-ce que tu te connectes bien sur https://kalydian.xefi.fr ? L’url kalydian.com est la solution que nous vendons à nos clients finaux, tu n’as pas de compte dessus.\n•\tSi tu as un compte AD fonctionnel, tu pourras te connecter automatiquement par le formulaire de connexion. Il te faudra paramétrer une double authentification.\n\nJe reste disponible pour tous renseignements,\nBien cordialement,\n",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-10T09:44:58Z"
+    },
+    {
+      "incidentId": "cc672018-e186-ef11-97bb-00155d0879e2",
+      "etat": "suggestions kalydian",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 6441 550 876   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJ'ai trois suggestions concernant Kalydian :\n- Une case a cocher a droite du champs de recherche pour rechercher uniquement dans le Coffre en cours (gain en rapidité et en requêtes).\n- Lorsque l'on clique sur le résultat de la requête, allez directement dans le dossier plutôt qu'a la racine avec focus sur le dossier, nous somme à 836 dossiers et malgré la pagination sa met beaucoup de temps a s'afficher et un clique supplémentaire (gain en rapidité et en requêtes).\n- Pouvoir mettre plusieurs liens URL, utiles sur les Firewall par exemple.\n\nMerci :)\n\n---- THOMYRIS ----\n\nBonjour Damien,\n\nMerci beaucoup pour tes retours, ils nous sont très précieux pour améliorer notre solution !\n\nNous allons bientôt améliorer la recherche dans les coffres, et je transmets ta proposition pour la recherche uniquement dans coffre en cours, en effet ça sera plus rapide !\nPour l'accès direct au dossier, c'est dans les tuyaux pour une mise en prod rapide, ça fera du bien au temps de recherche en effet.\n\nJe note pour les liens URL, c'est très intéressants comme retours et on l'intégrera à la roadmap !\n\nMerci encore,\nBien cordialement,\n\nLydie RECH - THOMYRIS",
+      "ownerName": "Alexandre MENAND",
+      "creationDate": "2024-10-10T09:24:43Z"
+    },
+    {
+      "incidentId": "82b1ff64-162b-430c-9180-8e27654538f9",
+      "etat": "pb création item",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 6241 550 836   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, je suis en train de migrer les identifiants clients sur KALYDIAN mais 1/2 fois j'ai ce message d'erreur qui apparait (pj). Je dois, des fois, changer un caractère ou deux pour que ça fonctionne et revenir dessus pour le corriger, cependant il peut arriver que ça ne fonctionne pas du tout. Je voulais savoir s'il y avait des caractères interdits, ou peut être des combinaisons de mot à ne pas faire ? \nMerci d'avance.\nCordialement.\n\nTimothée\n\n---- THOMYRIS ----\n\nBonjour Timothée,\n\nSuite à nos échanges nous avons mis en production les modifications, je te laisse retester la création de mot de passe et rouvrir un ticket si cela n'est pas résolu lorsque tu reviens :)\n\nBonne fin de journée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-10T09:08:32Z"
+    },
+    {
+      "incidentId": "54467137-db86-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 5621 550 712   ",
+      "statusName": "Résolu",
+      "description": "Impossible d'avoir Kalydian sur Firefox, fin de session automatiquement instantanément on utilise donc edge/chrome en alternative \n\n----- THOMYRIS -----\n\nBonjour,\n\nSuite à la migration de kalydian.xefi.fr par la DSI, nous rencontrons un problème d'invalidation de session sur firefox en effet.\nActuellement nous garantissons une couverture complète de Kalydian sur Chrome et Edge uniquement, mais concernant Firefox les devops sont sur le coup, nous ferons en sorte de stabiliser la solution.\n\nBelle journée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-10T08:42:42Z"
+    },
+    {
+      "incidentId": "f7364677-5386-ef11-97bb-00155d0879e2",
+      "etat": "création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 3711 550 330   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à réception mail\n\nCréation banque nouveau client : ITINERAIRE EMPLOI sur kalydian.com",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-09T16:30:59Z"
+    },
+    {
+      "incidentId": "c85fe1dc-4ac3-4ea6-a9e4-d40910acdfa1",
+      "etat": "import keepass",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 3641 550 316   ",
+      "statusName": "Problème résolu",
+      "description": "Kalydian\n\nBonjour,\n\nJe n'arrive pas a importer mon keepass sur kalydian. (voir erreur pj ci-joint).\nNous avons la dernière maj de keepass.\n\n--- THOMYRIS ----\n\nBonjour Kevin,\n\nSuite à nos échanges nous avons mis en production les modifications vendredi, je te laisse retester l'import et rouvrir un ticket si cela n'est pas résolu :)\n\nBien cordialement,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-09T16:23:13Z"
+    },
+    {
+      "incidentId": "26500f5d-5186-ef11-97bb-00155d0879e2",
+      "etat": "Création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 3591 550 306   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à email\n\nCréation des utilisateurs et coffres dans la banque SEM SARL sur kalydian.com",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-09T16:15:57Z"
+    },
+    {
+      "incidentId": "4f258533-3886-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 1531 549 894   ",
+      "statusName": "Résolu",
+      "description": "Bonjour,\n\nNous avons des nouveaux dans notre service.\n\nPouvez vous  créer les accès à Rieux Aurélien et Jassem  Ben MABROUK pour Kalydian s'il vous plait \n\nMerci beaucoup\n\n\n---- THOMYRIS ----\n\nBonjour Florian,\n\nSi Aurélien et Jassem ont des comptes AD fonctionnels, ils peuvent déjà se connecter à Kalydian et un compte leur sera automatiquement créé.\n\nPour la première connexion ils faut passer par le formulaire de connexion :\n- identifiants : p.nom (par exemple a.rieux)\n- mot de passe : leur mot de passe AD\nIls devront configurer une double authentification pour cette 1e connexion.\n\nPar la suite ils pourront utiliser directement le bouton SSO Microsoft pour se connecter.\n\nBonne journée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-09T13:15:49Z"
+    },
+    {
+      "incidentId": "d3205ad5-3686-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS775 1371 549 862   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJ'aurais besoin des accès aux coffres de toute les franchises. Merci de nous accordé l'accès à Abdelhakim EL GADIR ainsi que Vincent MAS.\n\n\n---- THOMYRIS ----\n\nBonjour Abdelhakim,\n\nJe vous ai rajouté au groupe Xefi_astreinte, c'est tout bon :) Si tu vois une franchise qui te manque, n'hésite pas à nous prévenir.\n\nBonne journée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-09T13:05:58Z"
+    },
+    {
+      "incidentId": "fccd86f9-1c86-ef11-97bb-00155d0879e2",
+      "etat": "Ajout groupe coffre",
+      "severityLabel": "Forte",
+      "ticketNumber": "CAS774 9821 549 552   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour\n\nSylvain Verani et moi-même avons besoin d'accéder au coffre de Saint Claude\n\nPouvez-vous nous mettre les droits en urgence svp, nous avons une souci sur le PCA Simplivity en prod\n\nmerci\n\n---- THOMYRIS ----\n\nSalut Cédric,\n\nC'est fait :)\n\nBelle journée,\nLydie RECH - THOMYRIS\n.\n\n",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-09T10:00:54Z"
+    },
+    {
+      "incidentId": "15770de1-5018-4a8f-b898-56843e9deace",
+      "etat": "Accès portail",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 6261 548 840   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour.\n\nDepuis cet après-midi, impossible d'accéder aux mots de passe stockés dans Kalydian (voir image jointe).\n\nMerci.\n\n---- THOMYRIS ----\n\nBonjour Maxence,\n\nEst-ce que tu arrives à te connecter sur https://kalydian.xefi.fr/ ?\n  \nSuite à une migration de la DSI, les franchisés peuvent désormais accéder à https://kalydian.xefi.fr/ mais cela a créé des difficultés d'accès via le portail, nous sommes en train de réparer cela.\n \nNous ne communiquons pas encore publiquement car nous avons des tests à faire suite à cette migration, afin d’être sûr que tout est bien stabilisé pour tout le monde, mais désormais vous pouvez utiliser https://kalydian.xefi.fr/ librement\nIdem pour l’extension, depuis le menu interne de Kalydian vous pouvez télécharger une extension Kalydian Xefi qui est fonctionnelle pour vous désormais !\n\nSi jamais ça ne fonctionne pas sur https://kalydian.xefi.fr/ on lance un dépannage, cela peut venir du cache DNS suite à la migration.\nEnfin, actuellement la session ne fonctionne pas sur Firefox, nous sommes en train d’investiguer le problème. Kalydian fonctionne sur Chrome et Edge cependant.\n\nBien cordialement,\nLydie RECH - Thomyris\n.\n\n------  mardi 8 octobre 2024 17:03  |  Maxence BEAUDON  ------\n\nBonjour.\n\nJe confirme pouvoir accéder à Kalydian via https://kalydian.xefi.fr.\nLes mots de passes sont bien présent.\nL'erreur est toujours là sur la version portail XEFI.\n\nMerci pour le dépannage.\n\n---- THOMYRIS ----\n\nBonjour,\n\nLe portail xefi renvoie désormais sur kalydian.xefi.fr :)\n\nBelle journée,\nLydie RECH - THOMYRIS",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-08T14:58:03Z"
+    },
+    {
+      "incidentId": "0ba3e87b-17ba-42ea-a9ac-934387bf6492",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 6071 548 802   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\r\nJ'ai un problème avec Kalidyan j'arrive pas à me connecter pour récuperer informations.\r\n\r\nMerci bien,\r\nNadir SLIMANE\r\n0148489341",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-08T14:40:40Z"
+    },
+    {
+      "incidentId": "289c3739-0d87-4075-8184-0ef379a72e12",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 6031 548 794   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, \n\nNous n'avons plus d'accès à Kalydian.\n\nMerci d'avance pour votre retour.\n\nNicholas\n\n----- Thomyris ----\n\nSuite à entretien tel, explication de la migration et redirection connexion sur kalydian.xefi.fr, fonctionnel.\n\nBien cordialement,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-08T14:38:33Z"
+    },
+    {
+      "incidentId": "5c017364-7585-ef11-97bb-00155d0879e2",
+      "etat": "Accès portail",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 5441 548 676   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour \nJ'ai un soucis de connexion a kalydian. Trop de copie/colle peut etre!\n\n---- THOMYRIS ----\n\nSuite à échange de mails, explication de la migration et redirection connexion sur kalydian.xefi.fr, fonctionnel.\n\nBien cordialement,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-08T14:01:12Z"
+    },
+    {
+      "incidentId": "7f392dab-b462-4adb-8e3e-033facdfda70",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 5041 548 596   ",
+      "statusName": "Problème résolu",
+      "description": "URGENT Kalydian HS\n\n\nBonjour\n\nProblème résolu\n\nManu\n\n------  08/10/2024 14:56  |  Stephen QUEVAL  ------\n\nBonjour, pas depuis le portail.xefi.fr\n\n\n----- THOMYRIS -----\n\nBonjour,\n\nJe m'excuse du retard qu'a pris le traitement de ce ticket, il était passé dans une autre catégorie que \"Kalydian\" dans notre vue et a mis du temps à nous parvenir.\n\nEst-ce que tu arrives à te connecter sur https://kalydian.xefi.fr/ ? \n\nSuite à une migration de la DSI, les franchisés peuvent désormais accéder à https://kalydian.xefi.fr/ mais cela a créé des difficultés d'accès via le portail, ils sont en train de réparer cela.\n \nNous ne communiquons pas encore publiquement car nous avons des tests à faire suite à cette migration, afin d’être sûr que tout est bien stabilisé pour tout le monde, mais désormais vous pouvez utiliser https://kalydian.xefi.fr/ librement.\nIdem pour l’extension, depuis le menu interne de Kalydian vous pouvez télécharger une extension Kalydian Xefi qui est fonctionnelle pour vous désormais !\n\nSi jamais ça ne fonctionne pas sur https://kalydian.xefi.fr/ on lance un dépannage, cela peut venir du cache DNS suite à la migration.\nEnfin, actuellement la session ne fonctionne pas sur Firefox, nous sommes en train d’investiguer le problème. Kalydian fonctionne sur Chrome et Edge cependant.\n\nBien cordialement,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-08T13:38:43Z"
+    },
+    {
+      "incidentId": "4d8bb595-7185-ef11-97bb-00155d0879e2",
+      "etat": "connexion sur firefox",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 4981 548 584   ",
+      "statusName": "Problème résolu",
+      "description": "Problème avec mon kalydian\nlorsque je tente de me connecter je suis éjecté de ma session vers la page de connexion avec comme message d'erreurs session expiré (voir note)\n\n--- Thomyris \n\nBonjour,\n\nComme discuté par téléphone, le problème de connexion est résolu.\n\nBonne journée !\n\nJoachim\n\n\n",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-08T13:34:04Z"
+    },
+    {
+      "incidentId": "d6106b39-84c4-462f-bd5f-867a556e0bc4",
+      "etat": "Accès portail",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 4971 548 582   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour \nNous avons tous perdu l'accès a kalidyan\nC'est très bloquant pour notre activité\nMerci de nous contacter d'urgence \n\n----- Thomyris ----\n\nSuite à entretien tel, explication de la migration et redirection connexion sur kalydian.xefi.fr, fonctionnel.\n\nBien cordialement,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-08T13:33:59Z"
+    },
+    {
+      "incidentId": "d7ffaa0d-0447-4f23-ac91-4ed4b2cceec5",
+      "etat": "Pb accès portail",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 4561 548 500   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nNous n'avons plus accès à Kalydian depuis fin de matinée, peu importe le compte utilisé.\nMerci.\n\n----- THOMYRIS ----\n\nBonjour Davy,\n\nEst-ce que tu arrives à te connecter sur https://kalydian.xefi.fr/ ?\n\nSuite à une migration de la DSI, les franchisés peuvent désormais accéder à https://kalydian.xefi.fr/ mais cela a créé des difficultés d'accès via le portail, nous sommes en train d'investiguer ça.\n\nNous ne communiquons pas encore publiquement car nous avons des tests à faire suite à cette migration, afin d’être sûr que tout est bien stabilisé pour tout le monde, mais désormais vous pouvez utiliser https://kalydian.xefi.fr/ librement.\n\nIdem pour l’extension, depuis le menu burger vous pouvez télécharger une extension Kalydian Xefi qui est fonctionnelle pour vous désormais !\n\nSi jamais ça ne fonctionne pas sur https://kalydian.xefi.fr/ réouvre ce ticket et on lance un dépannage, cela peut venir du cache DNS suite à la migration.\n\nBien cordialement,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-08T13:05:11Z"
+    },
+    {
+      "incidentId": "62b510d3-82f8-4844-8344-12f22b7e10e7",
+      "etat": "Accès portail",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 4271 548 442   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJe n'arrive pas à accéder à Kalydian, quel que soit le navigateur ou le réseau que j'utilise.\n\nSur Edge, je ne parviens même pas à atteindre la page, tandis que sur Chrome, je suis bloqué à la fenêtre d'introduction des identifiants.\n\nAvez-vous déjà rencontré ce problème ou est-ce un problème général ?\n\nMerci d'avance,\nFélix\n\nBonjour\n\nPb resolu.\n\nManu\n\n------  mardi 8 octobre 2024 14:53  |  Chimay IT  ------\nRe-Bonjour\n\nToujours pas moyen de passer la fenêtre de connexion.\n\n---- THOMYRIS ----\n\nBonjour,\n\nJe m'excuse du retard qu'a pris le traitement de ce ticket, il était passé dans une autre catégorie que \"Kalydian\" dans notre vue et a mis du temps à nous parvenir.\n\nEst-ce que vous arrivez à vous connecter sur https://kalydian.xefi.fr/ ?\n\nSuite à une migration de la DSI, les franchisés peuvent désormais accéder à https://kalydian.xefi.fr/ mais cela a créé des difficultés d'accès via le portail, nous sommes en train de réparer cela.\n\nNous ne communiquons pas encore publiquement car nous avons des tests à faire suite à cette migration, afin d’être sûr que tout est bien stabilisé pour tout le monde, mais désormais vous pouvez utiliser https://kalydian.xefi.fr/ librement.\nIdem pour l’extension, depuis le menu interne de Kalydian vous pouvez télécharger une extension Kalydian Xefi qui est fonctionnelle pour vous désormais !\n\nSi jamais ça ne fonctionne pas sur https://kalydian.xefi.fr/ on lance un dépannage, cela peut venir du cache DNS suite à la migration.\n\nEnfin, actuellement la session ne fonctionne pas sur Firefox, nous sommes en train d’investiguer le problème. Kalydian fonctionne sur Chrome et Edge cependant.\n\nBien cordialement,\nLydie RECH - Thomyris\n\n---- THOMYRIS ----\n\nBonjour,\n\nLe portail xefi renvoie désormais sur kalydian.xefi.fr :)\n\nBelle journée,\nLydie RECH - THOMYRIS",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-08T12:42:41Z"
+    },
+    {
+      "incidentId": "987264fd-0e55-4b51-ba6a-334be9c97aea",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 4051 548 398   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\r\nje n'ai plus accès à Kalydian. Pouvez vous me rappeler à ce sujet svp? tel 0772517315\r\nD'avance merci\r\n\r\n\r\n------  mardi 8 octobre 2024 14:15  |  Joseph BLANCHE  ------\r\n\r\n",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-10-08T11:27:24Z"
+    },
+    {
+      "incidentId": "c6de0462-5385-ef11-97bb-00155d0879e2",
+      "etat": "Suggestions utilisateur",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS774 2871 548 162   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à email.\n\nRenseignements et enregistrement des suggestions front de Idriss Nacha sur Kalydian : taille de la description et taille modulable des modales.",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-08T09:57:49Z"
+    },
+    {
+      "incidentId": "db5543a9-c384-ef11-97bb-00155d0879e2",
+      "etat": "Ajout utilisateur coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS773 9831 547 554   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à échange emails\n\nAjout de Corentin Revillet au coffre Démo Kalydian",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-07T16:49:06Z"
+    },
+    {
+      "incidentId": "7628d245-b282-4c15-8cd1-32b1d093969d",
+      "etat": "Renseignements fonctionnalité OTP",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS773 8521 547 292   ",
+      "statusName": "Résolu",
+      "description": "Bonjour,\nComment gérez vous la mise en place de la double authentification pour les comptes admin des Tenant Microsoft 365 des clients.\nAvec Kalydian? Dans ce cas, comment utiliser Kalydian à la place de Microsoft Authenticator?\nMerci\nPierre-François\n04 91 34 75 71\n\n--- THOMYRIS ---\n\nBonjour Pierre-François,\n\n\t• Dans Kalydian, les utilisateurs peuvent renseigner les clés secrètes de leurs codes de double authentification lors de la création d’un mot de passe, ou modification d’un mot de passe existant, dans le champ « OTP » (one time password)\n\t• Ils peuvent ensuite copier le code à 6 chiffres depuis l’explorer de Kalydian, ou directement depuis l’extension Kalydian lorsqu’ils se trouvent sur la page de connexion souhaitée et ouvrent l’extension.\n\t• Pour récupérer une clé secrète lorsque seul un QR code est proposé, il suffit de scanner le QR code avec une application de scan QR code ordinaire\n\nJe reste disponible pour tous renseignements via mail ou téléphone ci-dessous,\nBien cordialement,\nLydie RECH - THOMYRIS\n",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-07T14:37:10Z"
+    },
+    {
+      "incidentId": "cac818fd-c6f8-40a3-b8c0-324eca0bd928",
+      "etat": "Ajout utilisateur coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS773 8291 547 246   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, \nJe souhaiterai créer et mettre en place le coffre fort Kalydian, est-ce que je pourrai être rappelé svp? \nMerci d'avance.\n\nTimothée\n\n----- THOMYRIS -----\n\nSuite à notre appel, je t'ai ajouté au coffre d'Albi.\n\nBonne semaine :)\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-07T14:23:25Z"
+    },
+    {
+      "incidentId": "bf63824b-0028-4169-b326-815dc3311cf5",
+      "etat": "Problème injection extension",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS773 5861 546 760   ",
+      "statusName": "Résolu",
+      "description": "Bonjour, je vous contacte concernant Kalydian.\nUn client rencontre des problèmes pour la connexion sur certains sites car ceux-ci n'active pas le bouton connexion sans entrée clavier.\nDu coup le client sélectionne  mais impossible de valider la connexion.\n\nPouvez-vous me dire si vous avez déjà eu des retours de problèmes similaires ?\n\nMerci\n\n---- THOMYRIS ----\n\nBonjour,\n\nMerci pour ce retour !\nL'extension est encore en bêta concernant l'injection web, nous sommes actuellement en train de peaufiner et corriger les bugs d'injection qui peuvent apparaitre, car les formulaires web changent drastiquement d'un site à l'autre.\n\nNous rencontrons un blocage sur les formulaires qui sont justement protégés contre l'injection de donnée, ceux-ci n'acceptent pas les données copiées-collées, uniquement tapées à la main.\nActuellement la parade est d'injecter ou coller l'identifiant, ajouter un espace et l'effacer à la fin afin d'activer la saisie manuelle du formulaire, et celui-ci devrait permettre la soumission ensuite.\n\nNous travaillons à supprimer ce blocage, est-ce que tu peux me transmettre la liste des sites concernés par ton client ? Je vais les ajouter aux sites à corriger.\n\nBon lundi,\nLydie RECH - Thomyris\n\n------  lundi 7 octobre 2024 13:41  |  Chimay IT  ------\n\nSalut, oui effectivement j'avais bien compris le problème.\nLe souci est que cela fonctionne via la sauvegarde des mots de passe Google et comme j'ai conseillé au client d'utiliser Kalydian pour des raisons de sécurités , pas facile de lui faire comprendre . J'ai expliqué l'astuce du caractère à mettre puis supprimer mais le client me dit que ce n'est pas normale de devoir faire ça (Il n'a pas tort)\nLe site est https://shop.getalma.eu/\nBien à vous\nDamien\n\n---- THOMYRIS ----\n\nSalut Damien,\n\nOui c'est sur je comprends parfaitement la frustration surtout face à une solution qui fonctionne très bien comme Google ! Je fais remonter ce site en tête de liste des sites à débloquer, nos clients finaux sont les plus importants :)\n\nJe clos ce ticket vis à vis de ta demande d'information, mais nous allons nous occuper de cela dans les prochains jours, le temps d'identifier le problème, le régler et tester avant une mise en production.\n\nJe reste à ta dispo via ticket, mail ou tel pour tout renseignement\nBien à toi,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-07T10:42:11Z"
+    },
+    {
+      "incidentId": "4d3d03fc-8d84-ef11-97bb-00155d0879e2",
+      "etat": "Ajout utilisateur coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS773 5591 546 706   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à demande interne\n\nAjout de Romain Debernardi aux coffres de Thomyris et Thomyris - Commerce",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-07T10:24:45Z"
+    },
+    {
+      "incidentId": "aeb2af91-7f84-ef11-97bb-00155d0879e2",
+      "etat": "Modification rôle utilisateur",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS773 3621 546 312   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à email - Xefi Montpellier OUEST\n\nModification de Moana Teuhi en rôle Intervenant.",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-07T08:41:32Z"
+    },
+    {
+      "incidentId": "54703ba2-454f-4bd1-9656-fbe2d489cf13",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS773 2491 546 086   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour \n\nEst-il possible d'avoir un coffre partagé TECHNICIEN avec mon collègue Mathieu ROHART dans KALYDIAN \n\nDans l'attente de votre retour\n\nEn vous remerciant,\n\n\n---- THOMYRIS ----\n\nBonjour Valentin,\n\nC'est tout bon, j'ai créé un coffre \"XEFI Boulogne-sur-Mer - TECHNIQUE\" où seul toi et Matthieu avez accès.\n\nBon lundi !\nLydie RECH - THOMYRIS",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-07T07:58:31Z"
+    },
+    {
+      "incidentId": "2441e5bd-1982-ef11-97bb-00155d0879e2",
+      "etat": "Création client Xefi Nice",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS772 6991 544 986   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nNous avons un client CLARTEIS, N° Sage CLA0001, je ne le trouve pas dans la liste des clients sur Kalydian.\nAvez-vous la possibilité de le rajouter ?\n\nMerci par avance\n\nCordialement\n\n\n------Support Kalydian-------\n\nBonjour,\n\nJ'ai créer le client CLA0001_CLARTEIS dans exploitation du coffre Xefi Nice\n\nCordialement\n\nSauvinet Lucas",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-04T07:27:36Z"
+    },
+    {
+      "incidentId": "a689b7b8-9581-ef11-97bb-00155d0879e2",
+      "etat": "Ajout intervenant banque Mairie de Marseillan",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS772 6101 544 808",
+      "statusName": "Problème résolu",
+      "description": "Ajout des interventant banque Mairie de Marseillan\n\nAlexandre LEBRUN\n\nDamien BONNIAUD\n\nFlavien ZEKRI\n\nMoana TEUHI\n\nSlimen KARA\n\nVincent AUDOUARD",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-03T15:42:34Z"
+    },
+    {
+      "incidentId": "b07618ff-804c-413c-b146-10d001069cc4",
+      "etat": "Extension franchisé",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS772 4951 544 578   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nJ'ai bien accès au site de Kalydian, mais pas a l'extension.\nJ'utilise bien la même adresse mail et le même mot de passe...\n\n----- THOMYRIS -----\n\nBonjour Damien,\n\nJe reprends la suite de ton ticket suite à l'absence de Céline cette semaine.\n\nMalheureusement pour le moment nous avons un problème d'accessibilité de l'extension aux franchisés : afin d'utiliser l'extension, il vous est nécessaire actuellement d'utiliser le service via le RDS. Nous comprenons le désagrément sur cette problématique d'accès au service, nous travaillons actuellement à vous permettre d'accéder à Kalydian librement sans même passer par le portail, et cela permettra aussi un accès libre à l'extension.\nLa bonne nouvelle : cela sera effectif d'ici 10 jours.\n\nJe reste disponible pour toute question,\nBon vendredi,\n\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-03T14:19:40Z"
+    },
+    {
+      "incidentId": "002295b0-1e6e-4e1e-839f-aff665357d01",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS772 4051 544 398   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, j'ai un problème vaec Kalydian, lorsque j'essaye de connecter mon client sur l'extention cela ne fonctionne pas a cause d'un \"-\" pouvez vous m'aider dans cette démarche merci ! \r\n\r\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-10-03T13:19:39Z"
+    },
+    {
+      "incidentId": "798cea15-8081-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Modérée",
+      "ticketNumber": "CAS772 3921 544 372   ",
+      "statusName": "Problème résolu",
+      "description": "Salut la team, \n\nDepuis ce début d'aprem je n'arrive plus à me connecter à Kalydian. Quand je fais 'Se connecter avec Windows\" ça me renvoie sur la page de login avec le message \"l'utilisateur n'existe pas\". Pourtant ce matin j'ai pu me connecter comme ça sans soucis. \nEt mes identifiants/mdp pour accéder au VPN sont sur kalydian et j'aurai besoin d'accéder au VPN \n\nMerci la team, \n\n\n\n------------\n\nConnexion Ok\n\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-10-03T13:07:49Z"
+    },
+    {
+      "incidentId": "f5b69a44-6881-ef11-97bb-00155d0879e2",
+      "etat": "Appui management extension",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS772 2651 544 118   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à intervention\n\nAide auprès de Cassandra GROS pour lui permettre de désinstaller la version de Kalydian installée \"selon politique d'entreprise\", afin d'obtenir la version à jour de l'extension sans créer de conflits",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-03T10:17:10Z"
+    },
+    {
+      "incidentId": "7f764efd-6781-ef11-97bb-00155d0879e2",
+      "etat": "Appui accès site web avec extension",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS772 2591 544 106   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à intervention\n\nAide auprès de Camille MAKRIDIS afin de lui permettre l'accès à HP Partners, l'extension Kalydian bloquait la soumission du formulaire",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-03T10:15:18Z"
+    },
+    {
+      "incidentId": "02bf019e-6781-ef11-97bb-00155d0879e2",
+      "etat": "Ajout utilisateur à un coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS772 2551 544 098   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à appel téléphonique :\n\nAjout de Sarah CHAABANE au coffre XEFI INFO PAIE",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-10-03T10:12:36Z"
+    },
+    {
+      "incidentId": "3878f05a-c780-ef11-97bb-00155d0879e2",
+      "etat": "Création du client final Parme pour Xefi grand paris",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS771 8781 543 344",
+      "statusName": "Problème résolu",
+      "description": "Création du client final Parme pour Xefi grand paris\n\nterminé",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-02T15:05:24Z"
+    },
+    {
+      "incidentId": "48430980-52cf-4831-986b-a435c91238ab",
+      "etat": "Création client ALT0001_Altitude Vie SRL pour XEFI Chimay",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS771 6941 542 976   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nPouvez vous créer notre client \" Altitude Vie SRL\" dans kalydian\n\nMerci d'avance et bonne journée,\nFélix\n\n\n\n------Support Kalydian-------\n\nBonjour,\n\nLe client ALT0001_Altitude Vie SRL a bien été créer avec les sous dossiers\n\nCordialement,\n\nSauvinet Lucas",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-02T12:54:27Z"
+    },
+    {
+      "incidentId": "8290772f-7db4-4643-8c0d-6e4308d5a8d2",
+      "etat": "Ajout de Davy et thomas en intervenant dans la banque ECOVITRE",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS771 6911 542 970   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nSujet : Kalydian\nClient : Ecovitres\nAgence : Villeneuve-d'ascq\n\nÇa serait pour savoir si Thomas et Sophie ont reçu leurs accès Kalydian. \nIl faudrait nous donner les accès admin à Davy et moi Alexis.\n\n\n------Support Kalydian------\n\nBonjour,\n\nComme vu au téléphone, les utilisateurs Thomas et Sophie on bien leur compte Kalydian\n\nEt Davy et Alexis on bien été ajouter en tant qu'intervenant dans la banque\n\nCordialement\n\nSauvinet Lucas",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-02T12:51:46Z"
+    },
+    {
+      "incidentId": "cc882ff5-b380-ef11-97bb-00155d0879e2",
+      "etat": "Probleme de connexion avec le SSO",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS771 6871 542 962",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJe suis arrivé chez GreenOptimizer (BU de Xefi) fin août, et je n'arrive pas à accéder à Kalydian.\nLorsque j'essaie de me connecter avec mon compte Microsoft depuis l'URL https://kalydian.xefi.fr/login, j'obtient un message d'erreur \"L'utilisateur n'existe pas\".\n\nMerci d'avance.\nBonne journée.\n\n\n------Support kalydian-------\n\nBonjour,\n\nComme vu au téléphone\n\nProblème de connexion avec le SSO car non connexion manuel\n\nProblème résolu\n\nCordialement\n\nSauvinet Lucas",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-02T12:46:31Z"
+    },
+    {
+      "incidentId": "4689595e-8d80-ef11-97bb-00155d0879e2",
+      "etat": "Utilisation extension probleme",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS771 3281 542 244   ",
+      "statusName": "Problème résolu",
+      "description": "Comme vu au téléphone\n\nOralane Bodoignet souhaite utiliser l'extension mais ne peut pas car franchiser, elle a donc créer un mot de passe dans KALYDIAN\n\n problème régler",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-02T08:10:20Z"
+    },
+    {
+      "incidentId": "e731a188-0e80-ef11-97bb-00155d0879e2",
+      "etat": "Probleme de connexion sur l'extension",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS771 2431 542 074   ",
+      "statusName": "Problème résolu",
+      "description": "Comme vu au tel\n\nFlanc Gabriel n'arrivais pas a se connecter sur l'extension\n\nprobleme résolu",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-01T17:02:22Z"
+    },
+    {
+      "incidentId": "98285ad1-0d80-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS771 2411 542 070",
+      "statusName": "Problème résolu",
+      "description": "Ticket au nom de Languer Abdel \n\nBonjour, \nEst-ce possible de m'être les mot de passe serveur de AIAD sur notre coffre \nLes sous dossier sont vide \nmerci de me contacter pour plus d'info  \n\n----- Support kalydian -------\n\nBonjour,\n\nComme convenu par téléphone les mots de passe \n\n-VAPPLI-2020\n\n-VDC-2020\n\nOnt été ajouté a l'emplacement souhaité, le mot de passe pour le serveur *host-01-6618 n'existe pas dans kalydian je ne peut donc pas le dupliquer dans le dossier:\n\nXEFI LYON-SUD-OUEST/EXPLOITATION/CLIENTS/AIA0001_AIAD/SITE 1/SERVEUR\n\nCordialement\n\nSauvinet Lucas",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-01T16:57:17Z"
+    },
+    {
+      "incidentId": "c2415a55-0480-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS771 1911 541 970   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJ'ai besoins d'avoir les accès pour me connecter sur le serveur \"VAPPLI-2020\" mais les mot de passe ne sont pas inscrit sur Kalydian \nMerci de mes les faires parvenir .\n\n",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-01T15:49:22Z"
+    },
+    {
+      "incidentId": "03e5cd90-ec7f-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS770 9381 541 464",
+      "statusName": "Problème résolu",
+      "description": "message de Kathy ORIENTE:\n\nBonjour à vous 2, \n\nPouvez vous donner les accès aux 2 coffres kalydian de Toulouse EST et OUEST à l’ensemble de nos techniciens svp, sont concernés : \n-\tMatthieu ROUCH \n-\tMathieu TALLINEAU \n-\tStéphane MARREC \n-\tSylvain PIERRU \n-\tMaxime BOUYER \n-\tAlex CAILLOT\n\nMerci d’avance pour votre retour.\n\nBonne journée, \n\n------Support Kalydian -----\n\nUtilisateur ajouter\n",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-01T12:59:14Z"
+    },
+    {
+      "incidentId": "3425fe75-a130-45b1-be0d-ee57f793d1c1",
+      "etat": "Probleme connexion",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS770 5391 540 666   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nCe matin, Kalydian reconnais pas mon mot de passe.\n\nComment peut-on reinitialisé le mot de passe ?\n\nCordialement\n\n\n\n------ Support Kalydian -------\n\nBonjour,\n\nComme vu au téléphone, problème de connexion résolu.\n\nEn attente de ton retours concernant les utilisateurs a mettre dans les deux coffre Toulouse\n\nje te souhaite une agréable journée !\n\nCordialement \n\nSauvinet Lucas",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-10-01T08:14:23Z"
+    },
+    {
+      "incidentId": "384c882e-467f-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS770 4311 540 450   ",
+      "statusName": "Problème résolu",
+      "description": "Utilisateur bloqué durant la connexion\n\norlane Bodoignet:\n\nHello,\n\nJe n’arrive pas à utiliser KALYDIAN et je n’arrive plus à me connecter sur TECHDATA par exemple ☹\n\nMerci,\n\n\n",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-09-30T17:08:12Z"
+    },
+    {
+      "incidentId": "a42b9a18-02b7-4c32-8137-021b626a3fe8",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS770 3071 540 202   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, nous avons effectué notre première mise en place de Kalydian chez notre client Couvivet.\nVoici quelques points à remonter:\n1) Lors de la recherche, il sélectionne dans la liste mais ne filtre pas la vue (cela a changé ?)\n2) Est-ce possible de déplacer des mots de passe entre coffre-fort  ?\n3) Sur smartphone ,via google , on peut se connecter mais impossible de glisser la page pour accéder aux mots de passe (configuration CSS). Les clients utilisent beaucoup leur smartphone pour consulter des sites internet. Je sais qu'un app est en développement mais une petite adaptation \"CSS\" sur la page web serait sympa pour dépanner temporairement ;)\n4) Je vois après import CSV que pas mal de sites sont en doubles (probablement dès dans le compte google) , y a t'il un possibilité de suppression multiple ?\n\nMerci d'avance pour votre retour\n\nDamien\n\n\n--------- Support Kalydian ------------\n\nBonjour,\n\nComme vu au téléphone les point remonté seront noté et réfléchis par notre chef de projet.\n\nCordialement \nSauvinet Lucas",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-09-30T14:41:10Z"
+    },
+    {
+      "incidentId": "a72f5c4b-317f-ef11-97bb-00155d0879e2",
+      "etat": "Création client SASU ECOVITRES",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS770 3041 540 196   ",
+      "statusName": "Problème résolu",
+      "description": "Comme convenue par mail\n\nCréation client SASU ECOVITRES\n\nrésolu",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-09-30T14:38:41Z"
+    },
+    {
+      "incidentId": "0d8f12e2-6c4a-42fa-9808-524bda4c10f9",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS770 1131 539 814   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nPour me client  Couvivet, pourriez vous modifier l'adresse mail de Arnord Dozot par : arnold.dozot@couvivet.com ?\nJe n'ai pas su le faire car je ne vois pas les utilisateurs dans Kalydian pour Couvivet\n\n\n\n------- Support Kalydian ---------\n\nBonjour,\n\ncomme convenue au téléphone\nProblème de mail résolu\n\nSi a la venir tu n'arrive pas a modifier un utilisateur c'est qu'il n'est tout simplement pas rattacher a ta banque.\nHésite pas a nous contacter en cas de soucis\n\nCordialement\n\nSauvinet Lucas\n",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-09-30T12:10:23Z"
+    },
+    {
+      "incidentId": "761c5d59-127f-ef11-97bb-00155d0879e2",
+      "etat": "Création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS770 0821 539 752   ",
+      "statusName": "Problème résolu",
+      "description": "Comme vu par mail\n\nCréation client MED EXPERTISE-JPEC CONSULTING avec l'utilisateur JPEC CONSULTING",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-09-30T10:57:08Z"
+    },
+    {
+      "incidentId": "9d5afdcf-0f7f-ef11-97bb-00155d0879e2",
+      "etat": "Déblocage utilisateur",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS770 0571 539 702   ",
+      "statusName": "Problème résolu",
+      "description": "comme vu au telephone\n\nmodification de mail + réinitialisation du mdp",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-09-30T10:38:57Z"
+    },
+    {
+      "incidentId": "20f9f08f-bb5c-4dd0-a91e-0e7fc41964e5",
+      "etat": "Déblocage utilisateur",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS770 0151 539 618   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nIl y a eu une faute de frappe pour l'adresse mail de l'utilisateur secretaire.couvivet pour leur espace Kalydian.\n\nPourriez vous mettre l'adresse suivante et envoyer de nouveau le mot de passe ?\nsecretaires@couvivet.com\n\nMerci à vous,\nNicolas\n\n0032 477 53 31 02\n\n-------- Support Kalydian ------\n\nBonjour,\n\nComme convenue au téléphone problème résolu\n\nmodification mail + réinitialisation mot de passe utilisateur\n\nCordialement\n\nSauvinet Lucas ",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-09-30T10:08:42Z"
+    },
+    {
+      "incidentId": "87073213-097f-ef11-97bb-00155d0879e2",
+      "etat": "Déblocage utilisateur",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS769 9701 539 528   ",
+      "statusName": "Problème résolu",
+      "description": "Comme vu au téléphone\n\nRéinitialisation du mot de passe",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-09-30T09:50:46Z"
+    },
+    {
+      "incidentId": "c457e8ad-9f7c-ef11-97bb-00155d0879e2",
+      "etat": "URGENT",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS769 2191 538 026   ",
+      "statusName": "Problème résolu",
+      "description": "Plus d'accès au coffre Kalydian - le code pour les paies est dedans et on est en fin de mois :)\nMerci\n\n--- f.rosito ---\nHPE Partner item/137125\nTECHDATA item/135311\n\n=> 1763\tMon coffre",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-27T08:11:22Z"
+    },
+    {
+      "incidentId": "1a68256a-197c-ef11-97bb-00155d0879e2",
+      "etat": "Créer dossier client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS769 1251 537 838   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nPourriez-vous mettre mon client « Les petits pas de la botte » dans Kalydian ?\n\nMerci à vous,\n\n-- f.rosito --\nDone\n",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-26T16:10:10Z"
+    },
+    {
+      "incidentId": "159ba323-017c-ef11-97bb-00155d0879e2",
+      "etat": "Rattachement Fortalicia",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS768 8911 537 370   ",
+      "statusName": "Résolu",
+      "description": "c.benyoucef@fortalicia.com\ns.zaoui@fortalicia.com \nr.assadi@fortalicia.com \nm.ferriere@fortalicia.com \na.barreau@fortalicia.com\n\ntous dois avoir accès au DEUX : XEFI GRAND PARIS et XEFI PARIS \n ",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-26T13:16:26Z"
+    },
+    {
+      "incidentId": "b875b68f-f87b-ef11-97bb-00155d0879e2",
+      "etat": "Création Coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS768 8151 537 218   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nPouvez vous créer deux coffres fort vente/technique pour le client LIANELI\n\nAccès : \n           Vente = maelle.bacot / mialy.randriarimanga  / arnaud.monin \n           Technique = desire.arra / luigi.aubry\n\nMerci d'avance",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-26T12:15:04Z"
+    },
+    {
+      "incidentId": "cca38897-db7b-ef11-97bb-00155d0879e2",
+      "etat": "Création d'utilisateur",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS768 5891 536 766   ",
+      "statusName": "Résolu",
+      "description": "From : Sarah CHAABANE <s.chaabane@xefi.fr>\nTo : Support Kalydian <support-kalydian@thomyris.com>\nObject : Accès Kalydian \n\nHello,\n\nPourriez-vous me donner un accès svp ?  Je dois accéder au fichier des salaires de mon équipe via cet outil svp.\n\nMerci 😊\n\nSarah \n\nEnvoyé à partir de Outlook pour iOS\n\nMail envoyer, pas de retour\n",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-26T08:47:42Z"
+    },
+    {
+      "incidentId": "a1434129-d57b-ef11-97bb-00155d0879e2",
+      "etat": "Recherche lente",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS768 5071 536 602   ",
+      "statusName": "Problème résolu",
+      "description": "Salut,\nPouvez-vous regarder, depuis début de semaine la recherche sur Kalydian est super lente et ne s'effectue pas comme avant. \n\n--- Fabrice Rosito ---\nOn a bien pris le retour du souci de performance dans les paginations lointaines, on va vite corriger cela (au pire en 2.10)\n\nCdlt",
+      "ownerName": "Alexandre BRICHE",
+      "creationDate": "2024-09-26T08:01:40Z"
+    },
+    {
+      "incidentId": "ca9c7e1c-d07b-ef11-97bb-00155d0879e2",
+      "etat": "Rattachement coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS768 4631 536 514   ",
+      "statusName": "Résolu",
+      "description": "Bonjour,\n\nj'ai besoin d'avoir accès au coffre secure it dans kalydian.\n\nMerci\n\nCordialement\n\n\n--- Fabrice Rosito ---\nBonjour,\n\nC'est fait, n'hésite pas si tu as besoin de quoi que ce soit d'autre.\n\nCdlt",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-26T07:25:28Z"
+    },
+    {
+      "incidentId": "d4703e7a-193b-4b56-b1ed-c51ee895254d",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS768 2321 536 052   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\r\nJ'ai essayé via l'admin KALYDIAN d'ajouter un nouvel utilisateur pour notre client HELP PARTNERS, mais lors de la création, j'ai un message comme quoi une erreur est survenue :'( \r\nMerci.",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-25T13:39:46Z"
+    },
+    {
+      "incidentId": "ceb3c39d-367b-ef11-97bb-00155d0879e2",
+      "etat": "Création dossier client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS768 1781 535 944   ",
+      "statusName": "Résolu",
+      "description": "Coucou !\n\nPouvez-vous créer le dossier KALYDIAN du client \"SAS FRATELLI MAM\" svp ?\n\n-- fabrice rosito --\nC'est fait :) Au plaisir et à dispo",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-25T13:06:44Z"
+    },
+    {
+      "incidentId": "e21aac8a-31b8-4ac2-acb9-69afd00126e5",
+      "etat": "Microsoft OTP",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS768 1461 535 880   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\r\n\r\nJe n'arrive pas a entrer mes codes OTP sur Kalydan.\r\nLe champs OTP reste en rouge et je ne peux pas valider.\r\n\r\n------  jeudi 26 septembre 2024 14:05  |  Kévin DROUILLARD  ------\r\n\r\nLa procédure marche nickel, merci",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-25T12:43:26Z"
+    },
+    {
+      "incidentId": "df3b9a2d-0d7b-ef11-97bb-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS767 8581 535 304   ",
+      "statusName": "Problème résolu",
+      "description": "Lenteurs constatées lors de la recherche\n\nUne correction sera réalisée sur la prochaine version\n\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-25T08:10:01Z"
+    },
+    {
+      "incidentId": "f80df5b6-5efe-46e3-a19c-c33de08345cb",
+      "etat": "Rensiegnement extension",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS767 6601 534 908   ",
+      "statusName": "Problème résolu",
+      "description": "La connexion à Kalydian sur l'extension Chrome est refusée alors que les identifiants sont corrects.\nJe suis connecté en web a kalydian pour valider les identifiants et lorsque je tente de connecter l'extension, il est indiqué nom d'utilisateur ou mot de apsse incorrect.\nj'ai testé en instance publique et en Privé.\n\nbàV\n\n------- THOMYRIS -------\n\nBonjour Mathieu,\n\nMerci pour ton message\n\nMalheureusement pour le moment nous avons un problème d'accessibilité de l'extension aux franchisés : afin d'utiliser l'extension, il vous est nécessaire actuellement d'utiliser le service via le RDS. Nous comprenons le désagrément sur cette problématique d'accès au service, nous travaillons actuellement à vous permettre d'accéder à Kalydian librement sans même passer par le portail, et cela permettra aussi un accès libre à l'extension. Cela sera effectif d'ici la 2e moitié d'octobre.\n\nJe reste disponible pour toute question,\nBon vendredi,\n\nLydie RECH - Thomyris\n",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-24T14:53:46Z"
+    },
+    {
+      "incidentId": "16cbdc6f-717a-ef11-97bb-00155d0879e2",
+      "etat": "Accès coffres",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS767 5581 534 704   ",
+      "statusName": "Résolu",
+      "description": "Bonjour , \nje  rencontre des problèmes avec mon compte KALYDIAN . J'ai accès qu'à deux coffres forts , le mien (mon coffre fort ) et celui nommé Fortalicia qui lui s'avère  être vide . Pouvez-vous m'aider ? \n\nMerci\n\n-- fabrice rosito --\nBonjour, j'essai de vous contacter pour vous accompagner n'héitez pas à m'appeler au 04 79 60 59 50\nAu plaisir\n\n-- f.rosito --\nDone",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-24T13:35:17Z"
+    },
+    {
+      "incidentId": "7585d229-707a-ef11-97bb-00155d0879e2",
+      "etat": "Accès Kalydian",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS767 5451 534 678   ",
+      "statusName": "Problème résolu",
+      "description": "Salut\n\nJe n'ai pas accès à Kalydian.\nSerait-il possible de me donner accès ?\n\nMerci :) \n\n--- fabrice rosito ---\nBonjour\n\nSauf erreur vous pouvez vous rendre sur https://kalydian.xefi.fr depuis le réseaux Xefi puis avec login / mot de passe de l'AD (outlook) vous avez accès :)\n\nAu plaisir de votre retour,\n\nN'hésiter à pas me joindre :)",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-24T13:26:08Z"
+    },
+    {
+      "incidentId": "95caf8c7-597a-ef11-97bb-00155d0879e2",
+      "etat": "Ajout des collaborateurs",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS767 4171 534 422   ",
+      "statusName": "Problème résolu",
+      "description": "De : Valerie HOJNACKI <v.hojnacki@xefi.fr> \nEnvoyé : mardi 24 septembre 2024 08:38\nÀ : Support Kalydian <support-kalydian@thomyris.com>; Sébastien HOJNACKI <s.hojnacki@xefi.fr>\nCc : Cédric LETOUT <c.letout@xefi.fr>; Charlène BIDAULT <c.bidault@xefi.fr>; Benjamin STOCK <b.stock@xefi.fr>; Corentin LACINGA <c.lacinga@xefi.fr>; Thomas DUMOUCHEL <t.dumouchel@xefi.fr>; Valentin RENAULT <v.renault@xefi.fr>; Sébastien HOJNACKI <s.hojnacki@xefi.fr>\nObjet : RE: ajout des collaborateurs\n\nBonjour,\n\nJ’espère que le support Kalydian se porte bien 😊\nPourriez-vous vérifier que :\n\n•\tCorentin Lacinga (technique)\n•\tCédric Letout (Commerce)\n•\tValentin Renault (Commerce°\n\nSoient bien rattachés au coffre fort commun Rouen Sud.\n\nIl faudrait aussi créer un coffre fort commun Rouen Nord en ajoutant tout le monde.\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-24T10:45:52Z"
+    },
+    {
+      "incidentId": "19f5611d-af82-4324-9845-a2c3d10a6a2e",
+      "etat": "Création dossier client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS767 3171 534 222   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\npouvez-vous créeér notre client \"SAS AURUM ADAMAS\" dans Kalydian ?\n\nMerci\n\n--- f.rosito ---\nDone",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-24T09:44:50Z"
+    },
+    {
+      "incidentId": "1c46e84f-4e7a-ef11-97bb-00155d0879e2",
+      "etat": "Problème d'accès",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS767 2781 534 144   ",
+      "statusName": "Résolu",
+      "description": "Bonjour , \n\nJ'avais un compte Kalydian qui ne fonctionne plus , que ce soit par l'authentification via Microsoft ou directement avec mes logins. \"L'utilisateur n'existe pas\"\n\nMerci beaucoup ! \n\n--- fabrice rosito --\nBonjour, j'ai tenté de vous joindre par téléphone :) Afin de vous accompagner, je retenterai, mais vous pouvez m'appeler quant vous le désirer.\nCdlt \n\n\n------Anis-------------\nProblème résolu ! \n\nBonne journée \n\n---- fabrice ----\nCool, au plaisir, n'hésitez pas à nous joindre !\ncdlt",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-24T09:23:48Z"
+    },
+    {
+      "incidentId": "8f200898-d62c-493a-8b46-4dd2aaba634a",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS767 0841 533 756   ",
+      "statusName": "Problème résolu",
+      "description": "Hello l'équipe !\nJe souhaite faire remonter quelques points que je trouverais intéressants sur Kalydian:\n1) Possibilité de suppression multiple (casse à cocher puis bouton supprimer)\n2) Dans le tableau de bord , quand on clique sur le graphique , afficher la liste des mots de passe correspondant à \"Faible , Moyen , …) afin de pouvoir les corriger rapidement. Un peu comme le top5 ;)\n3) Dans l'import csv , possibilité de définir la catégorie dans le fichier (colonne catégorie)\n\nBug à signaler:\nLorsque l'url est très longue, on ne sait plus accéder aux actions (sauf avec un zoom négatif de la page)\n\nBelle journée à vous \n\nDamien\n\n---------------------\nBonjour Damien,\n\nLe bug a été corrigé.\n\n\nLa multi-sélection (case à cocher) a été ajoutée à notre roadmap.\nPour le tableau de bord, nos développeurs commencent déjà à travailler dessus et cette nouvelle fonctionnalité arrivera dans les prochaines versions.\nPour l'import CSV, nous voyons ce qu'il est possible de faire.\n\nMerci pour tous ces retours :-)\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-24T07:55:49Z"
+    },
+    {
+      "incidentId": "720ac91c-9e79-ef11-97bb-00155d0879e2",
+      "etat": "Compte bloquer",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS766 6821 532 952   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nJ'ai un problème pour me connecter a Kalydian, mon utilisateur est bloquer.",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-23T12:22:28Z"
+    },
+    {
+      "incidentId": "04c6607a-8e79-ef11-97bb-00155d0879e2",
+      "etat": "Créer client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS766 5981 532 784   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nPouvez-vous intégrer notre client CTE PACK - CTE0002 dans Kalydian ?\nMerci\n\n---- f.rosito 23/09/24 ---\nDone",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-23T10:30:34Z"
+    },
+    {
+      "incidentId": "5eca134f-5e77-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS766 2211 532 030",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nPouvez-vous donner un accès au coffre Hookto svp à : \n\nMohamed Annajar\nMohamed Amiri\nWacim El Haimer\nAdrien Steiner\n\nMerci :)\n\n--- Thomyris \n\nBonjour,\n\nJe les ai ajoutés au coffre.\n\nBon week-end! \n\nJoachim",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-20T15:40:43Z"
+    },
+    {
+      "incidentId": "d2fa2eaf-5d77-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS766 2151 532 018   ",
+      "statusName": "Problème résolu",
+      "description": "From: William FOULON <w.foulon@xefi.fr>\nTo: support-kalydian@thomyris.com\nContent: \nBonjour, \n\nLorsque j’essaie de me connecte à l’extension chrome de Kalydian cela ne fonctionne pas j’ai le message identifiant incorrect qui apparait, \n\nL’extension est-elle disponible pour les franchisés également ou que pour les agences interne ?\n\nAucun souci pour me connecter a Kalydian via le portail xefi mais pour l’extension rien n’y fait ☹ \n\nMerci pour le retour  \n\nBien cordialement.\n\n\nBonne journée.\n\n",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-20T15:36:17Z"
+    },
+    {
+      "incidentId": "745c758e-4977-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS766 0531 531 694   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nNotre nouveau collaborateur Robin HUGUES r.hugues@xefi.fr n'a plus accès à aucuns coffres sur Kalydian.\nPouvez-vous rétablir ses accès ?\n\nCordialement,",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-20T13:12:08Z"
+    },
+    {
+      "incidentId": "a2b3185a-1a77-ef11-97ba-00155d0879e2",
+      "etat": "Donné accès a un coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS765 6261 530 840",
+      "statusName": "Problème résolu",
+      "description": "From: l.delbarre@xefi.fr\nTo: support-kalydian@thomyris.com\nObject: MODIFICATION ACCES COFFRE INFO PAIE\nContent: \nBonjour, \n\nPourriez-vous svp faire ces modifications dans le coffre INFO PAIE : \n-\tAjouter Sarah CHAABANE\n-\tAjouter William MESCLIER\n-\tEnlever Stéphane LE BEC\n\nMerci,\n",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-20T07:34:23Z"
+    },
+    {
+      "incidentId": "725e3c36-6ba5-442b-b38d-6d17c42c4d87",
+      "etat": "Création dossier",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS765 4231 530 434   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nPouvez-vous créer le client \" AUPERAS EANM FDV FOYERS CUNLHAT\"  dans le kalydian.\n\nS'il vous plait.\nBonne journée \n\n--- Thomyris \n\nBonjour,\n\nJ'ai lancé une opération de service suite à ta demande. Quelqu'un te contactera pour te tenir informé de l'avancement.\n\nBon après-midi !  \n\nJoachim\n\n--- \n\nLe dossier AUP0003_AUPERAS EANM FDV FOYERS CUNLHAT a été créé dans le coffre de XEFI CLERMONT\nhttps://kalydian.xefi.fr/routes/manager/?selectId=623489&selectType=folder&\n\nJoachim",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-19T13:41:48Z"
+    },
+    {
+      "incidentId": "b880cb59-b6be-48b7-aae2-1e1fa637e445",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS765 4141 530 416   ",
+      "statusName": "Problème résolu",
+      "description": "Hello, serait-il possible de réinitialiser le QR Code Kalydian pour l'utilisateur Arnaud CAUTIN (XEFI Chartres), s'il vous plaît ?",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-19T13:35:27Z"
+    },
+    {
+      "incidentId": "c8384f2f-8076-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS765 3721 530 332   ",
+      "statusName": "Problème résolu",
+      "description": "Hello,\n\nEst-il possible d'avoir accès au client \"ALFIDIS\" dans Kalydian svp ?\n\nMerci !",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-19T13:10:45Z"
+    },
+    {
+      "incidentId": "0b2c4f6d-6276-ef11-97ba-00155d0879e2",
+      "etat": "Accès au coffres des agences",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS765 2121 530 012   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, XEFI VICHY faisant désormais partie des agences en propre, pouvez vous étendre les droits sur Kalydian de Cyril GIRODEAU et Stanislas AUJOULAT afin qu'ils accèdent à l'ensemble des agence et plus seulement Vichy?\n\nBonjour,\n\nLes accès aux différents coffres sont liés à l'AD. Je te conseille de faire une demande à la DSI pour ajouter les utilisateurs au groupe AD correspondant :\nCN=ALL_TECHNIQUE_INFRA,OU=Technique,OU=Groupes,OU=XEFI,DC=xefi,DC=priv.\n\nUne fois ajoutés et après synchronisation de Kalydian, ils pourront accéder aux coffres des agences.\n\nBon après-midi !  \n\nJoachim",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-19T09:37:40Z"
+    },
+    {
+      "incidentId": "9c6c004d-2390-4d55-a285-f1b656cabf99",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS764 9681 529 524   ",
+      "statusName": "Problème résolu",
+      "description": "bonjour,\r\n\r\nest-il possible d'utiliser l'extension  Kalydian pour navigateur ?\r\nnous n'arrivons pas à nous connecter avec nos identifiants xefi.\r\n\r\nCordialement",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-19T07:11:16Z"
+    },
+    {
+      "incidentId": "e63e69e5-3a3c-433a-a69e-701c92303c87",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS764 8591 529 306   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nDans Kalydian, nous avons vu qu'il y a une clé secrète pour l'OTP. Est ce que vous savez comment configuré la clé OTP dans Microsoft ?\nMerci.\n\n--- Thomyris \n\nBonjour,\n\nExporter OTP compte Microsoft\n1. Accéder à la page Informations de sécurité dans le tableau de bord de le compte.\n    https://mysignins.microsoft.com/security-info\n2. Sélectionner :  Ajouter une méthode de connexion.\n3. Choisisser:  Utiliser une application.\n4. Sélectionner: Je souhaite utiliser une autre application d'authentification.\n5. Sélectionner Impossible de numériser l'image.\n6. Copier la clé secrète qui s'affiche.\n7. Ajouter la clé secrète dans le champ OTP sur Kalydian.\n\nBonne fin de journée !\nJoachim",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-18T15:02:06Z"
+    },
+    {
+      "incidentId": "79d7568c-8f75-ef11-97ba-00155d0879e2",
+      "etat": "Problème connexion utilisateur",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS764 3931 528 374",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJe n'arrive pas à accéder à mon compte KALYDIAN mais lors de mon identification j'ai un message d'erreur disant que le compte est inexistant. \n\nMerci \n\n\n------Support Kalydian-------\n\nBonjour,\n\nProblème de connexion lié a la tentative de connexion SSO alors qu'il n'y a pas eu de précédente connexion manuel.\nProblème résolu au téléphone.\n\nCordialement\n\nSauvinet Lucas",
+      "ownerName": "Lucas SAUVINET",
+      "creationDate": "2024-09-18T08:28:16Z"
+    },
+    {
+      "incidentId": "c2d95056-0c75-ef11-97ba-00155d0879e2",
+      "etat": "RESET 2FA",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS764 2861 528 160",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\n\nje viens de recevoir mon nouveau tel suite à la perte de l'ancien semaine passée, est il possible de réinit les double authen suivante :\n\n\nInventaire SHD PROD\nKALYDIAN\nAD XEFI - MICROSOFT\n\nMerci d'avance pour votre aide.\nJe reste évidement dispo si ma demande n'est pas suffisamment claire.\nMorgan.\n\n-------------------------------------------\n\nMICROSOFT: OK\nPORTAIL: OK\nISL: OK\n\n--- Thomyris \n\nBonjour,\n\nTon code 2FA a été réinitialisé dans Kalydian.\nJe ne peux pas t'aider pour la réinitialisation de l'authentification à deux facteurs sur les autres plateformes.\n\nBonne journée !\n\nJoachim",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-17T16:48:58Z"
+    },
+    {
+      "incidentId": "bc52e50e-0175-ef11-97ba-00155d0879e2",
+      "etat": "Ajout coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS764 2101 528 008",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, pouvez vous m'accorder l'accès aux coffres franchises (l.perchirin@xefi.fr) et neil dhaoui ( n.dhaoui) \n\nMerci,\n\n--- Thomyris \n\nBonjour,\n\nExceptionnellement, je vous ai rattaché au coffre de Réunion Ouest. Il n'existe pas de coffre spécifique pour les franchises.\n\nBonne journée !\n\nJoachim",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-17T15:28:16Z"
+    },
+    {
+      "incidentId": "5dfdce4f-ee74-ef11-97ba-00155d0879e2",
+      "etat": "Débloquer utilisateur",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS764 0231 527 634",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nMon compte KALYDIAN est bloqué, serait-il possible de le débloquer svp?\n\nMerci! :)\n\n--- Thomyris \n\nBonjour,\n\nJe viens de te débloquer, dis-moi si tu as toujours des problèmes pour te connecter.\n\nBon après-midi ! \n\nJoachim",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-17T13:14:00Z"
+    },
+    {
+      "incidentId": "022442d7-db74-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS763 9491 527 486",
+      "statusName": "Problème résolu",
+      "description": "Pouvez vous donner les accès au coffres LSO et LYON a Abdel LANGUER \n\n--- Thomyris \n\nBonjour.\n\nAbdel LANGUER a désormais accès aux coffres suivants :\n- XEFI Lyon-Sud-Ouest\n- XEFI Lyon - Technique\n- XEFI Lyon\n\nBon après-midi ! \n\nJoachim\n",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-17T11:01:53Z"
+    },
+    {
+      "incidentId": "3f9971d5-c574-ef11-97ba-00155d0879e2",
+      "etat": "Creation client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS763 6571 526 902",
+      "statusName": "Problème résolu",
+      "description": "Création client LIANELI \nAgence: LYON PRESQU'ILE - Sébastien HUGUES s.hugues@xefi.fr\nInstance : Public\nSujet : Création d’un client\nInfo client: \n\nNom : LIANELI - PREVENEAR\n\nN° Sage : LIA0002\n\nProduit : Forfait KALYDIAN - Jusqu'à 5 utilisateurs\n\nAvancement : \n\nMail à Sébastien HUGUES, fiches navette transmises ",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-17T08:24:12Z"
+    },
+    {
+      "incidentId": "fb4c55a7-3374-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS763 4051 526 398",
+      "statusName": "Problème résolu",
+      "description": "Bonjour \n\nPouvez donner des acces kalydian a Abdel LANGUER s'il vous plait\n\n--- Thomyris \n\nBonjour.\n\nLa création des utilisateurs Xefi se fait automatiquement lors de la première connexion à l'application Kalydian. Il est important de se connecter via le formulaire de l'application, et non via le bouton de connexion Windows.\n\nSur la page de connexion, il faut renseigner le champ \"identifiant\" avec le login sous la forme p.nom, et utiliser le mot de passe de l'AD.\n\nS'il a besoin d'accéder à des coffres spécifiques, n'hésite pas à nous le faire savoir. Je pourrai lui attribuer les accès uniquement après sa première connexion.\n\nPasse une bonne journée !\n\nJoachim\n",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-16T14:57:56Z"
+    },
+    {
+      "incidentId": "107b5b53-e5f6-4b07-9f34-b7891d5cc868",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS763 3651 526 318   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJe n'arrive pas a me connecter à l'extension web de Kalydian. Pourtant j'y accède bien via l'interface web.\nJ'ai utilisé le même user/mdp.\n\nIl me renvoi : Identifiants incorrects \n\nJoignable au 07 81 73 42 55 Mr Barbier Michaël XEFI SQY\n\n",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-09-16T14:28:49Z"
+    },
+    {
+      "incidentId": "054c4ab0-0a74-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS763 0721 525 732   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nNous avons un nouveau collaborateur: Robin HUGUES r.hugues@xefi.fr\nPouvez-vous lui créer des accès Sophos central et Kalydian ?\n\nCordialement,\n\n--- Thomyris \n\nBonjour.\n\nLa création des utilisateurs Xefi se fait automatiquement lors de la première connexion à l'application Kalydian. Il est important de se connecter via le formulaire de l'application, et non via le bouton de connexion Windows.\n\nSur la page de connexion, il faut renseigner le champ \"identifiant\" avec le login sous la forme p.nom, et utiliser le mot de passe de l'AD.\nIdentifiant: r.hugues\n\nUn technicien se charge de la création des accès à Sophos Central.\nPasse une bonne journée !\n\nJoachim\n\n2024-09-16 12:02 ET :  Appel fait avec - Neil DHAOUI\n-> Compte créer.",
+      "ownerName": "Enzo TERRANCLE",
+      "creationDate": "2024-09-16T10:04:37Z"
+    },
+    {
+      "incidentId": "b0a706e1-d971-ef11-97ba-00155d0879e2",
+      "etat": "Ajout utilisateurs coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS762 6991 524 986   ",
+      "statusName": "Problème résolu",
+      "description": "Echange de mails avec Lucile DELBARRE.\n\nAjout de Alexandra RICHARD et Rose GNOAHOULOU aux coffres INFO PAIE et RH - PAIE",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-13T15:10:08Z"
+    },
+    {
+      "incidentId": "8ae7423e-b271-ef11-97ba-00155d0879e2",
+      "etat": "Aide connexion Kalydian",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS762 4811 524 550   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nNe connais plus mon mdp pour me connecter à KALYDIAN autrement que par Microsoft \n\n----- THOMYRIS -----\n\nBonjour Alban,\n\nDans un premier temps vérifie bien que tu te connectes sur notre instance Kalydian via le portail Xefi et non pas sur notre instance externe kalydian.com qui est notre instance publique destinée aux clients finaux.\nSi jamais tu n'as pas la tuile sur le portail, il faudra faire une demande au service Portail de la DSI pour l'ajouter.\n\nSur l'instance via le portail XEFI qui est notre instance interne aux collaborateurs du groupe, tu peux te connecter avec ton identifiant AD a.faure et ton mot de passe AD actuel.\n\nSur l'instance externe, les techniciens XEFI ne peuvent se connecter que par Microsoft mais n'ont accès à aucun coffre : sur cette instance nous n'avons qu'un rôle administratif dans le cas où nous gérons des clients qui ont souscrit au service et ont eux-mêmes un espace sur Kalydian.\n\nSi jamais tu as d'autres problèmes de connexion n'hésite pas à me répondre par mail, teams ou téléphone au 04 79 60 59 51\n\nBon vendredi,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-13T10:26:24Z"
+    },
+    {
+      "incidentId": "19c71f83-af71-ef11-97ba-00155d0879e2",
+      "etat": "Réinitialisation MDP",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS762 4441 524 476   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket émis suite à appel téléphonique.\n\nRéinitialisation du mot de passe et renvoi identifiants à DL-Technologies depuis Kalydian.com",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-13T10:06:55Z"
+    },
+    {
+      "incidentId": "9bf9d439-656a-4d00-a059-1f9245b662a6",
+      "etat": "Renseignements extension Franchisé",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS762 3471 524 282   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nnous avons essayé de tester l'extension de kalydian mais ça ne fonctionne pas, est-ce que c'est normal?\n\nMerci de vos réponses.\n\n------ THOMYRIS ------\n\nBonjour Baihan,\n\nMerci pour ton message\n\nMalheureusement pour le moment oui... afin d'utiliser l'extension, il est nécessaire actuellement d'utiliser le service via le RDS. Nous comprenons le désagrément sur cette problématique d'accès au service, nous travaillons actuellement à l'amélioration de votre expérience utilisateur.\nNotre travail sur les prochaines semaines est de vous permettre un accès au service sans portail ou RDS.\n\nJe reste disponible pour toute question,\nBon vendredi,\n\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-13T08:56:05Z"
+    },
+    {
+      "incidentId": "ec6cf114-9e71-ef11-97ba-00155d0879e2",
+      "etat": "Renseignements synchro AzureAD",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS762 2601 524 108   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nQuand Kalydian sera disponible à la vente pour les clients finaux, sera-t-il possible de mettre en place de la synchro AzureAD comme nous avons en interne ?\nSi oui, existe-t-il une procédure ?\n\nCordialement,\n\n------ THOMYRIS --------\n\nBonjour Neil,\n\nBonne nouvelle, Kalydian est disponible à la commercialisation dès maintenant ! 😊\nConcernant la synchro d'un AzureAD externe, Fabrice Rosito va prendre contact avec toi, je lui transfère ta demande.\n\nBonne matinée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-13T08:02:08Z"
+    },
+    {
+      "incidentId": "be35521c-9b71-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS762 2311 524 050   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, \n\npouvez-vous reset le MFA kalydian de mon compte svp ? \na.menand@xefi.fr\n\ncordialement,\n\n------ THOMYRIS ------\n\nBonjour Alexandre,\n\nTa secret key et ton QR code ont bien été réinitialisés :)\n\nBelle journée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-13T07:40:49Z"
+    },
+    {
+      "incidentId": "32d1e315-1c36-45f4-817c-5887c94dae87",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS761 9871 523 562   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\naprès le onboarding de mon collaborateur,  nous nous aperçu que je n'avais pas accès au coffre xefi ajaccio sur kalydian.\nen cas d’absence de celui-ci je n aurai pas accès aux informations clients.\n\nbonne réception \n\n------ THOMYRIS ------\n\nBonjour Jean-François,\n\nTu as bien été ajouté au coffre de Xefi Ajaccio :) Tu peux y accéder en cliquant sur l'icône \"changer de coffre\" une fois dans Kalydian\n\nBelle journée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-12T13:52:41Z"
+    },
+    {
+      "incidentId": "d5bad97d-274b-4055-9b13-be7cbe19527e",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS761 8501 523 288   ",
+      "statusName": "Résolu",
+      "description": "Bonjour, \n\nj arrive pas a me connecter a l extension navigateur de KALYDIAN sur Chrome.\n\npouvez-vous m aider ? \n\nMerci.\n\nZiad / tech\n\n07.83.32.89.26\n\n------- THOMYRIS -------\n\nBonjour,\n\nAfin d'utiliser l'extension, il est nécessaire actuellement d'utiliser le service via le RDS.\nNous comprenons le désagrément sur cette problématique d'accès au service, nous travaillons actuellement à l'amélioration de votre expérience utilisateur.\nDans les prochaines semaines, vous pourrez accéder au service normalement :)\n\nJe reste disponible pour toute question,\n\nBonne journée,\nLydie RECH - Thomyris\n\n",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-12T11:00:31Z"
+    },
+    {
+      "incidentId": "47ac49cf-ea70-ef11-97ba-00155d0879e2",
+      "etat": "Ajout utilisateur coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS761 8211 523 230   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket créé suite à échange mails avec Lucile DELBARRE\n----\n\nBonjour, \n\nPourriez svp rajouter Emma GEORGES au coffre cité au objet ?\n\nMerci 😊\n\n---- THOMYRIS ----\n\nSalut Lucile, Emma,\n\nEmma a bien été ajoutée au coffre XEFI !\n\nBonne matinée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-12T10:38:57Z"
+    },
+    {
+      "incidentId": "01181c27-6508-49fa-a26b-253f8aa629d4",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS761 8121 523 212   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJ'espère que vous allez bien et que vous passez une agréable journée !\n\nJe me permets de vous contacter ce matin afin d'obtenir quelques informations concernant le produit KALYDIAN :\n\n1. Connexion agence XEFI : En tant qu'agence XEFI, devons nous impérativement passer par le portail XEFI pour accéder à Kalydian, ou est-il possible d'y accéder directement via un lien spécifique ?\n   \n2. Accès client : Maintenant que le produit est également disponible pour les clients, pourriez-vous m'expliquer comment ils peuvent se connecter à la console KALYDIAN ? Doivent-ils également passer par le portail XEFI ou existe-t-il un autre moyen pour rejoindre leur espace client ?\n\nJe vous remercie d'avance pour votre attention et votre réponse, et vous souhaite une excellente journée !\n\nBien cordialement,  \nYassine\n\n---- THOMYRIS ----\n\nBonjour Yassine,\n\nActuellement malheureusement en effet, l’instance XEFI de Kalydian, www.kalydian.xefi.fr, n’est pas ouverte à l’extérieur et uniquement disponible par le portail ou RDS… c’est pour cela aussi que vous ne pourrez pas vous connecter à l’extension Kalydian autrement que sur le RDS. Nous comprenons le désagrément sur cette problématique d'accès au service, nous travaillons actuellement à l'amélioration de votre expérience utilisateur, l’objectif étant de permettre la connexion au service normalement, en extranet.\n\nLa solution disponible à la vente pour les clients est une autre instance de Kalydian, une publique, qui est www.kalydian.com. Les clients souscrivant à un contrat contenant Kalydian ont alors un espace qui leur est créé dans lequel ils peuvent avoir leurs propres coffres personnels et des coffres partagés à l’ensemble de leur entreprise, afin d’y stocker leurs mots de passe.\nLes techniciens Xefi des agences en charge de chaque client pourront alors avoir un accès avec un rôle « intervenant », qui leur permet d’effectuer des fonctions d’administrateurs sur ces clients précisément.\n\nJe reste disponible pour toute question,\nBon après-midi,\nLydie RECH - Thomyris\n",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-12T10:32:53Z"
+    },
+    {
+      "incidentId": "5f1209a9-a925-4a6a-8190-399dde24c8a1",
+      "etat": "OPS - Création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS761 4891 522 566   ",
+      "statusName": "Problème résolu",
+      "description": "Salut,\nPouvez vous ajouter notre client \"Remy TROMENSCHLAGER AVOCAT\" sur Kalydian, nous en avons besoin rapidement pour la double authentification \nMerci d'avance !\n\n------ THOMYRIS -----\n\nSalut Robin,\n\nJ'ai transmis la demande à mon collègue pour cette création, nous revenons vers toi au plus vite :)\n\nBelle journée,\nLydie RECH - Thomyris\n\n--- f.rosito ----\nC'est fait, au plaisir :)",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-12T07:27:31Z"
+    },
+    {
+      "incidentId": "5522208c-4970-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS761 3921 522 372   ",
+      "statusName": "Problème résolu",
+      "description": "Problème d'accès au service KALYDIAN sur mon poste de travail à l'agence.\n\n------- THOMYRIS -------\n\nBonjour William,\n\nPour la connexion à Kalydian, il te faut passer par le portail Xefi portail.xefi.fr.\nSi tu n'as pas la tuile Kalydian sur le portail, il te faut faire un ticket au service PORTAIL de la DSI pour la rajouter. Actuellement kalydian.xefi.fr est uniquement disponible via la wifi du groupe ou par le RDS, et kalydian.com est la solution que nous vendons à l'extérieur.\n\nUne fois sur l'interface Kalydian par le portail, il faut utiliser tes identifiants AD (login et mot de passe), et paramétrer un QR Code de double authentification.\nTu es obligé de passer par le formulaire de connexion la première fois, ensuite tu pourras te connecter directement par le bouton Windows.\n\nSi tu rencontres encore des problèmes par la suite tu peux m'appeler via teams ou au 04 79 60 59 51 et on regardera ensemble.\n\nBon après-midi,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-11T15:24:34Z"
+    },
+    {
+      "incidentId": "7f7a4d90-a374-4493-b02c-f6dd4b8b3d1e",
+      "etat": "OPS - Création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS761 2141 522 016   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nPouvez vous créer mon client Hotel de Franc Bois dans Kalydian ?\nMerci à vous,\nNicolas\n\n------- THOMYRIS -------\n\nBonjour Nicolas,\n\nJe crée une opération de service pour la création du client HOT0001_HOTEL DE FRANCBOIS, nous reviendrons vers toi dès qu'elle sera effectuée.\n\nBon après-midi,\nLydie RECH - THOMYRIS\n\n---- f.rosito ---\nC'est fait, au plaisir",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-11T12:52:29Z"
+    },
+    {
+      "incidentId": "e9b830ee-3ea6-4ca7-bbc0-9ecd77a84cb7",
+      "etat": "Réinitialisation mot de passe",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS761 0861 521 760   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nAgence : Villeneuve d'Ascq\nClient : Help Partners\n\nPB : il faudrait réinitialiser le mdp de Clara. Elle aurait eu un bug la réinitialisation de son mdp d'hier n'aurait pas été pris en compte.\n\nSerait-il possible d'avoir accès à l'admin pour pouvoir le faire nous-même ? \n\nCordialement.\n\n\n------- THOMYRIS -------\n\nBonjour Alexis,\n\nJ'ai réinitialisé le mot de passe de Clara et je l'ai débloquée, est-ce qu'elle avait bien reçu le mail de réinitialisation, dans ses spams ou MailInBlack ?\nSi besoin nous pouvons aussi réinitialiser son code de double authentification.\n\nConcernant le rôle \"Intervenant\" pour vous permettre de gérer administrativement Help Partners vous-même, nous pouvons convenir d'un rendez-vous pour vous présenter le rôle et vous accompagner dans vos premières manipulations. Personnellement je suis disponible dès demain 9h, vous seriez nos premiers intervenants :)\n\nCordialement,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-11T09:59:07Z"
+    },
+    {
+      "incidentId": "dac5463c-fe1d-460d-b8cc-01aeb2059e7e",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS760 8401 521 268",
+      "statusName": "Résolu",
+      "description": "Bonjour, impossible de me connecter à l'extension kalydian, lorsque je me connecte via kalydian.com il n reconnait pas mon compte non plus. Ca fonctionne seulement via le portail. Mais par contre quand je me connecte via microsoft je n'ai aucun coffre disponible. a.molnar@xefi.be Merci\n\n------ THOMYRIS le 11/09/2024 ------\n\nRéponse email : \n\nBonjour Anthony,\n\nJe fais suite à ton ticket CRM concernant Kalydian : https://crm.xefi.fr/XEFI/main.aspx?pagetype=entityrecord&etc=10033&id=%7bDAC5463C-FE1D-460D-B8CC-01AEB2059E7E%7d&sitemappath=CS%7cCS%7cxefi_incidentxefi&extraqs=&newWindow=true&histKey=809492074#189237094\n\nLors de ta connexion SSO, tu utilises bien a.molnar@xefi.be comme adresse, sur le portail ?\nJe vois ton adresse email rattachée au coffre de Namur et ton coffre personnel, peux-tu me renvoyer une capture d’écran de ce que tu as à l’écran ?\nTu trouveras en pièce-jointe une capture d’un coffre vide, avec le bouton qui te permet de changer de coffre. Au clic, tu ne vois aucun coffre ?\n\nAfin d'utiliser l'extension, il est nécessaire d'utiliser le service via le RDS. Nous comprenons le désagrément sur cette problématique d'accès au service, nous travaillons actuellement à l'amélioration de votre expérience utilisateur.\n\nJe reste disponible pour toute question,\nBonne matinée,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-10T18:10:57Z"
+    },
+    {
+      "incidentId": "992a4c6d-5a6f-ef11-97ba-00155d0879e2",
+      "etat": "Ajout utilisateur coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS760 5021 520 592   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket émis suite à demande email de la part de Lucile Delbarre\n\nAjout de Déborah AZOULAY au coffre de XEFI LYON - MARKETING COMMUNICATION",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-10T10:52:45Z"
+    },
+    {
+      "incidentId": "553724d1-a83c-4e46-98e2-48167849f7ef",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS760 4661 520 520   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nAgence : Villeneuve d'ascq\nClient : Help Partners\n\nPB : Il faudrait réinitialiser le mdp de clara.\n\nMerci d'avance,\nCordialement.\n\n------ THOMYRIS ------\n\nBonjour Alexis,\n\nLe mot de passe de Clara Horlance a bien été réinitialisé, elle devrait recevoir un email directement, sinon c'est qu'il se trouve dans MailInBlack :)\n\nBelle journée",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-10T10:26:13Z"
+    },
+    {
+      "incidentId": "dfed938d-4b6f-ef11-97ba-00155d0879e2",
+      "etat": "Aide 1e connexion",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS760 3331 520 254   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket émis suite à demande directe : aide à la première connexion de Enzo Terrancle et ajout aux coffres Techniques de Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-10T09:06:24Z"
+    },
+    {
+      "incidentId": "63ecd250-a28b-45dd-9ed5-49a5276c0641",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS760 2541 520 096   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nJ'avais mis en service Kalidian mais sans jamais m'en servir.\nJe n'arrive plus à me connecter. Ca semble bloquer au niveau de l'authenticator.\nMerci\nPierre-François\n\n-------\n\nBonjour Pierre-François, \n\nJ'ai réinitialisé ton QR code, tu vas pouvoir le re-scanner à nouveau.\nEn cas de soucis tu peux répondre à ce ticket par mail ou ma ligne directe interne est 7319\n\nBonne matinée,\nLydie RECH - Thomyris\n",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-10T08:26:10Z"
+    },
+    {
+      "incidentId": "7f863288-416f-ef11-97ba-00155d0879e2",
+      "etat": "Rattachement utilisateur coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS760 1911 519 970   ",
+      "statusName": "Problème résolu",
+      "description": "Ajouter Carine AYRAL-TERNISIEN sur le coffre COFFRE MARKETING COM",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-10T07:54:36Z"
+    },
+    {
+      "incidentId": "2f0136a4-c90c-4b59-aa30-fee1afa0ae73",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS759 9021 519 392   ",
+      "statusName": "Problème résolu",
+      "description": "Salut a tous,\n\nMes collègues Anthony et Jean-Yane n'a pas les même accès que moi sur Kalydian.\n\nPouvez vous leurs mettre les même droits que moi svp ? \n\nMerci d'avance,\nRestant disponible,\n\nCamille GICQUEL\nXEFI LE MANS SUD\n\n------ THOMYRIS -------\n\nBonjour Camille,\n\nIl y avait un coffre de XEFI LE MANS SUD en doublon (création automatique par l'AD, nous allons étudier ça), j'ai rebasculé Anthony et Jean-Yane sur votre véritable de coffre :)\n\nBon lundi,\nLydie RECH - Thomyris\n",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-09T14:09:08Z"
+    },
+    {
+      "incidentId": "9c88a28c-a36e-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS759 7841 519 156   ",
+      "statusName": "Problème résolu",
+      "description": "Appel de Fatima Mendili pour être rattachée au coffre de la GED",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-09T13:03:41Z"
+    },
+    {
+      "incidentId": "52a263ef-2939-41e0-8527-ed92a4dc195a",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS759 5041 518 596   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJ'ai installé l'extension pour navigateur de Kalydian, mais il m'est impossible de m'y connecter avec mes identifiants.\nFaut-il utiliser d'autres identifiants ?\nPourriez-vous nous revenir avec une solution ?\n\nMerci d'avance,\nFélix\n\n-------- THOMYRIS --------\n\nBonjour Félix,\n\nAfin d'utiliser l'extension, il est nécessaire d'utiliser le service via le RDS.\nNous comprenons  le désagrément sur cette problématique d'accès au service, nous travaillons actuellement à l'amélioration de votre expérience utilisateur.\n\nJe reste disponible pour tous renseignements,\nBon lundi,\n\nLydie RECH - THOMYRIS",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-09T09:05:16Z"
+    },
+    {
+      "incidentId": "ad37947e-7e6e-ef11-97ba-00155d0879e2",
+      "etat": "OPS - Création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS759 3991 518 386   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nNotre client PK CONSEILS à Nice n'existe pas dans la console KALYDIAN\n\nPouvez vous faire le necessaire ?\n\nmerci bcp\n\n------ THOMYRIS -------\n\nBonjour David,\n\nPeux-tu me transmettre le code SAGE de ce client ? Je vais regarder.\n\nBon lundi,\nLydie RECH - Thomyris\n\n\n---- XEFI NICE ----\n\n\nvoici le code : PKC0001\n\n\n------ THOMYRIS ------\n\nIl est effectivement sous contrat mais apparait dans la vue de Xefi Aix-en-Provence.\nFaut-il le déplacer ou le dédoubler dans Xefi Nice ?\n\n--- XEFI ---\n\nOui stp dans la vue de Nice\nVu avec Manu\n\n----- THOMYRIS -----\n\nMerci pour toutes ces infos.\nJ'ai créé une OPS de notre côté pour la création du client dans le coffre de Xefi Nice, nous revenons vers toi dès qu'elle sera passée :)\n\n----- f.rosito 09/09/24 -----\nC'est fait",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-09T08:38:32Z"
+    },
+    {
+      "incidentId": "63d54b89-2321-4578-929a-5c5a9b94b5fc",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS759 3161 518 220   ",
+      "statusName": "Problème résolu",
+      "description": "KALYDIAN\nBonjour,\nPouvez-vous réinitialiser ma double authentification pour Kalydian svp?\nMerci d'avance\n\n----- THOMYRIS -----\n\nBonjour Olivier,\nJ'ai bien réinitialisé le QR code.\n\nBon lundi !\n\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-09T08:01:42Z"
+    },
+    {
+      "incidentId": "d281e3b8-01f2-45dc-a14c-2de32b138ee2",
+      "etat": "Renseignements synchro",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS759 2591 518 106   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\npouvez-vous créer les clients suivants dans Kalydian ? ils ont tous des contrats mais je ne les trouve pas.\n\n- lycée professionnel privé sainte marie\n- mfr chargey les gray\n- rh thermolaquage\n\nCordialement\n\n------ THOMYRIS -------\n\nBonjour Thomas,\n\nPeux-tu me transmettre les codes SAGE de ces clients ? Je vais regarder.\n \nBon lundi,\nLydie RECH - Thomyris",
+      "ownerName": "Lydie RECH",
+      "creationDate": "2024-09-09T07:19:21Z"
+    },
+    {
+      "incidentId": "4c5bc0d9-366c-ef11-97ba-00155d0879e2",
+      "etat": "Ajout utilisateur au coffre",
+      "severityLabel": "Modérée",
+      "ticketNumber": "CAS758 9911 517 570   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour pourriez vous donner accès au coffre fort KALYDIAN XEFI Grand Paris aux personnes suivantes:\n\nAnis BARREAU <a.barreau@fortalicia.com>; \nCacem BENYOUCEF <c.benyoucef@fortalicia.com>; \nMarc Sébastien KAMANKE <ms.kamanke@fortalicia.com>; \nMathieu FERRIERE <m.ferriere@fortalicia.com>; \nRayane ASSADI <r.assadi@fortalicia.com>; \nSofiane ZAOUI <s.zaoui@fortalicia.com>\n\nmerci à vous\n\n-------------------\n\nBonjour,\n\nC'est bon pour tous sauf pour :\nCacem BENYOUCEF <c.benyoucef@fortalicia.com>; \nMarc Sébastien KAMANKE <ms.kamanke@fortalicia.com>; \n\nIls doivent se connecter à Kalydian une fois pour que leur compte soit créé automatiquement.\n\nMerci\nCéline",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-06T11:00:40Z"
+    },
+    {
+      "incidentId": "04e34dfb-9d19-4e7c-b07d-b4d78b656e49",
+      "etat": "Extension pour franchisés",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS758 9251 517 438   ",
+      "statusName": "Problème résolu",
+      "description": "Impossible de se connecter sur l'extension Kalydian\n\n------------------------\n\nBonjour,\n\nEn effet pour les franchisés, l'extension est pour l'instant disponible uniquement depuis le RDS.\nPeux-tu tenter de t'y connecter ainsi ? \n\nA savoir que le RDS est disponible depuis le portail XEFI.\n\nMerci à toi\nCéline\n\n------  vendredi 6 septembre 2024 14:12  |  Cindy SPIQUEL  ------\n\nBonjour,\nça ne fonctionne pas via le rds\nPourrez vous me rappeler svp ?  \n\nMerci\n\n----------------------\n\nCindy, \n\nJ'ai pris contact avec la DSI pour ce point.\nOn te recontacte dès que l'on a du nouveau.\n\nMerci à toi,\n\n-----------------------\n\nBonjour Cindy,\n\nLe problème est corrigé.\nJe t'envoie un mail en parallèle :-)\n\nMerci à toi,\nCéline\n\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-06T10:09:41Z"
+    },
+    {
+      "incidentId": "07e46490-1bfb-424c-a8d7-d17fabdfad32",
+      "etat": "Extension franchisés",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS758 7561 517 100   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n \nJe vous contacte pour une aide pour me connecter via l'extension de Kalydian sur le navigateur.\nJe rentre les mêmes identifiants Kalydian après être aller sur portail.xefi.fr puis l'icone Kalydian mais impossible de m'y connecter.\nBesoin d'une petite assistance \n\nMerci\nAliou Ba\n\n-------------------\n\nBonjour,\n\nPour les franchisés l'extension est disponible pour l'instant uniquement depuis le RDS.\n\nMerci à toi\nCéline",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-06T08:37:37Z"
+    },
+    {
+      "incidentId": "23129420-4616-48f4-8747-d4092d1f4ab9",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS758 7261 517 040   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nnous avons installé l'extension navigateur pour Kalydian \nmais lorsque nous renseignons nos identifiants, nous avons un message indiquant que les informations renseignées sont mauvaises.\n\nPourrions-nous avoir de l'aide à ce sujet ? \nMerci.\n\n\n--------------\nBonjour,\n\nL'extension est disponible pour les franchisés uniquement depuis le RDS.\n¨Peux-tu essayer de t'y connecter via le bureau à distance disponible depuis le portail ? \n\nMerci\nCéline",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-06T08:21:59Z"
+    },
+    {
+      "incidentId": "cdfbd65a-6c6b-ef11-97ba-00155d0879e2",
+      "etat": "création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS758 2311 516 050   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nJe ne trouve pas dans Kalydian le dossier du client AURIGA qui existe bien dans le CRM Xefi.\nPouvez vous vérifier de votre côté s'il vous plait ?\n\nMerci d'avance\n\nMatthieu\n\n---------------------\n\nBonjour Mathieu,\n\nPeux-tu me donner le N° SAGE de ce client ? \n\nMerci à toi\nCéline\n\n---------------------\n\nBonjour Céline,\n\nLe bon numéro est celui de Xefi Grand Paris : C2877085\n\nC'est bizarre je n'ai pas eu de mail de suivi de ce ticket.\n\nMerci et bonne journée\n\n--------------\n\nBonjour,\n\nLe client ne remonte pas car le N° SAGE n'est pas renseigné dans la CRM.\nVoir en PJ\nJe n'ai pas la main à ce niveau pour faire cette modification.\nPeux-tu voir pour faire cet ajout et nous tenir au courant dès que c'est bon ? \n\nMerci\n\n-------------------\n\nOK je vais me rapprocher du service commercial pour qu'ils renseignent le numéro Sage au bon emplacement afin que la synchro Kalydian se fasse correctement.\n\nMerci Céline",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-05T10:51:06Z"
+    },
+    {
+      "incidentId": "6cfd47e2-9a6a-ef11-97ba-00155d0879e2",
+      "etat": "Problème de connexion",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS757 3511 514 290   ",
+      "statusName": "Problème résolu",
+      "description": "bonjour, \n\nsamy joseph n'a pas accés a kalydian.\n\npouvez vous faire le necessaire.\n\ncordialement, \n\n------------\nBonjour,\n\nEst-ce qu'il peut se connecter à https://kalydian.xefi.fr/ et utiliser son identifiant et son mot de passe de Outlook ? \n\nMerci\nCéline\n\n-------- Psi\nbonjour,\nexcusez moi, j'ai pas était assez précis il a accès a aucun coffre :).\n\nCordialement, \n\n----- PSI\n\navez vous résolue le probleme ? \n\n\n-------------- \n\nAppel de Samy\nConnexion OK",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-04T09:51:33Z"
+    },
+    {
+      "incidentId": "93aeb905-f369-ef11-97ba-00155d0879e2",
+      "etat": "Info sur la connexion",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 8711 513 330   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour quelle est la procédure pour donner accès à Kalydian au 6 nouveaux alternant de FORTALICIA svp?\n\n\n---------------\nBonjour,\n\nIls peuvent se connecter à Kalydian directement avec leurs identifiants AD.\nLeur compte sera automatiquement créé avec leur coffre personnel.\n\nS'ils doivent rejoindre un coffre commun, cette action pourra être réalisée à la demande de notre côté.\n\nMerci\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-03T13:50:05Z"
+    },
+    {
+      "incidentId": "cc567632-ee69-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 8191 513 226   ",
+      "statusName": "Problème résolu",
+      "description": "Merci pour le coffre fort Kalydian pour la partie XEFI AMIENS, malheureusement et après discussion avec mes collègues, les données se trouvent dans le dossier XEFI GRAND PARIS (courneuve) mais ne sont pas dans le dossier XEFI AMIENS.\n\nSerait il possible de :\n- Migrer les données se trouvant sur XEFI GRAND PARIS vers XEFI AMIENS\nou\n- Me donner l'accès sur les clients d'amiens se trouvant dans le dossier XEFI GRAND PARIS ..?\n\nEncore désolé pour le dérrangement et merci pour votre aide.\n\nGrégory\n\n-------------\nAppel vers Grégory, message laissé",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-03T13:15:25Z"
+    },
+    {
+      "incidentId": "714c770a-2888-421a-bd38-637a3e3d9ae7",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 7111 513 010   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nPour le client HELP PARTNERS, il nous faudrait les accès Kalydian. Info sur la fiche navette.\nEn rouge ce qu'il faut créer :) \nPour Juliette, et pour Carl.\nMerci.\n\n-----------\nBonjour,\n\nC'est fait :-)\n\nMerci ",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-03T10:42:37Z"
+    },
+    {
+      "incidentId": "5dbfa63c-d269-ef11-97ba-00155d0879e2",
+      "etat": "Ajout utilisateur coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 6351 512 858   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nPouvez mettre les accès pour Benjamin ACCART sur les coffres suivants SVP:\n\nTHOMYRIS - TECHNIQUE_CLIENTS\nTHOMYRIS - TECHNIQUE_INTERNE\n\nMerci et bonne journée,\n\nCyril RAVET :) \n\n*--------------\nCB -A ccès OK",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-03T09:55:16Z"
+    },
+    {
+      "incidentId": "cb5e5114-cd69-ef11-97ba-00155d0879e2",
+      "etat": "Pb de connexion",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 5611 512 710   ",
+      "statusName": "Problème résolu",
+      "description": "bonjour, \n\nutilisateur rayan amari n'est pas reconnu dans kalydian.\n\npouvez vous faire le necessaire.\n\ncordialement, \n\nPatrice\n\n------------\nBonjour,\n\nJ'ai tenté de contacter Rayan mais sa ligne sonne occupé.\nPeut-il me recontacter quand il sera disponible ? \n\nMerci\nCéline\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-03T09:18:22Z"
+    },
+    {
+      "incidentId": "f5281a2a-c469-ef11-97ba-00155d0879e2",
+      "etat": "Création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 4101 512 408   ",
+      "statusName": "Problème résolu",
+      "description": "Accès base de données Amiens Kalydian : pas de données visible dans le dossier AMIENS\n\n\n---------\nBonjour,\n\nLa synchronisation est en cours.\nNous te tiendrons au courant dès qu'elle sera terminée.\n\nMerci\nCéline\n\n-----------\n\nGrégory, \n\nLes clients ont été créés dans Kalydian pour le coffre de XEFI AMIENS.\n\nMerci à toi,",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-03T08:14:39Z"
+    },
+    {
+      "incidentId": "a75608df-11a6-45e9-b0a3-59a4974bfe62",
+      "etat": "Création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 3321 512 252   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, Je ne comprends pas je ne retrouve pas mon client Mairie de Saint Gilles 50180 dans kalydian.\nMerci de faire une Synchro\n\n\n----------------------\n\nBonjour, \n\nLa demande de création a été transmise.\nNous te recontacterons dès que cela aura été fait.\n\nMerci\nCéline\n\n--- 03/09/24 | f.rosito ---\nBonjour, \nC'est fait au plaisir !",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-03T07:40:49Z"
+    },
+    {
+      "incidentId": "4fd3cf90-4169-ef11-97ba-00155d0879e2",
+      "etat": "Ajout au coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 2781 512 144   ",
+      "statusName": "Problème résolu",
+      "description": "Mail de Lucile pour ajout d'un utilisateur à au coffre Market",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T16:39:50Z"
+    },
+    {
+      "incidentId": "9c4c5d47-da93-4e92-886d-62dc99b245b3",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 1961 511 980   ",
+      "statusName": "Problème résolu",
+      "description": "Impossible de se connecter à l'extension Kalydian, même avec les des identifiants qui fonctionne sur la version web de kalydian du portail XEFI. J'ai essayé en instance publique et privée sans changement.\n\nEN cliquant sur le titre Kalydian dans l'extension on tombe sur la page https://kalydian.xefi.fr qui me dit que mon compte n'existe pas mais je suppose que c'est parce que c'est pour les agences internes.\n\nEst-ce que l'extension ne marche que pour les agences internes ?\n\nMerci d'avance\n\nUgo Delvaux (u.delvaux@xefi.fr)\n\n-------------------\n\nBonjour Hugo,\n\nEn effet pour les franchisés l'extension est disponible uniquement depuis le RDS.\n\nMerci à toi,",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T15:27:10Z"
+    },
+    {
+      "incidentId": "23b65f63-2f69-ef11-97ba-00155d0879e2",
+      "etat": "Ajout utilisateur au coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 1141 511 816   ",
+      "statusName": "Problème résolu",
+      "description": "Suite au mail de Melissa Cure\n\nAjout de  -\tNolan ESSERTAIZE au coffre Eddy",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T14:29:41Z"
+    },
+    {
+      "incidentId": "ed6289ce-2769-ef11-97ba-00155d0879e2",
+      "etat": "Mise à jour client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 0261 511 640   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, \n\nSuite à mon arrivée sur l'agence de Xefi Amiens, \n\nIl me faudrait pouvoir avoir accès aux ressources Kalydian d'Amiens (actuellement aucune ressources sous Kalydian)\n\nMerci d'avance et bonne journée\n\nGrégory\n\n------------------\nBonjour Grégory \n\nLa mise à jour a été réalisée et sera effective dès demain pour le coffre de XEFI Amiens.\n\nMerci à toi,",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T13:35:17Z"
+    },
+    {
+      "incidentId": "89ce2d6f-a007-4cd8-be3e-17620b99818a",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS756 0201 511 628   ",
+      "statusName": "Problème résolu",
+      "description": "Impossible de se connecter au plugin Kalydian sur Chrome. J'ai essayé en privé et en publique mais rien ne fonctionne.\n\n\n-------------------------\n\nAppel vers Stephen\nl’extension est uniquement accessible via le RDS disponible depuis le portail.",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T13:31:26Z"
+    },
+    {
+      "incidentId": "37f0e29f-eea0-4d88-9cd0-3c9f68c50340",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS755 9091 511 406   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\r\nEst il possible de renvoyer le mail pour les utilisateurs suivants de la société HELP PARTNERS : \r\n- Civadiee Carl\r\n- Lebihan Juliette\r\nLeur adresse mail n'était pas encore créée par leur presta, ils n'ont donc pas pu recevoir le mail de bienvenue leur demandant la mise en place du mot de passe.\r\nMerci.\r\n-----------------\r\nBonjour Dany,\r\n\r\nPeux-tu me donner leur adresse mail ? \r\n\r\nMerci\r\nCéline\r\n\r\n------  mardi 3 septembre 2024 11:40  |  Davy LOINTIER  ------\r\n\r\nAh....mais je me suis trompé d'utilisateur... Ces utilisateurs là, je n'ai pas encore fait la demande avec la navette..\r\nAutant pour moi. Désolé ! \r\nJe refais un ticket avec la navette jointe ! ",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T11:09:56Z"
+    },
+    {
+      "incidentId": "bfeae162-1169-ef11-97ba-00155d0879e2",
+      "etat": "Ajout utilisateurs au coffre",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS755 8821 511 352   ",
+      "statusName": "Problème résolu",
+      "description": "Via un appel téléphonique de Ludo Perchirin\n\npeux tu ajouter les droits sur XEFI LYON TECHNIQUE - XEFI LSO - XEFI VENDOME - XEFI PRESQU'ILE à : gabriel desmaris, loan meridji et benjamin laveur\n\nOK pour loan meridji et benjamin laveur\n\ngabriel desmaris ne s'est pas encore connecté",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T10:54:51Z"
+    },
+    {
+      "incidentId": "b7336171-0769-ef11-97ba-00155d0879e2",
+      "etat": "Info extension franchisés",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS755 7141 511 016   ",
+      "statusName": "Problème résolu",
+      "description": "Suite mail de Camille Gicquel (Le mans Sud), franchisé ne peut pas se connecter à l'extension\n\n-> communication réalisée auprès de l'agence et auprès du siège",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T09:43:43Z"
+    },
+    {
+      "incidentId": "c8357848-0169-ef11-97ba-00155d0879e2",
+      "etat": "Création client",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS755 5941 510 776   ",
+      "statusName": "Problème résolu",
+      "description": "Hello ! \n\nPossible de me rajouter le compte client CIM0002 - CIM VOREPPE dans Kalydian s'il vous plait ? \nMême soucis que pour le compte SELARL GROUPE IMAGINEUR il ne remonte pas car l'agence n'est pas en agence principale\n\nMerci d'avance :)\n\n\n------------------\nHello Valentin !\n\nJe transfère au développeur qui peut faire cet ajout :-)\nIl te tiendra au courant dès que ça sera fait.\n\nMerci à toi, \nCéline\n\n--- 03/09/2024 | l'homme d'entretient ----\nDone",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-09-02T08:59:31Z"
+    },
+    {
+      "incidentId": "b3777e6a-ade5-4b0f-9eac-2f5c8b99e932",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS755 5931 510 774   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\nJe fais ce ticket pour Kalydian, en installant l'extension de Kalydian pour navigateur, impossible de me connecter avec mes identifiants que ce soit en instance publique ou privée, comment peut-on faire ? \nCordialement\n\n\n--------------\nAppel vers Jordan\n-> l'extension n'est pas dispo pour les franchisés\nAppel vers la cheffe de produit pour voir ce qui peut être fait",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T08:58:42Z"
+    },
+    {
+      "incidentId": "d006a0e6-ff68-ef11-97ba-00155d0879e2",
+      "etat": "Assistance connexion",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS755 5611 510 710   ",
+      "statusName": "Problème résolu",
+      "description": "Ticket pour assister Lucile pour une connexion via l'extension.\nPb rencontré avec la TWOFA - non constaté chez nous\n\nAppel téléphonique, connexion OK",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T08:49:37Z"
+    },
+    {
+      "incidentId": "c106e7d5-fc68-ef11-97ba-00155d0879e2",
+      "etat": "Déblocage user",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS755 4921 510 572   ",
+      "statusName": "Problème résolu",
+      "description": "TIcket créé suite à appel de HUGO BUNELIER (XEFI MOULIN) pour déblocage utilisateur",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T08:27:46Z"
+    },
+    {
+      "incidentId": "350d719e-401e-403d-b4eb-584d2bbcdf5a",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS755 4611 510 510   ",
+      "statusName": "Problème résolu",
+      "description": "Salut, \r\n\r\nJe n'arrive plus a accéder a Kalydian, j'ai un identifiant incorrect.\r\n\r\nMerci, Hugo\r\n\r\n------  lundi 2 septembre 2024 09:25  |  Laurent GUICHON  ------\r\n\r\nTout est bon ! \r\n\r\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-09-02T08:14:17Z"
+    },
+    {
+      "incidentId": "37450aa0-d966-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS755 3291 510 246",
+      "statusName": "Problème résolu",
+      "description": "De Lucile DELBARRE:\n\nBonjour, \n\nPourriez vous svp rajouter Julie au coffre fort Omnysis ?\n\nMerci 😊\n",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-08-30T15:10:36Z"
+    },
+    {
+      "incidentId": "d58158d6-3e9e-4aed-984a-b9295f588519",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS754 3321 508 252   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nje ne trouve pas notre client Chalon equip dans Kalydian.\nils ont uniquement un contrat Office 365\nPouvez-vous le créer ?\n\nCordialement\n\n------------- Kalydian ----------------\n\n\nBonjour,\n\nMerci pour ton message. La personne qui pourra gérer ce problème sera de retour lundi 02, je te propose donc d'attendre son retour pour qu'elle puisse s'en occuper.\n\nN'hésite pas à revenir vers moi si besoin d'ici là.\n\nBonne journée à toi !\n\nCordialement,\nSauvinet Lucas\n\n\n\n------  mardi 3 septembre 2024 09:49  |  Thomas HUOT-MARCHAND  ------\nbonjour,\npouvez-vous me dire ou en est cette demande ?\nj'ai également d'autres clients qui n'apparaissent pas dans Kalydian\n\nCordialement\n\n---- 03/09/24 14:02 | Rosito Fabrice ---\nJe regrette l'attente :) voici qui est fait !\n\nAu plaisir",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-08-28T16:01:05Z"
+    },
+    {
+      "incidentId": "1f4f55da-b257-4a3e-acf3-ea864170a1dc",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS754 3191 508 226",
+      "statusName": "Problème résolu",
+      "description": "N° Sage: SOU203PH\nCompte client : SOUDURE TUYAUTERIE HOMOLOGUEE S A R\nContact client : Daniel COURTOUT\nTéléphone contact : \nDescription : Bonjour, \n\nJ'ai besoin de configurer la double authentification sur l'office d'un client. \nQuand j'essaye de créer le compte dans Kalydian, au moment de valider j'ai le message d'erreur suivant : \"Erreur pendant la création de l'item\"\n\nMerci d'avance. \n\nCordialement. \n\nAurore\n\n-- Thomyris\n\nBonjour,\n\nComme convenu lors de notre appel, le problème est désormais résolu.\n\nBonne journée.\n\nJoachim",
+      "ownerName": "Joachim RENEVIER",
+      "creationDate": "2024-08-28T15:43:15Z"
+    },
+    {
+      "incidentId": "6216ee82-2de5-491d-868b-a7141038fd43",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS754 2251 508 038   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour, J'ai changé de téléphone. Pouvez vous m'aider à paramétrer Authenticator avec mon compte XEFI ? Merci de transmettre ma demande au bon service si ce n'est pas vous. Lucie\n\n--Chris-- \nAuthenticator reset sur portail\nbesoin de reset sur kalytdian\n--Fabrice--\nLa 2FA a été réinitialisé ,)",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-08-28T14:03:39Z"
+    },
+    {
+      "incidentId": "ce6ceea4-1365-ef11-97ba-00155d0879e2",
+      "etat": "Analyse synchro public",
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS753 9981 507 584   ",
+      "statusName": "Problème résolu",
+      "description": "Salut,\n\nPeut tu créer Joachim et moi meme sur Kalydian.com en Admin s'il te plait\n\njoachim:\nj.renevier@thomyris.com\n\nlucas:\nl.sauvinet@thomyris.com\n\nMerci d'avance\n\nSauvinet Lucas",
+      "ownerName": "Fabrice ROSITO",
+      "creationDate": "2024-08-28T09:01:01Z"
+    },
+    {
+      "incidentId": "d0b9822c-688d-4241-8d0b-08ad8788bcd7",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS753 8991 507 386   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nsur Kalydian est-il possible de stocker les jetons de double authentification ?\ncela éviterait que chaque technicien possède tous les jetons dans son google authenticator\n\nCordialement\n\n---------------------------------------------\n\n\nBonjour,\n\nCette fonctionnalité est disponible sur Kalydian.\nTu peux saisir la valeur de ta clef secrète dans la création ou dans l'édition de ton mot de passe.\nVoir en PJ\nLe code à 6 chiffres s'affichera après enregistrement avec un timer à 30 secondes.\n\nMerci à toi,\nCéline",
+      "ownerName": "Céline BAULU",
+      "creationDate": "2024-08-28T07:45:59Z"
+    },
+    {
+      "incidentId": "9bd082ec-a963-ef11-97ba-00155d0879e2",
+      "etat": null,
+      "severityLabel": "Faible",
+      "ticketNumber": "CAS753 1011 505 790   ",
+      "statusName": "Problème résolu",
+      "description": "Bonjour,\n\nVoici le renouvellement de la licence pour le boitier SG 135 de S/N S170495625E8FE6 client TECNIPLAST FRANCE\nLicence disponible dans les notes,\nLicence à mettre à jour sur le boitier.\n\nBien cordialement,\n\nJulien GUERY\n\n--------------\n\nSalut,\n\nJe n'ai pas ce n° de série. \n\nVoici les 2 que j'ai :\n\nModel:\t\tSG135\nSerial:\t\tS17072837A49834\n\nModel:\t\tSG135\nSerial:\t\tS1B0CC9JVY9T7D5",
+      "ownerName": "Vincent MAS",
+      "creationDate": "2024-08-26T13:51:44Z"
+    }
+  ]
+}
