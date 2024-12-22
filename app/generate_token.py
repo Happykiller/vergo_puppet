@@ -2,16 +2,22 @@
 import os
 import jwt
 import datetime
+from pathlib import Path
 from dotenv import load_dotenv
 
-# Load the .env file
-load_dotenv(".env")
+# Build the absolute path to the .env files
+env_path = Path(__file__).resolve().parent.parent / ".env"
+env_local_path = Path(__file__).resolve().parent.parent / ".env.local"
 
-# Load the .env.local file if present (override values if override=True)
-load_dotenv(".env.local", override=True)
+# Load environment variables
+load_dotenv(env_path)
+load_dotenv(env_local_path, override=True)
 
 # Example of accessing an environment variable
 SECRET_KEY = os.getenv("SECRET_KEY")
+
+if not SECRET_KEY:
+    raise EnvironmentError("SECRET_KEY is missing in the environment variables.")
 
 def create_token(user_id: str, expiration_minutes: int = 30):
     """
@@ -25,6 +31,7 @@ def create_token(user_id: str, expiration_minutes: int = 30):
         "sub": user_id,
         "exp": expiration
     }
+    print(f"SECRET_KEY: {SECRET_KEY}")
     token = jwt.encode(payload, SECRET_KEY, algorithm="HS256")
     return token
 
