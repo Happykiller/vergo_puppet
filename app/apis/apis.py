@@ -2,6 +2,7 @@
 import os
 import jwt
 from dotenv import load_dotenv
+from app.inversify import get_inversify
 from fastapi.security import OAuth2PasswordBearer # type: ignore
 from fastapi import Depends, APIRouter, HTTPException # type: ignore
 
@@ -283,6 +284,13 @@ async def secure_endpoint(payload: dict = Depends(verify_access_token)):
     try:
         # Logic for your secure endpoint
         logger.debug(f"payload: {payload}")
+
+        # Configure dependencies using the singleton instance
+        inversify = get_inversify()
+        bdd = inversify.get_bdd()
+        logger.debug(f"Bdd: {bdd.who_is()}")
+
         return {"message": "Secured endpoint accessed"}
     except Exception as e:
-        raise HTTPException(status_code=500, detail="An error occurred")
+        logger.error(f"Error occurred: {str(e)}")
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
