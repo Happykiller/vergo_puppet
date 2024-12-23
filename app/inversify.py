@@ -1,8 +1,10 @@
 # inversify.py
+
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from app.services.bdd import AbstractBDDService, FakeBDDService
+from app.services.bdd.bdd import BDDService
+from app.services.bdd.bdd_fake import FakeBDDService
 
 class Inversify:
   """Dependency injector based on the environment."""
@@ -37,7 +39,7 @@ class Inversify:
       raise ValueError(f"Service '{service_name}' not configured.")
     return service
   
-  def get_bdd(self) -> AbstractBDDService:
+  def get_bdd(self) -> BDDService:
     """Retrieve the configured database service."""
     return self.get("bdd_service")
 
