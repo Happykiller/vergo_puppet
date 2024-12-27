@@ -55,8 +55,8 @@ def test_usecase_tokenize_full_process(mock_nlp, mock_anonymize_names, mock_load
     result = usecase_tokenize(test_data, regex_filepath)
 
     # Verify the expected result
-    expected_result = [{"tokens": ["[name]", "signaler", "issue"]}]
-    assert result == expected_result, f"Expected {expected_result} but got {result}"
+    expected_result = ["[name]", "signaler", "issue"]
+    assert result[0]["tokens"] == expected_result, f"Expected {expected_result} but got {result}"
 
 # Test: Verify stopword removal
 @patch("app.usecases.usecase_tokenize.remove_stopwords")

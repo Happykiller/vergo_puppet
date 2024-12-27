@@ -1,9 +1,10 @@
 #app\usecases\gru\usecase_mesure_gru.py
 from typing import List
+from fastapi import HTTPException  # type: ignore
+
 from app.services.logger import logger
 from app.repositories.memory import get_model
 from app.neural_network.nn_gru import predict
-from fastapi import HTTPException  # type: ignore
 from app.usecases.gru.usecase_commons_gru import process_input
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 

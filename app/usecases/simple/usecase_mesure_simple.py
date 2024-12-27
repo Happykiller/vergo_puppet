@@ -1,17 +1,21 @@
-#app\usecases\simple\usecase_mesure_simple.py
+# app\usecases\simple\usecase_mesure_simple.py
 import joblib
+
+from app.inversify import Inversify
 from app.services.logger import logger
-from app.repositories.memory import get_model
 from app.neural_network.nn_simple import predict
 from app.usecases.simple.usecase_commons_simple import process_input_data
 
-def mesure_simple_nn(name, test_data):
+def mesure_simple_nn(name, test_data, inversify: Inversify):
     try:
+        # Fetch Bdd
+        bdd = inversify.get_bdd()
+
         total_error = 0
         total_percentage_error = 0
         correct_predictions = 0
         total_tests = len(test_data)
-        model = get_model(name)
+        model = bdd.get_model(name)
         nn_model = model.get("nn_model", None)
         if nn_model is None:
             raise Exception("Model not trained yet")

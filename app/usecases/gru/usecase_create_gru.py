@@ -1,6 +1,7 @@
-#app\usecases\gru\usecase_create_gru.py
-from app.services.logger import logger
+# app\usecases\gru\usecase_create_gru.py
 from fastapi import HTTPException  # type: ignore
+
+from app.services.logger import logger
 from app.repositories.memory import model_exists, save_model
 
 def create_model_gru(name: str):

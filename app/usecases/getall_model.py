@@ -1,7 +1,7 @@
-#app\usecases\getall_model.py
-from app.repositories.memory import get_all_models
+# app\usecases\getall_model.py
+from app.inversify import Inversify
 
-def get_all_models_usecase():
+def get_all_models_usecase(inversify: Inversify):
     """
     Retrieves all models from the repository.
     - If no models are found, returns a message indicating this.
@@ -9,8 +9,11 @@ def get_all_models_usecase():
     
     :return: A dictionary with either a message or the list of models.
     """
+    # Fetch Bdd
+    bdd = inversify.get_bdd()
+
     # Fetch all models from the memory repository
-    models = get_all_models()
+    models = bdd.get_all_models()
     
     # Check if the models list is empty
     if not models:

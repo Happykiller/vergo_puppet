@@ -1,7 +1,8 @@
-#app\usecases\simple\usecase_commons_simple.py
+# app\usecases\simple\usecase_commons_simple.py
 import numpy as np
 from typing import List
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
 from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 
 def process_input_data(input_data, encoder, scaler, categorical_indices, numerical_indices):

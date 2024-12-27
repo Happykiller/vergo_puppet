@@ -1,12 +1,12 @@
-#app\apis\apis.py
-import os
+# app\apis\apis.py
 import jwt
-from dotenv import load_dotenv
 from fastapi.security import OAuth2PasswordBearer # type: ignore
 from fastapi import Depends, APIRouter, HTTPException # type: ignore
 
 from app.version import __version__
+from app.common import load_env_vars
 from app.services.logger import logger
+from app.inversify import get_inversify
 from app.apis.models.test_model_data import TestModelData
 from app.usecases.usecase_tokenize import usecase_tokenize
 from app.usecases.gru.usecase_mesure_gru import mesure_gru
@@ -29,7 +29,6 @@ from app.usecases.simple.usecase_mesure_simple import mesure_simple_nn
 from app.usecases.siamese.usecase_mesure_siamese import mesure_siamese
 from app.usecases.siamese.usecase_train_siamese import train_model_siamese
 from app.usecases.simple.usecase_train_simple import train_model_simple_nn
-from app.usecases.simple.usecase_create_simple import create_model_simple_nn
 from app.usecases.simple.usecase_search_simple import search_model_simple_nn
 from app.usecases.siamese.usecase_update_siamese import update_model_siamese
 from app.usecases.siamese.usecase_create_siamese import create_model_siamese
@@ -37,6 +36,7 @@ from app.usecases.siamese.usecase_search_siamese import search_model_siamese
 from app.apis.models.search_multi_brut_model_data import SearchBrutMultiModelData
 from app.usecases.usecase_create_data_puppeto4 import usecase_create_data_puppeto4
 from app.usecases.gru.usecase_search_multi_brut_gru import search_multi_brut_model_gru
+from app.usecases.simple.usecase_create_simple import CreateSimpleUsecaseDto, create_model_simple_nn
 
 # Initialisation du routeur
 router = APIRouter()
@@ -47,20 +47,11 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 # Token verification function (verify_access_token)
 def verify_access_token(token: str = Depends(oauth2_scheme)):
     # Load the .env file
-    load_dotenv(".env")
-
-    # Load the .env.local file if present (override values if override=True)
-    load_dotenv(".env.local", override=True)
-
-    # Example of accessing an environment variable
-    SECRET_KEY = os.getenv("SECRET_KEY")
-
-    if not SECRET_KEY:
-        raise HTTPException(status_code=500, detail="Secret key not found")
-
+    envs = load_env_vars()
     try:
         # Decode the token
-        payload = jwt.decode(token, SECRET_KEY, algorithms=["HS256"])
+        payload = jwt.decode(token, envs["secret_key"], algorithms=["HS256"])
+        logger.debug(f"payload: {payload}")
     except jwt.ExpiredSignatureError:
         raise HTTPException(status_code=401, detail="Token has expired")
     except jwt.InvalidTokenError:
@@ -75,11 +66,9 @@ async def create_model_api(data: CreateModelData, payload: dict = Depends(verify
     """
     Creates a new model with specified tokens and glossary.
     """
-    # Logic for your secure endpoint
-    logger.debug(f"payload: {payload}")
     try:
         if data.neural_network_type == 'SimpleNN':
-            return create_model_simple_nn(data.name)
+            return create_model_simple_nn(CreateSimpleUsecaseDto(name=data.name, inversify=get_inversify()))
         elif data.neural_network_type == 'GRU':
             return create_model_gru(data.name)
         elif data.neural_network_type == 'SIAMESE':
@@ -100,7 +89,6 @@ async def update_model_api(data: UpdateModelData, payload: dict = Depends(verify
     """
     Update existing model.
     """
-    logger.debug(f"payload: {payload}")
     try:
         if data.neural_network_type == 'SIAMESE':
             if not data.dictionary or not data.glossary:
@@ -120,11 +108,9 @@ async def train_model_api(data: TrainModelData, payload: dict = Depends(verify_a
     """
     Trains an existing model using input-target tuples.
     """
-    # Logic for your secure endpoint
-    logger.debug(f"payload: {payload}")
     try:
         if data.neural_network_type == 'SimpleNN':
-            return train_model_simple_nn(data.name, data.training_data)
+            return train_model_simple_nn(data.name, data.training_data, get_inversify())
         elif data.neural_network_type == 'GRU':
             return train_model_gru(data.name, data.training_data)
         elif data.neural_network_type == 'SIAMESE':
@@ -145,7 +131,6 @@ async def prepare_cache_api(data: PrepareCacheData, payload: dict = Depends(veri
     """
     Prepares the search cache for a model by precomputing results for a collection of search vectors.
     """
-    logger.debug(f"payload: {payload}")
     try:
         if data.neural_network_type == 'SIAMESE':
             return prepare_cache(data.name, data.search_vectors)
@@ -164,11 +149,9 @@ async def search_model_api(data: SearchModelData, payload: dict = Depends(verify
     """
     Searches for a vector within the specified model.
     """
-    # Logic for your secure endpoint
-    logger.debug(f"payload: {payload}")
     try:
         if data.neural_network_type == 'SimpleNN':
-            return search_model_simple_nn(data.name, data.vector)
+            return search_model_simple_nn(data.name, data.vector, get_inversify())
         elif data.neural_network_type == 'GRU':
             return search_model_gru(data.name, data.vector)
         elif data.neural_network_type == 'SIAMESE':
@@ -189,8 +172,6 @@ async def search_brut_multi_model_api(data: SearchBrutMultiModelData, payload: d
     """
     Searches for multi input within the specified model.
     """
-    # Logic for your secure endpoint
-    logger.debug(f"payload: {payload}")
     try:
         if data.neural_network_type == 'GRU':
             logger.info(f"search_brut_multi: {data}")
@@ -209,15 +190,13 @@ async def test(data: TestModelData, payload: dict = Depends(verify_access_token)
     """
     Tests the specified model with provided test data.
     """
-    # Logic for your secure endpoint
-    logger.debug(f"payload: {payload}")
     try:
-        if data.neural_network_type == 'SIAMESE':
-            return mesure_siamese(data.name, data.test_data)
-        elif data.neural_network_type == 'SimpleNN':
-            return mesure_simple_nn(data.name, data.test_data)
+        if data.neural_network_type == 'SimpleNN':
+            return mesure_simple_nn(data.name, data.test_data, get_inversify())
         elif data.neural_network_type == 'GRU':
             return mesure_gru(data.name, data.test_data)
+        elif data.neural_network_type == 'SIAMESE':
+            return mesure_siamese(data.name, data.test_data)
         elif data.neural_network_type == 'LSTM':
             return mesure_lstm(data.name, data.test_data)
         else:
@@ -234,10 +213,8 @@ async def get_all_models_api(payload: dict = Depends(verify_access_token)):
     """
     Returns all models stored in memory.
     """
-    # Logic for your secure endpoint
-    logger.debug(f"payload: {payload}")
     try:
-        return get_all_models_usecase()
+        return get_all_models_usecase(get_inversify())
     except Exception as e:
         logger.error(f"Error occurred while retrieving models: {str(e)}")
         raise HTTPException(status_code=500, detail=f"An error occurred while retrieving models: {str(e)}")
@@ -248,8 +225,6 @@ async def tokenize(data: TokenizeModelData, payload: dict = Depends(verify_acces
     """
     Tokenizes provided data.
     """
-    # Logic for your secure endpoint
-    logger.debug(f"payload: {payload}")
     try:
         return usecase_tokenize(data.data)
     except Exception as e:
@@ -262,8 +237,6 @@ async def create_data_puppet_o4(payload: dict = Depends(verify_access_token)):
     """
     Creates data for Puppet-O4 use case.
     """
-    # Logic for your secure endpoint
-    logger.debug(f"payload: {payload}")
     return usecase_create_data_puppeto4()
 
 # API to get application version
@@ -281,8 +254,6 @@ async def secure_endpoint(payload: dict = Depends(verify_access_token)):
     Example of a secure endpoint using JWT
     """
     try:
-        # Logic for your secure endpoint
-        logger.debug(f"payload: {payload}")
         return {"message": "Secured endpoint accessed"}
     except Exception as e:
         logger.error(f"Error occurred: {str(e)}")

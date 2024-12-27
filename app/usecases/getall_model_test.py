@@ -1,21 +1,28 @@
+# app\usecases\getall_model_test.py
 import pytest
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 from app.usecases.getall_model import get_all_models_usecase
 
-# Test 1: Verify that the function returns all available models
-@patch('app.usecases.getall_model.get_all_models')
-def test_get_all_models_with_models(mock_get_all_models):
+# Test : Verify that the function returns all available models
+@patch("app.inversify.Inversify")
+def test_get_all_models_with_models(mock_inversify_class):
     """
     Test that get_all_models_usecase returns a list of models when models are available.
     """
-    # Simulate the return value of models
-    mock_get_all_models.return_value = [
+    # Create a mock Inversify instance
+    mock_inversify = MagicMock()
+    mock_bdd = MagicMock()
+
+    # Mock methods and their return values
+    mock_bdd.get_all_models.return_value = [
         {"name": "model1", "type": "GRU"},
         {"name": "model2", "type": "Siamese"}
     ]
+    mock_inversify.get_bdd.return_value = mock_bdd
+    mock_inversify_class.return_value = mock_inversify
     
     # Call the function
-    result = get_all_models_usecase()
+    result = get_all_models_usecase(mock_inversify)
     
     # Expected output when models are present
     expected_result = {
@@ -26,17 +33,23 @@ def test_get_all_models_with_models(mock_get_all_models):
     }
     assert result == expected_result, f"Expected {expected_result} but got {result}"
 
-# Test 2: Verify the response when no models are found
-@patch('app.usecases.getall_model.get_all_models')
-def test_get_all_models_no_models(mock_get_all_models):
+# Test : Verify the response when no models are found
+@patch("app.inversify.Inversify")
+def test_get_all_models_no_models(mock_inversify_class):
     """
     Test that get_all_models_usecase returns a message indicating no models are found when the model list is empty.
     """
-    # Simulate the case where no models are available
-    mock_get_all_models.return_value = []
+    # Create a mock Inversify instance
+    mock_inversify = MagicMock()
+    mock_bdd = MagicMock()
+    
+    # Mock methods and their return values
+    mock_bdd.get_all_models.return_value = []
+    mock_inversify.get_bdd.return_value = mock_bdd
+    mock_inversify_class.return_value = mock_inversify
     
     # Call the function
-    result = get_all_models_usecase()
+    result = get_all_models_usecase(mock_inversify)
     
     # Expected output when no models are found
     expected_result = {"message": "No models found"}

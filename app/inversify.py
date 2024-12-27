@@ -1,36 +1,27 @@
 # inversify.py
-
-import os
-from pathlib import Path
-from dotenv import load_dotenv
+from app.common import load_env_vars
 from app.services.bdd.bdd import BDDService
 from app.services.bdd.bdd_fake import FakeBDDService
 
 class Inversify:
-  """Dependency injector based on the environment."""
+  """Dependency injector based on the mode."""
 
   def __init__(self):
-      
-    # Build the absolute path to the .env files
-    env_path = Path(__file__).resolve().parent.parent / ".env"
-    env_local_path = Path(__file__).resolve().parent.parent / ".env.local"
-
-    # Load environment variables
-    load_dotenv(env_path)
-    load_dotenv(env_local_path, override=True)
-
-    self._env = os.getenv("MODE", "dev")  # Default to "dev" if MODE is not set
+    envs = load_env_vars()
+    self._mode = envs["mode"]
     self._dependencies = {}
 
   def configure(self) -> None:
-    """Configure services based on the environment."""
-    if self._env == "dev":
+    """Configure services based on the mode."""
+    if self._mode == "dev":
       self._dependencies["bdd_service"] = FakeBDDService()
-    elif self._env == "prod":
+    elif self._mode == "test":
+      self._dependencies["bdd_service"] = FakeBDDService()
+    elif self._mode == "prod":
       # Placeholder for a real database service in production
       raise NotImplementedError("Real BDD service not yet implemented.")
     else:
-      raise ValueError(f"Unknown environment: {self._env}")
+      raise ValueError(f"Unknown mode: {self._mode}")
 
   def get(self, service_name: str):
     """Retrieve the configured service by name."""

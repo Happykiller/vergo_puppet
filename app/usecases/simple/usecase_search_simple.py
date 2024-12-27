@@ -1,20 +1,24 @@
-#app\usecases\simple\usecase_search_simple.py
+# app\usecases\simple\usecase_search_simple.py
 import joblib
-from app.repositories.memory import get_model
 from fastapi import HTTPException  # type: ignore
+
+from app.inversify import Inversify
 from app.neural_network.nn_simple import predict
 from app.apis.models.simple_nn_search_model_data import SimpleNNSearchModelData
 from app.usecases.simple.usecase_commons_simple import process_input_data
 
-def search_model_simple_nn(name: str, search: SimpleNNSearchModelData):
+def search_model_simple_nn(name: str, search: SimpleNNSearchModelData, inversify: Inversify):
     """
     Uses the SimpleNN model to predict the price based on input data.
     :param name: Name of the model.
     :param search: Input data as a SimpleNNSearchModelData object.
     :return: Predicted price.
     """
+    # Fetch Bdd
+    bdd = inversify.get_bdd()
+
     # Retrieve the model
-    model = get_model(name)
+    model = bdd.get_model(name)
     
     if model is None or not model:
         raise HTTPException(status_code=404, detail="Model not found")

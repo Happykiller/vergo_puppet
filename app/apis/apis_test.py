@@ -1,8 +1,8 @@
 # app\apis\apis_test.py
 import pytest
 from app.main import app
+from unittest.mock import patch
 from app.generate_token import create_token
-from app.repositories.memory import save_model, models
 from fastapi.testclient import TestClient # type: ignore 
 
 # Initialize test client for making requests to the API
@@ -23,13 +23,28 @@ training_data = [
     [["token1", "token2", "token5"], ["token2", "token5", "token1"], 0.5],
     [["token1", "token2", "token3", "token4"], ["token2", "token3", "token4", "token5"], 0.75]
 ]
-# Génération d'un token JWT pour un utilisateur fictif
-token = create_token(user_id="test_user")
-# Envoi de la requête avec l'en-tête Authorization
-headers = {"Authorization": f"Bearer {token}"}
+
+@pytest.fixture(scope="module", autouse=True)
+def mocked_env_vars():
+    # Mock environment variables
+    with patch("app.apis.apis.load_env_vars", return_value={
+        "secret_key": "mocked-secret-key",
+        "mode": "test"
+    }), patch("app.generate_token.load_env_vars", return_value={
+        "secret_key": "mocked-secret-key",
+        "mode": "test"
+    }):
+        yield
+
+@pytest.fixture(scope="module")
+def get_headers(mocked_env_vars):
+    # Génération d'un token JWT pour un utilisateur fictif
+    token = create_token(user_id="test_user")
+    # Retourne les en-têtes nécessaires
+    return {"Authorization": f"Bearer {token}"}
 
 # Test for the model creation API
-def test_create_model():
+def test_create_model(mocked_env_vars, get_headers):
     # Data to be sent to the API for creating a new model
     data = {
         "name": "model1",
@@ -38,14 +53,14 @@ def test_create_model():
         "glossary": glossary
     }
     # Send POST request to /create_model endpoint
-    response = client.post("/create_model", json=data, headers=headers)
+    response = client.post("/create_model", json=data, headers=get_headers)
     # Assert that the response is successful (status code 200)
     assert response.status_code == 200, f"Error during model creation: {response.text}"
     # Verify that the expected response structure and content are returned
     assert response.json()['status'] == "model created"
 
 # Test for the model training API
-def test_train_model():
+def test_train_model(mocked_env_vars, get_headers):
     # Data to be sent to the API to train an existing model
     data = {
         "name": "model1",
@@ -53,13 +68,13 @@ def test_train_model():
         "training_data": training_data
     }
     # Send POST request to /train_model endpoint
-    response = client.post("/train_model", json=data, headers=headers)
+    response = client.post("/train_model", json=data, headers=get_headers)
     # Assert that the response is successful (status code 200)
     assert response.status_code == 200, f"Error during model training: {response.text}"
     # Verify that the response indicates training has completed
     assert "training completed" in response.json()["status"]
 
-def test_prepare_cache_with_results():
+def test_prepare_cache_with_results(mocked_env_vars, get_headers):
     # Input data
     data = {
         "name": "model1",
@@ -68,7 +83,7 @@ def test_prepare_cache_with_results():
     }
 
     # Send request to the /prepare_cache endpoint
-    response = client.post("/prepare_cache", json=data, headers=headers)
+    response = client.post("/prepare_cache", json=data, headers=get_headers)
     assert response.status_code == 200, f"Error during cache preparation: {response.text}"
     response_data = response.json()
 
@@ -86,7 +101,7 @@ def test_prepare_cache_with_results():
     assert "result" in response_data["results"][1]
 
 # Test for the model search API
-def test_search_model():
+def test_search_model(mocked_env_vars, get_headers):
     # Data for performing a search query within the model
     data = {
         "name": "model1",
@@ -94,7 +109,7 @@ def test_search_model():
         "vector": search_vector
     }
     # Send POST request to /search endpoint
-    response = client.post("/search", json=data, headers=headers)
+    response = client.post("/search", json=data, headers=get_headers)
     # Assert that the response is successful (status code 200)
     assert response.status_code == 200, f"Error during model search: {response.text}"
     # Verify response includes expected search output structure
@@ -103,7 +118,7 @@ def test_search_model():
     assert "find" in result  # Check for presence of a 'find' key in the response
     assert "stats" in result # Check for presence of a 'stats' key in the response
 
-def test_update_model():
+def test_update_model(mocked_env_vars, get_headers):
     # Data for updating the model
     update_data = {
         "name": "model1",
@@ -113,7 +128,7 @@ def test_update_model():
     }
 
     # Send a PATCH request to the /update_model endpoint
-    response = client.patch("/update_model", json=update_data, headers=headers)
+    response = client.patch("/update_model", json=update_data, headers=get_headers)
     
     # Assert that the response is successful (status code 200)
     assert response.status_code == 200, f"Error during model update: {response.text}"

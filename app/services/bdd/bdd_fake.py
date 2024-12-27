@@ -51,6 +51,7 @@ class FakeBDDService(BDDService):
         Retrieve all models from the in-memory storage.
         :return: A dictionary containing all models.
         """
+        logger.debug(f"self.models: {self.models}")
         return self.models
 
     def save_search_result(self, model_name: str, search_query: str, result: dict):

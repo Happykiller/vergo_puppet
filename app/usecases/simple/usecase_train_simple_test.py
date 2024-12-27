@@ -1,18 +1,18 @@
-#app\usecases\simple\usecase_train_simple_test.py
+# app\usecases\simple\usecase_train_simple_test.py
 import pytest
 from unittest.mock import patch, MagicMock
-from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
+
 from app.usecases.simple.usecase_train_simple import train_model_simple_nn
+from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 
 # Test for successful training
 @patch('app.usecases.simple.usecase_train_simple.joblib.dump')
-@patch('app.usecases.simple.usecase_train_simple.update_model')
 @patch('app.usecases.simple.usecase_train_simple.train_model_nn')
 @patch('app.usecases.simple.usecase_train_simple.transform_data')
-@patch('app.usecases.simple.usecase_train_simple.get_model')
-def test_train_model_simple_nn_success(mock_get_model, mock_transform_data, mock_train_model_nn, mock_update_model, mock_joblib_dump):
-    # Mock the model returned by get_model
-    mock_get_model.return_value = {"nn_model": None}
+def test_train_model_simple_nn_success(mock_transform_data, mock_train_model_nn, mock_joblib_dump, patch_inversify):
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
+    mock_bdd.get_model.return_value = {"nn_model": None}
 
     # Mock the transformed data
     mock_transform_data.return_value = (
@@ -36,10 +36,10 @@ def test_train_model_simple_nn_success(mock_get_model, mock_transform_data, mock
     ]
 
     # Call the train_model_simple_nn function
-    result = train_model_simple_nn("test_model", training_data)
+    result = train_model_simple_nn("test_model", training_data, mock_inversify)
 
     # Verify that update_model was called
-    mock_update_model.assert_called_once()
+    mock_bdd.update_model.assert_called_once()
 
     # Verify that joblib.dump was called to save encoder, scaler, and indices files
     assert mock_joblib_dump.call_count == 3, "Encoder, scaler, and indices files should be saved"
@@ -48,26 +48,31 @@ def test_train_model_simple_nn_success(mock_get_model, mock_transform_data, mock
     assert result == {"status": "training completed", "model_name": "test_model"}
 
 # Test when the model is not found
-@patch('app.usecases.simple.usecase_train_simple.get_model', return_value=None)
-def test_train_model_simple_nn_model_not_found(mock_get_model):
+def test_train_model_simple_nn_model_not_found(patch_inversify):
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
+    mock_bdd.get_model.return_value = None
+
     training_data = [
         SimpleNNTrainingModelData(type=1, surface=75, pieces=3, floor=2, parking=1, balcon=0, ascenseur=1, orientation=1, transports=1, neighborhood=8, price=350000)
     ]
 
     # Verify that an exception is raised if the model is not found
     with pytest.raises(Exception) as exc_info:
-        train_model_simple_nn("unknown_model", training_data)
+        train_model_simple_nn("unknown_model", training_data, mock_inversify)
     
     # Check that the exception is an HTTPException with status 404
     assert exc_info.value.status_code == 404
     assert exc_info.value.detail == "Model not found"
 
 # Test when training data is missing
-@patch('app.usecases.simple.usecase_train_simple.get_model', return_value={"nn_model": None})
-def test_train_model_simple_nn_no_training_data(mock_get_model):
+def test_train_model_simple_nn_no_training_data(patch_inversify):
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, _ = patch_inversify
+
     # Verify that an exception is raised if the training data is empty
     with pytest.raises(Exception) as exc_info:
-        train_model_simple_nn("test_model", [])
+        train_model_simple_nn("test_model", [], mock_inversify)
 
     # Check that the exception is an HTTPException with status 400
     assert exc_info.value.status_code == 400

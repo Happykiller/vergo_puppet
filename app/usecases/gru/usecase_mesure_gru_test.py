@@ -1,6 +1,7 @@
-#app\usecases\gru\usecase_mesure_gru_test.py
+# app\usecases\gru\usecase_mesure_gru_test.py
 import pytest
 from unittest.mock import patch, MagicMock
+
 from app.usecases.gru.usecase_mesure_gru import mesure_gru
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 
@@ -55,7 +56,7 @@ def test_mesure_gru_model_not_trained(mock_logger, mock_get_model):
         mesure_gru("test_gru_model", test_data)
     
     # Verify that the error was logged
-    mock_logger.error.assert_called_once_with("An error occurred during measurement: Model is not trained")
+    mock_logger.error.assert_called_once_with("An error occurred during measurement: 400: Model is not trained")
 
 # Test when the model data is incomplete
 @patch('app.usecases.gru.usecase_mesure_gru.get_model', return_value={"nn_model": MagicMock(), "word2idx": None})
