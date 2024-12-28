@@ -5,17 +5,13 @@ from fastapi import HTTPException  # type: ignore
 from app.usecases.simple.usecase_create_simple import CreateSimpleUsecaseDto, create_model_simple_nn
 
 # Test when the model is created successfully
-@patch("app.usecases.simple.usecase_create_simple.Inversify")
-def test_create_model_simple_nn_success(mock_inversify_class):
+def test_create_model_simple_nn_success(patch_inversify):
     """
     Test that the model is created successfully.
     """
-    # Mock the Inversify instance and BDD service
-    mock_inversify = MagicMock()
-    mock_bdd = MagicMock()
-    mock_inversify.get_bdd.return_value = mock_bdd
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
     mock_bdd.model_exists.return_value = False  # Simulate model does not exist
-    mock_inversify_class.return_value = mock_inversify
 
     model_name = "test_model"
     
@@ -29,17 +25,13 @@ def test_create_model_simple_nn_success(mock_inversify_class):
     assert response == {"status": "model created", "model_name": model_name}
 
 # Test when the model already exists
-@patch("app.usecases.simple.usecase_create_simple.Inversify")
-def test_create_model_simple_nn_model_already_exists(mock_inversify_class):
+def test_create_model_simple_nn_model_already_exists(patch_inversify):
     """
     Test that the function raises an HTTP 400 exception when the model already exists.
     """
-    # Mock the Inversify instance and BDD service
-    mock_inversify = MagicMock()
-    mock_bdd = MagicMock()
-    mock_inversify.get_bdd.return_value = mock_bdd
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
     mock_bdd.model_exists.return_value = True  # Simulate model already exists
-    mock_inversify_class.return_value = mock_inversify
 
     model_name = "existing_model"
     
@@ -52,17 +44,14 @@ def test_create_model_simple_nn_model_already_exists(mock_inversify_class):
     assert exc_info.value.detail == "Model already exists"
 
 # Test when the model is saved with the correct data
-@patch("app.usecases.simple.usecase_create_simple.Inversify")
-def test_create_model_simple_nn_save_called_with_correct_data(mock_inversify_class):
+def test_create_model_simple_nn_save_called_with_correct_data(patch_inversify):
     """
     Test that the model is saved with the correct data.
     """
     # Mock the Inversify instance and BDD service
-    mock_inversify = MagicMock()
-    mock_bdd = MagicMock()
-    mock_inversify.get_bdd.return_value = mock_bdd
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
     mock_bdd.model_exists.return_value = False  # Simulate model does not exist
-    mock_inversify_class.return_value = mock_inversify
 
     model_name = "new_model"
     

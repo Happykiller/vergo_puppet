@@ -9,7 +9,6 @@ from app.services.logger import logger
 from app.inversify import get_inversify
 from app.apis.models.test_model_data import TestModelData
 from app.usecases.usecase_tokenize import usecase_tokenize
-from app.usecases.gru.usecase_mesure_gru import mesure_gru
 from app.apis.models.train_model_data import TrainModelData
 from app.usecases.lstm.usecase_train_lstm import train_lstm
 from app.usecases.getall_model import get_all_models_usecase
@@ -21,7 +20,6 @@ from app.usecases.lstm.usecase_search_lstm import search_lstm
 from app.apis.models.search_model_data import SearchModelData
 from app.usecases.gru.usecase_train_gru import train_model_gru
 from app.apis.models.prepare_cache_data import PrepareCacheData
-from app.usecases.gru.usecase_create_gru import create_model_gru
 from app.usecases.gru.usecase_search_gru import search_model_gru
 from app.apis.models.tokenize_model_data import TokenizeModelData
 from app.usecases.siamese.prepare_cache_siamese import prepare_cache
@@ -33,8 +31,10 @@ from app.usecases.simple.usecase_search_simple import search_model_simple_nn
 from app.usecases.siamese.usecase_update_siamese import update_model_siamese
 from app.usecases.siamese.usecase_create_siamese import create_model_siamese
 from app.usecases.siamese.usecase_search_siamese import search_model_siamese
+from app.usecases.gru.usecase_mesure_gru import MesureGRUUsecaseDto, mesure_gru
 from app.apis.models.search_multi_brut_model_data import SearchBrutMultiModelData
 from app.usecases.usecase_create_data_puppeto4 import usecase_create_data_puppeto4
+from app.usecases.gru.usecase_create_gru import CreateGRUUsecaseDto, create_model_gru
 from app.usecases.gru.usecase_search_multi_brut_gru import search_multi_brut_model_gru
 from app.usecases.simple.usecase_create_simple import CreateSimpleUsecaseDto, create_model_simple_nn
 
@@ -70,7 +70,7 @@ async def create_model_api(data: CreateModelData, payload: dict = Depends(verify
         if data.neural_network_type == 'SimpleNN':
             return create_model_simple_nn(CreateSimpleUsecaseDto(name=data.name, inversify=get_inversify()))
         elif data.neural_network_type == 'GRU':
-            return create_model_gru(data.name)
+            return create_model_gru(CreateGRUUsecaseDto(name=data.name, inversify=get_inversify()))
         elif data.neural_network_type == 'SIAMESE':
             return create_model_siamese(data.name, data.dictionary, data.glossary)
         elif data.neural_network_type == 'LSTM':
@@ -194,7 +194,7 @@ async def test(data: TestModelData, payload: dict = Depends(verify_access_token)
         if data.neural_network_type == 'SimpleNN':
             return mesure_simple_nn(data.name, data.test_data, get_inversify())
         elif data.neural_network_type == 'GRU':
-            return mesure_gru(data.name, data.test_data)
+            return mesure_gru(MesureGRUUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
         elif data.neural_network_type == 'SIAMESE':
             return mesure_siamese(data.name, data.test_data)
         elif data.neural_network_type == 'LSTM':

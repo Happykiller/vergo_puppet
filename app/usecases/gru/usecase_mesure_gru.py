@@ -1,22 +1,30 @@
 #app\usecases\gru\usecase_mesure_gru.py
-from typing import List
+from typing import List, NamedTuple
 from fastapi import HTTPException  # type: ignore
 
+from app.inversify import Inversify
 from app.services.logger import logger
-from app.repositories.memory import get_model
 from app.neural_network.nn_gru import predict
 from app.usecases.gru.usecase_commons_gru import process_input
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 
-def mesure_gru(name: str, test_data: List[GRUTrainingModelData]):
+class MesureGRUUsecaseDto(NamedTuple):
+    name: str
+    inversify: Inversify
+    test_data: List[GRUTrainingModelData]
+
+def mesure_gru(dto: MesureGRUUsecaseDto):
     """
     Measures the performance of a GRU model on provided test data.
     :param name: The name of the model.
     :param test_data: A list of test data instances.
     """
     try:
+        # Fetch Bdd
+        bdd = dto.inversify.get_bdd()
+
         # Retrieve model data from the in-memory repository
-        model_data = get_model(name)
+        model_data = bdd.get_model(dto.name)
 
         # Check if the model data is found
         if model_data is None or not model_data:
@@ -40,13 +48,13 @@ def mesure_gru(name: str, test_data: List[GRUTrainingModelData]):
         # Initialize metrics
         total_error = 0
         correct_predictions = 0
-        total_tests = len(test_data)
+        total_tests = len(dto.test_data)
         
         y_true = []  # Ground truth categories
         y_pred = []  # Predicted categories
         
         # Iterate over each data instance in the test set
-        for data in test_data:
+        for data in dto.test_data:
             # Prepare input data for prediction
             tokens = data.tokens
             expected_category = data.category

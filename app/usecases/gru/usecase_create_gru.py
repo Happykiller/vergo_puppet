@@ -1,10 +1,15 @@
 # app\usecases\gru\usecase_create_gru.py
+from typing import NamedTuple
 from fastapi import HTTPException  # type: ignore
 
 from app.services.logger import logger
-from app.repositories.memory import model_exists, save_model
+from app.inversify import Inversify
 
-def create_model_gru(name: str):
+class CreateGRUUsecaseDto(NamedTuple):
+    name: str
+    inversify: Inversify
+
+def create_model_gru(dto: CreateGRUUsecaseDto):
     """
     Creates a new GRU model with the specified name.
     - Checks if the model already exists, and if so, raises an HTTPException.
@@ -15,9 +20,12 @@ def create_model_gru(name: str):
     """
     # Log the model creation process with specified machine learning type
     logger.info("Machine learning type used for model creation: 'GRU'")
+    
+    # Fetch Bdd
+    bdd = dto.inversify.get_bdd()
 
     # Check if a model with the given name already exists
-    if model_exists(name):
+    if bdd.model_exists(dto.name):
         # If model exists, raise an HTTP 400 error with a relevant message
         raise HTTPException(status_code=400, detail="Model already exists")
 
@@ -27,8 +35,8 @@ def create_model_gru(name: str):
     }
     
     # Save the model with the provided name and data
-    save_model(name, model_data)
+    bdd.save_model(dto.name, model_data)
 
     # Return success status and model name for confirmation
-    return {"status": "model created", "model_name": name}
+    return {"status": "model created", "model_name": dto.name}
 
