@@ -1,21 +1,28 @@
 # app\usecases\simple\usecase_mesure_simple.py
 import joblib
+from typing import List, NamedTuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
 from app.neural_network.nn_simple import predict
 from app.usecases.simple.usecase_commons_simple import process_input_data
+from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 
-def mesure_simple_nn(name, test_data, inversify: Inversify):
+class MesureSimpleUsecaseDto(NamedTuple):
+    name: str
+    test_data: List[SimpleNNTrainingModelData]
+    inversify: Inversify
+
+def mesure_simple_nn(dto: MesureSimpleUsecaseDto):
     try:
         # Fetch Bdd
-        bdd = inversify.get_bdd()
+        bdd = dto.inversify.get_bdd()
 
         total_error = 0
         total_percentage_error = 0
         correct_predictions = 0
-        total_tests = len(test_data)
-        model = bdd.get_model(name)
+        total_tests = len(dto.test_data)
+        model = bdd.get_model(dto.name)
         nn_model = model.get("nn_model", None)
         if nn_model is None:
             raise Exception("Model not trained yet")
@@ -39,7 +46,7 @@ def mesure_simple_nn(name, test_data, inversify: Inversify):
         if targets_mean is None or targets_std is None:
             raise Exception("Missing normalization parameters in the model")
         
-        for data in test_data:
+        for data in dto.test_data:
             # Prepare input data
             input_data = [
                 data.type,

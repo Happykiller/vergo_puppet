@@ -2,8 +2,8 @@
 import pytest
 from unittest.mock import patch, MagicMock
 
-from app.usecases.simple.usecase_train_simple import train_model_simple_nn
 from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
+from app.usecases.simple.usecase_train_simple import TrainSimpleUsecaseDto, train_model_simple_nn
 
 # Test for successful training
 @patch('app.usecases.simple.usecase_train_simple.joblib.dump')
@@ -36,7 +36,7 @@ def test_train_model_simple_nn_success(mock_transform_data, mock_train_model_nn,
     ]
 
     # Call the train_model_simple_nn function
-    result = train_model_simple_nn("test_model", training_data, mock_inversify)
+    result = train_model_simple_nn(TrainSimpleUsecaseDto(name="test_model", training_data=training_data, inversify=mock_inversify))
 
     # Verify that update_model was called
     mock_bdd.update_model.assert_called_once()
@@ -59,7 +59,7 @@ def test_train_model_simple_nn_model_not_found(patch_inversify):
 
     # Verify that an exception is raised if the model is not found
     with pytest.raises(Exception) as exc_info:
-        train_model_simple_nn("unknown_model", training_data, mock_inversify)
+        train_model_simple_nn(TrainSimpleUsecaseDto(name="unknown_model", training_data=training_data, inversify=mock_inversify))
     
     # Check that the exception is an HTTPException with status 404
     assert exc_info.value.status_code == 404
@@ -72,7 +72,7 @@ def test_train_model_simple_nn_no_training_data(patch_inversify):
 
     # Verify that an exception is raised if the training data is empty
     with pytest.raises(Exception) as exc_info:
-        train_model_simple_nn("test_model", [], mock_inversify)
+        train_model_simple_nn(TrainSimpleUsecaseDto(name="unknown_model", training_data=[], inversify=mock_inversify))
 
     # Check that the exception is an HTTPException with status 400
     assert exc_info.value.status_code == 400

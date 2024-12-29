@@ -2,8 +2,8 @@
 import pytest
 from unittest.mock import patch, MagicMock
 
-from app.usecases.simple.usecase_mesure_simple import mesure_simple_nn
 from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
+from app.usecases.simple.usecase_mesure_simple import MesureSimpleUsecaseDto, mesure_simple_nn
 
 # Test that mesure_simple_nn runs successfully with valid test data
 @patch('app.usecases.simple.usecase_mesure_simple.predict')
@@ -42,7 +42,7 @@ def test_mesure_simple_nn_success(mock_joblib_load, mock_process_input_data, moc
     ]
 
     # Run mesure_simple_nn
-    mesure_simple_nn("test_model", test_data, mock_inversify)
+    mesure_simple_nn(MesureSimpleUsecaseDto(name="test_model", test_data=test_data, inversify=mock_inversify))
 
     # Ensure the prediction function was called correctly
     mock_predict.assert_called_once()
@@ -63,7 +63,7 @@ def test_mesure_simple_nn_model_not_trained(patch_inversify):
 
     # Ensure an exception is raised if the model is not trained
     with pytest.raises(Exception, match="Model not trained yet"):
-        mesure_simple_nn("test_model", test_data, mock_inversify)
+        mesure_simple_nn(MesureSimpleUsecaseDto(name="test_model", test_data=test_data, inversify=mock_inversify))
 
 # Test handling if encoder, scaler, or indices files are missing
 def test_mesure_simple_nn_missing_files(patch_inversify):
@@ -86,7 +86,7 @@ def test_mesure_simple_nn_missing_files(patch_inversify):
 
     # Ensure an exception is raised if required files are missing
     with pytest.raises(Exception, match="Missing encoder, scaler, or indices in the model"):
-        mesure_simple_nn("test_model", test_data, mock_inversify)
+        mesure_simple_nn(MesureSimpleUsecaseDto(name="test_model", test_data=test_data, inversify=mock_inversify))
 
 # Test handling when target normalization parameters are missing
 @patch('app.usecases.simple.usecase_mesure_simple.joblib.load')  # Simulate loading encoder/scaler/indices
@@ -119,4 +119,4 @@ def test_mesure_simple_nn_missing_normalization_parameters(mock_joblib_load, pat
 
     # Ensure an exception is raised if normalization parameters are missing
     with pytest.raises(Exception, match="Missing normalization parameters in the model"):
-        mesure_simple_nn("test_model", test_data, mock_inversify)
+        mesure_simple_nn(MesureSimpleUsecaseDto(name="test_model", test_data=test_data, inversify=mock_inversify))

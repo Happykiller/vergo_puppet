@@ -1,13 +1,19 @@
 # app\usecases\simple\usecase_search_simple.py
 import joblib
+from typing import NamedTuple
 from fastapi import HTTPException  # type: ignore
 
 from app.inversify import Inversify
 from app.neural_network.nn_simple import predict
-from app.apis.models.simple_nn_search_model_data import SimpleNNSearchModelData
 from app.usecases.simple.usecase_commons_simple import process_input_data
+from app.apis.models.simple_nn_search_model_data import SimpleNNSearchModelData
 
-def search_model_simple_nn(name: str, search: SimpleNNSearchModelData, inversify: Inversify):
+class SearchSimpleUsecaseDto(NamedTuple):
+    name: str
+    search: SimpleNNSearchModelData
+    inversify: Inversify
+
+def search_model_simple_nn(dto: SearchSimpleUsecaseDto):
     """
     Uses the SimpleNN model to predict the price based on input data.
     :param name: Name of the model.
@@ -15,10 +21,10 @@ def search_model_simple_nn(name: str, search: SimpleNNSearchModelData, inversify
     :return: Predicted price.
     """
     # Fetch Bdd
-    bdd = inversify.get_bdd()
+    bdd = dto.inversify.get_bdd()
 
     # Retrieve the model
-    model = bdd.get_model(name)
+    model = bdd.get_model(dto.name)
     
     if model is None or not model:
         raise HTTPException(status_code=404, detail="Model not found")
@@ -48,16 +54,16 @@ def search_model_simple_nn(name: str, search: SimpleNNSearchModelData, inversify
     
     # Prepare the input data
     input_data = [
-        search.type,
-        search.surface,
-        search.pieces,
-        search.floor,
-        search.parking,
-        search.balcon,
-        search.ascenseur,
-        search.orientation,
-        search.transports,
-        search.neighborhood
+        dto.search.type,
+        dto.search.surface,
+        dto.search.pieces,
+        dto.search.floor,
+        dto.search.parking,
+        dto.search.balcon,
+        dto.search.ascenseur,
+        dto.search.orientation,
+        dto.search.transports,
+        dto.search.neighborhood
     ]
     
     # Transform the input data

@@ -1,10 +1,10 @@
 # app\usecases\simple\usecase_search_simple_test.py
 import pytest
 from unittest.mock import patch, MagicMock
-
 from fastapi import HTTPException  # type: ignore
-from app.usecases.simple.usecase_search_simple import search_model_simple_nn
+
 from app.apis.models.simple_nn_search_model_data import SimpleNNSearchModelData
+from app.usecases.simple.usecase_search_simple import SearchSimpleUsecaseDto, search_model_simple_nn
 
 # Test successful search with a SimpleNN model
 @patch('app.usecases.simple.usecase_search_simple.joblib.load')
@@ -46,7 +46,7 @@ def test_search_model_simple_nn_success(mock_predict, mock_joblib_load, patch_in
     )
 
     # Call the search_model_simple_nn function
-    result = search_model_simple_nn("test_model", search_data, mock_inversify)
+    result = search_model_simple_nn(SearchSimpleUsecaseDto(name="test_model", search=search_data, inversify=mock_inversify))
 
     # Verify that the predict function was called with the correct arguments
     mock_predict.assert_called_once()
@@ -74,7 +74,7 @@ def test_search_model_simple_nn_model_not_found(patch_inversify):
 
     # Check that an HTTP 404 exception is raised if the model is not found
     with pytest.raises(HTTPException) as exc_info:
-        search_model_simple_nn("unknown_model", search_data, mock_inversify)
+        search_model_simple_nn(SearchSimpleUsecaseDto(name="unknown_model", search=search_data, inversify=mock_inversify))
     
     # Confirm the exception is HTTPException with status 404
     assert exc_info.value.status_code == 404
@@ -108,7 +108,7 @@ def test_search_model_simple_nn_model_not_trained(patch_inversify):
 
     # Check that an HTTP 400 exception is raised if the model is not yet trained
     with pytest.raises(HTTPException) as exc_info:
-        search_model_simple_nn("test_model", search_data, mock_inversify)
+        search_model_simple_nn(SearchSimpleUsecaseDto(name="test_model", search=search_data, inversify=mock_inversify))
 
     # Confirm the exception is HTTPException with status 400
     assert exc_info.value.status_code == 400
@@ -142,7 +142,7 @@ def test_search_model_simple_nn_missing_files(patch_inversify):
 
     # Check that an HTTP 400 exception is raised if files are missing
     with pytest.raises(HTTPException) as exc_info:
-        search_model_simple_nn("test_model", search_data, mock_inversify)
+        search_model_simple_nn(SearchSimpleUsecaseDto(name="test_model", search=search_data, inversify=mock_inversify))
 
     # Confirm the exception is HTTPException with status 400
     assert exc_info.value.status_code == 400
@@ -185,7 +185,7 @@ def test_search_model_simple_nn_missing_normalization_parameters(mock_joblib_loa
 
     # Check that an HTTP 400 exception is raised if normalization parameters are missing
     with pytest.raises(HTTPException) as exc_info:
-        search_model_simple_nn("test_model", search_data, mock_inversify)
+        search_model_simple_nn(SearchSimpleUsecaseDto(name="test_model", search=search_data, inversify=mock_inversify))
 
     # Confirm the exception is HTTPException with status 400
     assert exc_info.value.status_code == 400

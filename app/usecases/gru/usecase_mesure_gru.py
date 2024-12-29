@@ -1,4 +1,4 @@
-#app\usecases\gru\usecase_mesure_gru.py
+# app\usecases\gru\usecase_mesure_gru.py
 from typing import List, NamedTuple
 from fastapi import HTTPException  # type: ignore
 

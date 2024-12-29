@@ -1,21 +1,30 @@
-#app\usecases\gru\usecase_search_gru.py
-from typing import List
-from app.services.logger import logger
-from app.repositories.memory import get_model
+# app\usecases\gru\usecase_search_gru.py
+from typing import List, NamedTuple
 from fastapi import HTTPException  # type: ignore
+
+from app.inversify import Inversify
+from app.services.logger import logger
 from app.neural_network.nn_gru import predict
 from app.usecases.gru.usecase_commons_gru import process_input
 
-def search_model_gru(name: str, vector: List[str]):
+class SearchGRUUsecaseDto(NamedTuple):
+    name: str
+    search: List[str]
+    inversify: Inversify
+
+def search_model_gru(dto: SearchGRUUsecaseDto):
     """
     Uses the GRU model to predict the category of a new sequence of tokens.
     :param name: Name of the model.
-    :param vector: List of tokens representing the sequence to classify.
+    :param search: List of tokens representing the sequence to classify.
     :return: Predicted category.
     """
     try:
+        # Fetch Bdd
+        bdd = dto.inversify.get_bdd()
+
         # Retrieve model data from memory
-        model_data = get_model(name)
+        model_data = bdd.get_model(dto.name)
         
         # Check if the model data is found
         if model_data is None or not model_data:
@@ -36,7 +45,7 @@ def search_model_gru(name: str, vector: List[str]):
             raise HTTPException(status_code=400, detail="Model data incomplete")
         
         # Process the input sequence using the word-to-index mapping
-        input = process_input(vector, word2idx)
+        input = process_input(dto.search, word2idx)
 
         # Make a prediction using the GRU model
         predicted_idx = predict(nn_model, input)

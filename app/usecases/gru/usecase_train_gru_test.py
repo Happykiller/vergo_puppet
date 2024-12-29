@@ -1,20 +1,22 @@
-#app\usecases\gru\usecase_train_gru_test.py
+# app\usecases\gru\usecase_train_gru_test.py
 import pytest
-from fastapi import HTTPException  # type: ignore
 from unittest.mock import patch, MagicMock
+from fastapi import HTTPException  # type: ignore
+
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
-from app.usecases.gru.usecase_train_gru import train_model_gru
+from app.usecases.gru.usecase_train_gru import TrainGRUUsecaseDto, train_model_gru
 
 # Test to verify successful training of the GRU model
-@patch('app.usecases.gru.usecase_train_gru.update_model')
 @patch('app.usecases.gru.usecase_train_gru.train_gru')
 @patch('app.usecases.gru.usecase_train_gru.prepare_sequences')
 @patch('app.usecases.gru.usecase_train_gru.build_category_mapping')
 @patch('app.usecases.gru.usecase_train_gru.build_vocab')
-@patch('app.usecases.gru.usecase_train_gru.get_model')
-def test_train_model_gru_success(mock_get_model, mock_build_vocab, mock_build_category_mapping, mock_prepare_sequences, mock_train_gru, mock_update_model):
+def test_train_model_gru_success(mock_build_vocab, mock_build_category_mapping, mock_prepare_sequences, mock_train_gru, patch_inversify):
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
+
     # Mock the return value for get_model to simulate model retrieval
-    mock_get_model.return_value = {"nn_model": None}
+    mock_bdd.get_model.return_value = {"nn_model": None}
 
     # Mock vocabulary and category mappings
     mock_build_vocab.return_value = ({"hello": 1, "<PAD>": 0}, {1: "hello", 0: "<PAD>"})
@@ -33,10 +35,10 @@ def test_train_model_gru_success(mock_get_model, mock_build_vocab, mock_build_ca
     ]
 
     # Call the train_model_gru function
-    result = train_model_gru("test_gru_model", training_data)
+    result = train_model_gru(TrainGRUUsecaseDto(name="test_gru_model", training_data=training_data, inversify=mock_inversify))
 
     # Verify that update_model was called to save the trained model
-    mock_update_model.assert_called_once()
+    mock_bdd.update_model.assert_called_once()
 
     # Check the return value to confirm training completion
     assert result == {
@@ -46,8 +48,11 @@ def test_train_model_gru_success(mock_get_model, mock_build_vocab, mock_build_ca
     }
 
 # Test when the specified model cannot be found
-@patch('app.usecases.gru.usecase_train_gru.get_model', return_value=None)
-def test_train_model_gru_model_not_found(mock_get_model):
+def test_train_model_gru_model_not_found(patch_inversify):
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
+    mock_bdd.get_model.return_value = None
+
     # Create test training data
     training_data = [
         GRUTrainingModelData(category="cat1", tokens=["hello", "world"])
@@ -55,18 +60,23 @@ def test_train_model_gru_model_not_found(mock_get_model):
 
     # Expect an HTTPException with status 404 if the model is not found
     with pytest.raises(HTTPException) as exc_info:
-        train_model_gru("unknown_model", training_data)
+        train_model_gru(TrainGRUUsecaseDto(name="unknown_model", training_data=training_data, inversify=mock_inversify))
 
     # Verify the exception details
     assert exc_info.value.status_code == 404
     assert exc_info.value.detail == "Model not found"
 
 # Test when the training data is missing or empty
-@patch('app.usecases.gru.usecase_train_gru.get_model', return_value={"nn_model": None})
-def test_train_model_gru_no_training_data(mock_get_model):
+def test_train_model_gru_no_training_data(patch_inversify):
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
+
+    # Mock the return value for get_model to simulate model retrieval
+    mock_bdd.get_model.return_value = {"nn_model": None}
+
     # Expect an HTTPException with status 400 if no training data is provided
     with pytest.raises(HTTPException) as exc_info:
-        train_model_gru("test_gru_model", [])
+        train_model_gru(TrainGRUUsecaseDto(name="test_gru_model", training_data=[], inversify=mock_inversify))
 
     # Verify the exception details
     assert exc_info.value.status_code == 400

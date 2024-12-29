@@ -1,9 +1,10 @@
 # app\apis\apis_test.py
 import pytest
+from fastapi.testclient import TestClient # type: ignore 
+
 from app.main import app
 from unittest.mock import patch
 from app.generate_token import create_token
-from fastapi.testclient import TestClient # type: ignore 
 
 # Initialize test client for making requests to the API
 client = TestClient(app)

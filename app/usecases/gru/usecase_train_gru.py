@@ -1,33 +1,42 @@
-#app\usecases\gru\usecase_train_gru.py
-from typing import List, Dict
+# app\usecases\gru\usecase_train_gru.py
+from typing import List, Dict, NamedTuple
 from collections import Counter
+from app.inversify import Inversify
+from fastapi import HTTPException  # type: ignore
+
 from app.services.logger import logger
 from app.neural_network.nn_gru import train_gru
-from fastapi import HTTPException  # type: ignore
-from app.repositories.memory import get_model, update_model
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 
-def train_model_gru(name: str, training_data: List[GRUTrainingModelData]):
+class TrainGRUUsecaseDto(NamedTuple):
+    name: str
+    inversify: Inversify
+    training_data: List[GRUTrainingModelData]
+
+def train_model_gru(dto: TrainGRUUsecaseDto):
     """
     Trains the GRU model with the provided training data.
     :param name: Model name.
     :param training_data: List of training data.
     """
-    model = get_model(name)
+    # Fetch Bdd
+    bdd = dto.inversify.get_bdd()
+    
+    model = bdd.get_model(dto.name)
     
     # Check if model exists
     if model is None or not model:
         raise HTTPException(status_code=404, detail="Model not found")
     
     # Check if training data is valid
-    if training_data is None or len(training_data) == 0:
+    if dto.training_data is None or len(dto.training_data) == 0:
         raise HTTPException(status_code=400, detail="No training data provided or data is empty")
     
     logger.info("Machine learning type for training: GRU")
     
     # Display training data statistics
-    num_documents = len(training_data)
-    categories = [data.category for data in training_data]
+    num_documents = len(dto.training_data)
+    categories = [data.category for data in dto.training_data]
     category_counts = Counter(categories)
     num_categories = len(category_counts)
     
@@ -39,7 +48,7 @@ def train_model_gru(name: str, training_data: List[GRUTrainingModelData]):
         logger.info(f" - {category}: {count} documents ({percentage:.2f}%)")
     
     # Analyze sequence lengths
-    sequence_lengths = [len(data.tokens) for data in training_data]
+    sequence_lengths = [len(data.tokens) for data in dto.training_data]
     max_seq_length = max(sequence_lengths)
     min_seq_length = min(sequence_lengths)
     avg_seq_length = sum(sequence_lengths) / num_documents
@@ -49,15 +58,15 @@ def train_model_gru(name: str, training_data: List[GRUTrainingModelData]):
     logger.info(f"Average sequence length: {avg_seq_length:.2f}")
     
     # Build vocabulary for the model
-    word2idx, idx2word = build_vocab(training_data)
+    word2idx, idx2word = build_vocab(dto.training_data)
     vocab_size = len(word2idx)
     logger.info(f"Vocabulary size: {vocab_size}")
     
     # Map categories to indices
-    category2idx, idx2category = build_category_mapping(training_data)
+    category2idx, idx2category = build_category_mapping(dto.training_data)
     
     # Prepare sequences and labels for training
-    sequences, labels = prepare_sequences(training_data, word2idx, category2idx, max_seq_length)
+    sequences, labels = prepare_sequences(dto.training_data, word2idx, category2idx, max_seq_length)
     
     # Set model parameters
     num_classes = len(category2idx)
@@ -76,11 +85,11 @@ def train_model_gru(name: str, training_data: List[GRUTrainingModelData]):
         "category2idx": category2idx,
         "idx2category": idx2category
     }
-    update_model(name, model_data)
+    bdd.update_model(dto.name, model_data)
     
     return {
         "status": "Training complete",
-        "model_name": name,
+        "model_name": dto.name,
         "training_stats": training_stats
     }
 

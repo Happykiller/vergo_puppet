@@ -1,19 +1,25 @@
 # app\usecases\gru\usecase_search_multi_brut_gru.py
-from typing import List
+from typing import List, NamedTuple
 from fastapi import HTTPException  # type: ignore
 
-from app.services.logger import logger
-from app.repositories.memory import get_model
+from app.inversify import Inversify
 from app.neural_network.nn_gru import predict
 from app.usecases.usecase_tokenize import usecase_tokenize
 from app.usecases.gru.usecase_commons_gru import process_input
 from app.apis.models.tokenize_model_data import ModelTokenizeData
 
-def search_multi_brut_model_gru(name: str, documents: List[ModelTokenizeData]):
+class SearchMultiBrutGRUUsecaseDto(NamedTuple):
+    name: str
+    documents: List[ModelTokenizeData]
+    inversify: Inversify
+
+def search_multi_brut_model_gru(dto: SearchMultiBrutGRUUsecaseDto):
     result = []
+    # Fetch Bdd
+    bdd = dto.inversify.get_bdd()
 
     # Retrieve model data from memory
-    model_data = get_model(name)
+    model_data = bdd.get_model(dto.name)
     
     # Check if the model data is found
     if model_data is None or not model_data:
@@ -33,7 +39,7 @@ def search_multi_brut_model_gru(name: str, documents: List[ModelTokenizeData]):
         # Raise a 400 error if essential model data is incomplete
         raise HTTPException(status_code=400, detail="Model data incomplete")
     
-    documents_tokenized = usecase_tokenize(documents)
+    documents_tokenized = usecase_tokenize(dto.documents)
 
     for index, data in enumerate(documents_tokenized):
         # Process the input sequence using the word-to-index mapping
@@ -46,8 +52,8 @@ def search_multi_brut_model_gru(name: str, documents: List[ModelTokenizeData]):
         predicted_category = idx2category[predicted_idx]
     
         result.append({
-            'incidentId': documents[index].incidentId,
-            'description': documents[index].description,
+            'incidentId': dto.documents[index].incidentId,
+            'description': dto.documents[index].description,
             'tokens': data['tokens'],
             'predicted_category': predicted_category
         })
