@@ -1,4 +1,4 @@
-#app\usecases\gru\usecase_commons_gru_test.py
+# app\usecases\gru\usecase_commons_gru_test.py
 import pytest
 from app.usecases.gru.usecase_commons_gru import process_input
 

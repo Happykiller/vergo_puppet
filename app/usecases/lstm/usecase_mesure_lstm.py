@@ -2,15 +2,21 @@
 import joblib
 import numpy as np
 import pandas as pd
-from typing import List
+from typing import List, NamedTuple
+from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error
+
+from app.inversify import Inversify
 from app.services.logger import logger
-from app.repositories.memory import get_model
 from app.neural_network.nn_lstm import predict_nn_lstm
 from app.apis.models.weather_model_data import WeatherModelData
-from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error
 from app.usecases.lstm.usecase_commons_lstm import inverse_transform_predictions, preprocess_input_data
 
-def mesure_lstm(name: str, test_data: List[WeatherModelData]):
+class MesureLSTMUsecaseDto(NamedTuple):
+    name: str
+    test_data: List[WeatherModelData]
+    inversify: Inversify
+
+def mesure_lstm(dto: MesureLSTMUsecaseDto):
     """
     Measures the performance of the LSTM model on the provided test data.
     :param name: Name of the model.
@@ -18,16 +24,19 @@ def mesure_lstm(name: str, test_data: List[WeatherModelData]):
     :return: A dictionary with performance metrics.
     """
     try:
+        # Fetch Bdd
+        bdd = dto.inversify.get_bdd()
+
         # Verify that the model exists
-        model = get_model(name)
+        model = bdd.get_model(dto.name)
         nn_model = model.get("nn_model", None)
         if nn_model is None:
             raise Exception("The model has not been trained yet")
         
         # Load scaler and encoder
-        scaler = joblib.load(f'{name}_scaler.pkl')
-        target_scaler = joblib.load(f'{name}_target_scaler.pkl')
-        coco_encoder = joblib.load(f'{name}_coco_encoder.pkl')
+        scaler = joblib.load(f'{dto.name}_scaler.pkl')
+        target_scaler = joblib.load(f'{dto.name}_target_scaler.pkl')
+        coco_encoder = joblib.load(f'{dto.name}_coco_encoder.pkl')
         
         # Define the sequence length used during training
         sequence_length = 24  # Adjust if necessary
@@ -37,7 +46,7 @@ def mesure_lstm(name: str, test_data: List[WeatherModelData]):
         y_pred_list = []
         
         # Loop through each test sample
-        for data in test_data:
+        for data in dto.test_data:
             # Extract the actual 'temp' value
             y_true = data.temp
             

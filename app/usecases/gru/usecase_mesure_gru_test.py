@@ -2,8 +2,8 @@
 import pytest
 from unittest.mock import patch, MagicMock
 
-from app.usecases.gru.usecase_mesure_gru import MesureGRUUsecaseDto, mesure_gru
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
+from app.usecases.gru.usecase_mesure_gru import MesureGRUUsecaseDto, mesure_gru
 
 # Test for successful performance measurement
 @patch('app.usecases.gru.usecase_mesure_gru.logger')

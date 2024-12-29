@@ -10,13 +10,9 @@ from app.inversify import get_inversify
 from app.apis.models.test_model_data import TestModelData
 from app.usecases.usecase_tokenize import usecase_tokenize
 from app.apis.models.train_model_data import TrainModelData
-from app.usecases.lstm.usecase_train_lstm import train_lstm
 from app.usecases.getall_model import get_all_models_usecase
 from app.apis.models.create_model_data import CreateModelData
 from app.apis.models.update_model_data import UpdateModelData
-from app.usecases.lstm.usecase_create_lstm import create_lstm
-from app.usecases.lstm.usecase_mesure_lstm import mesure_lstm
-from app.usecases.lstm.usecase_search_lstm import search_lstm
 from app.apis.models.search_model_data import SearchModelData
 from app.apis.models.prepare_cache_data import PrepareCacheData
 from app.apis.models.tokenize_model_data import TokenizeModelData
@@ -27,9 +23,13 @@ from app.usecases.siamese.usecase_update_siamese import update_model_siamese
 from app.usecases.siamese.usecase_create_siamese import create_model_siamese
 from app.usecases.siamese.usecase_search_siamese import search_model_siamese
 from app.usecases.gru.usecase_mesure_gru import MesureGRUUsecaseDto, mesure_gru
+from app.usecases.lstm.usecase_train_lstm import TrainLSTMUsecaseDto, train_lstm
 from app.apis.models.search_multi_brut_model_data import SearchBrutMultiModelData
 from app.usecases.gru.usecase_train_gru import TrainGRUUsecaseDto, train_model_gru
 from app.usecases.usecase_create_data_puppeto4 import usecase_create_data_puppeto4
+from app.usecases.lstm.usecase_create_lstm import CreateLSTMUsecaseDto, create_lstm
+from app.usecases.lstm.usecase_mesure_lstm import MesureLSTMUsecaseDto, mesure_lstm
+from app.usecases.lstm.usecase_search_lstm import SearchLSTMUsecaseDto, search_lstm
 from app.usecases.gru.usecase_search_gru import SearchGRUUsecaseDto, search_model_gru
 from app.usecases.gru.usecase_create_gru import CreateGRUUsecaseDto, create_model_gru
 from app.usecases.gru.usecase_search_multi_brut_gru import search_multi_brut_model_gru
@@ -74,7 +74,7 @@ async def create_model_api(data: CreateModelData, payload: dict = Depends(verify
         elif data.neural_network_type == 'SIAMESE':
             return create_model_siamese(data.name, data.dictionary, data.glossary)
         elif data.neural_network_type == 'LSTM':
-            return create_lstm(data.name)
+            return create_lstm(CreateLSTMUsecaseDto(name=data.name, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=500, detail=f"Unknown neural network type: {data.neural_network_type}")
     except HTTPException as e:
@@ -116,7 +116,7 @@ async def train_model_api(data: TrainModelData, payload: dict = Depends(verify_a
         elif data.neural_network_type == 'SIAMESE':
             return train_model_siamese(data.name, data.training_data)
         elif data.neural_network_type == 'LSTM':
-            return train_lstm(data.name, data.training_data)
+            return train_lstm(TrainLSTMUsecaseDto(name=data.name, training_data=data.training_data, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=500, detail=f"Unknown neural network type: {data.neural_network_type}")
     except HTTPException as e:
@@ -157,7 +157,7 @@ async def search_model_api(data: SearchModelData, payload: dict = Depends(verify
         elif data.neural_network_type == 'SIAMESE':
             return search_model_siamese(data.name, data.vector)
         elif data.neural_network_type == 'LSTM':
-            return search_lstm(data.name, data.vector)
+            return search_lstm(SearchLSTMUsecaseDto(name=data.name, search=data.vector, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=500, detail=f"Unknown neural network type: {data.neural_network_type}")
     except HTTPException as e:
@@ -198,7 +198,7 @@ async def test(data: TestModelData, payload: dict = Depends(verify_access_token)
         elif data.neural_network_type == 'SIAMESE':
             return mesure_siamese(data.name, data.test_data)
         elif data.neural_network_type == 'LSTM':
-            return mesure_lstm(data.name, data.test_data)
+            return mesure_lstm(MesureLSTMUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=400, detail="Model type not supported yet")
     except HTTPException as e:

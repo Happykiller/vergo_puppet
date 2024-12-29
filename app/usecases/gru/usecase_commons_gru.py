@@ -1,4 +1,4 @@
-#app\usecases\gru\usecase_commons_gru.py
+# app\usecases\gru\usecase_commons_gru.py
 from typing import List
 
 def process_input(tokens: List[str], word2idx):
