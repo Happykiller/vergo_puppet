@@ -27,7 +27,10 @@ def test_prepare_cache_success(mock_search_model_siamese, patch_inversify):
     mock_inversify, mock_bdd = patch_inversify
 
     # Mock the behavior of search_model_siamese
-    mock_search_model_siamese.side_effect = lambda name, vector: {"search": vector, "find": vector, "stats": {"accuracy": 0.9}}
+    mock_search_model_siamese.side_effect = [
+        {"search": ["token1", "token2"], "find": ["token1", "token2"], "stats": {"accuracy": 0.9}},
+        {"search": ["token3", "token4"], "find": ["token3", "token4"], "stats": {"accuracy": 0.9}}
+    ]
 
     search_vectors = [["token1", "token2"], ["token3", "token4"]]
 
@@ -96,10 +99,10 @@ def test_prepare_cache_with_invalid_vector(mock_search_model_siamese, patch_inve
     mock_inversify, mock_bdd = patch_inversify
 
     # Mock behavior: raise an exception for invalid vectors
-    def mock_side_effect(name, vector):
-        if "invalid_token" in vector:
+    def mock_side_effect(dto):
+        if "invalid_token" in dto.search:
             raise Exception("Invalid vector")
-        return {"search": vector, "find": vector, "stats": {"accuracy": 0.9}}
+        return {"search": dto.search, "find": dto.search, "stats": {"accuracy": 0.9}}
     
     mock_search_model_siamese.side_effect = mock_side_effect
 
