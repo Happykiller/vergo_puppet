@@ -1,12 +1,18 @@
 # app/usecases/siamese/usecase_update_siamese.py
-from typing import List
+from typing import List, NamedTuple
+from app.inversify import Inversify
 from fastapi import HTTPException  # type: ignore
-from app.usecases.siamese.usecase_commons_siamese import tokens_to_indices
 
 from app.services.logger import logger
-from app.repositories.memory import clear_search_buffer, get_model, update_model
+from app.usecases.siamese.usecase_commons_siamese import tokens_to_indices
 
-def update_model_siamese(name: str, dictionary: List[List[str]], glossary: List[str]):
+class UpdateSiameseUsecaseDto(NamedTuple):
+    name: str
+    dictionary: List[List[str]]
+    glossary: List[str]
+    inversify: Inversify
+
+def update_model_siamese(dto: UpdateSiameseUsecaseDto):
     """
     Updates the SIAMESE model with a new dictionary and glossary.
     :param name: Name of the model
@@ -14,29 +20,32 @@ def update_model_siamese(name: str, dictionary: List[List[str]], glossary: List[
     :param glossary: New glossary for the model
     :return: Status of the update
     """
+    # Fetch Bdd
+    bdd = dto.inversify.get_bdd()
+
     # Retrieve the model from memory
-    model = get_model(name)
+    model = bdd.get_model(dto.name)
 
     if model is None or not model:
         raise HTTPException(status_code=404, detail="Model not found")
     
-    if not dictionary or len(dictionary) == 0:
+    if not dto.dictionary or len(dto.dictionary) == 0:
         raise HTTPException(status_code=400, detail="Dictionary cannot be empty")
     
-    if not glossary or len(glossary) == 0:
+    if not dto.glossary or len(dto.glossary) == 0:
         raise HTTPException(status_code=400, detail="Glossary cannot be empty")
     
-    logger.info(f"Updating SIAMESE model '{name}' with new dictionary and glossary")
+    logger.info(f"Updating SIAMESE model '{dto.name}' with new dictionary and glossary")
     
     # Add a blank entry at the beginning of the glossary
-    glossary = [""] + ["UNK"] + glossary
+    glossary = [""] + ["UNK"] + dto.glossary
 
     # Track tokens not in glossary
     tokens_not_in_glossary = set()
 
     # Transform each list of tokens into a list of indices
     indexed_dictionary = []
-    for tokens in dictionary:
+    for tokens in dto.dictionary:
         indices = tokens_to_indices(tokens, glossary)
         indexed_dictionary.append(indices)
 
@@ -45,21 +54,21 @@ def update_model_siamese(name: str, dictionary: List[List[str]], glossary: List[
         tokens_not_in_glossary.update(unknown_tokens)
     
     # Update the model
-    model["dictionary"] = dictionary
+    model["dictionary"] = dto.dictionary
     model["indexed_dictionary"] = indexed_dictionary
     model["glossary"] = glossary
     
     # Save the updated model back to memory
-    update_model(name, model)
+    bdd.update_model(dto.name, model)
     
-    logger.info(f"SIAMESE model '{name}' successfully updated")
+    logger.info(f"SIAMESE model '{dto.name}' successfully updated")
 
     # Clear the search buffer for the model
-    clear_search_buffer(name)
+    bdd.clear_search_buffer(dto.name)
     
     # Return response with missing tokens
     return {
         "status": "model updated",
-        "model_name": name,
+        "model_name": dto.name,
         "missing_tokens": list(tokens_not_in_glossary)  # List of tokens not in the glossary
     }

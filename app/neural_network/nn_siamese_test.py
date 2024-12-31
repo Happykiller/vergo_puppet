@@ -1,9 +1,9 @@
-#app\neural_network\nn_siamese_test.py
-import os
+# app\neural_network\nn_siamese_test.py
 import torch
 import pytest
 import random
 import numpy as np
+
 from app.neural_network.nn_siamese import SiameseLSTM, train_siamese_model_nn, evaluate_similarity
 from app.usecases.siamese.usecase_commons_siamese import create_glossary_from_dictionary, create_glossary_from_training_data, tokens_to_indices
 

@@ -72,7 +72,7 @@ class FakeBDDService(BDDService):
         :param search_query: Search query as a stringified representation of the input.
         :return: Cached result if available, otherwise None.
         """
-        return self.search_buffer.get(self, model_name, {}).get(search_query)
+        return self.search_buffer.get(model_name, {}).get(search_query)
 
     def clear_search_buffer(self, model_name: str):
         """

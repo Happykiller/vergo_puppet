@@ -1,5 +1,4 @@
-#app\neural_network\nn_siamese.py
-import os
+# app\neural_network\nn_siamese.py
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -7,6 +6,7 @@ from typing import List, Tuple
 import torch.nn.functional as F
 from torch.utils.data import Dataset, DataLoader
 import time  # For measuring training time
+
 from app.services.logger import logger  # Import custom logger
 
 # Siamese LSTM model definition

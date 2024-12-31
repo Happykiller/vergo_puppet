@@ -1,22 +1,30 @@
-#app\usecases\siamese\usecase_search_siamese.py
+# app\usecases\siamese\usecase_search_siamese.py
+from typing import NamedTuple
 from fastapi import HTTPException  # type: ignore
 
+from app.inversify import Inversify
 from app.services.logger import logger
-from app.repositories.memory import get_model
 from app.neural_network.nn_siamese import evaluate_similarity
-from app.repositories.memory import get_model, save_search_result, get_search_result
 from app.usecases.siamese.usecase_commons_siamese import create_indexed_glossary, tokens_to_indices
 
-def search_model_siamese(name: str, search: list):
+class SearchSiameseUsecaseDto(NamedTuple):
+    name: str
+    search: list
+    inversify: Inversify
+
+def search_model_siamese(dto: SearchSiameseUsecaseDto):
+    # Fetch Bdd
+    bdd = dto.inversify.get_bdd()
+
     # Vérification du buffer
-    search_query = str(search)  # Transforme la requête en une chaîne unique pour le cache
-    cached_result = get_search_result(name, search_query)
+    search_query = str(dto.search)  # Transforme la requête en une chaîne unique pour le cache
+    cached_result = bdd.get_search_result(dto.name, search_query)
     if cached_result:
         logger.info(f"Returning cached result for search query: {search_query}")
         return cached_result
 
     # Retrieve the model
-    model = get_model(name)
+    model = bdd.get_model(dto.name)
     if not model:
         raise HTTPException(status_code=404, detail="Model not found")
 
@@ -38,7 +46,7 @@ def search_model_siamese(name: str, search: list):
 
     # Convert search terms to indices
     word2idx = create_indexed_glossary(glossary)
-    search_indices = tokens_to_indices(search, word2idx)
+    search_indices = tokens_to_indices(dto.search, word2idx)
 
     # Calculate similarity with each vector in the dictionary
     similarities = []
@@ -55,7 +63,7 @@ def search_model_siamese(name: str, search: list):
     find = similarities[0][0]
 
     result = {
-        "search": search,
+        "search": dto.search,
         "find": find,
         "stats": {
             "accuracy": accuracy
@@ -63,6 +71,6 @@ def search_model_siamese(name: str, search: list):
     }
 
     # Save the result in the buffer
-    save_search_result(name, search_query, result)
+    bdd.save_search_result(dto.name, search_query, result)
 
     return result

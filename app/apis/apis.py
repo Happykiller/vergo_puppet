@@ -16,12 +16,6 @@ from app.apis.models.update_model_data import UpdateModelData
 from app.apis.models.search_model_data import SearchModelData
 from app.apis.models.prepare_cache_data import PrepareCacheData
 from app.apis.models.tokenize_model_data import TokenizeModelData
-from app.usecases.siamese.prepare_cache_siamese import prepare_cache
-from app.usecases.siamese.usecase_mesure_siamese import mesure_siamese
-from app.usecases.siamese.usecase_train_siamese import train_model_siamese
-from app.usecases.siamese.usecase_update_siamese import update_model_siamese
-from app.usecases.siamese.usecase_create_siamese import create_model_siamese
-from app.usecases.siamese.usecase_search_siamese import search_model_siamese
 from app.usecases.gru.usecase_mesure_gru import MesureGRUUsecaseDto, mesure_gru
 from app.usecases.lstm.usecase_train_lstm import TrainLSTMUsecaseDto, train_lstm
 from app.apis.models.search_multi_brut_model_data import SearchBrutMultiModelData
@@ -34,9 +28,15 @@ from app.usecases.gru.usecase_search_gru import SearchGRUUsecaseDto, search_mode
 from app.usecases.gru.usecase_create_gru import CreateGRUUsecaseDto, create_model_gru
 from app.usecases.gru.usecase_search_multi_brut_gru import search_multi_brut_model_gru
 from app.usecases.simple.usecase_mesure_simple import MesureSimpleUsecaseDto, mesure_simple_nn
+from app.usecases.siamese.usecase_mesure_siamese import MesureSiameseUsecaseDto, mesure_siamese
 from app.usecases.simple.usecase_train_simple import TrainSimpleUsecaseDto, train_model_simple_nn
+from app.usecases.siamese.usecase_train_siamese import TrainSiameseUsecaseDto, train_model_siamese
 from app.usecases.simple.usecase_search_simple import SearchSimpleUsecaseDto, search_model_simple_nn
 from app.usecases.simple.usecase_create_simple import CreateSimpleUsecaseDto, create_model_simple_nn
+from app.usecases.siamese.usecase_search_siamese import SearchSiameseUsecaseDto, search_model_siamese
+from app.usecases.siamese.usecase_update_siamese import UpdateSiameseUsecaseDto, update_model_siamese
+from app.usecases.siamese.usecase_create_siamese import CreateSiameseUsecaseDto, create_model_siamese
+from app.usecases.siamese.prepare_cache_siamese import PrepareSiameseUsecaseDto, prepare_cache_siamese
 
 # Initialisation du routeur
 router = APIRouter()
@@ -72,7 +72,7 @@ async def create_model_api(data: CreateModelData, payload: dict = Depends(verify
         elif data.neural_network_type == 'GRU':
             return create_model_gru(CreateGRUUsecaseDto(name=data.name, inversify=get_inversify()))
         elif data.neural_network_type == 'SIAMESE':
-            return create_model_siamese(data.name, data.dictionary, data.glossary)
+            return create_model_siamese(CreateSiameseUsecaseDto(name=data.name, dictionary=data.dictionary, glossary=data.glossary, inversify=get_inversify()))
         elif data.neural_network_type == 'LSTM':
             return create_lstm(CreateLSTMUsecaseDto(name=data.name, inversify=get_inversify()))
         else:
@@ -93,7 +93,7 @@ async def update_model_api(data: UpdateModelData, payload: dict = Depends(verify
         if data.neural_network_type == 'SIAMESE':
             if not data.dictionary or not data.glossary:
                 raise HTTPException(status_code=400, detail="Both dictionary and glossary must be provided for SIAMESE model")
-            return update_model_siamese(data.name, data.dictionary, data.glossary)
+            return update_model_siamese(UpdateSiameseUsecaseDto(name=data.name, dictionary=data.dictionary, glossary=data.glossary, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=400, detail=f"Model type '{data.neural_network_type}' not supported for update")
     except HTTPException as e:
@@ -114,7 +114,7 @@ async def train_model_api(data: TrainModelData, payload: dict = Depends(verify_a
         elif data.neural_network_type == 'GRU':
             return train_model_gru(TrainGRUUsecaseDto(name=data.name, training_data=data.training_data, inversify=get_inversify()))
         elif data.neural_network_type == 'SIAMESE':
-            return train_model_siamese(data.name, data.training_data)
+            return train_model_siamese(TrainSiameseUsecaseDto(name=data.name, training_data=data.training_data, inversify=get_inversify()))
         elif data.neural_network_type == 'LSTM':
             return train_lstm(TrainLSTMUsecaseDto(name=data.name, training_data=data.training_data, inversify=get_inversify()))
         else:
@@ -133,7 +133,7 @@ async def prepare_cache_api(data: PrepareCacheData, payload: dict = Depends(veri
     """
     try:
         if data.neural_network_type == 'SIAMESE':
-            return prepare_cache(data.name, data.search_vectors)
+            return prepare_cache_siamese(PrepareSiameseUsecaseDto(name=data.name, search_vectors=data.search_vectors, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=400, detail=f"Model type '{data.neural_network_type}' is not supported for cache preparation")
 
@@ -155,7 +155,7 @@ async def search_model_api(data: SearchModelData, payload: dict = Depends(verify
         elif data.neural_network_type == 'GRU':
             return search_model_gru(SearchGRUUsecaseDto(name=data.name, search=data.vector, inversify=get_inversify()))
         elif data.neural_network_type == 'SIAMESE':
-            return search_model_siamese(data.name, data.vector)
+            return search_model_siamese(SearchSiameseUsecaseDto(name=data.name, search=data.vector, inversify=get_inversify()))
         elif data.neural_network_type == 'LSTM':
             return search_lstm(SearchLSTMUsecaseDto(name=data.name, search=data.vector, inversify=get_inversify()))
         else:
@@ -196,7 +196,7 @@ async def test(data: TestModelData, payload: dict = Depends(verify_access_token)
         elif data.neural_network_type == 'GRU':
             return mesure_gru(MesureGRUUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
         elif data.neural_network_type == 'SIAMESE':
-            return mesure_siamese(data.name, data.test_data)
+            return mesure_siamese(MesureSiameseUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
         elif data.neural_network_type == 'LSTM':
             return mesure_lstm(MesureLSTMUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
         else:

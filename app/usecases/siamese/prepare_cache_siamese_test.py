@@ -1,33 +1,38 @@
 # app\usecases\siamese\prepare_cache_siamese_test.py
 import pytest
 from unittest.mock import patch
-from app.repositories.memory import save_model, models
-from app.usecases.siamese.prepare_cache_siamese import prepare_cache
+
+from app.usecases.siamese.prepare_cache_siamese import PrepareSiameseUsecaseDto, prepare_cache_siamese
 
 @pytest.fixture(autouse=True)
-def reset_memory():
+def reset_memory(patch_inversify):
     """
     Reset the in-memory storage before each test.
     """
-    models.clear()
-    save_model("mock_model", {
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
+
+    mock_bdd.save_model("mock_model", {
         "nn_model": "mock_nn_model",
         "dictionary": [["token1", "token2"], ["token3", "token4"]],
         "glossary": ["token1", "token2", "token3", "token4"]
     })
 
 @patch("app.usecases.siamese.prepare_cache_siamese.search_model_siamese")
-def test_prepare_cache_success(mock_search_model_siamese):
+def test_prepare_cache_success(mock_search_model_siamese, patch_inversify):
     """
     Test successful preparation of the cache for a SIAMESE model.
     """
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
+
     # Mock the behavior of search_model_siamese
     mock_search_model_siamese.side_effect = lambda name, vector: {"search": vector, "find": vector, "stats": {"accuracy": 0.9}}
 
     search_vectors = [["token1", "token2"], ["token3", "token4"]]
 
     # Prepare the cache
-    response = prepare_cache("mock_model", search_vectors)
+    response = prepare_cache_siamese(PrepareSiameseUsecaseDto(name="mock_model", search_vectors=search_vectors, inversify=mock_inversify))
 
     # Validate the response
     assert response["status"] == "cache prepared"
@@ -46,25 +51,32 @@ def test_prepare_cache_success(mock_search_model_siamese):
     mock_search_model_siamese.assert_called()
 
 @patch("app.usecases.siamese.prepare_cache_siamese.search_model_siamese")
-def test_prepare_cache_model_not_found(mock_search_model_siamese):
+def test_prepare_cache_model_not_found(mock_search_model_siamese, patch_inversify):
     """
     Test cache preparation with a non-existent model raises an error.
     """
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
+    mock_bdd.get_model.return_value = None
+
     # Mock behavior: raise an exception when the model is not found
     mock_search_model_siamese.side_effect = Exception("Model not found")
 
     with pytest.raises(Exception, match="Model not found"):
-        prepare_cache("non_existent_model", [["token1", "token2"]])
+        prepare_cache_siamese(PrepareSiameseUsecaseDto(name="non_existent_model", search_vectors=[["token1", "token2"]], inversify=mock_inversify))
 
     # Ensure the mock was not called with any vectors
     mock_search_model_siamese.assert_not_called()
 
 @patch("app.usecases.siamese.prepare_cache_siamese.search_model_siamese")
-def test_prepare_cache_with_empty_vectors(mock_search_model_siamese):
+def test_prepare_cache_with_empty_vectors(mock_search_model_siamese, patch_inversify):
     """
     Test cache preparation with an empty list of search vectors.
     """
-    response = prepare_cache("mock_model", [])
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
+
+    response = prepare_cache_siamese(PrepareSiameseUsecaseDto(name="mock_model", search_vectors=[], inversify=mock_inversify))
 
     # Validate the response
     assert response["status"] == "cache prepared"
@@ -76,10 +88,13 @@ def test_prepare_cache_with_empty_vectors(mock_search_model_siamese):
     mock_search_model_siamese.assert_not_called()
 
 @patch("app.usecases.siamese.prepare_cache_siamese.search_model_siamese")
-def test_prepare_cache_with_invalid_vector(mock_search_model_siamese):
+def test_prepare_cache_with_invalid_vector(mock_search_model_siamese, patch_inversify):
     """
     Test cache preparation with a search vector that causes an error.
     """
+    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    mock_inversify, mock_bdd = patch_inversify
+
     # Mock behavior: raise an exception for invalid vectors
     def mock_side_effect(name, vector):
         if "invalid_token" in vector:
@@ -90,7 +105,7 @@ def test_prepare_cache_with_invalid_vector(mock_search_model_siamese):
 
     search_vectors = [["token1", "token2"], ["invalid_token", "token4"]]
 
-    response = prepare_cache("mock_model", search_vectors)
+    response = prepare_cache_siamese(PrepareSiameseUsecaseDto(name="mock_model", search_vectors=search_vectors, inversify=mock_inversify))
 
     # Validate the response
     assert response["status"] == "cache prepared"

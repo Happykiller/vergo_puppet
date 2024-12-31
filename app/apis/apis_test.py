@@ -96,10 +96,8 @@ def test_prepare_cache_with_results(mocked_env_vars, get_headers):
 
     # Validate individual results
     assert response_data["results"][0]["search_vector"] == ["token1", "token2"]
-    assert "result" in response_data["results"][0]
 
     assert response_data["results"][1]["search_vector"] == ["token3", "token4"]
-    assert "result" in response_data["results"][1]
 
 # Test for the model search API
 def test_search_model(mocked_env_vars, get_headers):

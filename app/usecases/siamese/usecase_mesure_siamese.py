@@ -1,19 +1,28 @@
-#app\usecases\siamese\usecase_mesure_siamese.py
+# app\usecases\siamese\usecase_mesure_siamese.py
+from typing import List, NamedTuple
+
+from app.inversify import Inversify
 from app.services.logger import logger
-from app.repositories.memory import get_model
 from app.neural_network.nn_siamese import evaluate_similarity
 from app.usecases.siamese.usecase_commons_siamese import create_indexed_glossary, tokens_to_indices
 
-def mesure_siamese(name, test_data):
+class MesureSiameseUsecaseDto(NamedTuple):
+    name: str
+    test_data: List[List[str]]
+    inversify: Inversify
+
+def mesure_siamese(dto: MesureSiameseUsecaseDto):
     try:
-        total_error = 0
+        # Fetch Bdd
+        bdd = dto.inversify.get_bdd()
+
         correct_predictions = 0
-        total_tests = len(test_data)
+        total_tests = len(dto.test_data)
         similarity_precision = []
         details = []
         
         # Retrieve the model
-        model = get_model(name)
+        model = bdd.get_model(dto.name)
         if not model:
             raise Exception("Model not found")
 
@@ -26,7 +35,7 @@ def mesure_siamese(name, test_data):
         word2idx = create_indexed_glossary(glossary)
         
         # Iterate through test data
-        for vector1, vector2, expected_similarity in test_data:
+        for vector1, vector2, expected_similarity in dto.test_data:
             # Convert token lists to indices
             vector1_indices = tokens_to_indices(vector1, word2idx)
             vector2_indices = tokens_to_indices(vector2, word2idx)
@@ -65,7 +74,7 @@ def mesure_siamese(name, test_data):
 
         # Compile the report
         report = {
-            "model_name": name,
+            "model_name": dto.name,
             "total_tests": total_tests,
             "correct_predictions": correct_predictions,
             "prediction_accuracy_percentage": prediction_accuracy,

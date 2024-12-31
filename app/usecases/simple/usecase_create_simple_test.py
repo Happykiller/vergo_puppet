@@ -1,7 +1,7 @@
 # app\usecases\simple\usecase_create_simple_test.py
 import pytest
-from unittest.mock import MagicMock, patch
 from fastapi import HTTPException  # type: ignore
+
 from app.usecases.simple.usecase_create_simple import CreateSimpleUsecaseDto, create_model_simple_nn
 
 # Test when the model is created successfully
