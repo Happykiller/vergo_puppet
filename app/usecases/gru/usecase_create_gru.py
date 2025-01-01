@@ -2,8 +2,8 @@
 from typing import NamedTuple
 from fastapi import HTTPException  # type: ignore
 
-from app.services.logger import logger
 from app.inversify import Inversify
+from app.services.logger import logger
 
 class CreateGRUUsecaseDto(NamedTuple):
     name: str

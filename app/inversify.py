@@ -1,7 +1,9 @@
 # inversify.py
+import os
 from app.common import load_env_vars
 from app.services.bdd.bdd import BDDService
 from app.services.bdd.bdd_fake import FakeBDDService
+from app.services.bdd.bdd_mongo import MongoBDDService
 
 class Inversify:
   """Dependency injector based on the mode."""
@@ -9,6 +11,8 @@ class Inversify:
   def __init__(self):
     envs = load_env_vars()
     self._mode = envs["mode"]
+    self._mongo_uri = envs["mongo_uri"]
+    self._mongo_db_name = envs["mongo_db_name"]
     self._dependencies = {}
 
   def configure(self) -> None:
@@ -19,7 +23,7 @@ class Inversify:
       self._dependencies["bdd_service"] = FakeBDDService()
     elif self._mode == "prod":
       # Placeholder for a real database service in production
-      raise NotImplementedError("Real BDD service not yet implemented.")
+      self._dependencies["bdd_service"] = MongoBDDService(self._mongo_uri, self._mongo_db_name)
     else:
       raise ValueError(f"Unknown mode: {self._mode}")
 

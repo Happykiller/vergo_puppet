@@ -1,11 +1,13 @@
 # services/bdd_service.py
 from abc import ABC, abstractmethod
 
+from app.services.bdd.models.model_data import ModelData
+
 class BDDService(ABC):
     """Abstract Base Class for database service."""
 
     @abstractmethod
-    def save_model(name: str, data: dict):
+    def save_model(name: str, data: ModelData):
         pass
 
     @abstractmethod
@@ -17,7 +19,7 @@ class BDDService(ABC):
         pass
 
     @abstractmethod
-    def update_model(name: str, data: dict):
+    def update_model(name: str, data: ModelData):
         pass
 
     @abstractmethod

@@ -26,7 +26,12 @@ def load_env_vars():
     if not mode:
         raise EnvironmentError("MODE is missing in the environment variables.")
     
+    mongo_uri = os.getenv("MONGO_URI", "mongodb://localhost:27017")
+    mongo_db_name = os.getenv("MONGO_DB_NAME", "puppet")
+    
     return {
       "secret_key": secret_key,
-      "mode": mode
+      "mode": mode,
+      "mongo_uri": mongo_uri,
+      "mongo_db_name": mongo_db_name
     }

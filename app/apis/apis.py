@@ -26,7 +26,6 @@ from app.usecases.lstm.usecase_mesure_lstm import MesureLSTMUsecaseDto, mesure_l
 from app.usecases.lstm.usecase_search_lstm import SearchLSTMUsecaseDto, search_lstm
 from app.usecases.gru.usecase_search_gru import SearchGRUUsecaseDto, search_model_gru
 from app.usecases.gru.usecase_create_gru import CreateGRUUsecaseDto, create_model_gru
-from app.usecases.gru.usecase_search_multi_brut_gru import search_multi_brut_model_gru
 from app.usecases.simple.usecase_mesure_simple import MesureSimpleUsecaseDto, mesure_simple_nn
 from app.usecases.siamese.usecase_mesure_siamese import MesureSiameseUsecaseDto, mesure_siamese
 from app.usecases.simple.usecase_train_simple import TrainSimpleUsecaseDto, train_model_simple_nn
@@ -37,6 +36,7 @@ from app.usecases.siamese.usecase_search_siamese import SearchSiameseUsecaseDto,
 from app.usecases.siamese.usecase_update_siamese import UpdateSiameseUsecaseDto, update_model_siamese
 from app.usecases.siamese.usecase_create_siamese import CreateSiameseUsecaseDto, create_model_siamese
 from app.usecases.siamese.prepare_cache_siamese import PrepareSiameseUsecaseDto, prepare_cache_siamese
+from app.usecases.gru.usecase_search_multi_brut_gru import SearchMultiBrutGRUUsecaseDto, search_multi_brut_model_gru
 
 # Initialisation du routeur
 router = APIRouter()
@@ -175,7 +175,7 @@ async def search_brut_multi_model_api(data: SearchBrutMultiModelData, payload: d
     try:
         if data.neural_network_type == 'GRU':
             logger.info(f"search_brut_multi: {data}")
-            return search_multi_brut_model_gru(TrainGRUUsecaseDto(name=data.name, documents=data.documents, inversify=get_inversify()))
+            return search_multi_brut_model_gru(SearchMultiBrutGRUUsecaseDto(name=data.name, documents=data.documents, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=500, detail=f"Unknown neural network type: {data.neural_network_type}")
     except HTTPException as e:

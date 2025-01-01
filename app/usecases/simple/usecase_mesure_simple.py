@@ -1,6 +1,6 @@
 # app\usecases\simple\usecase_mesure_simple.py
 import joblib
-from typing import List, NamedTuple
+from typing import Any, Dict, List, NamedTuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
@@ -13,21 +13,23 @@ class MesureSimpleUsecaseDto(NamedTuple):
     test_data: List[SimpleNNTrainingModelData]
     inversify: Inversify
 
-def mesure_simple_nn(dto: MesureSimpleUsecaseDto):
+def mesure_simple_nn(dto: MesureSimpleUsecaseDto) -> Dict[str, Any]:
     try:
         # Fetch Bdd
         bdd = dto.inversify.get_bdd()
 
+        results = []  # Store individual test results
         total_error = 0
         total_percentage_error = 0
         correct_predictions = 0
         total_tests = len(dto.test_data)
+        
+        # Retrieve model and associated parameters
         model = bdd.get_model(dto.name)
         nn_model = model.get("nn_model", None)
         if nn_model is None:
             raise Exception("Model not trained yet")
         
-        # Load encoder, scaler, and indices
         encoder_filename = model.get("encoder_filename")
         scaler_filename = model.get("scaler_filename")
         indices_filename = model.get("indices_filename")
@@ -40,32 +42,20 @@ def mesure_simple_nn(dto: MesureSimpleUsecaseDto):
         categorical_indices = indices_info["categorical_indices"]
         numerical_indices = indices_info["numerical_indices"]
         
-        # Retrieve normalization parameters for targets
         targets_mean = model.get("targets_mean")
         targets_std = model.get("targets_std")
         if targets_mean is None or targets_std is None:
             raise Exception("Missing normalization parameters in the model")
         
         for data in dto.test_data:
-            # Prepare input data
             input_data = [
-                data.type,
-                data.surface,
-                data.pieces,
-                data.floor,
-                data.parking,
-                data.balcon,
-                data.ascenseur,
-                data.orientation,
-                data.transports,
-                data.neighborhood
+                data.type, data.surface, data.pieces, data.floor, data.parking,
+                data.balcon, data.ascenseur, data.orientation, data.transports, data.neighborhood
             ]
             expected = data.price
             
-            # Transform input data
+            # Process input
             input_processed = process_input_data(input_data, encoder, scaler, categorical_indices, numerical_indices)
-            
-            # Prediction
             predicted = predict(nn_model, input_processed, targets_mean, targets_std)
             
             # Calculate error
@@ -74,20 +64,40 @@ def mesure_simple_nn(dto: MesureSimpleUsecaseDto):
             total_error += error
             total_percentage_error += percentage_error
             
-            # Consider prediction correct if error is within 10% of the actual price
-            if percentage_error <= 10:
+            # Determine if the prediction is correct
+            is_correct = percentage_error <= 10
+            if is_correct:
                 correct_predictions += 1
             
-            # Log output
-            logger.info(f"Request: {input_data}")
-            logger.info(f"Expected price: {expected}€, Model price: {predicted:.2f}€, Error: {error:.2f}€, Percentage error: {percentage_error:.2f}%")
+            # Log details for each prediction
+            results.append({
+                "input": input_data,
+                "expected_price": expected,
+                "predicted_price": predicted,
+                "error": error,
+                "percentage_error": percentage_error,
+                "is_correct": is_correct,
+            })
         
+        # Calculate global metrics
         avg_error = total_error / total_tests
         avg_percentage_error = total_percentage_error / total_tests
-        # Log the number of correct predictions out of the total test cases
+        
+        # Global logs
         logger.info(f"Number of correct predictions: {correct_predictions}/{total_tests}")
-        logger.info(f"Mean Absolute Error (MAE) on the test set: {avg_error:.2f}€")
-        logger.info(f"Mean Absolute Percentage Error (MAPE) on the test set: {avg_percentage_error:.2f}%")
+        logger.info(f"Mean Absolute Error (MAE): {avg_error:.2f}€")
+        logger.info(f"Mean Absolute Percentage Error (MAPE): {avg_percentage_error:.2f}%")
+        
+        # Return a summary of results and metrics
+        return {
+            "results": results,
+            "metrics": {
+                "total_tests": total_tests,
+                "correct_predictions": correct_predictions,
+                "mean_absolute_error": avg_error,
+                "mean_absolute_percentage_error": avg_percentage_error,
+            },
+        }
     except Exception as e:
         logger.error(f"An error occurred during measurement: {str(e)}")
         raise Exception(f"An error occurred during measurement: {str(e)}")
