@@ -1,10 +1,10 @@
 # app\usecases\gru\usecase_search_gru.py
+import traceback
 from typing import List, NamedTuple
-from fastapi import HTTPException  # type: ignore
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.neural_network.nn_gru import predict
+from app.neural_network.nn_gru import GRUClassifier, predict
 from app.usecases.gru.usecase_commons_gru import process_input
 
 class SearchGRUUsecaseDto(NamedTuple):
@@ -24,25 +24,25 @@ def search_model_gru(dto: SearchGRUUsecaseDto):
         bdd = dto.inversify.get_bdd()
 
         # Retrieve model data from memory
-        model_data = bdd.get_model(dto.name)
+        model = bdd.get_model(dto.name, GRUClassifier)
         
         # Check if the model data is found
-        if model_data is None or not model_data:
+        if model is None or not model:
             # Raise a 404 error if the model is not found
-            raise HTTPException(status_code=404, detail="Model not found")
+            raise Exception("Model not found")
         
         # Extract the neural network model from the data
-        nn_model = model_data.get("nn_model", None)
+        nn_model = model.nn_model
         if nn_model is None:
             # Raise a 400 error if the model is not trained
-            raise HTTPException(status_code=400, detail="Model not trained")
+            raise Exception("Model not trained")
         
         # Retrieve word-to-index and index-to-category mappings
-        word2idx = model_data.get("word2idx", None)
-        idx2category = model_data.get("idx2category", None)
+        word2idx = model.word2idx
+        idx2category = model.idx2category
         if word2idx is None or idx2category is None:
             # Raise a 400 error if essential model data is incomplete
-            raise HTTPException(status_code=400, detail="Model data incomplete")
+            raise Exception("Model data incomplete")
         
         # Process the input sequence using the word-to-index mapping
         input = process_input(dto.search, word2idx)
@@ -56,9 +56,6 @@ def search_model_gru(dto: SearchGRUUsecaseDto):
         # Return the predicted category in a dictionary
         return {"category": predicted_category}
     
-    except HTTPException as e:
-        logger.error(f"An error occurred during measurement: {str(e)}")
-        raise e
     except Exception as e:
-        logger.error(f"An error occurred during measurement: {str(e)}")
-        raise Exception(f"An error occurred during measurement: {str(e)}")
+        logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")
+        raise Exception(f"[#search_model_simple_nn]{str(e)}")

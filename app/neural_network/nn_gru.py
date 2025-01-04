@@ -17,6 +17,14 @@ class GRUClassifier(nn.Module):
         :param dropout_rate: Dropout rate for regularization.
         """
         super(GRUClassifier, self).__init__()
+        # Store the initialization parameters for later access
+        self.args = {
+            "vocab_size": vocab_size,
+            "embedding_dim": embedding_dim,
+            "hidden_dim": hidden_dim,
+            "num_classes": num_classes,
+            "dropout_rate": dropout_rate,
+        }
         # Embedding layer to convert word indices into dense vectors
         self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
         # GRU layer to capture sequential dependencies

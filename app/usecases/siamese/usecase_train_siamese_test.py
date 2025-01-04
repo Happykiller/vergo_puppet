@@ -1,84 +1,122 @@
 # app\usecases\siamese\usecase_train_siamese_test.py
 import pytest
-from unittest.mock import MagicMock
-
+from unittest.mock import MagicMock, patch
+from app.services.bdd.models.model_data import ModelData
 from app.usecases.siamese.usecase_train_siamese import TrainSiameseUsecaseDto, train_model_siamese
 
-# Test: Verify that a 404 error is raised if the model does not exist
+
+# Test: Verify that an exception is raised if the model does not exist
 def test_train_model_not_found(patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
     mock_inversify, mock_bdd = patch_inversify
 
-    # Create a model without training the neural network
-    mock_bdd.get_model.return_value = False
+    # Simulate model not found
+    mock_bdd.get_model.return_value = None
 
-    with pytest.raises(Exception) as excinfo:
-        train_model_siamese(TrainSiameseUsecaseDto(name="model1", training_data=[["token1", "token2", "token3"]], inversify=mock_inversify))  # Non-existent model
-    
-    assert excinfo.value.status_code == 404  # Verify that the error is 404
-    assert str(excinfo.value.detail) == "Model not found"
+    with pytest.raises(Exception, match="Model not found"):
+        train_model_siamese(TrainSiameseUsecaseDto(
+            name="non_existent_model",
+            training_data=[(["token1", "token2"], ["token3", "token4"], 0.8)],
+            inversify=mock_inversify
+        ))
 
-# Test: Verify that a 400 error is raised if no dictionary is provided
-def test_train_model_no_dictionary(patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+
+# Test: Verify that an exception is raised if no training data is provided
+def test_train_model_no_training_data(patch_inversify):
     mock_inversify, mock_bdd = patch_inversify
 
-    # Save an empty model
-    mock_bdd.get_model.return_value = {
-        "name": "model1",
-        "dictionary": [["cat", "dog", "bird"]],
-        "indexed_dictionary": [[2, 3, 4]],
-        "glossary": ["", "UNK", "cat", "dog", "bird"],
-        "nn_model": MagicMock()
-    }
+    # Mock model with valid structure
+    mock_bdd.get_model.return_value = ModelData(
+        name="model1",
+        neural_network_type="SiameseLSTM",
+        nn_model=MagicMock(),
+        glossary=["", "UNK", "cat", "dog", "bird"],
+        indexed_dictionary=[2, 3, 4]
+    )
 
-    with pytest.raises(Exception) as excinfo:
-        train_model_siamese(TrainSiameseUsecaseDto(name="model1", training_data=None, inversify=mock_inversify))
-    
-    assert excinfo.value.status_code == 400
-    assert str(excinfo.value.detail) == "No training data provided"
+    with pytest.raises(Exception, match="No training data provided"):
+        train_model_siamese(TrainSiameseUsecaseDto(
+            name="model1",
+            training_data=None,
+            inversify=mock_inversify
+        ))
 
-# Test: Verify that a 400 error is raised if the dictionary is empty
-def test_train_model_empty_dictionary(patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+
+# Test: Verify that an exception is raised if training data is empty
+def test_train_model_empty_training_data(patch_inversify):
     mock_inversify, mock_bdd = patch_inversify
 
-    # Save an empty model
-    mock_bdd.get_model.return_value = {
-        "name": "model1",
-        "dictionary": [["cat", "dog", "bird"]],
-        "indexed_dictionary": [[2, 3, 4]],
-        "glossary": ["", "UNK", "cat", "dog", "bird"],
-        "nn_model": MagicMock()
-    }
+    # Mock model with valid structure
+    mock_bdd.get_model.return_value = ModelData(
+        name="model1",
+        neural_network_type="SiameseLSTM",
+        nn_model=MagicMock(),
+        glossary=["", "UNK", "cat", "dog", "bird"],
+        indexed_dictionary=[2, 3, 4]
+    )
 
-    with pytest.raises(Exception) as excinfo:
-        train_model_siamese(TrainSiameseUsecaseDto(name="model1", training_data=[], inversify=mock_inversify))
-    
-    assert excinfo.value.status_code == 400
-    assert str(excinfo.value.detail) == "Training data is empty"
+    with pytest.raises(Exception, match="Training data is empty"):
+        train_model_siamese(TrainSiameseUsecaseDto(
+            name="model1",
+            training_data=[],
+            inversify=mock_inversify
+        ))
+
+
+# Test: Verify that an exception is raised if the indexed dictionary is missing
+def test_train_model_no_indexed_dictionary(patch_inversify):
+    mock_inversify, mock_bdd = patch_inversify
+
+    # Mock model without an indexed dictionary
+    mock_bdd.get_model.return_value = ModelData(
+        name="model1",
+        neural_network_type="SiameseLSTM",
+        nn_model=MagicMock(),
+        glossary=["", "UNK", "cat", "dog", "bird"],
+        indexed_dictionary=None
+    )
+
+    with pytest.raises(Exception, match="No vectors available in the model"):
+        train_model_siamese(TrainSiameseUsecaseDto(
+            name="model1",
+            training_data=[(["token1", "token2"], ["token3", "token4"], 0.8)],
+            inversify=mock_inversify
+        ))
+
 
 # Test: Successful training
-def test_train_model_success(patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+@patch('app.usecases.siamese.usecase_train_siamese.train_siamese_model_nn', return_value=(MagicMock(), {"loss": 0.2}))
+def test_train_model_success(mock_train_nn, patch_inversify):
     mock_inversify, mock_bdd = patch_inversify
 
-    # Save an empty model
-    mock_bdd.get_model.return_value = {
-        "name": "model1",
-        "dictionary": [["cat", "dog", "bird"]],
-        "indexed_dictionary": [[2, 3, 4]],
-        "glossary": ["", "UNK", "cat", "dog", "bird"],
-        "nn_model": MagicMock()
-    }
+    # Mock model with valid data
+    mock_bdd.get_model.return_value = ModelData(
+        name="model1",
+        neural_network_type="SiameseLSTM",
+        nn_model=MagicMock(),
+        glossary=["", "UNK", "cat", "dog", "bird"],
+        indexed_dictionary=[2, 3, 4]
+    )
+
+    # Mock update_model to validate saved model data
+    def mock_update_model(model_data):
+        assert model_data.name == "model1"
+        assert model_data.neural_network_type == "SiameseLSTM"
+        assert model_data.nn_model is not None
+
+    mock_bdd.update_model.side_effect = mock_update_model
 
     # Call the function with valid training data
-    response = train_model_siamese(TrainSiameseUsecaseDto(name="model1", training_data=[
-        (["token1", "token2", "token3"], ["token1", "token2", "token3"], 1), 
-        (["token1", "token2", "token4"], ["token1", "token2", "token4"], 1), 
-        (["token1", "token2", "token5"], ["token1", "token2", "token5"], 1)
-    ], inversify=mock_inversify))
+    response = train_model_siamese(TrainSiameseUsecaseDto(
+        name="model1",
+        training_data=[
+            (["token1", "token2"], ["token3", "token4"], 0.8),
+            (["token5"], ["token6"], 0.6)
+        ],
+        inversify=mock_inversify
+    ))
 
-    # Verify that the response is correct
+    # Verify the response
     assert response["status"] == "training completed"
     assert response["model_name"] == "model1"
+    assert "training_report" in response
+    assert response["training_report"]["loss"] == 0.2

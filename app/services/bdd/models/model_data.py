@@ -3,8 +3,11 @@ import io
 import torch
 import base64
 import joblib
+import traceback
 from typing import List, Optional, Dict, Any
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
+
+from app.services.logger import logger
 
 class ModelData:
     """
@@ -24,6 +27,7 @@ class ModelData:
         idx2category: Optional[Dict[int, str]] = None,
         encoder: Optional[OneHotEncoder] = None,
         scaler: Optional[StandardScaler] = None,
+        target_scaler: Optional[StandardScaler] = None,
         indices: Optional[Dict[str, List[int]]] = None,
         targets_mean: Optional[float] = None,
         targets_std: Optional[float] = None,
@@ -40,6 +44,7 @@ class ModelData:
         self.idx2category = idx2category
         self.encoder = encoder
         self.scaler = scaler
+        self.target_scaler = target_scaler
         self.indices = indices
         self.targets_mean = targets_mean
         self.targets_std = targets_std
@@ -48,59 +53,90 @@ class ModelData:
         """
         Serialize the ModelData instance for storage in MongoDB.
         """
-        serialized_data = {
-            "name": self.name,
-            "neural_network_type": self.neural_network_type,
-            "dictionary": self.dictionary,
-            "indexed_dictionary": self.indexed_dictionary,
-            "glossary": self.glossary,
-            "word2idx": self.word2idx,
-            "idx2word": self.idx2word,
-            "category2idx": self.category2idx,
-            "idx2category": self.idx2category,
-            "encoder": joblib.dumps(self.encoder) if self.encoder else None,
-            "scaler": joblib.dumps(self.scaler) if self.scaler else None,
-            "indices": joblib.dumps(self.indices) if self.indices else None,
-            "targets_mean": self.targets_mean,
-            "targets_std": self.targets_std,
-        }
+        try:
+            def serialize_with_joblib(obj):
+                if obj is None:
+                    return None
+                buffer = io.BytesIO()
+                joblib.dump(obj, buffer)
+                buffer.seek(0)
+                return base64.b64encode(buffer.getvalue()).decode("utf-8")
+            
+            serialized_data = {
+                "name": self.name,
+                "neural_network_type": self.neural_network_type,
+                "dictionary": self.dictionary,
+                "indexed_dictionary": self.indexed_dictionary,
+                "glossary": self.glossary,
+                "word2idx": self.word2idx,
+                "idx2word": self.idx2word,
+                "category2idx": self.category2idx,
+                "idx2category": self.idx2category,
+                "encoder": serialize_with_joblib(self.encoder),
+                "scaler": serialize_with_joblib(self.scaler),
+                "target_scaler": serialize_with_joblib(self.target_scaler),
+                "indices": serialize_with_joblib(self.indices),
+                "targets_mean": self.targets_mean,
+                "targets_std": self.targets_std,
+            }
 
-        # Serialize the PyTorch model if it exists
-        if self.nn_model:
-            buffer = io.BytesIO()
-            torch.save(self.nn_model.state_dict(), buffer)
-            buffer.seek(0)
-            model_binary = buffer.read()
-            serialized_data["nn_model"] = base64.b64encode(model_binary).decode("utf-8")
+            # Serialize the PyTorch model if it exists
+            if self.nn_model:
+                buffer = io.BytesIO()
+                torch.save(self.nn_model.state_dict(), buffer)
+                buffer.seek(0)
+                model_binary = buffer.read()
+                serialized_data["nn_model"] = base64.b64encode(model_binary).decode("utf-8")
+                serialized_data["args"] = self.nn_model.args  # Include model arguments
+            else:
+                serialized_data["nn_model"] = None
 
-        return serialized_data
+            return serialized_data
+        except Exception as e:
+            logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")
+            raise Exception(f"[ModelData][#serialize]{str(e)}")
 
     @classmethod
     def deserialize(cls, data: Dict[str, Any], model_class: Optional[torch.nn.Module] = None) -> "ModelData":
         """
         Deserialize a MongoDB document into a ModelData instance.
         """
-        nn_model = None
-        if "nn_model" in data and data["nn_model"] and model_class:
-            model_binary = base64.b64decode(data["nn_model"])
-            buffer = io.BytesIO(model_binary)
-            nn_model = model_class()
-            nn_model.load_state_dict(torch.load(buffer))
+        try:
+            def deserialize_with_joblib(encoded_data: Optional[str]):
+                if not encoded_data:
+                    return None
+                buffer = io.BytesIO(base64.b64decode(encoded_data))
+                return joblib.load(buffer)
 
-        return cls(
-            name=data["name"],
-            neural_network_type=data["neural_network_type"],
-            dictionary=data.get("dictionary"),
-            indexed_dictionary=data.get("indexed_dictionary"),
-            glossary=data.get("glossary"),
-            word2idx=data.get("word2idx"),
-            idx2word=data.get("idx2word"),
-            category2idx=data.get("category2idx"),
-            idx2category=data.get("idx2category"),
-            encoder=joblib.loads(data["encoder"]) if data.get("encoder") else None,
-            scaler=joblib.loads(data["scaler"]) if data.get("scaler") else None,
-            indices=joblib.loads(data["indices"]) if data.get("indices") else None,
-            targets_mean=data.get("targets_mean"),
-            targets_std=data.get("targets_std"),
-            nn_model=nn_model,
-        )
+            nn_model = None
+            if "nn_model" in data and data["nn_model"]:
+                if not callable(model_class):
+                    raise TypeError(f"[ModelData][deserialize]: model_class must be callable, got {type(model_class).__name__}")
+                model_binary = base64.b64decode(data["nn_model"])
+                buffer = io.BytesIO(model_binary)
+                # Extract args from serialized data if available
+                args = data.get("args", {})
+                nn_model = model_class(**args)
+                nn_model.load_state_dict(torch.load(buffer))
+
+            return cls(
+                name=data["name"],
+                neural_network_type=data["neural_network_type"],
+                dictionary=data.get("dictionary"),
+                indexed_dictionary=data.get("indexed_dictionary"),
+                glossary=data.get("glossary"),
+                word2idx=data.get("word2idx"),
+                idx2word=data.get("idx2word"),
+                category2idx=data.get("category2idx"),
+                idx2category=data.get("idx2category"),
+                encoder=deserialize_with_joblib(data.get("encoder")),
+                scaler=deserialize_with_joblib(data.get("scaler")),
+                target_scaler=deserialize_with_joblib(data.get("target_scaler")),
+                indices=deserialize_with_joblib(data.get("indices")),
+                targets_mean=data.get("targets_mean"),
+                targets_std=data.get("targets_std"),
+                nn_model=nn_model,
+            )
+        except Exception as e:
+            logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")
+            raise Exception(f"[ModelData][#deserialize]{str(e)}")

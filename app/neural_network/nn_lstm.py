@@ -15,6 +15,11 @@ class LSTMNN(nn.Module):
         :param hidden_size: Number of hidden units in the LSTM layer.
         """
         super(LSTMNN, self).__init__()
+        # Store the initialization parameters for later access
+        self.args = {
+            "input_size": input_size,
+            "hidden_size": hidden_size
+        }
         # LSTM layer to capture temporal dependencies in the sequence
         self.lstm = nn.LSTM(input_size, hidden_size, batch_first=True)
         # Fully connected layer for outputting final predictions

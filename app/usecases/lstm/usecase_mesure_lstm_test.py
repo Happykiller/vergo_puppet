@@ -1,70 +1,116 @@
-#app\usecases\lstm\usecase_mesure_lstm_test.py
+# app\usecases\lstm\usecase_mesure_lstm_test.py
 import pytest
 import numpy as np
+import pandas as pd
 from unittest.mock import patch, MagicMock
 
+from app.services.bdd.models.model_data import ModelData
 from app.apis.models.weather_model_data import WeatherModelData
 from app.usecases.lstm.usecase_mesure_lstm import MesureLSTMUsecaseDto, mesure_lstm
 
-# Test to verify successful measurement with valid data
-@patch('app.usecases.lstm.usecase_mesure_lstm.joblib.load')
+
+# Test for successful measurement
 @patch('app.usecases.lstm.usecase_mesure_lstm.predict_nn_lstm')
-def test_mesure_lstm_success(mock_predict_nn_lstm, mock_joblib_load, patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+@patch('app.usecases.lstm.usecase_mesure_lstm.preprocess_input_data')
+@patch('app.usecases.lstm.usecase_mesure_lstm.inverse_transform_predictions')
+def test_mesure_lstm_success(mock_inverse_transform, mock_preprocess_input, mock_predict_nn_lstm, patch_inversify):
     mock_inversify, mock_bdd = patch_inversify
 
-    # Mock model data to simulate an LSTM model
-    mock_model = {
-        "nn_model": MagicMock()
-    }
+    # Mock model setup
+    mock_model = ModelData(
+        name="test_model",
+        neural_network_type="LSTMNN",
+        nn_model=MagicMock(),
+        scaler=MagicMock(),
+        encoder=MagicMock(),
+        target_scaler=MagicMock()
+    )
     mock_bdd.get_model.return_value = mock_model
 
-    # Mock scaler, target_scaler, and encoder
-    mock_scaler = MagicMock()
-    mock_target_scaler = MagicMock()
-    mock_encoder = MagicMock()
-    mock_joblib_load.side_effect = [mock_scaler, mock_target_scaler, mock_encoder]
-
-    # Mock prediction function to return a normalized prediction
-    mock_predict_nn_lstm.return_value = np.array([[0.5]])  # Simulated normalized prediction
-
-    # Mock inverse transformation to provide a simulated temperature prediction
-    mock_target_scaler.inverse_transform.return_value = np.array([[22.5]])  # Simulated temperature prediction
+    # Mock preprocessing and predictions
+    mock_preprocess_input.return_value = pd.DataFrame([[0.1, 0.2]], columns=["feature1", "feature2"])
+    mock_predict_nn_lstm.return_value = np.array([[0.5]])
+    mock_inverse_transform.return_value = np.array([22.5])
 
     # Test data
     test_data = [
-        WeatherModelData(time="2023-01-01T00:00:00Z", temp=22.0, dwpt=10.0, rhum=60, prcp=0.0, snow=0.0, wdir=180, wspd=10, wpgt=15, pres=1013, tsun=0, coco=3)
+        WeatherModelData(
+            time="2023-01-01T00:00:00Z", temp=22.0, dwpt=10.0, rhum=60, prcp=0.0,
+            snow=0.0, wdir=180, wspd=10, wpgt=15, pres=1013, tsun=0, coco=3
+        )
     ]
 
     # Run the function
     result = mesure_lstm(MesureLSTMUsecaseDto(name="test_model", test_data=test_data, inversify=mock_inversify))
 
     # Assertions on results
-    assert result["mae"] is not None, "MAE should be calculated"
-    assert result["mape"] is not None, "MAPE should be calculated"
-    assert result["test_count"] == 1, "Test count should match the length of the input data"
+    assert result["mae"] == pytest.approx(0.5, rel=1e-2), "MAE should match the difference between true and predicted"
+    assert result["mape"] == pytest.approx(2.27, rel=1e-2), "MAPE should be calculated correctly as a percentage"
+    assert result["test_count"] == 1, "Test count should match the input data length"
 
-# Test to verify missing normalization parameters
-@patch('app.usecases.lstm.usecase_mesure_lstm.joblib.load')
-def test_mesure_lstm_missing_normalization_parameters(mock_joblib_load, patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+
+# Test when the model is not found
+def test_mesure_lstm_model_not_found(patch_inversify):
     mock_inversify, mock_bdd = patch_inversify
+    mock_bdd.get_model.return_value = None
 
-    # Mock model without normalization parameters
-    mock_model = {
-        "nn_model": MagicMock(),
-        "scaler_filename": "scaler.pkl",
-        "target_scaler_filename": "target_scaler.pkl",
-        "encoder_filename": "encoder.pkl"
-    }
-    mock_bdd.get_model.return_value = mock_model
-    mock_joblib_load.side_effect = [MagicMock(), MagicMock(), MagicMock()]  # Mock scaler and encoder loading
-
-    # Test data
     test_data = [
-        WeatherModelData(time="2023-01-01T00:00:00Z", temp=22.0, dwpt=10.0, rhum=60, prcp=0.0, snow=0.0, wdir=180, wspd=10, wpgt=15, pres=1013, tsun=0, coco=3)
+        WeatherModelData(
+            time="2023-01-01T00:00:00Z", temp=22.0, dwpt=10.0, rhum=60, prcp=0.0,
+            snow=0.0, wdir=180, wspd=10, wpgt=15, pres=1013, tsun=0, coco=3
+        )
     ]
 
-    # Expect an exception due to missing parameters with a specific error message
-    with pytest.raises(Exception, match=r"An error occurred during measurement: Found array with 0 feature\(s\)"):
+    with pytest.raises(Exception, match="Model not found"):
+        mesure_lstm(MesureLSTMUsecaseDto(name="unknown_model", test_data=test_data, inversify=mock_inversify))
+
+
+## Test for missing input data
+def test_mesure_lstm_no_test_data(patch_inversify):
+    mock_inversify, mock_bdd = patch_inversify
+
+    mock_bdd.get_model.return_value = ModelData(
+        name="test_model",
+        neural_network_type="LSTMNN",
+        nn_model=MagicMock(),
+        scaler=MagicMock(),
+        encoder=MagicMock(),
+        target_scaler=MagicMock()
+    )
+
+    # Empty input data
+    test_data = []
+
+    # Run the function
+    result = mesure_lstm(MesureLSTMUsecaseDto(name="test_model", test_data=test_data, inversify=mock_inversify))
+
+    # Assertions
+    assert result["test_count"] == 0, "Test count should be zero for empty input data"
+    assert result["mae"] == pytest.approx(0.0), "MAE should be zero for no data"
+    assert result["mape"] == pytest.approx(0.0), "MAPE should be zero for no data"
+
+
+## Test for missing normalization parameters
+def test_mesure_lstm_missing_normalization_parameters(patch_inversify):
+    mock_inversify, mock_bdd = patch_inversify
+
+    # Mock model with missing normalization parameters
+    mock_model = ModelData(
+        name="test_model",
+        neural_network_type="LSTMNN",
+        nn_model=MagicMock(),
+        scaler=None,  # Missing scaler
+        encoder=MagicMock(),
+        target_scaler=None  # Missing target_scaler
+    )
+    mock_bdd.get_model.return_value = mock_model
+
+    test_data = [
+        WeatherModelData(
+            time="2023-01-01T00:00:00Z", temp=22.0, dwpt=10.0, rhum=60, prcp=0.0,
+            snow=0.0, wdir=180, wspd=10, wpgt=15, pres=1013, tsun=0, coco=3
+        )
+    ]
+
+    with pytest.raises(Exception, match="Missing normalization parameters in the model"):
         mesure_lstm(MesureLSTMUsecaseDto(name="test_model", test_data=test_data, inversify=mock_inversify))

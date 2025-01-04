@@ -1,5 +1,5 @@
 #app\usecases\lstm\usecase_mesure_lstm.py
-import joblib
+import traceback
 import numpy as np
 import pandas as pd
 from typing import List, NamedTuple
@@ -7,7 +7,7 @@ from sklearn.metrics import mean_absolute_error, mean_absolute_percentage_error
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.neural_network.nn_lstm import predict_nn_lstm
+from app.neural_network.nn_lstm import LSTMNN, predict_nn_lstm
 from app.apis.models.weather_model_data import WeatherModelData
 from app.usecases.lstm.usecase_commons_lstm import inverse_transform_predictions, preprocess_input_data
 
@@ -28,15 +28,25 @@ def mesure_lstm(dto: MesureLSTMUsecaseDto):
         bdd = dto.inversify.get_bdd()
 
         # Verify that the model exists
-        model = bdd.get_model(dto.name)
-        nn_model = model.get("nn_model", None)
+        model = bdd.get_model(dto.name, LSTMNN)
+        if model is None or not model:
+            raise Exception("Model not found")
+        
+        nn_model = model.nn_model
         if nn_model is None:
             raise Exception("The model has not been trained yet")
         
-        # Load scaler and encoder
-        scaler = joblib.load(f'{dto.name}_scaler.pkl')
-        target_scaler = joblib.load(f'{dto.name}_target_scaler.pkl')
-        coco_encoder = joblib.load(f'{dto.name}_coco_encoder.pkl')
+        # Check for missing normalization parameters
+        if model.scaler is None or model.target_scaler is None or model.encoder is None:
+            raise Exception("Missing normalization parameters in the model")
+        
+        # If test_data is empty, return default metrics
+        if not dto.test_data:
+            return {
+                "mae": 0.0,
+                "mape": 0.0,
+                "test_count": 0
+            }
         
         # Define the sequence length used during training
         sequence_length = 24  # Adjust if necessary
@@ -56,7 +66,7 @@ def mesure_lstm(dto: MesureLSTMUsecaseDto):
             df_input = pd.DataFrame([data_dict])
             
             # Preprocess the input data
-            df_processed = preprocess_input_data(df_input, scaler, coco_encoder)
+            df_processed = preprocess_input_data(df_input, model.scaler, model.encoder)
             
             # Create a sequence by duplicating the input to reach the required length
             input_sequence = np.repeat(df_processed.values, sequence_length, axis=0)
@@ -66,7 +76,7 @@ def mesure_lstm(dto: MesureLSTMUsecaseDto):
             prediction_normalized = predict_nn_lstm(nn_model, input_sequence)
             
             # Invert the normalization of the prediction
-            prediction_inverse = inverse_transform_predictions(prediction_normalized, target_scaler)[0]
+            prediction_inverse = inverse_transform_predictions(prediction_normalized, model.target_scaler)[0]
             
             # Add values to the lists
             y_true_list.append(y_true)
@@ -91,5 +101,5 @@ def mesure_lstm(dto: MesureLSTMUsecaseDto):
             "test_count": len(y_pred_list)
         }
     except Exception as e:
-        logger.error(f"An error occurred during measurement: {str(e)}")
-        raise Exception(f"An error occurred during measurement: {str(e)}")
+        logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")
+        raise Exception(f"[#mesure_lstm]{str(e)}")

@@ -1,37 +1,28 @@
 # app\usecases\simple\usecase_search_simple_test.py
 import pytest
 from unittest.mock import patch, MagicMock
-from fastapi import HTTPException  # type: ignore
 
 from app.apis.models.simple_nn_search_model_data import SimpleNNSearchModelData
 from app.usecases.simple.usecase_search_simple import SearchSimpleUsecaseDto, search_model_simple_nn
 
+
 # Test successful search with a SimpleNN model
-@patch('app.usecases.simple.usecase_search_simple.joblib.load')
-@patch('app.usecases.simple.usecase_search_simple.predict')
-def test_search_model_simple_nn_success(mock_predict, mock_joblib_load, patch_inversify):
-    # patch_inversify est un tuple (mock_inversify_instance, mock_bdd)
+@patch("app.usecases.simple.usecase_search_simple.predict")
+def test_search_model_simple_nn_success(mock_predict, patch_inversify):
+    """Test successful prediction with a SimpleNN model."""
     mock_inversify, mock_bdd = patch_inversify
-    mock_bdd.get_model.return_value = {
-        "nn_model": MagicMock(),
-        "encoder_filename": "encoder.pkl",
-        "scaler_filename": "scaler.pkl",
-        "indices_filename": "indices.pkl",
-        "targets_mean": 0.5,
-        "targets_std": 0.2
-    }
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=MagicMock(),
+        encoder=MagicMock(),
+        scaler=MagicMock(),
+        indices={"categorical_indices": [0, 1], "numerical_indices": [2, 3]},
+        targets_mean=0.5,
+        targets_std=0.2,
+    )
 
-    # Simulate loading encoder, scaler, and indices files
-    mock_joblib_load.side_effect = [
-        MagicMock(),  # Mock encoder
-        MagicMock(),  # Mock scaler
-        {"categorical_indices": [0, 1], "numerical_indices": [2, 3]}  # Mock indices
-    ]
-
-    # Mock model prediction
+    # Mock prediction
     mock_predict.return_value = 350000
 
-    # Create dummy search data
     search_data = SimpleNNSearchModelData(
         type=1,
         surface=100,
@@ -42,23 +33,23 @@ def test_search_model_simple_nn_success(mock_predict, mock_joblib_load, patch_in
         ascenseur=1,
         orientation=1,
         transports=1,
-        neighborhood=8
+        neighborhood=8,
     )
 
-    # Call the search_model_simple_nn function
+    # Execute function
     result = search_model_simple_nn(SearchSimpleUsecaseDto(name="test_model", search=search_data, inversify=mock_inversify))
 
-    # Verify that the predict function was called with the correct arguments
+    # Assertions
     mock_predict.assert_called_once()
-
-    # Check the search result
     assert result == {"predicted_price": 350000}
+
 
 # Test when the model is not found
 def test_search_model_simple_nn_model_not_found(patch_inversify):
-    # patch_inversify est un tuple (mock_inversify_instance, mock_bdd)
+    """Test the case where the model is not found."""
     mock_inversify, mock_bdd = patch_inversify
     mock_bdd.get_model.return_value = None
+
     search_data = SimpleNNSearchModelData(
         type=1,
         surface=100,
@@ -69,29 +60,27 @@ def test_search_model_simple_nn_model_not_found(patch_inversify):
         ascenseur=1,
         orientation=1,
         transports=1,
-        neighborhood=8
+        neighborhood=8,
     )
 
-    # Check that an HTTP 404 exception is raised if the model is not found
-    with pytest.raises(HTTPException) as exc_info:
+    with pytest.raises(Exception) as exc_info:
         search_model_simple_nn(SearchSimpleUsecaseDto(name="unknown_model", search=search_data, inversify=mock_inversify))
-    
-    # Confirm the exception is HTTPException with status 404
-    assert exc_info.value.status_code == 404
-    assert exc_info.value.detail == "Model not found"
 
-# Test when the model is not yet trained
+    assert str(exc_info.value) == "[#search_model_simple_nn]Model not found"
+
+
+# Test when the model is not trained
 def test_search_model_simple_nn_model_not_trained(patch_inversify):
-    # patch_inversify est un tuple (mock_inversify_instance, mock_bdd)
+    """Test the case where the model is not trained yet."""
     mock_inversify, mock_bdd = patch_inversify
-    mock_bdd.get_model.return_value = {
-        "nn_model": None,
-        "encoder_filename": "encoder.pkl",
-        "scaler_filename": "scaler.pkl",
-        "indices_filename": "indices.pkl",
-        "targets_mean": 0.5,
-        "targets_std": 0.2
-    }
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=None,
+        encoder=MagicMock(),
+        scaler=MagicMock(),
+        indices={"categorical_indices": [0, 1], "numerical_indices": [2, 3]},
+        targets_mean=0.5,
+        targets_std=0.2,
+    )
 
     search_data = SimpleNNSearchModelData(
         type=1,
@@ -103,29 +92,27 @@ def test_search_model_simple_nn_model_not_trained(patch_inversify):
         ascenseur=1,
         orientation=1,
         transports=1,
-        neighborhood=8
+        neighborhood=8,
     )
 
-    # Check that an HTTP 400 exception is raised if the model is not yet trained
-    with pytest.raises(HTTPException) as exc_info:
+    with pytest.raises(Exception) as exc_info:
         search_model_simple_nn(SearchSimpleUsecaseDto(name="test_model", search=search_data, inversify=mock_inversify))
 
-    # Confirm the exception is HTTPException with status 400
-    assert exc_info.value.status_code == 400
-    assert exc_info.value.detail == "Model not trained yet"
+    assert str(exc_info.value) == "[#search_model_simple_nn]Model not trained yet"
 
-# Test when encoder, scaler, or indices files are missing
+
+# Test when encoder, scaler, or indices are missing
 def test_search_model_simple_nn_missing_files(patch_inversify):
-    # patch_inversify est un tuple (mock_inversify_instance, mock_bdd)
+    """Test the case where encoder, scaler, or indices are missing."""
     mock_inversify, mock_bdd = patch_inversify
-    mock_bdd.get_model.return_value = {
-        "nn_model": MagicMock(),
-        "encoder_filename": None,
-        "scaler_filename": None,
-        "indices_filename": None,
-        "targets_mean": 0.5,
-        "targets_std": 0.2
-    }
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=MagicMock(),
+        encoder=None,
+        scaler=None,
+        indices=None,
+        targets_mean=0.5,
+        targets_std=0.2,
+    )
 
     search_data = SimpleNNSearchModelData(
         type=1,
@@ -137,39 +124,29 @@ def test_search_model_simple_nn_missing_files(patch_inversify):
         ascenseur=1,
         orientation=1,
         transports=1,
-        neighborhood=8
+        neighborhood=8,
     )
 
-    # Check that an HTTP 400 exception is raised if files are missing
-    with pytest.raises(HTTPException) as exc_info:
+    with pytest.raises(Exception) as exc_info:
         search_model_simple_nn(SearchSimpleUsecaseDto(name="test_model", search=search_data, inversify=mock_inversify))
 
-    # Confirm the exception is HTTPException with status 400
-    assert exc_info.value.status_code == 400
-    assert exc_info.value.detail == "Missing encoder, scaler, or indices in the model"
+    # Validate exception message
+    assert str(exc_info.value) == "[#search_model_simple_nn]Missing encoder, scaler, or indices in the model"
+
 
 # Test when target normalization parameters are missing
-@patch('app.usecases.simple.usecase_search_simple.joblib.load')
-def test_search_model_simple_nn_missing_normalization_parameters(mock_joblib_load, patch_inversify):
-    # patch_inversify est un tuple (mock_inversify_instance, mock_bdd)
+def test_search_model_simple_nn_missing_normalization_parameters(patch_inversify):
+    """Test the case where normalization parameters are missing."""
     mock_inversify, mock_bdd = patch_inversify
-    mock_bdd.get_model.return_value = {
-        "nn_model": MagicMock(),
-        "encoder_filename": "encoder.pkl",
-        "scaler_filename": "scaler.pkl",
-        "indices_filename": "indices.pkl",
-        "targets_mean": None,
-        "targets_std": None
-    }
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=MagicMock(),
+        encoder=MagicMock(),
+        scaler=MagicMock(),
+        indices={"categorical_indices": [0, 1], "numerical_indices": [2, 3]},
+        targets_mean=None,
+        targets_std=None,
+    )
 
-    # Simulate loading of encoder, scaler, and indices with joblib.load
-    mock_joblib_load.side_effect = [
-        MagicMock(),  # Mock encoder
-        MagicMock(),  # Mock scaler
-        {"categorical_indices": [0, 1], "numerical_indices": [2, 3]}  # Mock indices
-    ]
-
-    # Create dummy search data
     search_data = SimpleNNSearchModelData(
         type=1,
         surface=100,
@@ -180,13 +157,10 @@ def test_search_model_simple_nn_missing_normalization_parameters(mock_joblib_loa
         ascenseur=1,
         orientation=1,
         transports=1,
-        neighborhood=8
+        neighborhood=8,
     )
 
-    # Check that an HTTP 400 exception is raised if normalization parameters are missing
-    with pytest.raises(HTTPException) as exc_info:
+    with pytest.raises(Exception) as exc_info:
         search_model_simple_nn(SearchSimpleUsecaseDto(name="test_model", search=search_data, inversify=mock_inversify))
 
-    # Confirm the exception is HTTPException with status 400
-    assert exc_info.value.status_code == 400
-    assert exc_info.value.detail == "Missing normalization parameters in the model"
+    assert str(exc_info.value) == "[#search_model_simple_nn]Missing normalization parameters in the model"

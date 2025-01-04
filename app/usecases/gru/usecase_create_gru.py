@@ -1,9 +1,9 @@
 # app\usecases\gru\usecase_create_gru.py
 from typing import NamedTuple
-from fastapi import HTTPException  # type: ignore
 
 from app.inversify import Inversify
 from app.services.logger import logger
+from app.services.bdd.models.model_data import ModelData
 
 class CreateGRUUsecaseDto(NamedTuple):
     name: str
@@ -27,15 +27,10 @@ def create_model_gru(dto: CreateGRUUsecaseDto):
     # Check if a model with the given name already exists
     if bdd.model_exists(dto.name):
         # If model exists, raise an HTTP 400 error with a relevant message
-        raise HTTPException(status_code=400, detail="Model already exists")
-
-    # Prepare the data for saving the model with its type specified
-    model_data = {
-        "neural_network_type": "GRU"  # Record the model type as 'GRU'
-    }
+        raise Exception("Model already exists")
     
     # Save the model with the provided name and data
-    bdd.save_model(dto.name, model_data)
+    bdd.save_model(ModelData(name=dto.name, neural_network_type="GRU"))
 
     # Return success status and model name for confirmation
     return {"status": "model created", "model_name": dto.name}

@@ -1,7 +1,6 @@
 # app\usecases\gru\usecase_train_gru_test.py
 import pytest
 from unittest.mock import patch, MagicMock
-from fastapi import HTTPException  # type: ignore
 
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 from app.usecases.gru.usecase_train_gru import TrainGRUUsecaseDto, train_model_gru
@@ -12,11 +11,14 @@ from app.usecases.gru.usecase_train_gru import TrainGRUUsecaseDto, train_model_g
 @patch('app.usecases.gru.usecase_train_gru.build_category_mapping')
 @patch('app.usecases.gru.usecase_train_gru.build_vocab')
 def test_train_model_gru_success(mock_build_vocab, mock_build_category_mapping, mock_prepare_sequences, mock_train_gru, patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    """Test successful training of the GRU model."""
+    # Mock dependencies
     mock_inversify, mock_bdd = patch_inversify
-
-    # Mock the return value for get_model to simulate model retrieval
-    mock_bdd.get_model.return_value = {"nn_model": None}
+    mock_model_data = MagicMock()
+    mock_model_data.name = "test_gru_model"
+    mock_model_data.neural_network_type = "GRUClassifier"
+    mock_model_data.nn_model = None
+    mock_bdd.get_model.return_value = mock_model_data
 
     # Mock vocabulary and category mappings
     mock_build_vocab.return_value = ({"hello": 1, "<PAD>": 0}, {1: "hello", 0: "<PAD>"})
@@ -25,59 +27,88 @@ def test_train_model_gru_success(mock_build_vocab, mock_build_category_mapping, 
     # Mock sequence and label preparation
     mock_prepare_sequences.return_value = (MagicMock(), MagicMock())  # sequences, labels
 
-    # Mock the GRU model training
+    # Mock GRU model training
     mock_train_gru.return_value = (MagicMock(), {"final_loss": 0.1, "epochs_run": 5})
 
-    # Create test training data
+    # Test training data
     training_data = [
         GRUTrainingModelData(category="cat1", tokens=["hello", "world"]),
         GRUTrainingModelData(category="cat2", tokens=["another", "sentence"])
     ]
 
-    # Call the train_model_gru function
+    # Call the function
     result = train_model_gru(TrainGRUUsecaseDto(name="test_gru_model", training_data=training_data, inversify=mock_inversify))
 
-    # Verify that update_model was called to save the trained model
+    # Verify model update
     mock_bdd.update_model.assert_called_once()
+    updated_model = mock_bdd.update_model.call_args[0][0]
+    assert updated_model.name == "test_gru_model"
+    assert updated_model.neural_network_type == "GRUClassifier"
 
-    # Check the return value to confirm training completion
+    # Verify return value
     assert result == {
         "status": "Training complete",
         "model_name": "test_gru_model",
         "training_stats": {"final_loss": 0.1, "epochs_run": 5}
     }
 
+
 # Test when the specified model cannot be found
 def test_train_model_gru_model_not_found(patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    """Test the case where the specified GRU model is not found."""
     mock_inversify, mock_bdd = patch_inversify
     mock_bdd.get_model.return_value = None
 
-    # Create test training data
     training_data = [
         GRUTrainingModelData(category="cat1", tokens=["hello", "world"])
     ]
 
-    # Expect an HTTPException with status 404 if the model is not found
-    with pytest.raises(HTTPException) as exc_info:
+    with pytest.raises(Exception, match="Model not found"):
         train_model_gru(TrainGRUUsecaseDto(name="unknown_model", training_data=training_data, inversify=mock_inversify))
 
-    # Verify the exception details
-    assert exc_info.value.status_code == 404
-    assert exc_info.value.detail == "Model not found"
 
-# Test when the training data is missing or empty
+# Test when training data is missing or empty
 def test_train_model_gru_no_training_data(patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+    """Test the case where no training data is provided."""
     mock_inversify, mock_bdd = patch_inversify
+    mock_bdd.get_model.return_value = MagicMock(nn_model=None)
 
-    # Mock the return value for get_model to simulate model retrieval
-    mock_bdd.get_model.return_value = {"nn_model": None}
-
-    # Expect an HTTPException with status 400 if no training data is provided
-    with pytest.raises(HTTPException) as exc_info:
+    with pytest.raises(Exception, match="No training data provided or data is empty"):
         train_model_gru(TrainGRUUsecaseDto(name="test_gru_model", training_data=[], inversify=mock_inversify))
 
-    # Verify the exception details
-    assert exc_info.value.status_code == 400
-    assert exc_info.value.detail == "No training data provided or data is empty"
+
+# Test when there is an error during vocabulary or sequence preparation
+@patch('app.usecases.gru.usecase_train_gru.build_vocab')
+def test_train_model_gru_vocab_error(mock_build_vocab, patch_inversify):
+    """Test error during vocabulary building."""
+    mock_inversify, mock_bdd = patch_inversify
+    mock_bdd.get_model.return_value = MagicMock(nn_model=None)
+    mock_build_vocab.side_effect = Exception("Error building vocabulary")
+
+    training_data = [
+        GRUTrainingModelData(category="cat1", tokens=["hello", "world"])
+    ]
+
+    with pytest.raises(Exception, match="Error building vocabulary"):
+        train_model_gru(TrainGRUUsecaseDto(name="test_gru_model", training_data=training_data, inversify=mock_inversify))
+
+
+# Test when there is an error during model training
+@patch('app.usecases.gru.usecase_train_gru.train_gru')
+def test_train_model_gru_training_error(mock_train_gru, patch_inversify):
+    """Test error during GRU model training."""
+    mock_inversify, mock_bdd = patch_inversify
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=None,
+        name="test_gru_model",
+        neural_network_type="GRUClassifier"
+    )
+    mock_train_gru.side_effect = Exception("Training error")
+
+    training_data = [
+        GRUTrainingModelData(category="cat1", tokens=["hello", "world"]),
+        GRUTrainingModelData(category="cat2", tokens=["another", "sentence"])
+    ]
+
+    with pytest.raises(Exception, match="Training error"):
+        train_model_gru(TrainGRUUsecaseDto(name="test_gru_model", training_data=training_data, inversify=mock_inversify))

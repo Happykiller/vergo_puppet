@@ -13,77 +13,84 @@ def test_mesure_gru_success(mock_process_input, mock_predict, mock_logger, patch
     """
     Tests that the mesure_gru function successfully calculates the model's performance metrics.
     """
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
     mock_inversify, mock_bdd = patch_inversify
 
-    # Simulate model data returned by get_model
-    mock_bdd.get_model.return_value = {
-        "nn_model": MagicMock(),
-        "word2idx": {"hello": 1, "<PAD>": 0},
-        "idx2category": {0: "cat1", 1: "cat2"},
-        "category2idx": {"cat1": 0, "cat2": 1}
-    }
-    
-    # Mock input processing
+    # Mock model data
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=MagicMock(),
+        word2idx={"hello": 1, "<PAD>": 0},
+        idx2category={0: "cat1", 1: "cat2"},
+        category2idx={"cat1": 0, "cat2": 1}
+    )
+
+    # Mock input processing and predictions
     mock_process_input.side_effect = lambda tokens, word2idx: [word2idx.get(token, word2idx['<PAD>']) for token in tokens]
-    
-    # Mock prediction results
-    mock_predict.side_effect = [0, 1]  # Simulate predicted category indices
-    
-    # Create test data
+    mock_predict.side_effect = [0, 1]  # Simulated predictions
+
+    # Test data
     test_data = [
         GRUTrainingModelData(category="cat1", tokens=["hello"]),
         GRUTrainingModelData(category="cat2", tokens=["hello", "world"])
     ]
 
-    # Call the mesure_gru function
-    mesure_gru(MesureGRUUsecaseDto(name="test_gru_model", test_data=test_data, inversify=mock_inversify))
-    
-    # Verify that the expected info logs were called
-    mock_logger.info.assert_any_call("Number of correct predictions: 2/2")
-    mock_logger.info.assert_any_call("Model accuracy rate: 100.00%")
+    # Call the function
+    result = mesure_gru(MesureGRUUsecaseDto(name="test_gru_model", test_data=test_data, inversify=mock_inversify))
+
+    # Verify results and summary
+    summary = result["summary"]
+    detailed_results = result["detailed_results"]
+
+    assert summary["total_tests"] == 2
+    assert summary["correct_predictions"] == 2
+    assert summary["total_error"] == 0
+    assert summary["accuracy"] == 100.0
+
+    assert len(detailed_results) == 2
+    assert detailed_results[0]["expected_category"] == "cat1"
+    assert detailed_results[0]["predicted_category"] == "cat1"
+    assert detailed_results[0]["is_correct"] is True
+
 
 # Test when the model is not trained
-@patch('app.usecases.gru.usecase_mesure_gru.logger')
-def test_mesure_gru_model_not_trained(mock_logger, patch_inversify):
+def test_mesure_gru_model_not_trained(patch_inversify):
     """
     Tests that the mesure_gru function raises an exception if the model is not trained.
     """
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
     mock_inversify, mock_bdd = patch_inversify
-    
-    # Create test data
-    test_data = [GRUTrainingModelData(category="cat1", tokens=["hello"])]
-    mock_bdd.get_model.return_value={"nn_model": None}
 
-    # Verify that an exception is raised for an untrained model
+    # Mock model data with an untrained model
+    mock_bdd.get_model.return_value = MagicMock(nn_model=None)
+
+    # Test data
+    test_data = [GRUTrainingModelData(category="cat1", tokens=["hello"])]
+
     with pytest.raises(Exception, match="Model is not trained"):
         mesure_gru(MesureGRUUsecaseDto(name="test_gru_model", test_data=test_data, inversify=mock_inversify))
-    
-    # Verify that the error was logged
-    mock_logger.error.assert_called_once_with("An error occurred during measurement: 400: Model is not trained")
 
-# Test when the model data is incomplete
-@patch('app.usecases.gru.usecase_mesure_gru.logger')
-def test_mesure_gru_incomplete_model_data(mock_logger, patch_inversify):
+
+# Test when model data is incomplete
+def test_mesure_gru_incomplete_model_data(patch_inversify):
     """
     Tests that the mesure_gru function raises an exception if model data is incomplete.
     """
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
     mock_inversify, mock_bdd = patch_inversify
 
-    # Create test data
-    test_data = [GRUTrainingModelData(category="cat1", tokens=["hello"])]
-    mock_bdd.get_model.return_value={"nn_model": MagicMock(), "word2idx": None}
+    # Mock incomplete model data
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=MagicMock(),
+        word2idx=None,
+        idx2category=None,
+        category2idx=None
+    )
 
-    # Verify that an exception is raised for incomplete model data
+    # Test data
+    test_data = [GRUTrainingModelData(category="cat1", tokens=["hello"])]
+
     with pytest.raises(Exception, match="Model data is incomplete"):
         mesure_gru(MesureGRUUsecaseDto(name="test_gru_model", test_data=test_data, inversify=mock_inversify))
-    
-    # Verify that the error was logged
-    mock_logger.error.assert_called_once_with("An error occurred during measurement: Model data is incomplete")
 
-# Test when an unknown category is present in the test data
+
+# Test when an unknown category is present in test data
 @patch('app.usecases.gru.usecase_mesure_gru.logger')
 @patch('app.usecases.gru.usecase_mesure_gru.predict')
 @patch('app.usecases.gru.usecase_mesure_gru.process_input')
@@ -91,29 +98,57 @@ def test_mesure_gru_unknown_category_in_test_data(mock_process_input, mock_predi
     """
     Tests that the mesure_gru function logs a warning when an unknown category is encountered in test data.
     """
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
     mock_inversify, mock_bdd = patch_inversify
 
-    # Simulate model data
-    mock_bdd.get_model.return_value = {
-        "nn_model": MagicMock(),
-        "word2idx": {"hello": 1, "<PAD>": 0},
-        "idx2category": {0: "cat1", 1: "cat2"},
-        "category2idx": {"cat1": 0, "cat2": 1}
-    }
-    
-    # Mock input processing and prediction
+    # Mock model data
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=MagicMock(),
+        word2idx={"hello": 1, "<PAD>": 0},
+        idx2category={0: "cat1", 1: "cat2"},
+        category2idx={"cat1": 0, "cat2": 1}
+    )
+
+    # Mock input processing and predictions
     mock_process_input.return_value = [1, 0]
     mock_predict.return_value = 0  # Predicted category 'cat1'
 
-    # Create test data with an unknown category
+    # Test data with an unknown category
     test_data = [
         GRUTrainingModelData(category="cat1", tokens=["hello"]),
         GRUTrainingModelData(category="unknown_cat", tokens=["world"])
     ]
 
-    # Call the mesure_gru function
+    # Call the function
     mesure_gru(MesureGRUUsecaseDto(name="test_gru_model", test_data=test_data, inversify=mock_inversify))
-    
-    # Verify that the warning for the unknown category was logged
+
+    # Verify the warning log for the unknown category
     mock_logger.warning.assert_called_once_with("Unknown category in test data: 'unknown_cat'. It was not seen during training.")
+
+
+# Test when no test data is provided
+def test_mesure_gru_no_test_data(patch_inversify):
+    """
+    Tests that the mesure_gru function handles an empty test dataset gracefully.
+    """
+    mock_inversify, mock_bdd = patch_inversify
+
+    # Mock model data
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=MagicMock(),
+        word2idx={"hello": 1, "<PAD>": 0},
+        idx2category={0: "cat1", 1: "cat2"},
+        category2idx={"cat1": 0, "cat2": 1}
+    )
+
+    # Empty test data
+    test_data = []
+
+    # Call the function
+    result = mesure_gru(MesureGRUUsecaseDto(name="test_gru_model", test_data=test_data, inversify=mock_inversify))
+
+    # Verify the summary
+    summary = result["summary"]
+    assert summary["total_tests"] == 0
+    assert summary["correct_predictions"] == 0
+    assert summary["total_error"] == 0
+    assert summary["accuracy"] == 0.0

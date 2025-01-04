@@ -1,8 +1,8 @@
 # app\usecases\simple\usecase_create_simple_test.py
 import pytest
-from fastapi import HTTPException  # type: ignore
 
 from app.usecases.simple.usecase_create_simple import CreateSimpleUsecaseDto, create_model_simple_nn
+from app.services.bdd.models.model_data import ModelData
 
 # Test when the model is created successfully
 def test_create_model_simple_nn_success(patch_inversify):
@@ -18,11 +18,19 @@ def test_create_model_simple_nn_success(patch_inversify):
     # Call the create_model_simple_nn function
     response = create_model_simple_nn(CreateSimpleUsecaseDto(name=model_name, inversify=mock_inversify))
     
-    # Verify that the save_model function was called correctly
-    mock_bdd.save_model.assert_called_once_with(model_name, {"neural_network_type": "SimpleNN"})
-    
+    # Verify that the save_model function was called correctly with ModelData
+    expected_model_data = ModelData(name=model_name, neural_network_type="SimpleNN")
+    mock_bdd.save_model.assert_called_once()
+    actual_model_data = mock_bdd.save_model.call_args[0][0]  # Get the first positional argument
+
+    # Ensure the correct instance and attributes
+    assert isinstance(actual_model_data, ModelData)
+    assert actual_model_data.name == expected_model_data.name
+    assert actual_model_data.neural_network_type == expected_model_data.neural_network_type
+
     # Verify the response
     assert response == {"status": "model created", "model_name": model_name}
+
 
 # Test when the model already exists
 def test_create_model_simple_nn_model_already_exists(patch_inversify):
@@ -35,13 +43,13 @@ def test_create_model_simple_nn_model_already_exists(patch_inversify):
 
     model_name = "existing_model"
     
-    # Check that an HTTP 400 exception is raised
-    with pytest.raises(HTTPException) as exc_info:
+    # Check that an exception is raised
+    with pytest.raises(Exception) as exc_info:
         create_model_simple_nn(CreateSimpleUsecaseDto(name=model_name, inversify=mock_inversify))
     
-    # Verify the error message and status code
-    assert exc_info.value.status_code == 400
-    assert exc_info.value.detail == "Model already exists"
+    # Verify the error message
+    assert str(exc_info.value) == "Model already exists"
+
 
 # Test when the model is saved with the correct data
 def test_create_model_simple_nn_save_called_with_correct_data(patch_inversify):
@@ -58,11 +66,15 @@ def test_create_model_simple_nn_save_called_with_correct_data(patch_inversify):
     # Call the create_model_simple_nn function
     response = create_model_simple_nn(CreateSimpleUsecaseDto(name=model_name, inversify=mock_inversify))
     
-    # Verify that save_model was called with the correct arguments
-    expected_model_data = {
-        "neural_network_type": "SimpleNN"
-    }
-    mock_bdd.save_model.assert_called_once_with(model_name, expected_model_data)
-    
+    # Verify that save_model was called with the correct ModelData
+    expected_model_data = ModelData(name=model_name, neural_network_type="SimpleNN")
+    mock_bdd.save_model.assert_called_once()
+    actual_model_data = mock_bdd.save_model.call_args[0][0]  # Get the first positional argument
+
+    # Ensure the correct instance and attributes
+    assert isinstance(actual_model_data, ModelData)
+    assert actual_model_data.name == expected_model_data.name
+    assert actual_model_data.neural_network_type == expected_model_data.neural_network_type
+
     # Verify the response
     assert response == {"status": "model created", "model_name": model_name}

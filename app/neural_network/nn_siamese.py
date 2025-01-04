@@ -4,8 +4,8 @@ import torch.nn as nn
 import torch.optim as optim
 from typing import List, Tuple
 import torch.nn.functional as F
-from torch.utils.data import Dataset, DataLoader
 import time  # For measuring training time
+from torch.utils.data import Dataset, DataLoader
 
 from app.services.logger import logger  # Import custom logger
 
@@ -19,6 +19,12 @@ class SiameseLSTM(nn.Module):
         :param hidden_dim: Dimension of LSTM hidden states.
         """
         super(SiameseLSTM, self).__init__()
+        # Store the initialization parameters for later access
+        self.args = {
+            "vocab_size": vocab_size,
+            "embedding_dim": embedding_dim,
+            "hidden_dim": hidden_dim
+        }
         # Embedding layer to convert word indices to dense vectors
         self.embedding = nn.Embedding(vocab_size, embedding_dim)
         # LSTM to encode sequences
@@ -190,6 +196,8 @@ def evaluate_similarity(
     idxs1: List[int],
     idxs2: List[int]
 ) -> float:
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    model = model.to(device)
     model.eval()
     with torch.no_grad():
         torch1 = torch.tensor(idxs1, dtype=torch.long)
@@ -199,8 +207,6 @@ def evaluate_similarity(
         torch2 = torch.tensor(idxs2, dtype=torch.long)
         seq2 = torch2.unsqueeze(0)
         lengths2 = torch.tensor([len(idxs2)])
-
-        device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         seq1, lengths1 = seq1.to(device), lengths1.to(device)
         seq2, lengths2 = seq2.to(device), lengths2.to(device)
 

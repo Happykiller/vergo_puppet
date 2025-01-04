@@ -16,7 +16,7 @@ class FakeBDDService(BDDService):
         self.search_buffer = {}
         logger.debug("Bdd: Fake Bdd initialized")
 
-    def save_model(self, name: str, data: ModelData):
+    def save_model(self, data: ModelData):
         """
         Save a model with the given name and data to the in-memory storage.
         :param name: The name of the model to save.
@@ -24,7 +24,7 @@ class FakeBDDService(BDDService):
         """
         if not isinstance(data, ModelData):
             raise ValueError("Data must be an instance of ModelData.")
-        self.models[name] = data.serialize()
+        self.models[data.name] = data.serialize()
 
     def get_model(self, name: str, model_class: Optional[torch.nn.Module] = None) -> Optional[ModelData]:
         """
@@ -46,17 +46,17 @@ class FakeBDDService(BDDService):
         """
         return name in self.models
 
-    def update_model(self, name: str, data: ModelData):
+    def update_model(self, data: ModelData):
         """
         Update an existing model's data with new information.
         :param name: The name of the model to update.
         :param data: An instance of ModelData.
         """
-        if name not in self.models:
-            raise ValueError(f"Model '{name}' does not exist.")
+        if data.name not in self.models:
+            raise ValueError(f"Model '{data.name}' does not exist.")
         if not isinstance(data, ModelData):
             raise ValueError("Data must be an instance of ModelData.")
-        self.models[name] = data.serialize()
+        self.models[data.name] = data.serialize()
 
     def get_all_models(self):
         """

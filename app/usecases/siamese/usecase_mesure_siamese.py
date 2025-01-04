@@ -1,9 +1,10 @@
 # app\usecases\siamese\usecase_mesure_siamese.py
+import traceback
 from typing import List, NamedTuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.neural_network.nn_siamese import evaluate_similarity
+from app.neural_network.nn_siamese import SiameseLSTM, evaluate_similarity
 from app.usecases.siamese.usecase_commons_siamese import create_indexed_glossary, tokens_to_indices
 
 class MesureSiameseUsecaseDto(NamedTuple):
@@ -22,12 +23,12 @@ def mesure_siamese(dto: MesureSiameseUsecaseDto):
         details = []
         
         # Retrieve the model
-        model = bdd.get_model(dto.name)
+        model = bdd.get_model(dto.name, SiameseLSTM)
         if not model:
             raise Exception("Model not found")
 
-        glossary = model.get("glossary", [])
-        nn_model = model.get("nn_model", None)
+        glossary = model.glossary
+        nn_model = model.nn_model
         if not nn_model:
             raise Exception("Model not completed")
 
@@ -91,6 +92,5 @@ def mesure_siamese(dto: MesureSiameseUsecaseDto):
         return report
     
     except Exception as e:
-        # General error handling
-        logger.error(f"An error occurred during siamese testing: {str(e)}")
-        raise Exception(f"An error occurred during siamese testing: {str(e)}")
+        logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")
+        raise Exception(f"[#search_model_siamese]{str(e)}")

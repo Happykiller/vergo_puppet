@@ -1,11 +1,12 @@
 # app\usecases\gru\usecase_train_gru.py
-from typing import List, Dict, NamedTuple
+import traceback
 from collections import Counter
-from app.inversify import Inversify
-from fastapi import HTTPException  # type: ignore
+from typing import List, Dict, NamedTuple
 
+from app.inversify import Inversify
 from app.services.logger import logger
-from app.neural_network.nn_gru import train_gru
+from app.services.bdd.models.model_data import ModelData
+from app.neural_network.nn_gru import GRUClassifier, train_gru
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 
 class TrainGRUUsecaseDto(NamedTuple):
@@ -19,79 +20,83 @@ def train_model_gru(dto: TrainGRUUsecaseDto):
     :param name: Model name.
     :param training_data: List of training data.
     """
-    # Fetch Bdd
-    bdd = dto.inversify.get_bdd()
-    
-    model = bdd.get_model(dto.name)
-    
-    # Check if model exists
-    if model is None or not model:
-        raise HTTPException(status_code=404, detail="Model not found")
-    
-    # Check if training data is valid
-    if dto.training_data is None or len(dto.training_data) == 0:
-        raise HTTPException(status_code=400, detail="No training data provided or data is empty")
-    
-    logger.info("Machine learning type for training: GRU")
-    
-    # Display training data statistics
-    num_documents = len(dto.training_data)
-    categories = [data.category for data in dto.training_data]
-    category_counts = Counter(categories)
-    num_categories = len(category_counts)
-    
-    logger.info(f"Number of documents: {num_documents}")
-    logger.info(f"Number of categories: {num_categories}")
-    logger.info("Category distribution:")
-    for category, count in category_counts.items():
-        percentage = (count / num_documents) * 100
-        logger.info(f" - {category}: {count} documents ({percentage:.2f}%)")
-    
-    # Analyze sequence lengths
-    sequence_lengths = [len(data.tokens) for data in dto.training_data]
-    max_seq_length = max(sequence_lengths)
-    min_seq_length = min(sequence_lengths)
-    avg_seq_length = sum(sequence_lengths) / num_documents
-    
-    logger.info(f"Max sequence length: {max_seq_length}")
-    logger.info(f"Min sequence length: {min_seq_length}")
-    logger.info(f"Average sequence length: {avg_seq_length:.2f}")
-    
-    # Build vocabulary for the model
-    word2idx, idx2word = build_vocab(dto.training_data)
-    vocab_size = len(word2idx)
-    logger.info(f"Vocabulary size: {vocab_size}")
-    
-    # Map categories to indices
-    category2idx, idx2category = build_category_mapping(dto.training_data)
-    
-    # Prepare sequences and labels for training
-    sequences, labels = prepare_sequences(dto.training_data, word2idx, category2idx, max_seq_length)
-    
-    # Set model parameters
-    num_classes = len(category2idx)
+    try:
+        # Fetch Bdd
+        bdd = dto.inversify.get_bdd()
+        
+        model = bdd.get_model(dto.name, GRUClassifier)
+        
+        # Check if model exists
+        if model is None or not model:
+            raise Exception("Model not found")
+        
+        # Check if training data is valid
+        if dto.training_data is None or len(dto.training_data) == 0:
+            raise Exception("No training data provided or data is empty")
+        
+        logger.info("Machine learning type for training: GRU")
+        
+        # Display training data statistics
+        num_documents = len(dto.training_data)
+        categories = [data.category for data in dto.training_data]
+        category_counts = Counter(categories)
+        num_categories = len(category_counts)
+        
+        logger.info(f"Number of documents: {num_documents}")
+        logger.info(f"Number of categories: {num_categories}")
+        logger.info("Category distribution:")
+        for category, count in category_counts.items():
+            percentage = (count / num_documents) * 100
+            logger.info(f" - {category}: {count} documents ({percentage:.2f}%)")
+        
+        # Analyze sequence lengths
+        sequence_lengths = [len(data.tokens) for data in dto.training_data]
+        max_seq_length = max(sequence_lengths)
+        min_seq_length = min(sequence_lengths)
+        avg_seq_length = sum(sequence_lengths) / num_documents
+        
+        logger.info(f"Max sequence length: {max_seq_length}")
+        logger.info(f"Min sequence length: {min_seq_length}")
+        logger.info(f"Average sequence length: {avg_seq_length:.2f}")
+        
+        # Build vocabulary for the model
+        word2idx, idx2word = build_vocab(dto.training_data)
+        vocab_size = len(word2idx)
+        logger.info(f"Vocabulary size: {vocab_size}")
+        
+        # Map categories to indices
+        category2idx, idx2category = build_category_mapping(dto.training_data)
+        
+        # Prepare sequences and labels for training
+        sequences, labels = prepare_sequences(dto.training_data, word2idx, category2idx, max_seq_length)
+        
+        # Set model parameters
+        num_classes = len(category2idx)
 
-    # Train the model
-    logger.info("Training model...")
-    # Train the model and retrieve statistics
-    model, training_stats = train_gru(vocab_size, num_classes, sequences, labels)
-    
-    # Save trained model, mappings, and hyperparameters
-    model_data = {
-        "neural_network_type": "GRU",
-        "nn_model": model,
-        "word2idx": word2idx,
-        "idx2word": idx2word,
-        "category2idx": category2idx,
-        "idx2category": idx2category
-    }
-    bdd.update_model(dto.name, model_data)
-    
-    return {
-        "status": "Training complete",
-        "model_name": dto.name,
-        "training_stats": training_stats
-    }
+        # Train the model
+        logger.info("Training model...")
+        # Train the model and retrieve statistics
+        nn_model, training_stats = train_gru(vocab_size, num_classes, sequences, labels)
+        
+        # Save trained model, mappings, and hyperparameters
+        bdd.update_model(ModelData(
+            name=model.name,
+            neural_network_type=model.neural_network_type,
+            nn_model=nn_model,
+            word2idx=word2idx,
+            idx2word=idx2word,
+            category2idx=category2idx,
+            idx2category=idx2category
+        ))
+        
+        return {
+            "status": "Training complete",
+            "model_name": dto.name,
+            "training_stats": training_stats
+        }
+    except Exception as e:
+        logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")
+        raise Exception(f"[#search_model_simple_nn]{str(e)}")
 
 def build_vocab(training_data: List[GRUTrainingModelData]):
     """

@@ -1,10 +1,10 @@
 # app\usecases\simple\usecase_mesure_simple.py
-import joblib
+import traceback
 from typing import Any, Dict, List, NamedTuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.neural_network.nn_simple import predict
+from app.neural_network.nn_simple import SimpleNN, predict
 from app.usecases.simple.usecase_commons_simple import process_input_data
 from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 
@@ -25,25 +25,20 @@ def mesure_simple_nn(dto: MesureSimpleUsecaseDto) -> Dict[str, Any]:
         total_tests = len(dto.test_data)
         
         # Retrieve model and associated parameters
-        model = bdd.get_model(dto.name)
-        nn_model = model.get("nn_model", None)
+        model = bdd.get_model(dto.name, SimpleNN)
+        nn_model = model.nn_model
         if nn_model is None:
             raise Exception("Model not trained yet")
         
-        encoder_filename = model.get("encoder_filename")
-        scaler_filename = model.get("scaler_filename")
-        indices_filename = model.get("indices_filename")
-        if not encoder_filename or not scaler_filename or not indices_filename:
+        # Check for missing encoder, scaler, or indices
+        if not model.encoder or not model.scaler or not model.indices:
             raise Exception("Missing encoder, scaler, or indices in the model")
         
-        encoder = joblib.load(encoder_filename)
-        scaler = joblib.load(scaler_filename)
-        indices_info = joblib.load(indices_filename)
-        categorical_indices = indices_info["categorical_indices"]
-        numerical_indices = indices_info["numerical_indices"]
-        
-        targets_mean = model.get("targets_mean")
-        targets_std = model.get("targets_std")
+        # Retrieve the target normalization parameters
+        categorical_indices = model.indices["categorical_indices"]
+        numerical_indices = model.indices["numerical_indices"]
+        targets_mean = model.targets_mean
+        targets_std = model.targets_std
         if targets_mean is None or targets_std is None:
             raise Exception("Missing normalization parameters in the model")
         
@@ -55,7 +50,7 @@ def mesure_simple_nn(dto: MesureSimpleUsecaseDto) -> Dict[str, Any]:
             expected = data.price
             
             # Process input
-            input_processed = process_input_data(input_data, encoder, scaler, categorical_indices, numerical_indices)
+            input_processed = process_input_data(input_data, model.encoder, model.scaler, categorical_indices, numerical_indices)
             predicted = predict(nn_model, input_processed, targets_mean, targets_std)
             
             # Calculate error
@@ -99,5 +94,5 @@ def mesure_simple_nn(dto: MesureSimpleUsecaseDto) -> Dict[str, Any]:
             },
         }
     except Exception as e:
-        logger.error(f"An error occurred during measurement: {str(e)}")
-        raise Exception(f"An error occurred during measurement: {str(e)}")
+        logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")
+        raise Exception(f"[#mesure_simple_nn]{str(e)}")

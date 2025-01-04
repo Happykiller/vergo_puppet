@@ -16,11 +16,11 @@ class MongoBDDService(BDDService):
         self.database = self.client[database_name]
         logger.info(f"Connected to MongoDB at {uri}")
 
-    def save_model(self, model_data: ModelData):
+    def save_model(self, data: ModelData):
         """Save a ModelData instance to MongoDB."""
-        serialized_data = model_data.serialize()
+        serialized_data = data.serialize()
         self.database.models.update_one(
-            {"name": model_data.name}, {"$set": serialized_data}, upsert=True
+            {"name": data.name}, {"$set": serialized_data}, upsert=True
         )
 
     def get_model(self, name: str, model_class: Optional[torch.nn.Module] = None) -> Optional[ModelData]:
@@ -30,7 +30,7 @@ class MongoBDDService(BDDService):
             return None
         return ModelData.deserialize(record, model_class=model_class)
 
-    def update_model(self, name: str, data: ModelData):
+    def update_model(self, data: ModelData):
         """
         Update an existing model in MongoDB.
 
@@ -44,7 +44,7 @@ class MongoBDDService(BDDService):
         serialized_data = data.serialize()
 
         # Mettre à jour les données dans MongoDB
-        self.database.models.update_one({"name": name}, {"$set": serialized_data}, upsert=True)
+        self.database.models.update_one({"name": data.name}, {"$set": serialized_data}, upsert=True)
 
     def model_exists(self, name: str):
         """Check if a model exists in MongoDB."""

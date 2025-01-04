@@ -1,4 +1,6 @@
 # services/bdd_service.py
+import torch
+from typing import Optional
 from abc import ABC, abstractmethod
 
 from app.services.bdd.models.model_data import ModelData
@@ -7,11 +9,11 @@ class BDDService(ABC):
     """Abstract Base Class for database service."""
 
     @abstractmethod
-    def save_model(name: str, data: ModelData):
+    def save_model(model_data: ModelData):
         pass
 
     @abstractmethod
-    def get_model(name: str):
+    def get_model(self, name: str, model_class: Optional[torch.nn.Module] = None) -> Optional[ModelData]:
         pass
 
     @abstractmethod
@@ -19,7 +21,7 @@ class BDDService(ABC):
         pass
 
     @abstractmethod
-    def update_model(name: str, data: ModelData):
+    def update_model(data: ModelData):
         pass
 
     @abstractmethod

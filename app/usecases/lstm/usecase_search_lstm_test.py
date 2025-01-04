@@ -1,91 +1,101 @@
-#app\usecases\lstm\usecase_search_lstm_test.py
+# app\usecases\lstm\usecase_search_lstm_test.py
+from app.services.bdd.models.model_data import ModelData
 import pytest
 import numpy as np
+import pandas as pd
 from datetime import datetime, timezone
 from unittest.mock import patch, MagicMock
-from fastapi import HTTPException # type: ignore
 
 from app.apis.models.weather_model_data import WeatherSearchModelData
 from app.usecases.lstm.usecase_search_lstm import SearchLSTMUsecaseDto, search_lstm
 
+
 # Test for successful prediction
-@patch('app.usecases.lstm.usecase_search_lstm.joblib.load')
 @patch('app.usecases.lstm.usecase_search_lstm.predict_nn_lstm')
-def test_search_lstm_success(mock_predict_nn_lstm, mock_joblib_load, patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+@patch('app.usecases.lstm.usecase_search_lstm.preprocess_input_data')
+@patch('app.usecases.lstm.usecase_search_lstm.inverse_transform_predictions')
+def test_search_lstm_success(mock_inverse_transform, mock_preprocess_input, mock_predict_nn_lstm, patch_inversify):
     mock_inversify, mock_bdd = patch_inversify
 
-    # Mock model data to simulate an LSTM model
-    mock_model = {
-        "nn_model": MagicMock()
-    }
-    mock_model["nn_model"].eval = MagicMock()
+    # Simulate model data
+    mock_model = MagicMock()
+    mock_model.nn_model = MagicMock()
+    mock_model.nn_model.eval = MagicMock()
+    mock_model.scaler = MagicMock()
+    mock_model.encoder = MagicMock()
+    mock_model.target_scaler = MagicMock()
     mock_bdd.get_model.return_value = mock_model
 
-    # Mock scaler, target_scaler, and encoder
-    mock_scaler = MagicMock()
-    mock_target_scaler = MagicMock()
-    mock_encoder = MagicMock()
-    mock_joblib_load.side_effect = [mock_scaler, mock_target_scaler, mock_encoder]
+    # Mock preprocessing and predictions
+    mock_preprocess_input.return_value = pd.DataFrame([[0.1, 0.2]], columns=["feature1", "feature2"])
+    mock_predict_nn_lstm.return_value = np.array([[0.5]])
+    mock_inverse_transform.return_value = np.array([22.5])
 
-    # Mock predict function to return a normalized prediction
-    mock_predict_nn_lstm.return_value = np.array([[0.5]])  # Simulated normalized prediction
-
-    # Mock inverse transformation to provide a simulated temperature prediction
-    mock_target_scaler.inverse_transform.return_value = np.array([[22.5]])  # Simulated temperature prediction
-
-    # Test data with required fields, including time
+    # Test input data
     input_data = WeatherSearchModelData(
         time=datetime(2023, 1, 1, 0, 0, tzinfo=timezone.utc),
         dwpt=10.0, rhum=60, prcp=0.0, snow=0.0, wdir=180, wspd=10, wpgt=15,
         pres=1013, tsun=0, coco=3
     )
 
-    # Run the function
+    # Call the function
     result = search_lstm(SearchLSTMUsecaseDto(name="test_model", search=input_data, inversify=mock_inversify))
 
-    # Assertions on result
-    assert result["prediction"] == 22.5, "The predicted temperature should match the inverse transformed value."
+    # Assertions
+    assert result["prediction"] == 22.5, "Prediction should match the transformed value"
+    mock_predict_nn_lstm.assert_called_once()
+
+    # Validate the DataFrame passed to preprocess_input_data
+    called_df = mock_preprocess_input.call_args[0][0]
+    pd.testing.assert_frame_equal(
+        called_df,
+        pd.DataFrame([input_data.dict()]),
+        check_dtype=False  # Disable dtype checking for flexibility in mocks
+    )
+
+    mock_preprocess_input.assert_called_once_with(called_df, mock_model.scaler, mock_model.encoder)
+    mock_inverse_transform.assert_called_once_with(np.array([[0.5]]), mock_model.target_scaler)
+
 
 # Test for model not found
 def test_search_lstm_model_not_found(patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
     mock_inversify, mock_bdd = patch_inversify
-    mock_bdd.get_model.return_value = None
+    mock_bdd.get_model.return_value = ModelData(
+        nn_model=None,
+        name="test_model",
+        neural_network_type="LSTMNN"
+    )
 
-    # Test data with required fields, including time
     input_data = WeatherSearchModelData(
         time=datetime(2023, 1, 1, 0, 0, tzinfo=timezone.utc),
         dwpt=10.0, rhum=60, prcp=0.0, snow=0.0, wdir=180, wspd=10, wpgt=15,
         pres=1013, tsun=0, coco=3
     )
 
-    # Expect an HTTP 404 exception if the model is not found
-    with pytest.raises(HTTPException) as exc_info:
+    # Expect exception
+    with pytest.raises(Exception, match="Model not found"):
         search_lstm(SearchLSTMUsecaseDto(name="unknown_model", search=input_data, inversify=mock_inversify))
 
-    # Verify the exception status and message
-    assert exc_info.value.status_code == 404
-    assert exc_info.value.detail == "Model not found"
 
 # Test for missing scaler or encoder files
-@patch('app.usecases.lstm.usecase_search_lstm.joblib.load', side_effect=FileNotFoundError("File not found"))
-def test_search_lstm_missing_files(mock_joblib_load, patch_inversify):
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
+@patch('app.usecases.lstm.usecase_search_lstm.preprocess_input_data', side_effect=FileNotFoundError("File not found"))
+def test_search_lstm_missing_files(mock_preprocess_input, patch_inversify):
     mock_inversify, mock_bdd = patch_inversify
-    # Mock model data to simulate a model with missing files
-    mock_model = {
-        "nn_model": MagicMock()
-    }
+
+    # Simulate model data
+    mock_model = MagicMock()
+    mock_model.nn_model = MagicMock()
+    mock_model.scaler = MagicMock()
+    mock_model.encoder = MagicMock()
+    mock_model.target_scaler = MagicMock()
     mock_bdd.get_model.return_value = mock_model
 
-    # Test data with required fields, including time
     input_data = WeatherSearchModelData(
         time=datetime(2023, 1, 1, 0, 0, tzinfo=timezone.utc),
         dwpt=10.0, rhum=60, prcp=0.0, snow=0.0, wdir=180, wspd=10, wpgt=15,
         pres=1013, tsun=0, coco=3
     )
 
-    # Expect an exception for missing files
-    with pytest.raises(FileNotFoundError, match="File not found"):
+    # Expect exception
+    with pytest.raises(Exception, match=r"\[#search_lstm\]File not found"):
         search_lstm(SearchLSTMUsecaseDto(name="test_model", search=input_data, inversify=mock_inversify))

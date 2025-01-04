@@ -15,6 +15,12 @@ class SimpleNN(nn.Module):
         - output_size: size of the output vector
         """
         super(SimpleNN, self).__init__()
+        # Store the initialization parameters for later access
+        self.args = {
+            "input_size": input_size,
+            "hidden_size": hidden_size,
+            "output_size": output_size,
+        }
         # First fully connected layer
         self.fc1 = nn.Linear(input_size, hidden_size)
         # ReLU activation after the first layer

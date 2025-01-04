@@ -5,28 +5,21 @@ from unittest.mock import patch, MagicMock
 from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
 from app.usecases.simple.usecase_mesure_simple import MesureSimpleUsecaseDto, mesure_simple_nn
 
-# Test that mesure_simple_nn returns valid results with proper test data
-@patch('app.usecases.simple.usecase_mesure_simple.predict')
-@patch('app.usecases.simple.usecase_mesure_simple.process_input_data')
-@patch('app.usecases.simple.usecase_mesure_simple.joblib.load')
-def test_mesure_simple_nn_success(mock_joblib_load, mock_process_input_data, mock_predict, patch_inversify):
-    # Mock dependencies
-    mock_inversify, mock_bdd = patch_inversify
-    mock_bdd.get_model.return_value = {
-        "nn_model": MagicMock(),
-        "encoder_filename": "encoder.pkl",
-        "scaler_filename": "scaler.pkl",
-        "indices_filename": "indices.pkl",
-        "targets_mean": 0.5,
-        "targets_std": 0.2
-    }
 
-    # Simulate loading of encoder, scaler, and indices
-    mock_joblib_load.side_effect = [
-        MagicMock(),  # Encoder
-        MagicMock(),  # Scaler
-        {"categorical_indices": [0, 4, 5], "numerical_indices": [1, 2, 3]}  # Indices info
-    ]
+# Test that mesure_simple_nn returns valid results with proper test data
+@patch("app.usecases.simple.usecase_mesure_simple.predict")
+@patch("app.usecases.simple.usecase_mesure_simple.process_input_data")
+def test_mesure_simple_nn_success(mock_process_input_data, mock_predict, patch_inversify):
+    """Test successful execution of mesure_simple_nn with valid test data."""
+    mock_inversify, mock_bdd = patch_inversify
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=MagicMock(),
+        encoder=MagicMock(),
+        scaler=MagicMock(),
+        indices={"categorical_indices": [0, 4, 5], "numerical_indices": [1, 2, 3]},
+        targets_mean=0.5,
+        targets_std=0.2,
+    )
 
     # Mock processed input data and model prediction
     mock_process_input_data.return_value = [[0.5, 1.2, 0.8]]
@@ -61,10 +54,12 @@ def test_mesure_simple_nn_success(mock_joblib_load, mock_process_input_data, moc
     assert metrics["mean_absolute_error"] == pytest.approx(10000)
     assert metrics["mean_absolute_percentage_error"] == pytest.approx(2.78, rel=1e-2)
 
+
 # Test handling when the model is not trained
 def test_mesure_simple_nn_model_not_trained(patch_inversify):
+    """Test the case where the model is not trained yet."""
     mock_inversify, mock_bdd = patch_inversify
-    mock_bdd.get_model.return_value = {"nn_model": None}
+    mock_bdd.get_model.return_value = MagicMock(nn_model=None)
 
     test_data = [
         SimpleNNTrainingModelData(
@@ -76,15 +71,17 @@ def test_mesure_simple_nn_model_not_trained(patch_inversify):
     with pytest.raises(Exception, match="Model not trained yet"):
         mesure_simple_nn(MesureSimpleUsecaseDto(name="test_model", test_data=test_data, inversify=mock_inversify))
 
-# Test handling if encoder, scaler, or indices files are missing
+
+# Test handling if encoder, scaler, or indices are missing
 def test_mesure_simple_nn_missing_files(patch_inversify):
+    """Test the case where encoder, scaler, or indices are missing."""
     mock_inversify, mock_bdd = patch_inversify
-    mock_bdd.get_model.return_value = {
-        "nn_model": MagicMock(),
-        "encoder_filename": None,
-        "scaler_filename": None,
-        "indices_filename": None
-    }
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=MagicMock(),
+        encoder=None,  # Missing encoder
+        scaler=None,   # Missing scaler
+        indices=None,  # Missing indices
+    )
 
     test_data = [
         SimpleNNTrainingModelData(
@@ -96,24 +93,19 @@ def test_mesure_simple_nn_missing_files(patch_inversify):
     with pytest.raises(Exception, match="Missing encoder, scaler, or indices in the model"):
         mesure_simple_nn(MesureSimpleUsecaseDto(name="test_model", test_data=test_data, inversify=mock_inversify))
 
-# Test handling when target normalization parameters are missing
-@patch('app.usecases.simple.usecase_mesure_simple.joblib.load')
-def test_mesure_simple_nn_missing_normalization_parameters(mock_joblib_load, patch_inversify):
-    mock_inversify, mock_bdd = patch_inversify
-    mock_bdd.get_model.return_value = {
-        "nn_model": MagicMock(),
-        "encoder_filename": "encoder.pkl",
-        "scaler_filename": "scaler.pkl",
-        "indices_filename": "indices.pkl",
-        "targets_mean": None,
-        "targets_std": None
-    }
 
-    mock_joblib_load.side_effect = [
-        MagicMock(),  # Encoder
-        MagicMock(),  # Scaler
-        {"categorical_indices": [0, 4, 5], "numerical_indices": [1, 2, 3]}  # Indices info
-    ]
+# Test handling when target normalization parameters are missing
+def test_mesure_simple_nn_missing_normalization_parameters(patch_inversify):
+    """Test the case where normalization parameters are missing."""
+    mock_inversify, mock_bdd = patch_inversify
+    mock_bdd.get_model.return_value = MagicMock(
+        nn_model=MagicMock(),
+        encoder=MagicMock(),
+        scaler=MagicMock(),
+        indices={"categorical_indices": [0, 4, 5], "numerical_indices": [1, 2, 3]},
+        targets_mean=None,  # Missing targets_mean
+        targets_std=None,   # Missing targets_std
+    )
 
     test_data = [
         SimpleNNTrainingModelData(

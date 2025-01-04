@@ -1,6 +1,6 @@
 # app\usecases\simple\usecase_create_simple.py
 from typing import NamedTuple, Optional
-from fastapi import HTTPException  # type: ignore
+from app.services.bdd.models.model_data import ModelData
 
 from app.inversify import Inversify
 from app.services.logger import logger
@@ -17,12 +17,9 @@ def create_model_simple_nn(dto: CreateSimpleUsecaseDto):
     bdd = dto.inversify.get_bdd()
 
     if bdd.model_exists(dto.name):
-        raise HTTPException(status_code=400, detail="Model already exists")
+        raise Exception("Model already exists")
 
     # Save the model with its glossary and index dictionary
-    model_data = {
-        "neural_network_type": "SimpleNN"  # Save the model type
-    }
-    bdd.save_model(dto.name, model_data)
+    bdd.save_model(ModelData(name=dto.name, neural_network_type="SimpleNN"))
 
     return {"status": "model created", "model_name": dto.name}
