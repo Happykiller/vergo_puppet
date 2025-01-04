@@ -64,7 +64,7 @@ def test_train_lstm_nan_in_data(mock_preprocess_data, mock_prepare_sequences, pa
         )
     ]
 
-    with pytest.raises(Exception, match=r"\[#train_model_simple_nn\]X_train contains NaN values."):
+    with pytest.raises(Exception, match=r"\[#train_lstm\]X_train contains NaN values."):
         train_lstm(TrainLSTMUsecaseDto(name="test_model", training_data=training_data, inversify=mock_inversify))
 
 

@@ -52,7 +52,7 @@ def test_create_lstm_model_already_exists(patch_inversify):
         create_lstm(CreateLSTMUsecaseDto(name=model_name, inversify=mock_inversify))
 
     # Verify the exception message
-    assert str(exc_info.value) == "Model already exists"
+    assert str(exc_info.value) == "[#create_lstm]Model already exists"
 
 
 # Test to verify save_model is called with the correct data

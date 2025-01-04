@@ -1,3 +1,7 @@
+# Makefile
+# Mark targets as not file-dependent; they are always executed
+.PHONY: start startall down reset tar install help
+
 start: 
 	docker compose up -d
 
@@ -15,12 +19,24 @@ tar:
 	docker build -t vergo_puppet -f Dockerfile .
 	docker save vergo_puppet -o vergo_puppet.tar
 
-# Install the Docker image by loading it from a tarball and running it
+# Remove old version and install the Docker image by loading it from a tarball and running it
 install:
-	docker stop vergo_puppet
-	docker rm vergo_puppet
-	docker image rm vergo_puppet
+	# Stop the container if it exists
+	@if docker ps -a --format '{{.Names}}' | grep -q '^vergo_puppet$$'; then \
+		docker stop vergo_puppet; \
+		docker rm vergo_puppet; \
+	else \
+		echo "No running container to stop."; \
+	fi
+	# Remove the image if it exists
+	@if docker images -q vergo_puppet; then \
+		docker image rm vergo_puppet; \
+	else \
+		echo "No image to remove."; \
+	fi
+	# Load the image from the tarball
 	docker load -i vergo_puppet.tar
+	# Start the container with the production configuration
 	docker compose -f docker-compose.prod.yml up -d
 
 help:

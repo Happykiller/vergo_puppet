@@ -30,6 +30,8 @@ def search_lstm(dto: SearchLSTMUsecaseDto):
         model = bdd.get_model(dto.name, LSTMNN)
         if model is None or not model:
             raise Exception("Model not found")
+        if model.nn_model is None or not model.nn_model:
+            raise Exception("Model not trained")
         nn_model = model.nn_model
         nn_model.eval()
 
@@ -45,7 +47,7 @@ def search_lstm(dto: SearchLSTMUsecaseDto):
         input_sequence = np.expand_dims(input_sequence, axis=0)  # Shape: (1, sequence_length, num_features)
 
         # Make the prediction
-        prediction_normalized = predict_nn_lstm(nn_model, input_sequence)
+        prediction_normalized = predict_nn_lstm(model, input_sequence)
 
         # Invert the normalization of the prediction
         prediction_inverse = inverse_transform_predictions(prediction_normalized, model.target_scaler)[0]

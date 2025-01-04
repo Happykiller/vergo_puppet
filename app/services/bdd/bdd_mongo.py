@@ -52,7 +52,12 @@ class MongoBDDService(BDDService):
 
     def get_all_models(self):
         """Retrieve all models from MongoDB."""
-        return list(self.database.models.find())
+        models = self.database.models.find()
+        # Convertir les ObjectId en str
+        return [
+            {**model, "_id": str(model["_id"])} 
+            for model in models
+        ]
 
     def save_search_result(self, model_name: str, search_query: str, result: dict):
         """Save a search result to MongoDB."""

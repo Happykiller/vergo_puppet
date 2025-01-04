@@ -1,11 +1,11 @@
 # app\usecases\lstm\usecase_search_lstm_test.py
-from app.services.bdd.models.model_data import ModelData
 import pytest
 import numpy as np
 import pandas as pd
 from datetime import datetime, timezone
 from unittest.mock import patch, MagicMock
 
+from app.services.bdd.models.model_data import ModelData
 from app.apis.models.weather_model_data import WeatherSearchModelData
 from app.usecases.lstm.usecase_search_lstm import SearchLSTMUsecaseDto, search_lstm
 
@@ -18,13 +18,19 @@ def test_search_lstm_success(mock_inverse_transform, mock_preprocess_input, mock
     mock_inversify, mock_bdd = patch_inversify
 
     # Simulate model data
-    mock_model = MagicMock()
-    mock_model.nn_model = MagicMock()
-    mock_model.nn_model.eval = MagicMock()
-    mock_model.scaler = MagicMock()
-    mock_model.encoder = MagicMock()
-    mock_model.target_scaler = MagicMock()
-    mock_bdd.get_model.return_value = mock_model
+    nn_model = MagicMock()
+    nn_model.eval = MagicMock()
+    scaler = MagicMock()
+    encoder = MagicMock()
+    target_scaler = MagicMock()
+    mock_bdd.get_model.return_value = ModelData(
+        nn_model = nn_model,
+        name = "test_model",
+        neural_network_type = "LSTMNN",
+        scaler = scaler,
+        encoder = encoder,
+        target_scaler = target_scaler
+    )
 
     # Mock preprocessing and predictions
     mock_preprocess_input.return_value = pd.DataFrame([[0.1, 0.2]], columns=["feature1", "feature2"])
@@ -53,18 +59,14 @@ def test_search_lstm_success(mock_inverse_transform, mock_preprocess_input, mock
         check_dtype=False  # Disable dtype checking for flexibility in mocks
     )
 
-    mock_preprocess_input.assert_called_once_with(called_df, mock_model.scaler, mock_model.encoder)
-    mock_inverse_transform.assert_called_once_with(np.array([[0.5]]), mock_model.target_scaler)
+    mock_preprocess_input.assert_called_once_with(called_df, scaler, encoder)
+    mock_inverse_transform.assert_called_once_with(np.array([[0.5]]), target_scaler)
 
 
 # Test for model not found
 def test_search_lstm_model_not_found(patch_inversify):
     mock_inversify, mock_bdd = patch_inversify
-    mock_bdd.get_model.return_value = ModelData(
-        nn_model=None,
-        name="test_model",
-        neural_network_type="LSTMNN"
-    )
+    mock_bdd.get_model.return_value = None
 
     input_data = WeatherSearchModelData(
         time=datetime(2023, 1, 1, 0, 0, tzinfo=timezone.utc),

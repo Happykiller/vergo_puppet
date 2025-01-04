@@ -54,6 +54,14 @@ class ModelData:
         Serialize the ModelData instance for storage in MongoDB.
         """
         try:
+            def convert_keys_to_strings(obj):
+                if isinstance(obj, dict):
+                    return {str(k): convert_keys_to_strings(v) for k, v in obj.items()}
+                elif isinstance(obj, list):
+                    return [convert_keys_to_strings(item) for item in obj]
+                else:
+                    return obj
+
             def serialize_with_joblib(obj):
                 if obj is None:
                     return None
@@ -68,10 +76,10 @@ class ModelData:
                 "dictionary": self.dictionary,
                 "indexed_dictionary": self.indexed_dictionary,
                 "glossary": self.glossary,
-                "word2idx": self.word2idx,
-                "idx2word": self.idx2word,
-                "category2idx": self.category2idx,
-                "idx2category": self.idx2category,
+                "word2idx": convert_keys_to_strings(self.word2idx),
+                "idx2word": convert_keys_to_strings(self.idx2word),
+                "category2idx": convert_keys_to_strings(self.category2idx),
+                "idx2category": convert_keys_to_strings(self.idx2category),
                 "encoder": serialize_with_joblib(self.encoder),
                 "scaler": serialize_with_joblib(self.scaler),
                 "target_scaler": serialize_with_joblib(self.target_scaler),
@@ -102,6 +110,18 @@ class ModelData:
         Deserialize a MongoDB document into a ModelData instance.
         """
         try:
+            def convert_keys_from_strings(obj):
+                if isinstance(obj, dict):
+                    # Convert string keys that represent integers back to integers
+                    return {
+                        int(k) if k.isdigit() else k: convert_keys_from_strings(v)
+                        for k, v in obj.items()
+                    }
+                elif isinstance(obj, list):
+                    return [convert_keys_from_strings(item) for item in obj]
+                else:
+                    return obj
+
             def deserialize_with_joblib(encoded_data: Optional[str]):
                 if not encoded_data:
                     return None
@@ -111,10 +131,11 @@ class ModelData:
             nn_model = None
             if "nn_model" in data and data["nn_model"]:
                 if not callable(model_class):
-                    raise TypeError(f"[ModelData][deserialize]: model_class must be callable, got {type(model_class).__name__}")
+                    raise TypeError(
+                        f"[ModelData][deserialize]: model_class must be callable, got {type(model_class).__name__}"
+                    )
                 model_binary = base64.b64decode(data["nn_model"])
                 buffer = io.BytesIO(model_binary)
-                # Extract args from serialized data if available
                 args = data.get("args", {})
                 nn_model = model_class(**args)
                 nn_model.load_state_dict(torch.load(buffer))
@@ -125,10 +146,10 @@ class ModelData:
                 dictionary=data.get("dictionary"),
                 indexed_dictionary=data.get("indexed_dictionary"),
                 glossary=data.get("glossary"),
-                word2idx=data.get("word2idx"),
-                idx2word=data.get("idx2word"),
-                category2idx=data.get("category2idx"),
-                idx2category=data.get("idx2category"),
+                word2idx=convert_keys_from_strings(data.get("word2idx")),
+                idx2word=convert_keys_from_strings(data.get("idx2word")),
+                category2idx=convert_keys_from_strings(data.get("category2idx")),
+                idx2category=convert_keys_from_strings(data.get("idx2category")),
                 encoder=deserialize_with_joblib(data.get("encoder")),
                 scaler=deserialize_with_joblib(data.get("scaler")),
                 target_scaler=deserialize_with_joblib(data.get("target_scaler")),

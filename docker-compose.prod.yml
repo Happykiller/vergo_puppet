@@ -1,4 +1,4 @@
-#docker-compose.prod.yml
+# docker-compose.prod.yml
 services:
   vergo_puppet:
     image: vergo_puppet
@@ -6,3 +6,5 @@ services:
     ports:
       - "3004:8000"
     restart: always
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'

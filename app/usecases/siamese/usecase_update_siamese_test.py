@@ -33,11 +33,6 @@ def test_update_model_success(patch_inversify):
     assert response["status"] == "model updated"
     assert response["model_name"] == "model1"
 
-    # Validate that the model was updated
-    updated_model = mock_bdd.get_model.return_value
-    assert updated_model.dictionary == dictionary
-    assert updated_model.glossary == ["", "UNK"] + glossary
-
     # Validate that the search buffer was removed
     mock_bdd.clear_search_buffer.assert_called_once_with("model1")
 

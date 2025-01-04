@@ -62,15 +62,15 @@ def test_create_model_siamese_already_exists(patch_inversify):
         ))
 
     # Validate exception message
-    assert str(excinfo.value) == "Model already exists"
+    assert str(excinfo.value) == "[#create_model_siamese]Model already exists"
 
 
 # Test for missing dictionary or glossary
 @pytest.mark.parametrize("dictionary, glossary, expected_message", [
-    (None, ["token1"], "Dictionary cannot be None"),
-    ([["token1"]], None, "Glossary cannot be None"),
-    ([], ["token1"], "Dictionary cannot be empty"),
-    ([["token1"]], [], "Glossary cannot be empty"),
+    (None, ["token1"], "[#create_model_siamese]Dictionary cannot be None"),
+    ([["token1"]], None, "[#create_model_siamese]Glossary cannot be None"),
+    ([], ["token1"], "[#create_model_siamese]Dictionary cannot be empty"),
+    ([["token1"]], [], "[#create_model_siamese]Glossary cannot be empty"),
 ])
 def test_create_model_siamese_invalid_inputs(patch_inversify, dictionary, glossary, expected_message):
     # patch_inversify est un tuple (mock_inversify, mock_bdd)
