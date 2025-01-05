@@ -99,7 +99,17 @@ def remove_unwanted(tokens: List[str]) -> List[str]:
     :param tokens: List of tokens to filter.
     :return: Filtered list of tokens.
     """
-    unwanted_tokens = ["m’", "s’", "-t", "qu", "-ce", "j’", "l’", "n’", "qu’", "jusqu’", "c’"]
+    unwanted_tokens = [
+        # Existing tokens
+        "m'", "m'", "s'", "-t", "qu", "-ce", "j'", "l'", "n'", "qu'", "jusqu'", "c'",
+        # Pronouns
+        "je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles",
+        # Other words
+        "se", "ne", "me", "le", "en", "ci", "ce", "cela",
+        # Adverbs
+        "trop", "travers", "en train", "tout", "temps", "tandis", 
+        "rapidement", "jamais", "hier", "haut", "visiblement"
+    ]
     return [token for token in tokens if token.lower() not in unwanted_tokens]
 
 def remove_polite(text: str) -> str:
@@ -147,11 +157,71 @@ def extract_corrected_tokens(doc):
             for ent in doc.ents:
                 if ent.start == i:
                     tokens.append(f"[{ent.text}]")
-        elif token.pos_ not in {"DET", "PUNCT", "SPACE", "SYM", "ADP", "X", "NUM"} and len(token.lemma_) > 1:
+        elif token.pos_ not in {"DET", "PUNCT", "SPACE", "SYM", "ADP", "X", "NUM", "ADV"} and len(token.lemma_) > 1:
             lemma = token.lemma_
             corrected_lemma = lemma_corrections.get(lemma, lemma)
             tokens.append(corrected_lemma)
     return tokens
+
+def expand_abbreviations(text: str) -> str:
+    """
+    Expand common abbreviations in the text.
+    :param text: Input text to process.
+    :return: Text with abbreviations expanded.
+    """
+    abbreviations = {
+        "mr": "monsieur",
+        "mme": "madame",
+        "dr": "docteur",
+        "st": "saint",
+        "bcp": "beaucoup",
+        "pr": "pour",
+        "avt": "avant",
+        "dpt": "département",
+        "nb": "nombre",
+        "info": "information",
+        "tps": "temps",
+        "pb": "probleme",
+        "pbm": "probleme",
+        "mdp": "mot passe"
+    }
+
+    # Regex pattern to match abbreviations
+    abbreviation_pattern = re.compile(r"\b(" + "|".join(re.escape(abbr) for abbr in abbreviations.keys()) + r")\b", re.IGNORECASE)
+
+    # Replace abbreviations with their expansions
+    expanded_text = abbreviation_pattern.sub(lambda match: abbreviations[match.group(0).lower()], text)
+
+    return expanded_text
+
+def normalize_special_characters(text: str) -> str:
+    """
+    Normalize or remove special characters in the text.
+    :param text: Input text to process.
+    :return: Text with special characters normalized.
+    """
+    # Define the mapping of characters to replace
+    special_character_replacements = {
+        "’": "'",  # Replace typographic apostrophe with standard apostrophe
+        "“": '"',  # Replace left double quote
+        "”": '"',  # Replace right double quote
+        "—": "-",  # Replace em dash with hyphen
+        "–": "-",  # Replace en dash with hyphen
+        "…": "...",  # Replace ellipsis with three dots
+        "«": '"',  # Replace left guillemet
+        "»": '"',  # Replace right guillemet
+        " ": " ",  # Replace non-breaking space with regular space
+        "\t": " ",  # Replace tab with space
+    }
+
+    # Apply replacements
+    for special_char, replacement in special_character_replacements.items():
+        text = text.replace(special_char, replacement)
+
+    # Optionally, clean up extra spaces caused by replacements
+    text = re.sub(r"\s+", " ", text).strip()
+
+    return text
 
 def usecase_tokenize(data: List[ModelTokenizeData], regex_filepath: str = 'tokenize_regex.json'):
     """
@@ -165,38 +235,44 @@ def usecase_tokenize(data: List[ModelTokenizeData], regex_filepath: str = 'token
 
     for item in data:
         # Extract and process the main message from description
-        description_processed = process_description(item.description)
+        before_spacy = process_description(item.description)
+
+        # Expand abbreviations
+        before_spacy = normalize_special_characters(before_spacy)
+
+        # Expand abbreviations
+        before_spacy = expand_abbreviations(before_spacy)
 
         # Remove polite phrases
-        description_processed = remove_polite(description_processed)
+        before_spacy = remove_polite(before_spacy)
 
         # Apply regex patterns
-        description_processed = apply_regex_patterns(description_processed, regex_patterns)
+        before_spacy = apply_regex_patterns(before_spacy, regex_patterns)
 
         # Anonymize names
-        description_processed = anonymize_names(description_processed)
+        before_spacy = anonymize_names(before_spacy)
 
         # Remove stopwords before tokenization
-        description_processed = remove_stopwords(description_processed)
+        before_spacy = remove_stopwords(before_spacy)
 
         # Process text with spaCy
-        doc = nlp(description_processed)
+        doc = nlp(before_spacy)
 
         # 
-        filtered_tokens = extract_corrected_tokens(doc)
+        after_spacy = extract_corrected_tokens(doc)
 
         # Remove protected tags from tokens
-        filtered_tokens_final = remove_protected_tags(filtered_tokens)
+        final = remove_protected_tags(after_spacy)
 
         # Remove unwanted tokens
-        filtered_tokens_final = remove_unwanted(filtered_tokens_final)
+        final = remove_unwanted(final)
 
         result.append({
             'id': item.incidentId, 
             'source': item.description,
-            'source_processed': description_processed,
-            'filtered_tokens': filtered_tokens,
-            'tokens': filtered_tokens_final
+            'before_spacy': before_spacy,
+            'after_spacy': after_spacy,
+            'tokens': final
         })
 
     return result

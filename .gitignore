@@ -170,3 +170,5 @@ interfaces
 grenoble_weather_data.json
 vergo_puppet.tar
 .env.local
+*.old
+doc/puppet-o2_brut.old
