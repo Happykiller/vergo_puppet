@@ -4,6 +4,9 @@ import datetime
 from app.common import load_env_vars
 from app.services.logger import logger
 
+# export PYTHONPATH=$(pwd):$PYTHONPATH
+# python3 app/generate_token.py
+
 def create_token(user_id: str, expiration_minutes: int = 30):
     """
     Creates a JWT token for a specific user.

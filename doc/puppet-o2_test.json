@@ -1,6 +1,7 @@
 {
   "name": "puppet-o2",
   "neural_network_type": "GRU",
+  "iterate": 10,
   "test_data": [
     {
         "tokens":[

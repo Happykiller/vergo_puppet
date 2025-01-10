@@ -1,6 +1,6 @@
 # app\usecases\gru\usecase_mesure_gru.py
 import traceback
-from typing import List, NamedTuple
+from typing import List, NamedTuple, Optional
 
 from app.inversify import Inversify
 from app.services.logger import logger
@@ -12,6 +12,7 @@ class MesureGRUUsecaseDto(NamedTuple):
     name: str
     inversify: Inversify
     test_data: List[GRUTrainingModelData]
+    iterate: Optional[int]
 
 def mesure_gru(dto: MesureGRUUsecaseDto):
     """
@@ -36,8 +37,6 @@ def mesure_gru(dto: MesureGRUUsecaseDto):
         if nn_model is None:
             raise Exception("Model is not trained")
         
-        result = []
-        
         # Retrieve dictionaries for token and category mapping
         word2idx = model.word2idx
         idx2category = model.idx2category
@@ -45,80 +44,86 @@ def mesure_gru(dto: MesureGRUUsecaseDto):
         if word2idx is None or idx2category is None or category2idx is None:
             raise Exception("Model data is incomplete")
         
-        # Initialize metrics
-        total_error = 0
-        correct_predictions = 0
-        total_tests = len(dto.test_data)
+        def run_test():
+            """Runs a single iteration of the test and returns accuracy and detailed results."""
+            total_error = 0
+            correct_predictions = 0
+            total_tests = len(dto.test_data)
+            detailed_results = []
 
-        if total_tests == 0:
-            logger.info("No test data provided. Returning zero accuracy.")
-            return {
-                "summary": {
-                    "total_tests": 0,
-                    "correct_predictions": 0,
-                    "total_error": 0,
-                    "accuracy": 0.0
-                },
-                "detailed_results": []
+            if total_tests == 0:
+                return 0.0, []
+
+            for data in dto.test_data:
+                tokens = data.tokens
+                expected_category = data.category
+                input = process_input(tokens, word2idx)
+                predicted_idx = predict(nn_model, input)
+                predicted_category = idx2category[predicted_idx]
+
+                try:
+                    category2idx[expected_category]
+                except KeyError:
+                    logger.warning(f"Unknown category in test data: '{expected_category}'. Skipping sample.")
+                    continue
+
+                is_correct = predicted_category == expected_category
+                if is_correct:
+                    correct_predictions += 1
+                else:
+                    total_error += 1
+
+                detailed_results.append({
+                    "tokens": tokens,
+                    "expected_category": expected_category,
+                    "predicted_category": predicted_category,
+                    "is_correct": is_correct
+                })
+
+            accuracy = correct_predictions / total_tests * 100
+            return accuracy, detailed_results
+
+        # Handle iterate mode
+        if dto.iterate:
+            logger.info(f"Running tests {dto.iterate} times.")
+            accuracies = []
+            all_detailed_results = []
+
+            for _ in range(dto.iterate):
+                accuracy, detailed_results = run_test()
+                accuracies.append(accuracy)
+                all_detailed_results.append({
+                    "iteration": len(all_detailed_results) + 1,
+                    "accuracy": accuracy,
+                    "detailed_results": detailed_results
+                })
+
+            avg_accuracy = sum(accuracies) / len(accuracies)
+            min_accuracy = min(accuracies)
+            max_accuracy = max(accuracies)
+            
+            summary = {
+                "iterations": dto.iterate,
+                "average_accuracy": avg_accuracy,
+                "min_accuracy": min_accuracy,
+                "max_accuracy": max_accuracy
             }
-        
-        y_true = []  # Ground truth categories
-        y_pred = []  # Predicted categories
-        
-        # Iterate over each data instance in the test set
-        for data in dto.test_data:
-            # Prepare input data for prediction
-            tokens = data.tokens
-            expected_category = data.category
-            input = process_input(tokens, word2idx)
-            
-            # Make a prediction using the model
-            predicted_idx = predict(nn_model, input)
-            predicted_category = idx2category[predicted_idx]
-            
-            # Append actual and predicted categories for analysis
-            try:
-                y_true.append(category2idx[expected_category])
-            except KeyError:
-                logger.warning(f"Unknown category in test data: '{expected_category}'. It was not seen during training.")
-                continue  # Skip this sample if category is unknown
-            y_pred.append(predicted_idx)
-            
-            # Check if the prediction is correct
-            is_correct = predicted_category == expected_category
-            if is_correct:
-                correct_predictions += 1
-            else:
-                total_error += 1
-            
-            # Log individual prediction results
-            logger.info(f"Request: {tokens}")
-            logger.info(f"Expected category: {expected_category}, Predicted category: {predicted_category}")
+            logger.info(f"Summary after {dto.iterate} iterations: {summary}")
+            return {
+                "summary": summary,
+                "history": all_detailed_results
+            }
 
-            # Add detailed result for this test case
-            result.append({
-                "tokens": tokens,
-                "expected_category": expected_category,
-                "predicted_category": predicted_category,
-                "is_correct": is_correct
-            })
-        
-        # Summarize performance results
-        logger.info(f"Number of correct predictions: {correct_predictions}/{total_tests}")
-        accuracy = correct_predictions / total_tests * 100
-        logger.info(f"Model accuracy rate: {accuracy:.2f}%")
-
-        # Append summary to the result
+        # Default single test run
+        logger.info("Running a single test iteration.")
+        accuracy, detailed_results = run_test()
         summary = {
-            "total_tests": total_tests,
-            "correct_predictions": correct_predictions,
-            "total_error": total_error,
+            "total_tests": len(dto.test_data),
             "accuracy": accuracy
         }
-        
         return {
             "summary": summary,
-            "detailed_results": result
+            "detailed_results": detailed_results
         }
     
     except Exception as e:

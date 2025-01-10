@@ -1,6 +1,6 @@
-#app\apis\models\test_model_data.py
+# app\apis\models\test_model_data.py
 from pydantic import BaseModel, Field
-from typing import List, Tuple, Union
+from typing import List, Optional, Tuple, Union
 
 from app.apis.models.weather_model_data import WeatherModelData
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
@@ -16,6 +16,7 @@ class TestModelData(BaseModel):
         List[GRUTrainingModelData],  # GRU
         List[WeatherModelData],  # LSTM
     ] = Field(..., description="Test data")
+    iterate: Optional[int] = Field(None, description="Optional parameter for the number of iterations to run during testing")
 
     def validate_test_data(cls, values):
         """

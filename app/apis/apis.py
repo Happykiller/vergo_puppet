@@ -194,7 +194,12 @@ async def test(data: TestModelData, payload: dict = Depends(verify_access_token)
         if data.neural_network_type == 'SimpleNN':
             return mesure_simple_nn(MesureSimpleUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
         elif data.neural_network_type == 'GRU':
-            return mesure_gru(MesureGRUUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
+            return mesure_gru(MesureGRUUsecaseDto(
+                    name=data.name,
+                    test_data=data.test_data,
+                    inversify=get_inversify(),
+                    iterate=data.iterate
+                ))
         elif data.neural_network_type == 'SIAMESE':
             return mesure_siamese(MesureSiameseUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
         elif data.neural_network_type == 'LSTM':

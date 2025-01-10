@@ -14,12 +14,10 @@ down:
 reset: down
 	docker rm vergo_puppet
 
-# Build the Docker image and save it as a tarball
 tar: 
 	docker build -t vergo_puppet -f Dockerfile .
 	docker save vergo_puppet -o vergo_puppet.tar
 
-# Remove old version and install the Docker image by loading it from a tarball and running it
 install:
 	# Stop the container if it exists
 	@if docker ps -a --format '{{.Names}}' | grep -q '^vergo_puppet$$'; then \

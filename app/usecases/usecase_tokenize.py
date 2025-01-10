@@ -236,6 +236,7 @@ def usecase_tokenize(data: List[ModelTokenizeData], regex_filepath: str = 'token
     for item in data:
         # Extract and process the main message from description
         before_spacy = process_description(item.description)
+        initial_word_count = len(before_spacy.split())
 
         # Expand abbreviations
         before_spacy = normalize_special_characters(before_spacy)
@@ -258,7 +259,7 @@ def usecase_tokenize(data: List[ModelTokenizeData], regex_filepath: str = 'token
         # Process text with spaCy
         doc = nlp(before_spacy)
 
-        # 
+        # Extract tokens with corrected lemmatization
         after_spacy = extract_corrected_tokens(doc)
 
         # Remove protected tags from tokens
@@ -267,12 +268,17 @@ def usecase_tokenize(data: List[ModelTokenizeData], regex_filepath: str = 'token
         # Remove unwanted tokens
         final = remove_unwanted(final)
 
+        # Calculate compression rate
+        final_word_count = len(final)
+        compression_rate = 100 * (initial_word_count - final_word_count) / initial_word_count if initial_word_count > 0 else 0
+
         result.append({
             'id': item.incidentId, 
             'source': item.description,
             'before_spacy': before_spacy,
             'after_spacy': after_spacy,
-            'tokens': final
+            'tokens': final,
+            'compression_rate': compression_rate
         })
 
     return result
