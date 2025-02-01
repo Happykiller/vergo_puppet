@@ -172,3 +172,4 @@ vergo_puppet.tar
 .env.local
 *.old
 doc/puppet-o2_brut.old
+app/tools/generates/*.json

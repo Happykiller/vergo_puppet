@@ -1,3 +1,6 @@
+0.15.0 [2025-02-01]
+  - feat: Work on training data for o3
+
 0.14.0 [2025-01-11]
   - feat: add iterate to test GRU
 

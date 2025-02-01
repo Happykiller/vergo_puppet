@@ -29,3 +29,4 @@ tests/
 # Ignorer les logs
 logs/
 *.log
+app/tools/generates/*.json
