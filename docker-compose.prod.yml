@@ -6,5 +6,7 @@ services:
     ports:
       - "3004:8000"
     restart: always
+    volumes:
+      - ./training_data:/app/training_data
     extra_hosts:
       - 'host.docker.internal:host-gateway'

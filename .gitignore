@@ -173,3 +173,4 @@ vergo_puppet.tar
 *.old
 doc/puppet-o2_brut.old
 app/tools/generates/*.json
+training_data/*.json

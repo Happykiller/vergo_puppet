@@ -111,7 +111,7 @@ def train_siamese_model_nn(
     num_epochs: int = 1000,
     learning_rate: float = 0.001,
     batch_size: int = 32,
-    patience: int = 10,
+    patience: int = 20,
     best_model_path: str = 'best_model.pth'
 ):
     dataset = SimilarityDataset(training_data)
@@ -149,8 +149,7 @@ def train_siamese_model_nn(
 
         avg_loss = total_loss / len(train_loader)
         losses.append(avg_loss)
-        logger.debug(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {avg_loss:.8f}")
-        logger.debug(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {avg_loss:.8f}")
+        #logger.debug(f"Epoch {epoch+1}/{num_epochs}, Average Loss: {avg_loss:.8f}")
 
         if avg_loss < best_loss:
             best_loss = avg_loss

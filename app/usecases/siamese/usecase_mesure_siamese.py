@@ -66,8 +66,8 @@ def mesure_siamese(dto: MesureSiameseUsecaseDto):
             })
             
             # Log the output details
-            logger.info(f"Query: {vector1}, Image: {vector2}")
-            logger.info(f"Expected similarity: {expected_similarity*100}%, Model similarity: {predicted_similarity*100:.2f}%, Error: {error*100:.2f}%")
+            #logger.debug(f"Query: {vector1}, Image: {vector2}")
+            #logger.debug(f"Expected similarity: {expected_similarity*100}%, Model similarity: {predicted_similarity*100:.2f}%, Error: {error*100:.2f}%")
         
         # Calculate metrics
         prediction_accuracy = (correct_predictions / total_tests) * 100
@@ -84,7 +84,6 @@ def mesure_siamese(dto: MesureSiameseUsecaseDto):
         }
         
         # Log summary details
-        logger.info("---------------------")
         logger.info(f"Prediction accuracy: {prediction_accuracy:.2f}% ({correct_predictions}/{total_tests})")
         logger.info(f"Average similarity precision: {avg_similarity_precision:.2f}%")
 

@@ -30,3 +30,4 @@ tests/
 logs/
 *.log
 app/tools/generates/*.json
+training_data/*.json

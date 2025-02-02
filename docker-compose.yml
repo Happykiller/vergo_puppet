@@ -8,3 +8,4 @@ services:
       - "3004:8000"
     volumes:
       - .:/app
+      - ./training_data:/app/training_data

@@ -12,3 +12,4 @@ scikit-learn==1.5.2
 python-dotenv==1.0.1
 pyjwt==2.9.0
 pymongo==4.7.2
+python-multipart==0.0.9
