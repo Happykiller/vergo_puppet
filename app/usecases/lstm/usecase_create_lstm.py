@@ -4,7 +4,7 @@ from typing import NamedTuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.services.bdd.models.model_data import ModelData
+from app.services.bdd.models.model_data import ModelData, ModelStatus
 
 class CreateLSTMUsecaseDto(NamedTuple):
     name: str
@@ -24,7 +24,7 @@ def create_lstm(dto: CreateLSTMUsecaseDto):
             raise Exception("Model already exists")
 
         # Save the model data
-        bdd.save_model(ModelData(name=dto.name, neural_network_type="LSTM"))
+        bdd.save_model(ModelData(name=dto.name, neural_network_type="LSTM", status=ModelStatus.CREATED))
 
         # Return a success message with the model name
         return {"status": "model created", "model_name": dto.name}

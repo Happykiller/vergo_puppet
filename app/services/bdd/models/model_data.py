@@ -4,10 +4,20 @@ import torch
 import base64
 import joblib
 import traceback
+from enum import Enum
 from typing import List, Optional, Dict, Any
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 
 from app.services.logger import logger
+
+class ModelStatus(Enum):
+    INIT = "init"
+    CREATED = "created"
+    UPDATED = "updated"
+    TRAINING = "training"
+    TRAINED = "trained"
+    SUPER_TRAINING = "super_training"
+    SUPER_TRAINED = "super_trained"
 
 class ModelData:
     """
@@ -17,6 +27,7 @@ class ModelData:
         self,
         name: str,
         neural_network_type: str,
+        status: Optional[ModelStatus] = ModelStatus.INIT,
         dictionary: Optional[List[List[str]]] = None,
         indexed_dictionary: Optional[List[List[int]]] = None,
         glossary: Optional[List[str]] = None,
@@ -34,6 +45,7 @@ class ModelData:
     ):
         self.name = name
         self.neural_network_type = neural_network_type
+        self.status = status
         self.dictionary = dictionary
         self.indexed_dictionary = indexed_dictionary
         self.glossary = glossary
@@ -73,6 +85,7 @@ class ModelData:
             serialized_data = {
                 "name": self.name,
                 "neural_network_type": self.neural_network_type,
+                "status": self.status.value,
                 "dictionary": self.dictionary,
                 "indexed_dictionary": self.indexed_dictionary,
                 "glossary": self.glossary,
@@ -143,6 +156,7 @@ class ModelData:
             return cls(
                 name=data["name"],
                 neural_network_type=data["neural_network_type"],
+                status=ModelStatus(data["status"]),
                 dictionary=data.get("dictionary"),
                 indexed_dictionary=data.get("indexed_dictionary"),
                 glossary=data.get("glossary"),

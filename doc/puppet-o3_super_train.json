@@ -1,7 +1,7 @@
 {
   "name": "puppet-o3",
   "neural_network_type": "SIAMESE",
-  "file_name": "o3_generate_data_train_v2-2502011822.json",
+  "file_name": "o3_2502011822.json",
   "test_data": [
     [["air", "squat"], ["air", "squat"], 1.0],
     [["push", "up"], ["push", "up"], 1.0],
@@ -32,6 +32,8 @@
     [["lunge"], ["lunges", "step", "up"], 0.7],
     [["sit", "up"], ["crunch"], 0],
     [["pull", "up"], ["chin", "up"], 0.5],
-    [["bicep", "curl"], ["hammer", "curl"], 0.5]
+    [["bicep", "curl"], ["hammer", "curl"], 0.5],
+    [["man", "butt", "kick"], ["man", "butt", "kick", "character", "setu"], 0.9],
+    [["woman", "butt", "kick"], ["butt","kick"], 0.66]
   ]
 }

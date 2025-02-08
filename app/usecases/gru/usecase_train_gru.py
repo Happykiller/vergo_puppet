@@ -4,9 +4,10 @@ from collections import Counter
 from typing import List, Dict, NamedTuple
 
 from app.inversify import Inversify
+from app.services.bdd.models.training_result import TrainingResult
 from app.services.logger import logger
-from app.services.bdd.models.model_data import ModelData
 from app.neural_network.nn_gru import GRUClassifier, train_gru
+from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 
 class TrainGRUUsecaseDto(NamedTuple):
@@ -35,6 +36,11 @@ def train_model_gru(dto: TrainGRUUsecaseDto):
             raise Exception("No training data provided or data is empty")
         
         logger.info("Machine learning type for training: GRU")
+        
+        # Update the model in storage
+        if(model.status != ModelStatus.SUPER_TRAINING):
+            model.status = ModelStatus.TRAINING
+            bdd.update_model(model)
         
         # Display training data statistics
         num_documents = len(dto.training_data)
@@ -82,11 +88,17 @@ def train_model_gru(dto: TrainGRUUsecaseDto):
         bdd.update_model(ModelData(
             name=model.name,
             neural_network_type=model.neural_network_type,
+            status=ModelStatus.TRAINED if model.status != ModelStatus.SUPER_TRAINING else ModelStatus.SUPER_TRAINING,
             nn_model=nn_model,
             word2idx=word2idx,
             idx2word=idx2word,
             category2idx=category2idx,
             idx2category=idx2category
+        ))
+
+        bdd.save_training_result(TrainingResult(
+            model_name=dto.name,
+            metrics=training_stats
         ))
         
         return {

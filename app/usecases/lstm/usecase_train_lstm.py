@@ -6,7 +6,7 @@ from typing import List, NamedTuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.services.bdd.models.model_data import ModelData
+from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.neural_network.nn_lstm import LSTMNN, train_nn_lstm
 from app.apis.models.weather_model_data import WeatherModelData
 from app.usecases.lstm.usecase_commons_lstm import prepare_sequences, preprocess_data
@@ -34,6 +34,10 @@ def train_lstm(dto: TrainLSTMUsecaseDto):
         
         logger.info("Machine learning type used for training: LSTM")
 
+        # Update the model in storage
+        model.status = ModelStatus.TRAINING
+        bdd.update_model(model)
+
         # Convert training data to DataFrame
         df = pd.DataFrame([data.dict() for data in dto.training_data])
         
@@ -56,6 +60,7 @@ def train_lstm(dto: TrainLSTMUsecaseDto):
         bdd.update_model(ModelData(
             name=model.name, 
             neural_network_type=model.neural_network_type,
+            status=ModelStatus.TRAINED,
             scaler=scaler,
             target_scaler=target_scaler,
             encoder=encoder,

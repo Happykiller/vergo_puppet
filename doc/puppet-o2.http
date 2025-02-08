@@ -15,6 +15,23 @@ Content-Type: application/json
 
 < ./puppet-o2_train.json
 
+###
+POST {{host}}/train_model_from_file
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "puppet-o2",
+  "neural_network_type": "GRU",
+  "file_name": "o2_2502021922.json"
+}
+
+###
+POST {{host}}/super_train_model_from_file
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+< ./puppet-o2_super_train.json
 
 ###
 POST {{host}}/search
@@ -66,7 +83,7 @@ POST {{host}}/test
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-< ./puppet-o2_test.json
+< ./puppet-o2_test2.json
 
 
 ###

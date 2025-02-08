@@ -38,13 +38,12 @@ def test_mesure_gru_success(mock_process_input, mock_predict, mock_logger, patch
 
     # Verify results and summary
     summary = result["summary"]
-    detailed_results = result["detailed_results"]
+    assert summary["iterations"] == 1
+    assert summary["average_accuracy"] == 100.0
+    assert summary["min_accuracy"] == 100.0
+    assert summary["max_accuracy"] == 100.0
 
-    assert summary["total_tests"] == 2
-    assert summary["correct_predictions"] == 2
-    assert summary["total_error"] == 0
-    assert summary["accuracy"] == 100.0
-
+    detailed_results = result["history"][0]["detailed_results"]
     assert len(detailed_results) == 2
     assert detailed_results[0]["expected_category"] == "cat1"
     assert detailed_results[0]["predicted_category"] == "cat1"
@@ -122,7 +121,7 @@ def test_mesure_gru_unknown_category_in_test_data(mock_process_input, mock_predi
     mesure_gru(MesureGRUUsecaseDto(name="test_gru_model", test_data=test_data, inversify=mock_inversify))
 
     # Verify the warning log for the unknown category
-    mock_logger.warning.assert_called_once_with("Unknown category in test data: 'unknown_cat'. It was not seen during training.")
+    mock_logger.warning.assert_called_once_with("Unknown category in test data: 'unknown_cat'. Skipping sample.")
 
 
 # Test when no test data is provided
@@ -148,7 +147,7 @@ def test_mesure_gru_no_test_data(patch_inversify):
 
     # Verify the summary
     summary = result["summary"]
-    assert summary["total_tests"] == 0
-    assert summary["correct_predictions"] == 0
-    assert summary["total_error"] == 0
-    assert summary["accuracy"] == 0.0
+    assert summary["iterations"] == 1
+    assert summary["average_accuracy"] == 0
+    assert summary["min_accuracy"] == 0
+    assert summary["max_accuracy"] == 0.0

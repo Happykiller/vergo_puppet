@@ -1,30 +1,31 @@
-# app/usecases/siamese/usecase_super_train_siamese.py
+# app/usecases/gru/usecase_super_train_gru.py
 import copy
 import traceback
-from typing import List, NamedTuple, Dict, Tuple
+from typing import List, NamedTuple, Dict
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.neural_network.nn_siamese import SiameseLSTM
+from app.neural_network.nn_gru import GRUClassifier
 from app.services.bdd.models.model_data import ModelData, ModelStatus
-from app.usecases.siamese.usecase_mesure_siamese import mesure_siamese, MesureSiameseUsecaseDto
-from app.usecases.siamese.usecase_train_siamese import train_model_siamese, TrainSiameseUsecaseDto
+from app.apis.models.gru_training_model_data import GRUTrainingModelData
+from app.usecases.gru.usecase_mesure_gru import mesure_gru, MesureGRUUsecaseDto
+from app.usecases.gru.usecase_train_gru import train_model_gru, TrainGRUUsecaseDto
 
-class SuperTrainSiameseUsecaseDto(NamedTuple):
+class SuperTrainGRUUsecaseDto(NamedTuple):
     name: str
-    training_data: List[Tuple[List[str], List[str], float]]
-    test_data: List[List[str]]
+    training_data: List[GRUTrainingModelData]
+    test_data: List[GRUTrainingModelData]
     inversify: Inversify
     n_iterations: int = 30
 
-def super_train_model_siamese(dto: SuperTrainSiameseUsecaseDto) -> Dict:
+def super_train_model_gru(dto: SuperTrainGRUUsecaseDto) -> Dict:
     """
     Runs the training process followed by the measurement phase.
     This usecase performs n_iterations of training (each with early stopping) and,
     for each cycle, evaluates the model on the test set.
     The best model (in terms of test prediction accuracy) is finally saved to the BDD.
     
-    :param dto: SuperTrainSiameseUsecaseDto containing model name, training data, test data, etc.
+    :param dto: SuperTrainGRUUsecaseDto containing model name, training data, test data, etc.
     :return: Dictionary with keys "best_test_accuracy", "training_report", and "measurement_report".
     """
     try:
@@ -36,7 +37,7 @@ def super_train_model_siamese(dto: SuperTrainSiameseUsecaseDto) -> Dict:
         bdd = dto.inversify.get_bdd()
 
         # Update the model in storage
-        model = bdd.get_model(dto.name, SiameseLSTM)
+        model = bdd.get_model(dto.name, GRUClassifier)
 
         if(model.status == ModelStatus.SUPER_TRAINING):
             raise Exception("Model is training")
@@ -48,29 +49,29 @@ def super_train_model_siamese(dto: SuperTrainSiameseUsecaseDto) -> Dict:
             logger.info(f"Starting training iteration {i+1}/{dto.n_iterations}")
 
             # --- Training Phase ---
-            train_dto = TrainSiameseUsecaseDto(
+            train_dto = TrainGRUUsecaseDto(
                 name=dto.name,
                 training_data=dto.training_data,
                 inversify=dto.inversify
             )
-            training_result = train_model_siamese(train_dto)
+            training_result = train_model_gru(train_dto)
             logger.info("Training completed for iteration %d.", i+1)
 
-            # Retrieve current model state from BDD (the training usecase met à jour le modèle)
-            current_model = bdd.get_model(dto.name, SiameseLSTM)
+            # Retrieve current model state from BDD
+            current_model = bdd.get_model(dto.name, GRUClassifier)
             current_model_state = copy.deepcopy(current_model.nn_model.state_dict())
 
             # --- Measurement Phase ---
-            measure_dto = MesureSiameseUsecaseDto(
+            measure_dto = MesureGRUUsecaseDto(
                 name=dto.name,
                 test_data=dto.test_data,
                 inversify=dto.inversify
             )
-            measurement_result = mesure_siamese(measure_dto)
-            current_accuracy = measurement_result.get("prediction_accuracy_percentage", 0)
+            measurement_result = mesure_gru(measure_dto)
+            current_accuracy = measurement_result.get("summary", {}).get("average_accuracy", 0)
             logger.info(f"Iteration {i+1}: Test prediction accuracy: {current_accuracy:.2f}%")
 
-            # Si la performance est meilleure, sauvegarder cet état et les rapports associés
+            # If performance is better, save this model state
             if current_accuracy > best_test_accuracy:
                 best_test_accuracy = current_accuracy
                 best_model_state = current_model_state
@@ -79,16 +80,17 @@ def super_train_model_siamese(dto: SuperTrainSiameseUsecaseDto) -> Dict:
 
         # --- Update BDD with best model state ---
         if best_model_state is not None:
-            best_model = bdd.get_model(dto.name, SiameseLSTM)
+            best_model = bdd.get_model(dto.name, GRUClassifier)
             best_model.nn_model.load_state_dict(best_model_state)
             bdd.update_model(ModelData(
                 name=best_model.name,
                 neural_network_type=best_model.neural_network_type,
                 status = ModelStatus.SUPER_TRAINED,
                 nn_model=best_model.nn_model,
-                dictionary=best_model.dictionary,
-                indexed_dictionary=best_model.indexed_dictionary,
-                glossary=best_model.glossary
+                word2idx=best_model.word2idx,
+                idx2word=best_model.idx2word,
+                category2idx=best_model.category2idx,
+                idx2category=best_model.idx2category
             ))
             logger.info("Best model updated in BDD.")
 
@@ -98,8 +100,9 @@ def super_train_model_siamese(dto: SuperTrainSiameseUsecaseDto) -> Dict:
             "measurement_report": best_measurement_report
         }
         logger.info("Super training completed. Best test accuracy: %.2f%%", best_test_accuracy)
+
         return final_report
 
     except Exception as e:
         logger.error(f"Error in super training usecase: {str(e)}\nStack trace:\n{traceback.format_exc()}")
-        raise Exception(f"[#super_train_model_siamese]{str(e)}")
+        raise Exception(f"[#super_train_model_gru]{str(e)}")

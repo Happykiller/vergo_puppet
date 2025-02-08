@@ -1,6 +1,8 @@
 # inversify.py
-import os
+from pymongo import MongoClient
+
 from app.common import load_env_vars
+from app.services.logger import logger
 from app.services.bdd.bdd import BDDService
 from app.services.bdd.bdd_fake import FakeBDDService
 from app.services.bdd.bdd_mongo import MongoBDDService
@@ -23,7 +25,9 @@ class Inversify:
       self._dependencies["bdd_service"] = FakeBDDService()
     elif self._mode == "prod":
       # Placeholder for a real database service in production
-      self._dependencies["bdd_service"] = MongoBDDService(self._mongo_uri, self._mongo_db_name)
+      mongo_client = MongoClient(self._mongo_uri)
+      logger.info(f"Connected to MongoDB at {self._mongo_uri}")
+      self._dependencies["bdd_service"] = MongoBDDService(mongo_client, self._mongo_db_name)
     else:
       raise ValueError(f"Unknown mode: {self._mode}")
 

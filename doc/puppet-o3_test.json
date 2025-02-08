@@ -31,6 +31,8 @@
     [["lunge"], ["lunges", "step", "up"], 0.7],
     [["sit", "up"], ["crunch"], 0],
     [["pull", "up"], ["chin", "up"], 0.5],
-    [["bicep", "curl"], ["hammer", "curl"], 0.5]
+    [["bicep", "curl"], ["hammer", "curl"], 0.5],
+    [["man", "butt", "kick"], ["man", "butt", "kick", "character", "setu"], 0.9],
+    [["woman", "butt", "kick"], ["butt","kick"], 0.66]
   ]
 }

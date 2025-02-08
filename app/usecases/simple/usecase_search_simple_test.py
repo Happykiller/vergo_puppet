@@ -5,7 +5,6 @@ from unittest.mock import patch, MagicMock
 from app.apis.models.simple_nn_search_model_data import SimpleNNSearchModelData
 from app.usecases.simple.usecase_search_simple import SearchSimpleUsecaseDto, search_model_simple_nn
 
-
 # Test successful search with a SimpleNN model
 @patch("app.usecases.simple.usecase_search_simple.predict")
 def test_search_model_simple_nn_success(mock_predict, patch_inversify):

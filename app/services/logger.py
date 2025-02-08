@@ -2,6 +2,8 @@
 import logging
 import inspect
 
+from app.common import load_env_vars
+
 # ANSI color codes for different log levels, used to enhance log readability in the console
 LOG_COLORS = {
     'DEBUG': '\033[94m',   # Blue for debugging information
@@ -13,6 +15,10 @@ LOG_COLORS = {
 
 # Code to reset console color after each log entry
 RESET_COLOR = '\033[0m'
+
+# Load the .env file
+envs = load_env_vars()
+DEBUG_MODE = envs["debug"]
 
 # Custom formatter class to apply color coding based on log level
 class CustomFormatter(logging.Formatter):
@@ -33,7 +39,7 @@ logger = logging.getLogger(logger_name)
 
 # Only configure the logger if it hasn't been configured already (avoid duplicate handlers)
 if not logger.hasHandlers():
-    logger.setLevel(logging.DEBUG)
+    logger.setLevel(logging.DEBUG if DEBUG_MODE else logging.INFO)
     
     # Define a log format to include timestamp, function name, and log level
     formatter = CustomFormatter('[%(asctime)s][%(funcName)s][%(levelname)s] %(message)s')
@@ -47,3 +53,6 @@ if not logger.hasHandlers():
 
 # Prevent the logger from propagating messages to the root logger
 logger.propagate = False
+
+if not DEBUG_MODE:
+    logger.debug = lambda *args, **kwargs: None

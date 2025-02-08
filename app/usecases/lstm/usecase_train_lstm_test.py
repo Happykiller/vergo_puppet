@@ -114,10 +114,10 @@ def test_train_lstm_success(mock_preprocess_data, mock_prepare_sequences, patch_
     assert response["model_name"] == "test_model"
 
     # Verify that update_model was called once
-    mock_bdd.update_model.assert_called_once()
+    mock_bdd.update_model.assert_called()
 
     # Validate the attributes of the updated model
-    updated_model = updated_models[0]  # Retrieve the captured model
+    updated_model = updated_models[1]  # Retrieve the captured model
     assert updated_model.name == "test_model"
     assert updated_model.neural_network_type == "LSTMNN"
     assert updated_model.nn_model is not None

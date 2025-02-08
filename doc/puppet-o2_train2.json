@@ -1,0 +1,79 @@
+{
+    "name": "puppet-o2-temp",
+    "neural_network_type": "GRU",
+    "iterate": 10,
+    "training_data": [
+        {
+            "tokens": [
+                "probleme",
+                "connexion",
+                "[service_k]"
+            ],
+            "category": "probleme_connexion"
+        },
+        {
+            "tokens": [
+                "créer",
+                "nouveau",
+                "client"
+            ],
+            "category": "nouveau_client"
+        },
+        {
+            "tokens": [
+                "importer",
+                "fichier",
+                "lockself"
+            ],
+            "category": "import_lockself"
+        },
+        {
+            "tokens": [
+                "importer",
+                "fichier",
+                "keepass"
+            ],
+            "category": "import_keepass"
+        },
+        {
+            "tokens": [
+                "importer",
+                "fichier",
+                "csv"
+            ],
+            "category": "import_csv"
+        },
+        {
+            "tokens": [
+                "probleme",
+                "extension",
+                "[service_k]"
+            ],
+            "category": "probleme_extension"
+        },
+        {
+            "tokens": [
+                "proposer",
+                "suggestion",
+                "[service_k]"
+            ],
+            "category": "demande_evolution"
+        },
+        {
+            "tokens": [
+                "créer",
+                "nouveau",
+                "dossier"
+            ],
+            "category": "creation_dossier_client"
+        },
+        {
+            "tokens": [
+                "souhaiter",
+                "accéder",
+                "nouveau"
+            ],
+            "category": "droits_acces"
+        }
+    ]
+}

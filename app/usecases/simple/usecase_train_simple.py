@@ -4,7 +4,7 @@ from typing import List, NamedTuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.services.bdd.models.model_data import ModelData
+from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.neural_network.nn_simple import SimpleNN, train_model_nn
 from app.usecases.simple.usecase_commons_simple import transform_data
 from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelData
@@ -34,6 +34,10 @@ def train_model_simple_nn(dto: TrainSimpleUsecaseDto):
 
         logger.info("Machine learning type used for training: SimpleNN")
 
+        # Update the model in storage
+        model.status = ModelStatus.TRAINING
+        bdd.update_model(model)
+
         # Transform the data
         (
             features_processed,
@@ -56,6 +60,7 @@ def train_model_simple_nn(dto: TrainSimpleUsecaseDto):
         bdd.update_model(ModelData(
             name=model.name,
             neural_network_type=model.neural_network_type,
+            status=ModelStatus.TRAINED,
             nn_model=nn_model,
             encoder=encoder,
             scaler=scaler,

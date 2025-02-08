@@ -40,7 +40,7 @@ def test_train_model_gru_success(mock_build_vocab, mock_build_category_mapping, 
     result = train_model_gru(TrainGRUUsecaseDto(name="test_gru_model", training_data=training_data, inversify=mock_inversify))
 
     # Verify model update
-    mock_bdd.update_model.assert_called_once()
+    mock_bdd.update_model.assert_called()
     updated_model = mock_bdd.update_model.call_args[0][0]
     assert updated_model.name == "test_gru_model"
     assert updated_model.neural_network_type == "GRUClassifier"

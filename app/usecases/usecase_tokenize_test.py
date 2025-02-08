@@ -5,7 +5,6 @@ from unittest.mock import patch, MagicMock
 
 from app.usecases.usecase_tokenize import (
     expand_abbreviations,
-    load_regex_patterns,
     anonymize_names,
     apply_regex_patterns,
     normalize_special_characters,
@@ -108,8 +107,8 @@ def test_usecase_tokenize_full_process(mock_nlp, mock_anonymize_names, mock_load
 
     # Check that anonymization works
     expected_anonymized = "[no_process][name][/no_process]"
-    actual_processed = result[2]["source_processed"]
-    assert expected_anonymized in actual_processed, f"Name anonymization failed. Processed: {actual_processed}"
+    before_spacy = result[2]["before_spacy"]
+    assert expected_anonymized in before_spacy, f"Name anonymization failed. Processed: {before_spacy}"
 
     # Check regex replacement
     assert "[service_k]" in result[0]["tokens"], "Regex replacement or token extraction failed."
@@ -147,8 +146,8 @@ def test_usecase_tokenize_remove_stopwords(mock_remove_stopwords, test_data):
                 result = usecase_tokenize(test_data, "dummy_path")
 
     # Verify that stopwords are removed
-    assert "je" not in result[0]["source_processed"], "Stopword removal failed for 'je'."
-    assert "à" not in result[0]["source_processed"], "Stopword removal failed for 'à'."
+    assert "je" not in result[0]["before_spacy"], "Stopword removal failed for 'je'."
+    assert "à" not in result[0]["before_spacy"], "Stopword removal failed for 'à'."
 
 
 @patch("app.usecases.usecase_tokenize.remove_polite")
@@ -171,8 +170,8 @@ def test_usecase_tokenize_remove_polite(mock_remove_polite, test_data):
                 result = usecase_tokenize(test_data, "dummy_path")
 
     # Verify that polite phrases are removed
-    assert "Bonjour" not in result[0]["source_processed"], "Polite phrase removal failed for 'Bonjour'."
-    assert "Merci" not in result[0]["source_processed"], "Polite phrase removal failed for 'Merci'."
+    assert "Bonjour" not in result[0]["before_spacy"], "Polite phrase removal failed for 'Bonjour'."
+    assert "Merci" not in result[0]["before_spacy"], "Polite phrase removal failed for 'Merci'."
 
 
 def test_load_regex_patterns():
@@ -221,7 +220,7 @@ def test_remove_protected_tags():
 
 def test_remove_unwanted():
     """Test removing unwanted tokens."""
-    tokens = ["m’", "qu’", "word"]
+    tokens = ["m'", "qu'", "word"]
     result = remove_unwanted(tokens)
     assert result == ["word"], "Unwanted token removal failed."
 

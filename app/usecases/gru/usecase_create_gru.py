@@ -3,7 +3,7 @@ from typing import NamedTuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.services.bdd.models.model_data import ModelData
+from app.services.bdd.models.model_data import ModelData, ModelStatus
 
 class CreateGRUUsecaseDto(NamedTuple):
     name: str
@@ -30,7 +30,7 @@ def create_model_gru(dto: CreateGRUUsecaseDto):
         raise Exception("Model already exists")
     
     # Save the model with the provided name and data
-    bdd.save_model(ModelData(name=dto.name, neural_network_type="GRU"))
+    bdd.save_model(ModelData(name=dto.name, neural_network_type="GRU", status=ModelStatus.CREATED))
 
     # Return success status and model name for confirmation
     return {"status": "model created", "model_name": dto.name}

@@ -4,7 +4,7 @@ from typing import List, NamedTuple, Tuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.services.bdd.models.model_data import ModelData
+from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.neural_network.nn_siamese import SiameseLSTM, train_siamese_model_nn
 from app.usecases.siamese.usecase_commons_siamese import create_glossary_from_training_data, tokens_to_indices
 
@@ -41,6 +41,11 @@ def train_model_siamese(dto: TrainSiameseUsecaseDto):
         # Check the neural network type to use
         logger.info(f"Machine learning type used for training: SIAMESE")
 
+        # Update the model in storage
+        if(model.status != ModelStatus.SUPER_TRAINING):
+            model.status = ModelStatus.TRAINING
+            bdd.update_model(model)
+
         # Train the neural network according to the specified model type
         training_glossary = create_glossary_from_training_data(dto.training_data)
         training_word2idx = {word: idx for idx, word in enumerate(training_glossary)}
@@ -60,6 +65,7 @@ def train_model_siamese(dto: TrainSiameseUsecaseDto):
         bdd.update_model(ModelData(
             name=model.name, 
             neural_network_type=model.neural_network_type,
+            status=ModelStatus.TRAINED if model.status != ModelStatus.SUPER_TRAINING else ModelStatus.SUPER_TRAINING,
             nn_model=nn_model,
             dictionary=model.dictionary,
             indexed_dictionary=model.indexed_dictionary,

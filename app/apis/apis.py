@@ -1,8 +1,7 @@
 # app\apis\apis.py
-import json
 import jwt
+import json
 from pathlib import Path
-from app.apis.models.super_train_from_file_model_data import SuperTrainFromFileModelData
 from fastapi.security import OAuth2PasswordBearer # type: ignore
 from fastapi import BackgroundTasks, Depends, APIRouter, HTTPException # type: ignore
 
@@ -10,7 +9,9 @@ from app.version import __version__
 from app.common import load_env_vars
 from app.services.logger import logger
 from app.inversify import get_inversify
+from app.usecases.get_model import get_model_usecase
 from app.apis.models.test_model_data import TestModelData
+from app.services.bdd.models.model_data import ModelStatus
 from app.usecases.usecase_tokenize import usecase_tokenize
 from app.apis.models.train_model_data import TrainModelData
 from app.usecases.getall_model import get_all_models_usecase
@@ -19,6 +20,7 @@ from app.apis.models.update_model_data import UpdateModelData
 from app.apis.models.search_model_data import SearchModelData
 from app.apis.models.prepare_cache_data import PrepareCacheData
 from app.apis.models.tokenize_model_data import TokenizeModelData
+from app.apis.models.gru_training_model_data import GRUTrainingModelData
 from app.apis.models.train_from_file_model_data import TrainFromFileModelData
 from app.usecases.gru.usecase_mesure_gru import MesureGRUUsecaseDto, mesure_gru
 from app.usecases.lstm.usecase_train_lstm import TrainLSTMUsecaseDto, train_lstm
@@ -30,17 +32,19 @@ from app.usecases.lstm.usecase_mesure_lstm import MesureLSTMUsecaseDto, mesure_l
 from app.usecases.lstm.usecase_search_lstm import SearchLSTMUsecaseDto, search_lstm
 from app.usecases.gru.usecase_search_gru import SearchGRUUsecaseDto, search_model_gru
 from app.usecases.gru.usecase_create_gru import CreateGRUUsecaseDto, create_model_gru
-from app.usecases.siamese.usecase_super_train_siamese import SuperTrainSiameseUsecaseDto, super_train_model_siamese
+from app.apis.models.super_train_from_file_model_data import SuperTrainFromFileModelData
 from app.usecases.simple.usecase_mesure_simple import MesureSimpleUsecaseDto, mesure_simple_nn
 from app.usecases.siamese.usecase_mesure_siamese import MesureSiameseUsecaseDto, mesure_siamese
 from app.usecases.simple.usecase_train_simple import TrainSimpleUsecaseDto, train_model_simple_nn
 from app.usecases.siamese.usecase_train_siamese import TrainSiameseUsecaseDto, train_model_siamese
+from app.usecases.gru.usecase_super_train_gru import SuperTrainGRUUsecaseDto, super_train_model_gru
 from app.usecases.simple.usecase_search_simple import SearchSimpleUsecaseDto, search_model_simple_nn
 from app.usecases.simple.usecase_create_simple import CreateSimpleUsecaseDto, create_model_simple_nn
 from app.usecases.siamese.usecase_search_siamese import SearchSiameseUsecaseDto, search_model_siamese
 from app.usecases.siamese.usecase_update_siamese import UpdateSiameseUsecaseDto, update_model_siamese
 from app.usecases.siamese.usecase_create_siamese import CreateSiameseUsecaseDto, create_model_siamese
 from app.usecases.siamese.prepare_cache_siamese import PrepareSiameseUsecaseDto, prepare_cache_siamese
+from app.usecases.siamese.usecase_super_train_siamese import SuperTrainSiameseUsecaseDto, super_train_model_siamese
 from app.usecases.gru.usecase_search_multi_brut_gru import SearchMultiBrutGRUUsecaseDto, search_multi_brut_model_gru
 
 TRAINING_DATA_DIR = Path("training_data")
@@ -144,6 +148,14 @@ async def train_model_from_file(
     The file is stored in a directory and processed in the background.
     """
     try:
+        model = get_model_usecase(data.name, inversify=get_inversify())
+
+        if not model:
+            raise Exception("Model not found")
+
+        if(model.status == ModelStatus.TRAINING):
+            raise Exception("Model is training")
+        
         file_path = TRAINING_DATA_DIR / data.file_name
 
         # Vérifier si le fichier existe
@@ -171,8 +183,10 @@ def train_model_from_file_background(name: str, neural_network_type: str, file_p
         if neural_network_type == 'SimpleNN':
             train_model_simple_nn(TrainSimpleUsecaseDto(name=name, training_data=training_data, inversify=get_inversify()))
         elif neural_network_type == 'GRU':
+            training_data = [GRUTrainingModelData(**data) for data in training_data]
             train_model_gru(TrainGRUUsecaseDto(name=name, training_data=training_data, inversify=get_inversify()))
         elif neural_network_type == 'SIAMESE':
+            training_data = [GRUTrainingModelData(**data) for data in training_data]
             train_model_siamese(TrainSiameseUsecaseDto(name=name, training_data=training_data, inversify=get_inversify()))
         elif neural_network_type == 'LSTM':
             train_lstm(TrainLSTMUsecaseDto(name=name, training_data=training_data, inversify=get_inversify()))
@@ -194,6 +208,14 @@ async def super_train_model_from_file(
     The file is stored in a directory and processed in the background.
     """
     try:
+        model = get_model_usecase(data.name, inversify=get_inversify())
+
+        if not model:
+            raise Exception("Model not found")
+
+        if(model.status == ModelStatus.SUPER_TRAINING):
+            raise Exception("Model is training")
+
         file_path = TRAINING_DATA_DIR / data.file_name
 
         # Vérifier si le fichier existe
@@ -220,6 +242,9 @@ def super_train_model_from_file_background(data: SuperTrainFromFileModelData, fi
         # Call appropriate training function
         if data.neural_network_type == 'SIAMESE':
             super_train_model_siamese(SuperTrainSiameseUsecaseDto(name=data.name, training_data=training_data, test_data=data.test_data, inversify=get_inversify()))
+        elif data.neural_network_type == 'GRU':
+            training_data = [GRUTrainingModelData(**data) for data in training_data]
+            super_train_model_gru(SuperTrainGRUUsecaseDto(name=data.name, training_data=training_data, test_data=data.test_data, inversify=get_inversify()))
         else:
             raise ValueError(f"Unknown neural network type: {data.neural_network_type}")
 
@@ -319,10 +344,11 @@ async def test(data: TestModelData, payload: dict = Depends(verify_access_token)
 @router.get("/models")
 async def get_all_models_api(payload: dict = Depends(verify_access_token)):
     """
-    Returns all models stored in memory.
+    Returns a list of all models stored in memory with their name and neural network type.
     """
     try:
-        return get_all_models_usecase(get_inversify())
+        models = get_all_models_usecase(get_inversify())
+        return models
     except Exception as e:
         logger.error(f"Error occurred while retrieving models: {str(e)}")
         raise HTTPException(status_code=500, detail=f"An error occurred while retrieving models: {str(e)}")

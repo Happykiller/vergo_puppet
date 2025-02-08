@@ -4,7 +4,7 @@ from typing import List, NamedTuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
-from app.services.bdd.models.model_data import ModelData
+from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.usecases.siamese.usecase_commons_siamese import tokens_to_indices
 
 class CreateSiameseUsecaseDto(NamedTuple):
@@ -57,7 +57,8 @@ def create_model_siamese(dto: CreateSiameseUsecaseDto):
             neural_network_type="SIAMESE",
             dictionary=dto.dictionary,
             indexed_dictionary=indexed_dictionary,
-            glossary=glossary
+            glossary=glossary,
+            status=ModelStatus.CREATED
         ))
 
         # Return response with missing tokens

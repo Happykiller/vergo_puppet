@@ -4,6 +4,7 @@ from typing import Optional
 from abc import ABC, abstractmethod
 
 from app.services.bdd.models.model_data import ModelData
+from app.services.bdd.models.training_result import TrainingResult
 
 class BDDService(ABC):
     """Abstract Base Class for database service."""
@@ -38,4 +39,14 @@ class BDDService(ABC):
 
     @abstractmethod
     def clear_search_buffer(model_name: str):
+        pass
+
+    @abstractmethod
+    def save_training_result(self, result: TrainingResult):
+        """Save a training result."""
+        pass
+
+    @abstractmethod
+    def get_training_results(self, model_name: Optional[str] = None):
+        """Retrieve all training results, optionally filtered by model name."""
         pass

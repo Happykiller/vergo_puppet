@@ -1,5 +1,7 @@
 # app\usecases\siamese\usecase_mesure_siamese.py
 import traceback
+import numpy as np
+from collections import Counter
 from typing import List, NamedTuple
 
 from app.inversify import Inversify
@@ -66,12 +68,20 @@ def mesure_siamese(dto: MesureSiameseUsecaseDto):
             })
             
             # Log the output details
-            #logger.debug(f"Query: {vector1}, Image: {vector2}")
-            #logger.debug(f"Expected similarity: {expected_similarity*100}%, Model similarity: {predicted_similarity*100:.2f}%, Error: {error*100:.2f}%")
+            logger.debug(f"Query: {vector1}, Image: {vector2}")
+            logger.debug(f"Expected similarity: {expected_similarity*100}%, Model similarity: {predicted_similarity*100:.2f}%, Error: {error*100:.2f}%")
         
         # Calculate metrics
         prediction_accuracy = (correct_predictions / total_tests) * 100
-        avg_similarity_precision = sum(similarity_precision) / total_tests
+        avg_similarity_precision = np.mean(similarity_precision)
+        median_similarity = np.median(similarity_precision)
+        mode_similarity = Counter(similarity_precision).most_common(1)[0][0]
+        range_similarity = max(similarity_precision) - min(similarity_precision)
+        variance_similarity = np.var(similarity_precision)
+        std_dev_similarity = np.std(similarity_precision)
+        q1 = np.percentile(similarity_precision, 25)
+        q3 = np.percentile(similarity_precision, 75)
+        coeff_variation = (std_dev_similarity / avg_similarity_precision) * 100 if avg_similarity_precision != 0 else 0
 
         # Compile the report
         report = {
@@ -80,13 +90,52 @@ def mesure_siamese(dto: MesureSiameseUsecaseDto):
             "correct_predictions": correct_predictions,
             "prediction_accuracy_percentage": prediction_accuracy,
             "avg_similarity_precision_percentage": avg_similarity_precision,
+            "median_similarity_precision_percentage": median_similarity,
+            "mode_similarity_precision_percentage": mode_similarity,
+            "range_similarity_percentage": range_similarity,
+            "variance_similarity": variance_similarity,
+            "std_dev_similarity": std_dev_similarity,
+            "quartile_1": q1,
+            "quartile_3": q3,
+            "coefficient_of_variation_percentage": coeff_variation,
             "details": details
         }
         
         # Log summary details
         logger.info(f"Prediction accuracy: {prediction_accuracy:.2f}% ({correct_predictions}/{total_tests})")
         logger.info(f"Average similarity precision: {avg_similarity_precision:.2f}%")
+        
+        # Médiane : La valeur centrale qui sépare une distribution ordonnée en deux parties égales. 
+        # Elle est particulièrement utile pour comprendre la tendance centrale des données, 
+        # surtout en présence de valeurs aberrantes.
+        logger.info(f"Median similarity precision: {median_similarity:.2f}%")
 
+        # Mode : La valeur ou les valeurs les plus fréquentes dans un ensemble de données. 
+        # Le mode est utile pour identifier les valeurs les plus courantes ou les pics dans la distribution des données.
+        logger.info(f"Mode similarity precision: {mode_similarity:.2f}%")
+
+        # Étendue : La différence entre la valeur maximale et la valeur minimale. 
+        # Elle donne une indication de la dispersion des données.
+        logger.info(f"Range similarity precision: {range_similarity:.2f}%")
+
+        # Variance : Une mesure de la dispersion des données autour de la moyenne. 
+        # Elle est calculée en faisant la moyenne des carrés des écarts par rapport à la moyenne.
+        logger.info(f"Variance similarity: {variance_similarity:.2f}")
+
+        # Écart-type : La racine carrée de la variance. Il fournit une mesure de la dispersion des données 
+        # dans les mêmes unités que les données elles-mêmes, facilitant ainsi l'interprétation.
+        logger.info(f"Standard deviation similarity: {std_dev_similarity:.2f}")
+
+        # Quartiles : Les valeurs qui divisent un ensemble de données ordonné en quatre parties égales. 
+        # Le premier quartile (Q1) correspond au 25e centile, la médiane au 50e centile, 
+        # et le troisième quartile (Q3) au 75e centile. 
+        # Les quartiles sont utilisés pour comprendre la distribution des données et identifier les valeurs aberrantes potentielles.
+        logger.info(f"Q1 (25th percentile): {q1:.2f}%")
+        logger.info(f"Q3 (75th percentile): {q3:.2f}%")
+
+        # Coefficient de variation : Le rapport de l'écart-type à la moyenne, souvent exprimé en pourcentage. 
+        # Il permet de comparer la dispersion de différentes distributions, même si les unités ou les échelles diffèrent.
+        logger.info(f"Coefficient of Variation: {coeff_variation:.2f}%")
 
         return report
     

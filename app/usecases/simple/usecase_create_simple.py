@@ -1,9 +1,9 @@
 # app\usecases\simple\usecase_create_simple.py
 from typing import NamedTuple, Optional
-from app.services.bdd.models.model_data import ModelData
 
 from app.inversify import Inversify
 from app.services.logger import logger
+from app.services.bdd.models.model_data import ModelData, ModelStatus
 
 class CreateSimpleUsecaseDto(NamedTuple):
     name: str
@@ -20,6 +20,6 @@ def create_model_simple_nn(dto: CreateSimpleUsecaseDto):
         raise Exception("Model already exists")
 
     # Save the model with its glossary and index dictionary
-    bdd.save_model(ModelData(name=dto.name, neural_network_type="SimpleNN"))
+    bdd.save_model(ModelData(name=dto.name, neural_network_type="SimpleNN", status=ModelStatus.CREATED))
 
     return {"status": "model created", "model_name": dto.name}

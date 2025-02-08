@@ -41,7 +41,7 @@ def test_train_model_simple_nn_success(mock_transform_data, mock_train_model_nn,
     result = train_model_simple_nn(TrainSimpleUsecaseDto(name="test_model", training_data=training_data, inversify=mock_inversify))
 
     # Verify update_model was called
-    mock_bdd.update_model.assert_called_once()
+    mock_bdd.update_model.assert_called()
     actual_model_data = mock_bdd.update_model.call_args[0][0]
 
     # Validate ModelData attributes

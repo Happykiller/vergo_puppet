@@ -1,6 +1,7 @@
 # app\usecases\siamese\usecase_train_siamese_test.py
 import pytest
 from unittest.mock import MagicMock, patch
+
 from app.services.bdd.models.model_data import ModelData
 from app.usecases.siamese.usecase_train_siamese import TrainSiameseUsecaseDto, train_model_siamese
 

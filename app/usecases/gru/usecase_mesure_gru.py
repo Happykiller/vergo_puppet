@@ -12,7 +12,7 @@ class MesureGRUUsecaseDto(NamedTuple):
     name: str
     inversify: Inversify
     test_data: List[GRUTrainingModelData]
-    iterate: Optional[int]
+    iterate: Optional[int] = 1
 
 def mesure_gru(dto: MesureGRUUsecaseDto):
     """
@@ -83,47 +83,33 @@ def mesure_gru(dto: MesureGRUUsecaseDto):
             accuracy = correct_predictions / total_tests * 100
             return accuracy, detailed_results
 
-        # Handle iterate mode
-        if dto.iterate:
-            logger.info(f"Running tests {dto.iterate} times.")
-            accuracies = []
-            all_detailed_results = []
+        logger.info(f"Running tests {dto.iterate} times.")
+        accuracies = []
+        all_detailed_results = []
 
-            for _ in range(dto.iterate):
-                accuracy, detailed_results = run_test()
-                accuracies.append(accuracy)
-                all_detailed_results.append({
-                    "iteration": len(all_detailed_results) + 1,
-                    "accuracy": accuracy,
-                    "detailed_results": detailed_results
-                })
+        for _ in range(dto.iterate):
+            accuracy, detailed_results = run_test()
+            accuracies.append(accuracy)
+            all_detailed_results.append({
+                "iteration": len(all_detailed_results) + 1,
+                "accuracy": accuracy,
+                "detailed_results": detailed_results
+            })
 
-            avg_accuracy = sum(accuracies) / len(accuracies)
-            min_accuracy = min(accuracies)
-            max_accuracy = max(accuracies)
-            
-            summary = {
-                "iterations": dto.iterate,
-                "average_accuracy": avg_accuracy,
-                "min_accuracy": min_accuracy,
-                "max_accuracy": max_accuracy
-            }
-            logger.info(f"Summary after {dto.iterate} iterations: {summary}")
-            return {
-                "summary": summary,
-                "history": all_detailed_results
-            }
-
-        # Default single test run
-        logger.info("Running a single test iteration.")
-        accuracy, detailed_results = run_test()
+        avg_accuracy = sum(accuracies) / len(accuracies)
+        min_accuracy = min(accuracies)
+        max_accuracy = max(accuracies)
+        
         summary = {
-            "total_tests": len(dto.test_data),
-            "accuracy": accuracy
+            "iterations": dto.iterate,
+            "average_accuracy": avg_accuracy,
+            "min_accuracy": min_accuracy,
+            "max_accuracy": max_accuracy
         }
+        logger.info(f"Summary after {dto.iterate} iterations: {summary}")
         return {
             "summary": summary,
-            "detailed_results": detailed_results
+            "history": all_detailed_results
         }
     
     except Exception as e:
