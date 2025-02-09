@@ -6,6 +6,7 @@ from typing import List, NamedTuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
+from app.services.bdd.models.model_metrics import MetricsModel
 from app.neural_network.nn_siamese import SiameseLSTM, evaluate_similarity
 from app.usecases.siamese.usecase_commons_siamese import create_indexed_glossary, tokens_to_indices
 
@@ -136,6 +137,24 @@ def mesure_siamese(dto: MesureSiameseUsecaseDto):
         # Coefficient de variation : Le rapport de l'écart-type à la moyenne, souvent exprimé en pourcentage. 
         # Il permet de comparer la dispersion de différentes distributions, même si les unités ou les échelles diffèrent.
         logger.info(f"Coefficient of Variation: {coeff_variation:.2f}%")
+        
+        bdd.save_metrics(MetricsModel(
+            model_name=dto.name,
+            metrics={
+                "total_tests": total_tests,
+                "correct_predictions": correct_predictions,
+                "prediction_accuracy_percentage": prediction_accuracy,
+                "avg_similarity_precision_percentage": avg_similarity_precision,
+                "median_similarity_precision_percentage": median_similarity,
+                "mode_similarity_precision_percentage": mode_similarity,
+                "range_similarity_percentage": range_similarity,
+                "variance_similarity": variance_similarity,
+                "std_dev_similarity": std_dev_similarity,
+                "quartile_1": q1,
+                "quartile_3": q3,
+                "coefficient_of_variation_percentage": coeff_variation
+            }
+        ))
 
         return report
     

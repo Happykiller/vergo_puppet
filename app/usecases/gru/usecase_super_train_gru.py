@@ -17,7 +17,7 @@ class SuperTrainGRUUsecaseDto(NamedTuple):
     training_data: List[GRUTrainingModelData]
     test_data: List[GRUTrainingModelData]
     inversify: Inversify
-    n_iterations: int = 10
+    n_iterations: int = 30
 
 def super_train_model_gru(dto: SuperTrainGRUUsecaseDto) -> Dict:
     """

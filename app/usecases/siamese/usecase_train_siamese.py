@@ -1,9 +1,12 @@
 # app\usecases\siamese\usecase_train_siamese.py
 import traceback
-from typing import List, NamedTuple, Tuple
+import numpy as np
+from collections import Counter
+from typing import Dict, List, NamedTuple, Tuple
 
 from app.inversify import Inversify
 from app.services.logger import logger
+from app.services.bdd.models.model_metrics import MetricsModel
 from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.neural_network.nn_siamese import SiameseLSTM, train_siamese_model_nn
 from app.usecases.siamese.usecase_commons_siamese import create_glossary_from_training_data, tokens_to_indices
@@ -71,6 +74,17 @@ def train_model_siamese(dto: TrainSiameseUsecaseDto):
             indexed_dictionary=model.indexed_dictionary,
             glossary=model.glossary
         ))
+        
+        data_training_stats = compute_training_statistics(dto.training_data)
+        
+        bdd.save_metrics(MetricsModel(
+            model_name=dto.name,
+            metrics={
+                "type": "training",
+                "data_training_stats": data_training_stats,
+                "training_stats": report
+            }
+        ))
 
         # Clear the search buffer for the model
         bdd.clear_search_buffer(dto.name)
@@ -78,9 +92,70 @@ def train_model_siamese(dto: TrainSiameseUsecaseDto):
         return {
             "status": "training completed",
             "model_name": dto.name,
+            "data_training_stats": data_training_stats,
             "training_report": report
         }
     
     except Exception as e:
         logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")
         raise Exception(f"[#train_model_siamese]{str(e)}")
+    
+def compute_training_statistics(training_data: List[Tuple[List[str], List[str], float]]) -> Dict:
+    """
+    Compute statistics on training data for a Siamese model.
+    
+    :param training_data: List of (source_tokens, target_tokens, similarity_score)
+    :return: Dictionary with computed statistics
+    """
+    # Containers for data
+    word_counts = Counter()
+    source_lengths = []
+    target_lengths = []
+    similarity_buckets = Counter({
+        "0.0-0.0": 0,
+        "0.0-0.1": 0, "0.1-0.2": 0, "0.2-0.3": 0, "0.3-0.4": 0, "0.4-0.5": 0, 
+        "0.5-0.6": 0, "0.6-0.7": 0, "0.7-0.8": 0, "0.8-0.9": 0, "0.9-1.0": 0,
+        "1.0-1.0": 0
+    })
+
+    # Process training data
+    for source_tokens, target_tokens, similarity in training_data:
+        word_counts.update(source_tokens + target_tokens)
+        source_lengths.append(len(source_tokens))
+        target_lengths.append(len(target_tokens))
+
+        # Affectation dans la bonne tranche
+        if similarity == 0.0:
+            similarity_buckets["0.0-0.0"] += 1
+        elif similarity == 1.0:
+            similarity_buckets["1.0-1.0"] += 1
+        else:
+            # Calcul de l'intervalle correct
+            lower_bound = int(similarity * 10) / 10  # Exemple : 0.32 → 0.3
+            upper_bound = lower_bound + 0.1  # Exemple : 0.3 → 0.4
+            bucket_key = f"{lower_bound:.1f}-{upper_bound:.1f}"
+            similarity_buckets[bucket_key] += 1
+
+    # Compute percentages
+    total_words = sum(word_counts.values())
+    word_frequencies = {word: count / total_words * 100 for word, count in word_counts.items()}
+    total_pairs = len(training_data)
+    source_length_distribution = {length: count / total_pairs * 100 for length, count in Counter(source_lengths).items()}
+    target_length_distribution = {length: count / total_pairs * 100 for length, count in Counter(target_lengths).items()}
+    similarity_distribution = {k: v / total_pairs * 100 for k, v in similarity_buckets.items()}
+    
+    # Sorting in descending order
+    word_frequencies = dict(sorted(word_frequencies.items(), key=lambda item: item[1], reverse=True))
+    source_length_distribution = dict(sorted(source_length_distribution.items(), key=lambda item: item[1], reverse=True))
+    target_length_distribution = dict(sorted(target_length_distribution.items(), key=lambda item: item[1], reverse=True))
+
+    # Construct response
+    return {
+        "total_training_pairs": total_pairs,
+        "average_source_length": round(np.mean(source_lengths), 2) if source_lengths else 0,
+        "average_target_length": round(np.mean(target_lengths), 2) if target_lengths else 0,
+        "word_frequencies": word_frequencies,
+        "source_length_distribution": source_length_distribution,
+        "target_length_distribution": target_length_distribution,
+        "similarity_distribution": similarity_distribution
+    }

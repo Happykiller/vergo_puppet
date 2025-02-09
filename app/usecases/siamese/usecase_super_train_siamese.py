@@ -6,6 +6,7 @@ from typing import List, NamedTuple, Dict, Tuple
 from app.inversify import Inversify
 from app.services.logger import logger
 from app.neural_network.nn_siamese import SiameseLSTM
+from app.services.bdd.models.model_metrics import MetricsModel
 from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.usecases.siamese.usecase_mesure_siamese import mesure_siamese, MesureSiameseUsecaseDto
 from app.usecases.siamese.usecase_train_siamese import train_model_siamese, TrainSiameseUsecaseDto
@@ -98,6 +99,17 @@ def super_train_model_siamese(dto: SuperTrainSiameseUsecaseDto) -> Dict:
             "measurement_report": best_measurement_report
         }
         logger.info("Super training completed. Best test accuracy: %.2f%%", best_test_accuracy)
+        
+        bdd.save_metrics(MetricsModel(
+            model_name=dto.name,
+            metrics= {
+                "type": "super_training",
+                "iterations": dto.n_iterations,
+                "best_test_accuracy": best_test_accuracy,
+                "best_measurement_report": best_measurement_report
+            }
+        ))
+        
         return final_report
 
     except Exception as e:
