@@ -4,7 +4,7 @@ from collections import Counter
 from typing import List, Dict, NamedTuple
 
 from app.inversify import Inversify
-from app.services.bdd.models.training_result import TrainingResult
+from app.services.bdd.models.model_metrics import MetricsModel
 from app.services.logger import logger
 from app.neural_network.nn_gru import GRUClassifier, train_gru
 from app.services.bdd.models.model_data import ModelData, ModelStatus
@@ -48,12 +48,23 @@ def train_model_gru(dto: TrainGRUUsecaseDto):
         category_counts = Counter(categories)
         num_categories = len(category_counts)
         
+        data_training_stats = {
+            "num_documents": num_documents,
+            "num_categories": num_categories,
+            "dist_categories": []
+        }
         logger.info(f"Number of documents: {num_documents}")
         logger.info(f"Number of categories: {num_categories}")
         logger.info("Category distribution:")
         for category, count in category_counts.items():
             percentage = (count / num_documents) * 100
             logger.info(f" - {category}: {count} documents ({percentage:.2f}%)")
+            data_training_stats["dist_categories"].append({
+                category: {
+                    "count": count,
+                    "percentage": percentage
+                }
+            })
         
         # Analyze sequence lengths
         sequence_lengths = [len(data.tokens) for data in dto.training_data]
@@ -64,11 +75,15 @@ def train_model_gru(dto: TrainGRUUsecaseDto):
         logger.info(f"Max sequence length: {max_seq_length}")
         logger.info(f"Min sequence length: {min_seq_length}")
         logger.info(f"Average sequence length: {avg_seq_length:.2f}")
+        data_training_stats["max_seq_length"] = max_seq_length
+        data_training_stats["min_seq_length"] = min_seq_length
+        data_training_stats["avg_seq_length"] = avg_seq_length
         
         # Build vocabulary for the model
         word2idx, idx2word = build_vocab(dto.training_data)
         vocab_size = len(word2idx)
         logger.info(f"Vocabulary size: {vocab_size}")
+        data_training_stats["vocab_size"] = vocab_size
         
         # Map categories to indices
         category2idx, idx2category = build_category_mapping(dto.training_data)
@@ -96,15 +111,22 @@ def train_model_gru(dto: TrainGRUUsecaseDto):
             idx2category=idx2category
         ))
 
-        bdd.save_training_result(TrainingResult(
+        bdd.save_metrics(MetricsModel(
             model_name=dto.name,
-            metrics=training_stats
+            metrics={
+                "type": "training",
+                "data_training_stats": data_training_stats,
+                "training_stats": training_stats
+            }
         ))
         
         return {
             "status": "Training complete",
             "model_name": dto.name,
-            "training_stats": training_stats
+            "metrics": {
+                "data_training_stats": data_training_stats,
+                "training_stats": training_stats
+            }
         }
     except Exception as e:
         logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")

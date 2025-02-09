@@ -49,7 +49,10 @@ def test_train_model_gru_success(mock_build_vocab, mock_build_category_mapping, 
     assert result == {
         "status": "Training complete",
         "model_name": "test_gru_model",
-        "training_stats": {"final_loss": 0.1, "epochs_run": 5}
+        "metrics": {
+            "data_training_stats": {'num_documents': 2, 'num_categories': 2, 'dist_categories': [{'cat1': {'count': 1, 'percentage': 50.0}}, {'cat2': {'count': 1, 'percentage': 50.0}}], 'max_seq_length': 2, 'min_seq_length': 2, 'avg_seq_length': 2.0, 'vocab_size': 2},
+            "training_stats": {"final_loss": 0.1, "epochs_run": 5},
+        }
     }
 
 

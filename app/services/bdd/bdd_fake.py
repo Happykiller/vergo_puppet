@@ -7,7 +7,7 @@ from app.services.logger import logger
 from app.services.bdd.bdd import BDDService
 from app.services.bdd.models.model_data import ModelData
 from app.services.bdd.models.model_mapping import MODEL_MAPPING
-from app.services.bdd.models.training_result import TrainingResult
+from app.services.bdd.models.model_metrics import MetricsModel
 
 class FakeBDDService(BDDService):
     """Fake implementation of the database service for development/testing."""
@@ -17,7 +17,7 @@ class FakeBDDService(BDDService):
         self.models = {}
         # Buffer for caching search results
         self.search_buffer = {}
-        self.training_results = []
+        self.metrics = []
         logger.debug("Bdd: Fake Bdd initialized")
 
     def save_model(self, data: ModelData):
@@ -37,10 +37,17 @@ class FakeBDDService(BDDService):
         :param model_class: The class of the PyTorch model (optional).
         :return: An instance of ModelData if found, otherwise None.
         """
-        serialized_data = self.models.get(name)
-        if not serialized_data:
+        model = self.models.get(name)
+        
+        if not model:
             return None
-        return ModelData.deserialize(serialized_data, model_class=model_class)
+        
+        model_class = model_class if model_class is not None else MODEL_MAPPING.get(model.get("neural_network_type"))
+
+        if model_class is None:
+            raise ValueError(f"Unknown neural network type: {model.get('neural_network_type')}")
+        
+        return ModelData.deserialize(model, model_class=model_class)
 
     def model_exists(self, name: str) -> bool:
         """
@@ -109,12 +116,12 @@ class FakeBDDService(BDDService):
         if model_name in self.search_buffer:
             del self.search_buffer[model_name]
 
-    def save_training_result(self, result: TrainingResult):
+    def save_metrics(self, result: MetricsModel):
         """Save a training result to the in-memory database."""
-        self.training_results.append(result)
+        self.metrics.append(result)
 
-    def get_training_results(self, model_name: Optional[str] = None) -> List[TrainingResult]:
+    def get_metrics(self, model_name: Optional[str] = None) -> List[MetricsModel]:
         """Retrieve all training results, optionally filtered by model name."""
         if model_name:
-            return [res for res in self.training_results if res.model_name == model_name]
-        return self.training_results
+            return [res for res in self.metrics if res.model_name == model_name]
+        return self.metrics

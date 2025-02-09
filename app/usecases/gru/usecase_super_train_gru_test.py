@@ -52,8 +52,7 @@ def test_super_train_model_gru_success(mock_mesure_gru, mock_train_model_gru, pa
 
     # Vérification que la meilleure accuracy a bien été enregistrée
     assert result["best_test_accuracy"] == 85.0
-    assert result["training_report"]["training_stats"]["final_loss"] == 0.05
-    assert result["measurement_report"]["summary"]["average_accuracy"] == 85.0
+    assert result["best_measurement_report"]["average_accuracy"] == 85.0
 
     # Vérification de l'état final du modèle
     mock_bdd.update_model.assert_called()

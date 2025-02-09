@@ -83,7 +83,7 @@ POST {{host}}/test
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
-< ./puppet-o2_test2.json
+< ./puppet-o2_test.json
 
 
 ###

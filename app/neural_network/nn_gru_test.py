@@ -1,10 +1,10 @@
-#app\neural_network\nn_gru_test.py
-import pytest
+# app\neural_network\nn_gru_test.py
 import torch
+import pytest
 from unittest.mock import patch
-from app.neural_network.nn_gru import GRUClassifier, train_gru, predict
+from app.neural_network.nn_gru import GRUClassifier, pre_pad_sequences, train_gru, predict
 
-# Test 1: Verify the structure of the GRUClassifier model
+# Test: Verify the structure of the GRUClassifier model
 def test_gru_classifier_structure():
     vocab_size = 100
     embedding_dim = 128
@@ -29,7 +29,7 @@ def test_gru_classifier_structure():
     assert model.fc.in_features == hidden_dim, "Input size of fully connected layer is incorrect"
     assert model.fc.out_features == num_classes, "Output size of fully connected layer does not match the number of classes"
 
-# Test 2: Verify training of the GRU model with dummy data
+# Test: Verify training of the GRU model with dummy data
 def test_train_gru():
     vocab_size = 50
     num_classes = 3
@@ -46,7 +46,7 @@ def test_train_gru():
     # Check that the model has been trained
     assert model is not None, "GRU model was not trained correctly"
 
-# Test 3: Verify prediction with a trained GRU model
+# Test: Verify prediction with a trained GRU model
 def test_predict_with_trained_gru():
     vocab_size = 50
     num_classes = 3
@@ -68,7 +68,7 @@ def test_predict_with_trained_gru():
     assert isinstance(predicted_class, int), "Prediction should be an integer representing a class"
     assert 0 <= predicted_class < num_classes, "Prediction should be within the available class range"
 
-# Test 4: Verify loss decrease during training
+# Test: Verify loss decrease during training
 def test_loss_decrease_during_training():
     vocab_size = 50
     num_classes = 3
@@ -86,7 +86,7 @@ def test_loss_decrease_during_training():
     # Ensure training completed successfully
     assert model is not None, "GRU model was not trained correctly"
 
-# Test 5: Verify that dropout and log_softmax layers work correctly
+# Test: Verify that dropout and log_softmax layers work correctly
 def test_gru_dropout_log_softmax():
     vocab_size = 50
     embedding_dim = 128
@@ -102,3 +102,55 @@ def test_gru_dropout_log_softmax():
     # Check output shape and sum of probabilities
     assert output.shape == (1, num_classes), "Output should have shape (1, num_classes)"
     assert torch.allclose(torch.exp(output).sum(dim=1), torch.tensor([1.0]), atol=1e-3), "Probabilities should sum to 1"
+
+# Test: Verify that sequences of equal length remain unchanged
+def test_pre_pad_sequences_no_padding_needed():
+    sequences = [
+        [1, 2, 3],
+        [4, 5, 6]
+    ]
+    # When all sequences already have the same length, the function should return them unchanged.
+    padded = pre_pad_sequences(sequences)
+    assert padded == sequences, "Sequences of equal length should not be modified."
+
+# Test: Verify that sequences of unequal length are padded to the maximum length found
+def test_pre_pad_sequences_padding():
+    sequences = [
+        [1, 2],
+        [3, 4, 5]
+    ]
+    # Maximum length is 3 (from the second sequence). The first sequence should be padded with 0.
+    expected = [
+        [1, 2, 0],
+        [3, 4, 5]
+    ]
+    padded = pre_pad_sequences(sequences)
+    assert padded == expected, "Sequences should be padded with 0 to match the maximum length."
+
+# Test: Verify that providing a fixed max_len results in truncation or padding as needed
+def test_pre_pad_sequences_truncation():
+    sequences = [
+        [1, 2, 3, 4],
+        [5, 6]
+    ]
+    # If we set max_len=3, the first sequence should be truncated and the second padded.
+    expected = [
+        [1, 2, 3],
+        [5, 6, 0]
+    ]
+    padded = pre_pad_sequences(sequences, max_len=3)
+    assert padded == expected, "Sequences should be truncated or padded to fixed max_len=3."
+
+# Test: Verify that a custom padding value is used correctly
+def test_pre_pad_sequences_custom_padding_value():
+    sequences = [
+        [7],
+        [8, 9]
+    ]
+    # Set max_len=3 and a custom padding value, e.g., -1.
+    expected = [
+        [7, -1, -1],
+        [8, 9, -1]
+    ]
+    padded = pre_pad_sequences(sequences, max_len=3, padding_value=-1)
+    assert padded == expected, "Sequences should be padded using the custom padding value (-1)."

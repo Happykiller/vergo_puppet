@@ -16,7 +16,7 @@ class TestModelData(BaseModel):
         List[GRUTrainingModelData],  # GRU
         List[WeatherModelData],  # LSTM
     ] = Field(..., description="Test data")
-    iterate: Optional[int] = Field(None, description="Optional parameter for the number of iterations to run during testing")
+    iterate: Optional[int] = Field(1, description="Optional parameter for the number of iterations to run during testing")
 
     def validate_test_data(cls, values):
         """

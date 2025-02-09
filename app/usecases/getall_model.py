@@ -28,18 +28,30 @@ def get_all_models_usecase(inversify: Inversify) -> List[ModelData]:
                 logger.warning(f"Invalid model format: expected ModelData but got {type(model)}")
                 continue 
 
-            # Fetch training results limited to 50
-            training_results = bdd.get_training_results(model.name)[:50]
+            # Fetch training results and sort them by timestamp (most recent first)
+            metrics = sorted(
+                bdd.get_metrics(model.name),
+                key=lambda result: result.timestamp,
+                reverse=True
+            )[:50]
 
             # Convert training results to dictionaries
-            training_results_dicts = [result.to_dict() for result in training_results]
+            metrics_dicts = [result.to_dict() for result in metrics]
+            
+            filtered_metrics = [
+                {
+                    "metrics": result["metrics"],
+                    "timestamp": result["timestamp"]
+                }
+                for result in metrics_dicts
+            ]
 
             # Append model with training results
             models_with_results.append({
                 "name": model.name,
                 "neural_network_type": model.neural_network_type,
                 "status": model.status.value,
-                "training_results": training_results_dicts
+                "history": filtered_metrics
             })
 
         return models_with_results

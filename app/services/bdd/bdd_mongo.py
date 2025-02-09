@@ -5,7 +5,7 @@ from typing import List, Optional
 from app.services.bdd.bdd import BDDService
 from app.services.bdd.models.model_data import ModelData
 from app.services.bdd.models.model_mapping import MODEL_MAPPING
-from app.services.bdd.models.training_result import TrainingResult
+from app.services.bdd.models.model_metrics import MetricsModel
 
 class MongoBDDService(BDDService):
     """MongoDB implementation of BDDService."""
@@ -85,13 +85,15 @@ class MongoBDDService(BDDService):
         """Clear the search buffer for a specific model."""
         self.database.search_results.delete_many({"model_name": model_name})
 
-    def save_training_result(self, result: TrainingResult):
+    def save_metrics(self, result: MetricsModel):
         """Save a training result to MongoDB."""
-        self.database.training_results.insert_one(result.to_dict())
+        self.database.metrics.insert_one(result.to_dict())
 
-    def get_training_results(self, model_name: Optional[str] = None) -> List[TrainingResult]:
+    def get_metrics(self, model_name: Optional[str] = None) -> List[MetricsModel]:
         """Retrieve all training results, optionally filtered by model name."""
         query = {"model_name": model_name} if model_name else {}
-        results = self.database.training_results.find(query)
+        
+        # Fetch at most 100 results, sorted from most recent to oldest
+        results = self.database.metrics.find(query).sort("timestamp", -1).limit(100)
 
-        return [TrainingResult.from_dict(res) for res in results]
+        return [MetricsModel.from_dict(res) for res in results]

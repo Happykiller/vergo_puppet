@@ -3,6 +3,7 @@ import traceback
 from typing import List, NamedTuple, Optional
 
 from app.inversify import Inversify
+from app.services.bdd.models.model_metrics import MetricsModel
 from app.services.logger import logger
 from app.neural_network.nn_gru import GRUClassifier, predict
 from app.usecases.gru.usecase_commons_gru import process_input
@@ -12,7 +13,7 @@ class MesureGRUUsecaseDto(NamedTuple):
     name: str
     inversify: Inversify
     test_data: List[GRUTrainingModelData]
-    iterate: Optional[int] = 1
+    iterate: Optional[int] = 10
 
 def mesure_gru(dto: MesureGRUUsecaseDto):
     """
@@ -101,11 +102,18 @@ def mesure_gru(dto: MesureGRUUsecaseDto):
         max_accuracy = max(accuracies)
         
         summary = {
+            "type": "mesure",
             "iterations": dto.iterate,
             "average_accuracy": avg_accuracy,
             "min_accuracy": min_accuracy,
             "max_accuracy": max_accuracy
         }
+        
+        bdd.save_metrics(MetricsModel(
+            model_name=dto.name,
+            metrics=summary
+        ))
+        
         logger.info(f"Summary after {dto.iterate} iterations: {summary}")
         return {
             "summary": summary,
@@ -114,4 +122,4 @@ def mesure_gru(dto: MesureGRUUsecaseDto):
     
     except Exception as e:
         logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")
-        raise Exception(f"[#search_model_simple_nn]{str(e)}")
+        raise Exception(f"[#mesure_gru]{str(e)}")

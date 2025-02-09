@@ -2,7 +2,7 @@
 from typing import Dict, Any
 from datetime import datetime, timezone
 
-class TrainingResult:
+class MetricsModel:
     """Represents the result of a model training session."""
     
     def __init__(self, model_name: str, metrics: Dict[str, Any], timestamp: datetime = None):
@@ -26,9 +26,9 @@ class TrainingResult:
         }
     
     @staticmethod
-    def from_dict(data: Dict[str, Any]) -> "TrainingResult":
-        """Reconstruct a TrainingResult object from a dictionary."""
-        return TrainingResult(
+    def from_dict(data: Dict[str, Any]) -> "MetricsModel":
+        """Reconstruct a MetricsModel object from a dictionary."""
+        return MetricsModel(
             model_name=data["model_name"],
             metrics=data["metrics"],
             timestamp=datetime.fromisoformat(data["timestamp"]).replace(tzinfo=timezone.utc)

@@ -6,6 +6,7 @@ from typing import List, NamedTuple, Dict
 from app.inversify import Inversify
 from app.services.logger import logger
 from app.neural_network.nn_gru import GRUClassifier
+from app.services.bdd.models.model_metrics import MetricsModel
 from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 from app.usecases.gru.usecase_mesure_gru import mesure_gru, MesureGRUUsecaseDto
@@ -16,7 +17,7 @@ class SuperTrainGRUUsecaseDto(NamedTuple):
     training_data: List[GRUTrainingModelData]
     test_data: List[GRUTrainingModelData]
     inversify: Inversify
-    n_iterations: int = 30
+    n_iterations: int = 10
 
 def super_train_model_gru(dto: SuperTrainGRUUsecaseDto) -> Dict:
     """
@@ -31,7 +32,6 @@ def super_train_model_gru(dto: SuperTrainGRUUsecaseDto) -> Dict:
     try:
         best_test_accuracy = -1.0
         best_model_state = None
-        best_training_report = None
         best_measurement_report = None
 
         bdd = dto.inversify.get_bdd()
@@ -54,7 +54,7 @@ def super_train_model_gru(dto: SuperTrainGRUUsecaseDto) -> Dict:
                 training_data=dto.training_data,
                 inversify=dto.inversify
             )
-            training_result = train_model_gru(train_dto)
+            train_model_gru(train_dto)
             logger.info("Training completed for iteration %d.", i+1)
 
             # Retrieve current model state from BDD
@@ -75,7 +75,6 @@ def super_train_model_gru(dto: SuperTrainGRUUsecaseDto) -> Dict:
             if current_accuracy > best_test_accuracy:
                 best_test_accuracy = current_accuracy
                 best_model_state = current_model_state
-                best_training_report = training_result
                 best_measurement_report = measurement_result
 
         # --- Update BDD with best model state ---
@@ -94,14 +93,23 @@ def super_train_model_gru(dto: SuperTrainGRUUsecaseDto) -> Dict:
             ))
             logger.info("Best model updated in BDD.")
 
-        final_report = {
-            "best_test_accuracy": best_test_accuracy,
-            "training_report": best_training_report,
-            "measurement_report": best_measurement_report
-        }
         logger.info("Super training completed. Best test accuracy: %.2f%%", best_test_accuracy)
-
-        return final_report
+        
+        bdd.save_metrics(MetricsModel(
+            model_name=dto.name,
+            metrics= {
+                "type": "super_training",
+                "iterations": dto.n_iterations,
+                "best_test_accuracy": best_test_accuracy,
+                "best_measurement_report": best_measurement_report["summary"]
+            }
+        ))
+        
+        return {
+            "iterations": dto.n_iterations,
+            "best_test_accuracy": best_test_accuracy,
+            "best_measurement_report": best_measurement_report["summary"]
+        }
 
     except Exception as e:
         logger.error(f"Error in super training usecase: {str(e)}\nStack trace:\n{traceback.format_exc()}")

@@ -19,7 +19,7 @@ def test_get_all_models_with_models(mock_inversify_class):
         ModelData(name="model1", neural_network_type="GRU", status=ModelStatus.TRAINED),
         ModelData(name="model2", neural_network_type="SiameseLSTM", status=ModelStatus.CREATED)
     ]
-    mock_bdd.get_training_results.return_value = []
+    mock_bdd.get_metrics.return_value = []
     mock_inversify.get_bdd.return_value = mock_bdd
     mock_inversify_class.return_value = mock_inversify
     
@@ -28,8 +28,8 @@ def test_get_all_models_with_models(mock_inversify_class):
     
     # Expected output when models are present
     expected_result = [
-        {"name": "model1", "neural_network_type": "GRU", "status": "trained", "training_results": []},
-        {"name": "model2", "neural_network_type": "SiameseLSTM", "status": "created", "training_results": []}
+        {"name": "model1", "neural_network_type": "GRU", "status": "trained", "history": []},
+        {"name": "model2", "neural_network_type": "SiameseLSTM", "status": "created", "history": []}
     ]
     assert result == expected_result, f"Expected {expected_result} but got {result}"
 

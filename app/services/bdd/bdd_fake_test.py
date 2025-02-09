@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 
 from app.services.bdd.bdd_fake import FakeBDDService
 from app.services.bdd.models.model_data import ModelData
-from app.services.bdd.models.training_result import TrainingResult
+from app.services.bdd.models.model_metrics import MetricsModel
 
 @pytest.fixture
 def fake_bdd():
@@ -76,17 +76,17 @@ def test_clear_search_buffer(fake_bdd):
 
     assert fake_bdd.get_search_result(model_name, query) is None
 
-def test_save_and_get_training_results(fake_bdd):
+def test_save_and_get_metrics(fake_bdd):
     """Test saving and retrieving training results."""
-    training_result1 = TrainingResult(model_name="model1", metrics={"accuracy": 0.95}, timestamp=datetime.now(timezone.utc))
-    training_result2 = TrainingResult(model_name="model2", metrics={"accuracy": 0.98}, timestamp=datetime.now(timezone.utc))
+    training_result1 = MetricsModel(model_name="model1", metrics={"accuracy": 0.95}, timestamp=datetime.now(timezone.utc))
+    training_result2 = MetricsModel(model_name="model2", metrics={"accuracy": 0.98}, timestamp=datetime.now(timezone.utc))
 
-    fake_bdd.save_training_result(training_result1)
-    fake_bdd.save_training_result(training_result2)
+    fake_bdd.save_metrics(training_result1)
+    fake_bdd.save_metrics(training_result2)
 
-    all_results = fake_bdd.get_training_results()
+    all_results = fake_bdd.get_metrics()
     assert len(all_results) == 2
 
-    filtered_results = fake_bdd.get_training_results("model1")
+    filtered_results = fake_bdd.get_metrics("model1")
     assert len(filtered_results) == 1
     assert filtered_results[0].model_name == "model1"

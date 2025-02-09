@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 from app.services.bdd.bdd_mongo import MongoBDDService
 from app.services.bdd.models.model_data import ModelData
-from app.services.bdd.models.training_result import TrainingResult
+from app.services.bdd.models.model_metrics import MetricsModel
 
 @pytest.fixture
 def mongo_bdd_service():
@@ -62,16 +62,16 @@ def test_get_all_models(mongo_bdd_service):
     assert models[0].name in ["model1", "model2"]
     assert models[1].name in ["model1", "model2"]
 
-def test_save_and_get_training_results(mongo_bdd_service):
+def test_save_and_get_metrics(mongo_bdd_service):
     """Test saving and retrieving training results from MongoDB."""
-    training_result = TrainingResult(
+    training_result = MetricsModel(
         model_name="test_model",
         metrics={"accuracy": 0.95},
         timestamp=datetime.now(timezone.utc),
     )
 
-    mongo_bdd_service.save_training_result(training_result)
-    retrieved_results = mongo_bdd_service.get_training_results("test_model")
+    mongo_bdd_service.save_metrics(training_result)
+    retrieved_results = mongo_bdd_service.get_metrics("test_model")
 
     assert len(retrieved_results) == 1
     assert retrieved_results[0].model_name == "test_model"

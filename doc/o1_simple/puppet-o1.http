@@ -1,0 +1,46 @@
+###
+POST {{host}}/create_model
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "puppet-o1",
+  "neural_network_type": "SimpleNN"
+}
+
+###
+POST {{host}}/train_model
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+< ./puppet-o1_train.json
+
+###
+POST {{host}}/search
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "puppet-o1",
+    "neural_network_type": "SimpleNN",
+    "vector": {
+        "type":3,
+        "surface":70,
+        "pieces":3,
+        "floor":2,
+        "parking":0,
+        "balcon":0,
+        "ascenseur":0,
+        "orientation":3,
+        "transports":1,
+        "neighborhood":1
+    }
+}
+
+
+###
+POST {{host}}/test
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+< ./puppet-o1_test.json

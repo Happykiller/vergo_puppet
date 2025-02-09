@@ -65,6 +65,11 @@ def train_gru(vocab_size, num_classes, sequences, labels):
     """
     start_time = time.time()
     losses = []  # List to store the loss for each epoch
+    
+    # --- Preprocessing Step: Pre-pad the sequences ---
+    # For example, we set a fixed maximum length (you can adjust this according to the distribution of your sequences)
+    fixed_max_len = 50  # or compute it based on your data, e.g. max(len(seq) for seq in sequences)
+    sequences = pre_pad_sequences(sequences, max_len=fixed_max_len, padding_value=0)
 
     # Convert input data to tensors
     sequences = torch.tensor(sequences, dtype=torch.long)
@@ -73,7 +78,7 @@ def train_gru(vocab_size, num_classes, sequences, labels):
     # Model hyperparameters
     embedding_dim = 128  # Embedding dimension
     hidden_dim = 256     # GRU hidden state dimension
-    num_epochs = 100      # Number of training epochs
+    num_epochs = 1000      # Number of training epochs
     batch_size = 16      # Batch size for updates
     learning_rate = 0.0001  # Learning rate for stable convergence
     dropout_rate = 0.5   # Dropout rate for regularization
@@ -170,3 +175,25 @@ def predict(nn_model, input):
         predicted_idx = torch.argmax(outputs, dim=1).item()
     
     return predicted_idx
+
+def pre_pad_sequences(sequences, max_len=None, padding_value=0):
+    """
+    Pre-pad (or truncate) a list of token sequences so that all sequences have the same length.
+    
+    :param sequences: List of sequences (each sequence is a list of integers).
+    :param max_len: Desired maximum length. If None, the maximum length from the sequences is used.
+    :param padding_value: Value to use for padding (0 in your case, since padding_idx=0 in the embedding layer).
+    :return: List of pre-padded sequences.
+    """
+    if max_len is None:
+        max_len = max(len(seq) for seq in sequences)
+    padded_sequences = []
+    for seq in sequences:
+        if len(seq) < max_len:
+            # Append padding tokens at the end (post-padding)
+            padded_seq = seq + [padding_value] * (max_len - len(seq))
+        else:
+            # Truncate the sequence if necessary
+            padded_seq = seq[:max_len]
+        padded_sequences.append(padded_seq)
+    return padded_sequences
