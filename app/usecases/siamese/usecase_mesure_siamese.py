@@ -141,6 +141,7 @@ def mesure_siamese(dto: MesureSiameseUsecaseDto):
         bdd.save_metrics(MetricsModel(
             model_name=dto.name,
             metrics={
+                "type": "mesure",
                 "total_tests": total_tests,
                 "correct_predictions": correct_predictions,
                 "prediction_accuracy_percentage": prediction_accuracy,

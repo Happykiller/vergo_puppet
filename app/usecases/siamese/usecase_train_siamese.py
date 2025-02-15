@@ -107,7 +107,6 @@ def compute_training_statistics(training_data: List[Tuple[List[str], List[str], 
     :param training_data: List of (source_tokens, target_tokens, similarity_score)
     :return: Dictionary with computed statistics
     """
-    # Containers for data
     word_counts = Counter()
     source_lengths = []
     target_lengths = []
@@ -118,38 +117,34 @@ def compute_training_statistics(training_data: List[Tuple[List[str], List[str], 
         "1.0-1.0": 0
     })
 
-    # Process training data
     for source_tokens, target_tokens, similarity in training_data:
         word_counts.update(source_tokens + target_tokens)
         source_lengths.append(len(source_tokens))
         target_lengths.append(len(target_tokens))
 
-        # Affectation dans la bonne tranche
         if similarity == 0.0:
             similarity_buckets["0.0-0.0"] += 1
         elif similarity == 1.0:
             similarity_buckets["1.0-1.0"] += 1
         else:
-            # Calcul de l'intervalle correct
-            lower_bound = int(similarity * 10) / 10  # Exemple : 0.32 → 0.3
-            upper_bound = lower_bound + 0.1  # Exemple : 0.3 → 0.4
+            lower_bound = int(similarity * 10) / 10
+            upper_bound = lower_bound + 0.1
             bucket_key = f"{lower_bound:.1f}-{upper_bound:.1f}"
             similarity_buckets[bucket_key] += 1
 
-    # Compute percentages
     total_words = sum(word_counts.values())
-    word_frequencies = {word: count / total_words * 100 for word, count in word_counts.items()}
+    word_frequencies = {str(word): count / total_words * 100 for word, count in word_counts.items()}
     total_pairs = len(training_data)
-    source_length_distribution = {length: count / total_pairs * 100 for length, count in Counter(source_lengths).items()}
-    target_length_distribution = {length: count / total_pairs * 100 for length, count in Counter(target_lengths).items()}
-    similarity_distribution = {k: v / total_pairs * 100 for k, v in similarity_buckets.items()}
+
+    source_length_distribution = {str(length): count / total_pairs * 100 for length, count in Counter(source_lengths).items()}
+    target_length_distribution = {str(length): count / total_pairs * 100 for length, count in Counter(target_lengths).items()}
+    similarity_distribution = {str(k): v / total_pairs * 100 for k, v in similarity_buckets.items()}
     
     # Sorting in descending order
     word_frequencies = dict(sorted(word_frequencies.items(), key=lambda item: item[1], reverse=True))
     source_length_distribution = dict(sorted(source_length_distribution.items(), key=lambda item: item[1], reverse=True))
     target_length_distribution = dict(sorted(target_length_distribution.items(), key=lambda item: item[1], reverse=True))
 
-    # Construct response
     return {
         "total_training_pairs": total_pairs,
         "average_source_length": round(np.mean(source_lengths), 2) if source_lengths else 0,
