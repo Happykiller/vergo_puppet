@@ -186,7 +186,6 @@ def train_model_from_file_background(name: str, neural_network_type: str, file_p
             training_data = [GRUTrainingModelData(**data) for data in training_data]
             train_model_gru(TrainGRUUsecaseDto(name=name, training_data=training_data, inversify=get_inversify()))
         elif neural_network_type == 'SIAMESE':
-            training_data = [GRUTrainingModelData(**data) for data in training_data]
             train_model_siamese(TrainSiameseUsecaseDto(name=name, training_data=training_data, inversify=get_inversify()))
         elif neural_network_type == 'LSTM':
             train_lstm(TrainLSTMUsecaseDto(name=name, training_data=training_data, inversify=get_inversify()))
