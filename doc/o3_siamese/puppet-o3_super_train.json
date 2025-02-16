@@ -1,7 +1,7 @@
 {
   "name": "puppet-o3",
   "neural_network_type": "SIAMESE",
-  "file_name": "o3_2502151700.json",
+  "file_name": "o3_2502161200.json",
   "test_data": [
     [["air", "squat"], ["air", "squat"], 1.0],
     [["push", "up"], ["push", "up"], 1.0],
