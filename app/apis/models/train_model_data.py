@@ -10,19 +10,20 @@ from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelD
 class TrainModelData(BaseModel):
     name: str = Field(..., description="Name of the model to train")
     neural_network_type: Optional[str] = Field(description="Type of neural network ('SimpleNN', 'LSTMNN', 'GRU', or 'SIAMESE')")
-    training_data: Union[
+    training_data: Optional[Union[
         List[WeatherModelData],  # LSTM
         List[Tuple[List[str], List[str], float]],  # Siamese
         List[SimpleNNTrainingModelData],  # SimpleNN
         List[GRUTrainingModelData]  # GRU
-    ] = Field(..., description="Training data")
+    ]] = Field(None, description="Training data")
+    train_file: Optional[str] = Field(None, description="Name of the file for training")
 
     def __init__(self, **data):
         """
         Initializes the TrainModelData and assigns default values for missing elements in siamese training data.
         """
         super().__init__(**data)
-        if self.neural_network_type == 'SIAMESE':
+        if self.neural_network_type == 'SIAMESE' and self.training_data:
             for i, elem in enumerate(self.training_data):
                 # Ensures each tuple is complete with target initialized to 0.0 if missing
                 if len(elem) == 2:

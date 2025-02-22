@@ -7,6 +7,6 @@ services:
       - "3004:8000"
     restart: always
     volumes:
-      - ./training_data:/app/training_data
+      - ./files:/app/files
     extra_hosts:
       - 'host.docker.internal:host-gateway'

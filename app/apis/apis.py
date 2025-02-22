@@ -1,15 +1,16 @@
 # app\apis\apis.py
 import jwt
 import json
+from typing import Any
 from pathlib import Path
 from fastapi.security import OAuth2PasswordBearer # type: ignore
 from fastapi import BackgroundTasks, Depends, APIRouter, HTTPException # type: ignore
 
 from app.version import __version__
-from app.common import load_env_vars
 from app.services.logger import logger
 from app.inversify import get_inversify
 from app.usecases.get_model import get_model_usecase
+from app.common import load_env_vars, parse_input_data
 from app.apis.models.test_model_data import TestModelData
 from app.services.bdd.models.model_data import ModelStatus
 from app.usecases.usecase_tokenize import usecase_tokenize
@@ -20,6 +21,7 @@ from app.apis.models.update_model_data import UpdateModelData
 from app.apis.models.search_model_data import SearchModelData
 from app.apis.models.prepare_cache_data import PrepareCacheData
 from app.apis.models.tokenize_model_data import TokenizeModelData
+from app.apis.models.super_train_model_data import SuperTrainModelData
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 from app.apis.models.train_from_file_model_data import TrainFromFileModelData
 from app.usecases.gru.usecase_mesure_gru import MesureGRUUsecaseDto, mesure_gru
@@ -32,7 +34,6 @@ from app.usecases.lstm.usecase_mesure_lstm import MesureLSTMUsecaseDto, mesure_l
 from app.usecases.lstm.usecase_search_lstm import SearchLSTMUsecaseDto, search_lstm
 from app.usecases.gru.usecase_search_gru import SearchGRUUsecaseDto, search_model_gru
 from app.usecases.gru.usecase_create_gru import CreateGRUUsecaseDto, create_model_gru
-from app.apis.models.super_train_from_file_model_data import SuperTrainFromFileModelData
 from app.usecases.simple.usecase_mesure_simple import MesureSimpleUsecaseDto, mesure_simple_nn
 from app.usecases.siamese.usecase_mesure_siamese import MesureSiameseUsecaseDto, mesure_siamese
 from app.usecases.simple.usecase_train_simple import TrainSimpleUsecaseDto, train_model_simple_nn
@@ -47,8 +48,8 @@ from app.usecases.siamese.prepare_cache_siamese import PrepareSiameseUsecaseDto,
 from app.usecases.siamese.usecase_super_train_siamese import SuperTrainSiameseUsecaseDto, super_train_model_siamese
 from app.usecases.gru.usecase_search_multi_brut_gru import SearchMultiBrutGRUUsecaseDto, search_multi_brut_model_gru
 
-TRAINING_DATA_DIR = Path("training_data")
-TRAINING_DATA_DIR.mkdir(parents=True, exist_ok=True)
+FILES_DIR = Path("files")
+FILES_DIR.mkdir(parents=True, exist_ok=True)
 
 # Initialisation du routeur
 router = APIRouter()
@@ -84,7 +85,7 @@ async def create_model_api(data: CreateModelData, payload: dict = Depends(verify
         elif data.neural_network_type == 'GRU':
             return create_model_gru(CreateGRUUsecaseDto(name=data.name, inversify=get_inversify()))
         elif data.neural_network_type == 'SIAMESE':
-            return create_model_siamese(CreateSiameseUsecaseDto(name=data.name, dictionary=data.dictionary, glossary=data.glossary, inversify=get_inversify()))
+            return create_model_siamese(CreateSiameseUsecaseDto(name=data.name, dictionary=data.dictionary, inversify=get_inversify()))
         elif data.neural_network_type == 'LSTM':
             return create_lstm(CreateLSTMUsecaseDto(name=data.name, inversify=get_inversify()))
         else:
@@ -103,9 +104,7 @@ async def update_model_api(data: UpdateModelData, payload: dict = Depends(verify
     """
     try:
         if data.neural_network_type == 'SIAMESE':
-            if not data.dictionary or not data.glossary:
-                raise HTTPException(status_code=400, detail="Both dictionary and glossary must be provided for SIAMESE model")
-            return update_model_siamese(UpdateSiameseUsecaseDto(name=data.name, dictionary=data.dictionary, glossary=data.glossary, inversify=get_inversify()))
+            return update_model_siamese(UpdateSiameseUsecaseDto(name=data.name, dictionary=data.dictionary, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=400, detail=f"Model type '{data.neural_network_type}' not supported for update")
     except HTTPException as e:
@@ -121,14 +120,16 @@ async def train_model_api(data: TrainModelData, payload: dict = Depends(verify_a
     Trains an existing model using input-target tuples.
     """
     try:
+        train_data = parse_input_data(data.training_data, data.train_file)
+
         if data.neural_network_type == 'SimpleNN':
-            return train_model_simple_nn(TrainSimpleUsecaseDto(name=data.name, training_data=data.training_data, inversify=get_inversify()))
+            return train_model_simple_nn(TrainSimpleUsecaseDto(name=data.name, training_data=train_data, inversify=get_inversify()))
         elif data.neural_network_type == 'GRU':
-            return train_model_gru(TrainGRUUsecaseDto(name=data.name, training_data=data.training_data, inversify=get_inversify()))
+            return train_model_gru(TrainGRUUsecaseDto(name=data.name, training_data=train_data, inversify=get_inversify()))
         elif data.neural_network_type == 'SIAMESE':
-            return train_model_siamese(TrainSiameseUsecaseDto(name=data.name, training_data=data.training_data, inversify=get_inversify()))
+            return train_model_siamese(TrainSiameseUsecaseDto(name=data.name, training_data=train_data, inversify=get_inversify()))
         elif data.neural_network_type == 'LSTM':
-            return train_lstm(TrainLSTMUsecaseDto(name=data.name, training_data=data.training_data, inversify=get_inversify()))
+            return train_lstm(TrainLSTMUsecaseDto(name=data.name, training_data=train_data, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=500, detail=f"Unknown neural network type: {data.neural_network_type}")
     except HTTPException as e:
@@ -155,26 +156,26 @@ async def train_model_from_file(
 
         if(model.status == ModelStatus.TRAINING):
             raise Exception("Model is training")
-        
-        file_path = TRAINING_DATA_DIR / data.file_name
-
-        # Vérifier si le fichier existe
-        if not file_path.exists():
-            raise HTTPException(status_code=404, detail=f"File '{data.file_name}' not found in {TRAINING_DATA_DIR}")
 
         # Launch training asynchronously
-        background_tasks.add_task(train_model_from_file_background, data.name, data.neural_network_type, file_path)
+        background_tasks.add_task(train_model_from_file_background, data.name, data.neural_network_type, data.file_name)
 
         return {"message": "Training initiated", "file": data.file_name}
     except Exception as e:
         logger.error(f"Error occurred while uploading file: {str(e)}")
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
 
-def train_model_from_file_background(name: str, neural_network_type: str, file_path: Path):
+def train_model_from_file_background(name: str, neural_network_type: str, file_name: str):
     """
     Background task to process and train the model using the uploaded file.
     """
     try:
+        file_path = FILES_DIR / file_name
+
+        # Vérifier si le fichier existe
+        if not file_path.exists():
+            raise HTTPException(status_code=404, detail=f"File '{file_path}' not found.")
+
         # Load training data from the file
         with file_path.open("r", encoding="utf-8") as f:
             training_data = json.load(f)  # Assuming JSON format for training data
@@ -195,62 +196,95 @@ def train_model_from_file_background(name: str, neural_network_type: str, file_p
         logger.info(f"Training completed for {name} using {file_path}")
     except Exception as e:
         logger.error(f"Error during training from file {file_path}: {str(e)}")
-    
-@router.post("/super_train_model_from_file")
-async def super_train_model_from_file(
+
+@router.post("/super_train_model")
+async def super_train_model(
     background_tasks: BackgroundTasks,
-    data: SuperTrainFromFileModelData,
+    data: SuperTrainModelData,
     payload: dict = Depends(verify_access_token)
 ):
     """
-    Asynchronously trains a model using training data from an uploaded file.
-    The file is stored in a directory and processed in the background.
+    Asynchronously trains a model using two files: one for training data and one for test data.
     """
     try:
         model = get_model_usecase(data.name, inversify=get_inversify())
-
         if not model:
             raise Exception("Model not found")
 
-        if(model.status == ModelStatus.SUPER_TRAINING):
-            raise Exception("Model is training")
+        if model.status == ModelStatus.SUPER_TRAINING:
+            raise Exception("Model is already in SUPER_TRAINING state")
+        
+        train_data = parse_input_data(data.train_data, data.train_file)
 
-        file_path = TRAINING_DATA_DIR / data.file_name
+        test_data = parse_input_data(data.test_data, data.test_file)
 
-        # Vérifier si le fichier existe
-        if not file_path.exists():
-            raise HTTPException(status_code=404, detail=f"File '{data.file_name}' not found in {TRAINING_DATA_DIR}")
+        # 3) Launch the background task with the final training & test data
+        background_tasks.add_task(
+            super_train_model_background,
+            data,
+            train_data,
+            test_data,
+            data.iterate
+        )
 
-        # Launch training asynchronously
-        background_tasks.add_task(super_train_model_from_file_background, data, file_path)
+        return {
+            "message": "Super training initiated",
+            "model": data.name,
+        }
 
-        return {"message": "Super training initiated", "file": data.file_name}
     except Exception as e:
-        logger.error(f"Error occurred while uploading file: {str(e)}")
-        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+        logger.error(f"Error occurred while initiating super training: {str(e)}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"An error occurred: {str(e)}"
+        )
 
-def super_train_model_from_file_background(data: SuperTrainFromFileModelData, file_path: Path):
+def super_train_model_background(
+    data: SuperTrainModelData,
+    train_data: Any,
+    test_data: Any,
+    iterate: int
+):
     """
-    Background task to process and super train the model using the uploaded file.
+    Background task to process and super train the model using two separate files:
+    one for training data and one for test data.
     """
     try:
-        # Load training data from the file
-        with file_path.open("r", encoding="utf-8") as f:
-            training_data = json.load(f)  # Assuming JSON format for training data
+        # For GRU, we must parse each item into GRUTrainingModelData
+        if data.neural_network_type == 'GRU':
+            train_data = [GRUTrainingModelData(**item) for item in train_data]
 
-        # Call appropriate training function
+        # Depending on the neural network type, call the correct usecase
         if data.neural_network_type == 'SIAMESE':
-            super_train_model_siamese(SuperTrainSiameseUsecaseDto(name=data.name, training_data=training_data, test_data=data.test_data, inversify=get_inversify()))
+            super_train_model_siamese(
+                SuperTrainSiameseUsecaseDto(
+                    name=data.name,
+                    training_data=train_data,
+                    test_data=test_data,
+                    n_iterations=iterate,
+                    inversify=get_inversify()
+                )
+            )
         elif data.neural_network_type == 'GRU':
-            training_data = [GRUTrainingModelData(**data) for data in training_data]
-            super_train_model_gru(SuperTrainGRUUsecaseDto(name=data.name, training_data=training_data, test_data=data.test_data, inversify=get_inversify()))
+            # For GRU, we must parse training data items into GRUTrainingModelData
+            train_data = [GRUTrainingModelData(**item) for item in train_data]
+            super_train_model_gru(
+                SuperTrainGRUUsecaseDto(
+                    name=data.name,
+                    training_data=train_data,
+                    test_data=test_data,
+                    n_iterations=iterate,
+                    inversify=get_inversify()
+                )
+            )
         else:
-            raise ValueError(f"Unknown neural network type: {data.neural_network_type}")
+            raise ValueError(
+                f"Unsupported neural network type for super training: {data.neural_network_type}"
+            )
 
-        logger.info(f"Syper training completed for {data.name} using {file_path}")
+        logger.info(f"Super training completed for {data.name}")
     except Exception as e:
-        logger.error(f"Error during training from file {file_path}: {str(e)}")
-
+        logger.error(f"Error during super training from files: {str(e)}")
 
 # API to prepare seaching engine
 @router.post("/prepare_cache")
@@ -318,19 +352,21 @@ async def test(data: TestModelData, payload: dict = Depends(verify_access_token)
     Tests the specified model with provided test data.
     """
     try:
+        test_data = parse_input_data(data.test_data, data.test_file)
+
         if data.neural_network_type == 'SimpleNN':
-            return mesure_simple_nn(MesureSimpleUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
+            return mesure_simple_nn(MesureSimpleUsecaseDto(name=data.name, test_data=test_data, inversify=get_inversify()))
         elif data.neural_network_type == 'GRU':
             return mesure_gru(MesureGRUUsecaseDto(
                     name=data.name,
-                    test_data=data.test_data,
+                    test_data=test_data,
                     inversify=get_inversify(),
                     iterate=data.iterate
                 ))
         elif data.neural_network_type == 'SIAMESE':
-            return mesure_siamese(MesureSiameseUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
+            return mesure_siamese(MesureSiameseUsecaseDto(name=data.name, test_data=test_data, inversify=get_inversify()))
         elif data.neural_network_type == 'LSTM':
-            return mesure_lstm(MesureLSTMUsecaseDto(name=data.name, test_data=data.test_data, inversify=get_inversify()))
+            return mesure_lstm(MesureLSTMUsecaseDto(name=data.name, test_data=test_data, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=400, detail="Model type not supported yet")
     except HTTPException as e:

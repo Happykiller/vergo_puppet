@@ -4,7 +4,7 @@ import pytest
 from fastapi.testclient import TestClient # type: ignore 
 
 from app.main import app
-from unittest.mock import patch
+from unittest.mock import mock_open, patch
 from app.generate_token import create_token
 
 # Initialize test client for making requests to the API
@@ -16,7 +16,6 @@ dictionary = [
     ["token1", "token2", "token3", "token4"], 
     ["token1", "token2", "token5"]
 ]
-glossary = ["token1", "token2", "token3", "token4", "token5"]
 search_vector = ["token1", "token2", "token3"]
 training_data = [
     [["token1", "token2", "token3"], ["token2", "token3", "token4"], 0.66],
@@ -51,8 +50,7 @@ def test_create_model(mocked_env_vars, get_headers):
     data = {
         "name": "model1",
         "neural_network_type": "SIAMESE",
-        "dictionary": dictionary,
-        "glossary": glossary
+        "dictionary": dictionary
     }
     with patch("app.apis.apis.create_model_siamese", return_value={"status": "model created", "model_name": "model1", "missing_tokens": ["broomstick"]}):
         # Send POST request to /create_model endpoint
@@ -186,11 +184,10 @@ def test_update_model(mocked_env_vars, get_headers):
     update_data = {
         "name": "model1",
         "neural_network_type": "SIAMESE",
-        "dictionary": dictionary,
-        "glossary": glossary
+        "dictionary": dictionary
     }
 
-    with patch("app.apis.apis.update_model_siamese", return_value={"status": "model updated", "model_name": "model1", "missing_tokens": ["broomstick"]}):
+    with patch("app.apis.apis.update_model_siamese", return_value={"status": "model updated", "model_name": "model1"}):
         # Send a PATCH request to the /update_model endpoint
         response = client.patch("/update_model", json=update_data, headers=get_headers)
         
@@ -266,13 +263,13 @@ def test_train_model_from_file_missing(mocked_env_vars, get_headers):
         response = client.post("/train_model_from_file", json=data, headers=get_headers)
         assert response.status_code == 500
 
-# Test: Super train model from file
-def test_super_train_model_from_file(mocked_env_vars, get_headers):
-    data = {"name": "model1", "neural_network_type": "SIAMESE", "file_name": "test_data.json", "test_data": []}
-    with patch("app.apis.apis.super_train_model_from_file_background", return_value=None), \
+# Test: Super train model
+def test_super_train_model(mocked_env_vars, get_headers):
+    data = {"name": "model1", "neural_network_type": "SIAMESE", "train_file": "test_data.json", "test_data": []}
+    with patch("app.apis.apis.super_train_model_background", return_value=None), \
          patch("app.apis.apis.get_model_usecase", return_value=ModelData(name='test', neural_network_type="LSTM")), \
-         patch("pathlib.Path.exists", return_value=True):
-        response = client.post("/super_train_model_from_file", json=data, headers=get_headers)
+         patch("app.apis.apis.parse_input_data", return_value=[]):
+        response = client.post("/super_train_model", json=data, headers=get_headers)
         assert response.status_code in [200, 404]
 
 # Test: Search brut multi

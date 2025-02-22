@@ -1,7 +1,12 @@
 # app\common.py
 import os
+import json
 from pathlib import Path
 from dotenv import load_dotenv
+from typing import Any, Optional
+from fastapi import HTTPException
+
+FILES_DIR = Path("files")
 
 # Encapsulate environment variable loading
 def load_env_vars():
@@ -37,3 +42,40 @@ def load_env_vars():
       "mongo_db_name": mongo_db_name,
       "debug": debug
     }
+
+def parse_input_data(inline_data: Optional[Any], file_name: Optional[str]) -> Any:
+    """
+    Parse training data either from inline input or from a JSON file.
+
+    :param inline_data: The training data provided directly in the request body.
+    :param file_name: The name of the JSON file containing training data.
+    :return: Parsed training data (list, dict, etc. depending on file content).
+    :raises HTTPException: If the file is not found or if neither inline data
+                           nor file name is provided.
+    """
+    if inline_data is not None:
+        # Inline training data provided
+        return inline_data
+
+    if file_name is not None:
+        # Load training data from file
+        file_path = FILES_DIR / file_name
+        if not file_path.exists():
+            raise HTTPException(
+                status_code=404,
+                detail=f"File '{file_path}' not found."
+            )
+        try:
+            with file_path.open("r", encoding="utf-8") as f:
+                return json.load(f)
+        except json.JSONDecodeError as e:
+            raise HTTPException(
+                status_code=422,
+                detail=f"Failed to parse JSON from file '{file_path}': {str(e)}"
+            )
+
+    # Neither inline data nor file name
+    raise HTTPException(
+        status_code=422,
+        detail="You must provide either data or file."
+    )

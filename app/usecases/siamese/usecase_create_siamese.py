@@ -5,12 +5,11 @@ from typing import List, NamedTuple
 from app.inversify import Inversify
 from app.services.logger import logger
 from app.services.bdd.models.model_data import ModelData, ModelStatus
-from app.usecases.siamese.usecase_commons_siamese import tokens_to_indices
+from app.usecases.siamese.usecase_commons_siamese import calculate_word_representation, create_glossary_from_dictionary, tokens_to_indices
 
 class CreateSiameseUsecaseDto(NamedTuple):
     name: str
     dictionary: List[List[str]]
-    glossary: List[str]
     inversify: Inversify
 
 def create_model_siamese(dto: CreateSiameseUsecaseDto):
@@ -26,30 +25,19 @@ def create_model_siamese(dto: CreateSiameseUsecaseDto):
         # Check if dictionary or glossary are None
         if dto.dictionary is None:
             raise Exception("Dictionary cannot be None")
-        if dto.glossary is None:
-            raise Exception("Glossary cannot be None")
         
         # Check if dictionary or glossary are empty
         if len(dto.dictionary) == 0:
             raise Exception("Dictionary cannot be empty")
-        if len(dto.glossary) == 0:
-            raise Exception("Glossary cannot be empty")
 
-        # Add a blank entry at the beginning of the glossary
-        glossary = [""] + ["UNK"] + dto.glossary
-
-        # Track tokens not in glossary
-        tokens_not_in_glossary = set()
+        # Création automatique du glossaire depuis le dictionnaire
+        glossary = create_glossary_from_dictionary(dto.dictionary)
 
         # Transform each list of tokens into a list of indices
         indexed_dictionary = []
         for tokens in dto.dictionary:
             indices = tokens_to_indices(tokens, glossary)
             indexed_dictionary.append(indices)
-
-            # Identify tokens not mapped to known indices
-            unknown_tokens = [token for token, index in zip(tokens, indices) if index == glossary.index("UNK")]
-            tokens_not_in_glossary.update(unknown_tokens)
 
         # Save the model with the glossary and indexed dictionary
         bdd.save_model(ModelData(
@@ -61,11 +49,14 @@ def create_model_siamese(dto: CreateSiameseUsecaseDto):
             status=ModelStatus.CREATED
         ))
 
+        # Compute word representation rate
+        word_representation = calculate_word_representation(dto.dictionary)
+
         # Return response with missing tokens
         return {
             "status": "model created",
             "model_name": dto.name,
-            "missing_tokens": list(tokens_not_in_glossary)  # List of tokens not in the glossary
+            "word_representation": word_representation
         }
     
     except Exception as e:

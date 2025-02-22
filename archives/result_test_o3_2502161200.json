@@ -1,0 +1,522 @@
+{
+  "model_name": "puppet-o3",
+  "total_tests": 32,
+  "correct_predictions": 11,
+  "prediction_accuracy_percentage": 34.375,
+  "avg_similarity_precision_percentage": 73.4375,
+  "median_similarity_precision_percentage": 70.0,
+  "mode_similarity_precision_percentage": 100.0,
+  "range_similarity_percentage": 80.0,
+  "variance_similarity": 427.24609375,
+  "std_dev_similarity": 20.669932117692113,
+  "quartile_1": 60.0,
+  "quartile_3": 91.25,
+  "coefficient_of_variation_percentage": 28.146290543240326,
+  "details": [
+    {
+      "vector1": [
+        "air",
+        "squat"
+      ],
+      "vector2": [
+        "air",
+        "squat"
+      ],
+      "expected_similarity": 1.0,
+      "predicted_similarity": 1.0,
+      "error": 0.0,
+      "precision_percentage": 100.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "push",
+        "up"
+      ],
+      "vector2": [
+        "push",
+        "up"
+      ],
+      "expected_similarity": 1.0,
+      "predicted_similarity": 1.0,
+      "error": 0.0,
+      "precision_percentage": 100.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "man",
+        "push",
+        "up"
+      ],
+      "vector2": [
+        "woman",
+        "push",
+        "up"
+      ],
+      "expected_similarity": 0.7,
+      "predicted_similarity": 0.9,
+      "error": 0.20000000000000007,
+      "precision_percentage": 80.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "man",
+        "squat",
+        "dumbbell"
+      ],
+      "vector2": [
+        "woman",
+        "squat",
+        "dumbbell"
+      ],
+      "expected_similarity": 0.7,
+      "predicted_similarity": 0.9,
+      "error": 0.20000000000000007,
+      "precision_percentage": 80.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "jump",
+        "squat"
+      ],
+      "vector2": [
+        "squat",
+        "jump"
+      ],
+      "expected_similarity": 0.9,
+      "predicted_similarity": 0.9,
+      "error": 0.0,
+      "precision_percentage": 100.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "mountain",
+        "climber"
+      ],
+      "vector2": [
+        "mountain",
+        "climber"
+      ],
+      "expected_similarity": 1.0,
+      "predicted_similarity": 1.0,
+      "error": 0.0,
+      "precision_percentage": 100.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "man",
+        "dumbbell",
+        "bicep",
+        "curl"
+      ],
+      "vector2": [
+        "woman",
+        "dumbbell",
+        "bicep",
+        "curl"
+      ],
+      "expected_similarity": 0.75,
+      "predicted_similarity": 1.0,
+      "error": 0.25,
+      "precision_percentage": 75.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "push",
+        "up"
+      ],
+      "vector2": [
+        "pull",
+        "up"
+      ],
+      "expected_similarity": 0.5,
+      "predicted_similarity": 0.9,
+      "error": 0.4,
+      "precision_percentage": 60.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "lunge",
+        "step",
+        "up"
+      ],
+      "vector2": [
+        "step",
+        "up",
+        "knee",
+        "lift"
+      ],
+      "expected_similarity": 0.6,
+      "predicted_similarity": 0.7,
+      "error": 0.09999999999999998,
+      "precision_percentage": 90.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "burpee"
+      ],
+      "vector2": [
+        "jump",
+        "squat"
+      ],
+      "expected_similarity": 0,
+      "predicted_similarity": 0.4,
+      "error": 0.4,
+      "precision_percentage": 60.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "plank",
+        "shoulder",
+        "tap"
+      ],
+      "vector2": [
+        "plank",
+        "shoulder",
+        "tap"
+      ],
+      "expected_similarity": 1.0,
+      "predicted_similarity": 1.0,
+      "error": 0.0,
+      "precision_percentage": 100.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "man",
+        "dumbbell",
+        "deadlift"
+      ],
+      "vector2": [
+        "woman",
+        "kettlebell",
+        "deadlift"
+      ],
+      "expected_similarity": 0.3,
+      "predicted_similarity": 0.9,
+      "error": 0.6000000000000001,
+      "precision_percentage": 39.99999999999999,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "glute",
+        "bridge"
+      ],
+      "vector2": [
+        "hip",
+        "thrust"
+      ],
+      "expected_similarity": 0,
+      "predicted_similarity": 0.5,
+      "error": 0.5,
+      "precision_percentage": 50.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "high",
+        "knees"
+      ],
+      "vector2": [
+        "butt",
+        "kick"
+      ],
+      "expected_similarity": 0,
+      "predicted_similarity": 0.8,
+      "error": 0.8,
+      "precision_percentage": 19.999999999999996,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "lat",
+        "pull",
+        "down"
+      ],
+      "vector2": [
+        "pull",
+        "up"
+      ],
+      "expected_similarity": 0.2,
+      "predicted_similarity": 0.6,
+      "error": 0.39999999999999997,
+      "precision_percentage": 60.00000000000001,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "man",
+        "tricep",
+        "dip"
+      ],
+      "vector2": [
+        "woman",
+        "tricep",
+        "kickback"
+      ],
+      "expected_similarity": 0.3,
+      "predicted_similarity": 0.6,
+      "error": 0.3,
+      "precision_percentage": 70.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "jump",
+        "rope"
+      ],
+      "vector2": [
+        "high",
+        "knees"
+      ],
+      "expected_similarity": 0,
+      "predicted_similarity": 0.4,
+      "error": 0.4,
+      "precision_percentage": 60.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "box",
+        "jump"
+      ],
+      "vector2": [
+        "jump",
+        "squat"
+      ],
+      "expected_similarity": 0.5,
+      "predicted_similarity": 0.8,
+      "error": 0.30000000000000004,
+      "precision_percentage": 70.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "man",
+        "bench",
+        "press"
+      ],
+      "vector2": [
+        "woman",
+        "bench",
+        "press"
+      ],
+      "expected_similarity": 0.7,
+      "predicted_similarity": 1.0,
+      "error": 0.30000000000000004,
+      "precision_percentage": 70.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "sitting",
+        "hamstring",
+        "stretch"
+      ],
+      "vector2": [
+        "standing",
+        "hamstring",
+        "stretch"
+      ],
+      "expected_similarity": 0.7,
+      "predicted_similarity": 0.9,
+      "error": 0.20000000000000007,
+      "precision_percentage": 80.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "deadlift"
+      ],
+      "vector2": [
+        "squat"
+      ],
+      "expected_similarity": 0,
+      "predicted_similarity": 0.5,
+      "error": 0.5,
+      "precision_percentage": 50.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "plank"
+      ],
+      "vector2": [
+        "plank",
+        "exercise"
+      ],
+      "expected_similarity": 0.75,
+      "predicted_similarity": 0.8,
+      "error": 0.050000000000000044,
+      "precision_percentage": 95.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "yoga",
+        "pose"
+      ],
+      "vector2": [
+        "woman",
+        "yoga",
+        "stand",
+        "stretch"
+      ],
+      "expected_similarity": 0.4,
+      "predicted_similarity": 0.5,
+      "error": 0.09999999999999998,
+      "precision_percentage": 90.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "core",
+        "exercise"
+      ],
+      "vector2": [
+        "plank",
+        "shoulder",
+        "tap"
+      ],
+      "expected_similarity": 0,
+      "predicted_similarity": 0.5,
+      "error": 0.5,
+      "precision_percentage": 50.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "jump",
+        "squat"
+      ],
+      "vector2": [
+        "box",
+        "jump"
+      ],
+      "expected_similarity": 0.5,
+      "predicted_similarity": 0.8,
+      "error": 0.30000000000000004,
+      "precision_percentage": 70.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "kettlebell",
+        "swing"
+      ],
+      "vector2": [
+        "kettlebell",
+        "swing"
+      ],
+      "expected_similarity": 1.0,
+      "predicted_similarity": 1.0,
+      "error": 0.0,
+      "precision_percentage": 100.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "lunge"
+      ],
+      "vector2": [
+        "lunge",
+        "step",
+        "up"
+      ],
+      "expected_similarity": 0.5,
+      "predicted_similarity": 0.5,
+      "error": 0.0,
+      "precision_percentage": 100.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "sit",
+        "up"
+      ],
+      "vector2": [
+        "crunch"
+      ],
+      "expected_similarity": 0,
+      "predicted_similarity": 0.5,
+      "error": 0.5,
+      "precision_percentage": 50.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "pull",
+        "up"
+      ],
+      "vector2": [
+        "chin",
+        "up"
+      ],
+      "expected_similarity": 0.5,
+      "predicted_similarity": 0.9,
+      "error": 0.4,
+      "precision_percentage": 60.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "bicep",
+        "curl"
+      ],
+      "vector2": [
+        "hammer",
+        "curl"
+      ],
+      "expected_similarity": 0.5,
+      "predicted_similarity": 0.9,
+      "error": 0.4,
+      "precision_percentage": 60.0,
+      "is_correct": false
+    },
+    {
+      "vector1": [
+        "man",
+        "butt",
+        "kick"
+      ],
+      "vector2": [
+        "man",
+        "butt",
+        "kick",
+        "character",
+        "setu"
+      ],
+      "expected_similarity": 0.9,
+      "predicted_similarity": 0.8,
+      "error": 0.09999999999999998,
+      "precision_percentage": 90.0,
+      "is_correct": true
+    },
+    {
+      "vector1": [
+        "woman",
+        "butt",
+        "kick"
+      ],
+      "vector2": [
+        "butt",
+        "kick"
+      ],
+      "expected_similarity": 0.7,
+      "predicted_similarity": 1.0,
+      "error": 0.30000000000000004,
+      "precision_percentage": 70.0,
+      "is_correct": false
+    }
+  ]
+}

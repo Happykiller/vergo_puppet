@@ -10,13 +10,14 @@ from app.apis.models.simple_nn_training_model_data import SimpleNNTrainingModelD
 class TestModelData(BaseModel):
     name: str = Field(..., description="Name of the model to test")
     neural_network_type: str = Field(..., description="Type of neural network ('SimpleNN', 'LSTMNN', 'SIAMESE', 'GRU')")
-    test_data: Union[
+    test_data: Optional[Union[
         List[Tuple[List[str], List[str], float]],  # Siamese
         List[SimpleNNTrainingModelData],  # SimpleNN
         List[GRUTrainingModelData],  # GRU
         List[WeatherModelData],  # LSTM
-    ] = Field(..., description="Test data")
+    ]] = Field(None, description="Test data")
     iterate: Optional[int] = Field(1, description="Optional parameter for the number of iterations to run during testing")
+    test_file: Optional[str] = Field(None, description="Name of the file for test")
 
     def validate_test_data(cls, values):
         """

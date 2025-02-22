@@ -1,4 +1,5 @@
-#app\usecases\siamese\usecase_commons_siamese.py
+# app\usecases\siamese\usecase_commons_siamese.py
+from collections import Counter
 from typing import Dict, List, Optional, Tuple
 
 def create_glossary_from_training_data(training_data: List[Tuple[List[str], List[str], float]]) -> List[str]:
@@ -11,20 +12,25 @@ def create_glossary_from_training_data(training_data: List[Tuple[List[str], List
     for seq1, seq2, _ in training_data:
         unique_tokens.update(seq1)
         unique_tokens.update(seq2)
-    # Optionally add <PAD> if necessary
-    return ["<PAD>"] + sorted(unique_tokens)
+        
+    # Convert to sorted list and add special tokens
+    return ["<PAD>", "UNK"] + sorted(unique_tokens)
 
 def create_glossary_from_dictionary(dictionary: List[List[str]]) -> List[str]:
     """
     Creates a glossary from a dictionary, adding all unique tokens across sequences.
+    
     :param dictionary: List of token sequences.
-    :return: A sorted list of unique tokens with <PAD> added as the first element.
+    :return: A sorted list of unique tokens with <PAD> and UNK at the beginning.
     """
     unique_tokens = set()
-    for seq in dictionary:
-        unique_tokens.update(seq)
-    # Optionally add <PAD> if necessary
-    return ["<PAD>"] + sorted(unique_tokens)
+    
+    # Collect all unique tokens from dictionary
+    for sequence in dictionary:
+        unique_tokens.update(sequence)
+
+    # Convert to sorted list and add special tokens
+    return ["<PAD>", "UNK"] + sorted(unique_tokens)
 
 def create_indexed_glossary(glossary: List[str]) -> Dict[str, int]:
     """
@@ -61,3 +67,26 @@ def tokens_to_indices(tokens: List[str], glossary: List[str]) -> List[Optional[i
 
     # Use the dictionary to retrieve the indices of tokens
     return [glossary_dict.get(token, glossary_dict.get("UNK")) for token in tokens]
+
+def calculate_word_representation(dictionary: List[List[str]]) -> Dict[str, float]:
+    """
+    Calculates the representation rate of words used in the dictionary vectors.
+    
+    :param dictionary: List of token sequences representing dictionary entries.
+    :return: Dictionary where keys are words and values are their representation percentage.
+    """
+    word_counts = Counter()
+    total_words = 0
+
+    # Count occurrences of each word
+    for sequence in dictionary:
+        word_counts.update(sequence)
+        total_words += len(sequence)
+
+    # Compute percentage representation of each word
+    word_representation = {word: (count / total_words) * 100 for word, count in word_counts.items()}
+
+    # Sort by representation percentage in descending order
+    sorted_word_representation = dict(sorted(word_representation.items(), key=lambda item: item[1], reverse=True))
+
+    return sorted_word_representation

@@ -27,7 +27,7 @@ def test_update_model_success(patch_inversify):
     glossary = ["new_token1", "new_token2", "new_token3", "new_token4"]
 
     # Perform the update
-    response = update_model_siamese(UpdateSiameseUsecaseDto(name="model1", dictionary=dictionary, glossary=glossary, inversify=mock_inversify))
+    response = update_model_siamese(UpdateSiameseUsecaseDto(name="model1", dictionary=dictionary, inversify=mock_inversify))
 
     # Validate the response
     assert response["status"] == "model updated"
@@ -49,7 +49,6 @@ def test_update_model_not_found(patch_inversify):
         update_model_siamese(UpdateSiameseUsecaseDto(
             name="non_existent_model",
             dictionary=[["token1"]],
-            glossary=["token1", "token2"],
             inversify=mock_inversify
         ))
 
@@ -66,7 +65,6 @@ def test_update_model_empty_dictionary(patch_inversify):
         name="model1",
         neural_network_type="SiameseLSTM",
         dictionary=[["token1", "token2"]],
-        glossary=["token1", "token2"],
         nn_model=MagicMock(),
     )
     mock_bdd.get_model.return_value = mock_model
@@ -75,32 +73,5 @@ def test_update_model_empty_dictionary(patch_inversify):
         update_model_siamese(UpdateSiameseUsecaseDto(
             name="model1",
             dictionary=[],
-            glossary=["token1", "token2"],
-            inversify=mock_inversify
-        ))
-
-
-def test_update_model_empty_glossary(patch_inversify):
-    """
-    Test updating a model with an empty glossary raises an exception.
-    """
-    # patch_inversify est un tuple (mock_inversify, mock_bdd)
-    mock_inversify, mock_bdd = patch_inversify
-
-    # Mock existing model
-    mock_model = ModelData(
-        name="model1",
-        neural_network_type="SiameseLSTM",
-        dictionary=[["token1", "token2"]],
-        glossary=["token1", "token2"],
-        nn_model=MagicMock(),
-    )
-    mock_bdd.get_model.return_value = mock_model
-
-    with pytest.raises(Exception, match="Glossary cannot be empty"):
-        update_model_siamese(UpdateSiameseUsecaseDto(
-            name="model1",
-            dictionary=[["token1", "token2"]],
-            glossary=[],
             inversify=mock_inversify
         ))
