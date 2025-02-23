@@ -212,4 +212,4 @@ def evaluate_similarity(
         output1, output2 = model(seq1, lengths1, seq2, lengths2)
         cosine_similarity = F.cosine_similarity(output1, output2)
         similarity = (cosine_similarity.item() + 1) / 2
-        return round(similarity, 1)
+        return round(similarity, 3)

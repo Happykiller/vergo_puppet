@@ -1,3 +1,6 @@
+0.19.0 [2025-02-23]
+  - siamese, merge glossary create, train
+
 0.18.0 [2025-02-22]
   - feat: Support file for train or test data
 

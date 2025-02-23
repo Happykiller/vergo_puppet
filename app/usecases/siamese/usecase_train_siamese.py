@@ -51,15 +51,27 @@ def train_model_siamese(dto: TrainSiameseUsecaseDto):
 
         # Train the neural network according to the specified model type
         training_glossary = create_glossary_from_training_data(dto.training_data)
-        training_word2idx = {word: idx for idx, word in enumerate(training_glossary)}
+
+        # Fusion du glossaire existant et de celui issu du training
+        old_glossary = set(model.glossary)           # Glossaire actuel du modèle
+        new_glossary = set(training_glossary)        # Tokens vus dans training_data
+        merged_glossary = list(old_glossary.union(new_glossary))
+
+        # Mettre à jour le glossaire du modèle
+        model.glossary = merged_glossary
+        bdd.update_model(model)  # Sauvegarde du glossaire fusionné dans la base
+
+        vocab_size = len(model.glossary) + 1
+
+        # 6. Convertir les tokens en indices avec le nouveau glossaire fusionné
+        #    On prépare un mapping token->index via un simple dict:
+        final_word2idx = {word: idx for idx, word in enumerate(model.glossary)}
         
         transformed_data = []
         for source_tokens, target_tokens, score in dto.training_data:
-            source_indices = tokens_to_indices(source_tokens, training_word2idx)
-            target_indices = tokens_to_indices(target_tokens, training_word2idx)
+            source_indices = tokens_to_indices(source_tokens, final_word2idx)
+            target_indices = tokens_to_indices(target_tokens, final_word2idx)
             transformed_data.append((source_indices, target_indices, score))
-
-        vocab_size = len(model.glossary) + 1
         
         # Train the model
         nn_model, report = train_siamese_model_nn(transformed_data, vocab_size)
