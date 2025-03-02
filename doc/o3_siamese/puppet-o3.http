@@ -51,8 +51,8 @@ Content-Type: application/json
   "name": "puppet-o3",
   "neural_network_type": "SIAMESE",
   "iterate": 30,
-  "train_file": "o3_train_250301185939.json",
-  "test_file": "o3_test_250301185939.json"
+  "train_file": "o3_train_250302200722.json",
+  "test_file": "o3_test_250302200722.json"
 }
 
 
