@@ -11,23 +11,42 @@ from app.services.logger import logger  # Import custom logger
 
 # Siamese LSTM model definition
 class SiameseLSTM(nn.Module):
-    def __init__(self, vocab_size: int, embedding_dim: int, hidden_dim: int):
+    def __init__(
+        self,
+        vocab_size: int,
+        embedding_dim: int,
+        hidden_dim: int,
+        num_layers: int = 1,
+        bidirectional: bool = False,
+        dropout: float = 0.5
+    ):
         """
-        Initializes a Siamese LSTM model.
-        :param vocab_size: Size of the vocabulary.
-        :param embedding_dim: Dimension of the embedding layer.
-        :param hidden_dim: Dimension of LSTM hidden states.
+        Initialise un modèle Siamese LSTM évolué.
+        :param vocab_size: Taille du vocabulaire.
+        :param embedding_dim: Dimension de la couche d'embedding.
+        :param hidden_dim: Dimension des états cachés du LSTM.
+        :param num_layers: Nombre de couches LSTM.
+        :param bidirectional: Utiliser un LSTM bidirectionnel ou non.
+        :param dropout: Taux de dropout.
         """
-        super(SiameseLSTM, self).__init__()
-        # Store the initialization parameters for later access
+        super().__init__()
+        
         self.args = {
             "vocab_size": vocab_size,
             "embedding_dim": embedding_dim,
-            "hidden_dim": hidden_dim
+            "hidden_dim": hidden_dim,
+            "num_layers": num_layers,
+            "bidirectional": bidirectional,
+            "dropout": dropout
         }
-        # Embedding layer to convert word indices to dense vectors
-        self.embedding = nn.Embedding(vocab_size, embedding_dim)
-        # LSTM to encode sequences
+        
+        self.bidirectional = bidirectional
+        self.num_layers = num_layers
+        self.hidden_dim = hidden_dim
+        
+        self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
+        
+        # Pour plusieurs couches, le dropout est appliqué automatiquement entre les couches (sauf la dernière)
         self.lstm = nn.LSTM(
             embedding_dim,      # Input embedding dimension
             hidden_dim,         # LSTM hidden dimension
@@ -40,7 +59,7 @@ class SiameseLSTM(nn.Module):
         fc_input_dim = hidden_dim * 4
         self.fc = nn.Linear(fc_input_dim, 1)
 
-    def forward_once(self, x: torch.Tensor, lengths: torch.Tensor):
+    def forward_once(self, x, lengths):
         """
         Effectue la passe avant pour une seule séquence.
         :param x: Tenseur de la séquence d'entrée.
@@ -148,8 +167,8 @@ def train_siamese_model_nn(
     dataset = SimilarityDataset(training_data)
     train_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
 
-    model = SiameseLSTM(vocab_size, embedding_dim, hidden_dim)
-    criterion = SimilarityLoss()
+    model = SiameseLSTM(vocab_size, embedding_dim, hidden_dim, 2, True)
+    criterion = nn.MSELoss()
     optimizer = optim.Adam(model.parameters(), lr=learning_rate)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -230,15 +249,11 @@ def evaluate_similarity(
     model = model.to(device)
     model.eval()
     with torch.no_grad():
-        torch1 = torch.tensor(idxs1, dtype=torch.long)
-        seq1 = torch1.unsqueeze(0)
-        lengths1 = torch.tensor([len(idxs1)])
+        seq1 = torch.tensor(idxs1, dtype=torch.long).unsqueeze(0).to(device)
+        lengths1 = torch.tensor([len(idxs1)], dtype=torch.long).to(device)
 
-        torch2 = torch.tensor(idxs2, dtype=torch.long)
-        seq2 = torch2.unsqueeze(0)
-        lengths2 = torch.tensor([len(idxs2)])
-        seq1, lengths1 = seq1.to(device), lengths1.to(device)
-        seq2, lengths2 = seq2.to(device), lengths2.to(device)
+        seq2 = torch.tensor(idxs2, dtype=torch.long).unsqueeze(0).to(device)
+        lengths2 = torch.tensor([len(idxs2)], dtype=torch.long).to(device)
 
         similarity = model(seq1, lengths1, seq2, lengths2)
         return round(similarity.item(), 3)
