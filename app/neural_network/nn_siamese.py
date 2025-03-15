@@ -31,34 +31,62 @@ class SiameseLSTM(nn.Module):
         self.lstm = nn.LSTM(
             embedding_dim,      # Input embedding dimension
             hidden_dim,         # LSTM hidden dimension
+            num_layers=2,
             batch_first=True,   # Batch is the first dimension
-            bidirectional=False # Unidirectional LSTM
+            bidirectional=True # Bidirectional LSTM
         )
+        # Dropout layer for regularization applied after LSTM encoding
+        self.dropout = nn.Dropout(0.5)
+        fc_input_dim = hidden_dim * 4
+        self.fc = nn.Linear(fc_input_dim, 1)
 
     def forward_once(self, x: torch.Tensor, lengths: torch.Tensor):
         """
-        Forward pass for a single sequence.
-        :param x: Input sequence tensor.
-        :param lengths: Lengths of sequences for padding handling.
-        :return: Encoded sequence representation.
+        Effectue la passe avant pour une seule séquence.
+        :param x: Tenseur de la séquence d'entrée.
+        :param lengths: Longueurs des séquences pour gérer le padding.
+        :return: Représentation de la séquence en concaténant les états finaux des deux directions.
         """
+        # Conversion des indices en vecteurs denses
         embedded = self.embedding(x)
+        # Gestion des séquences de longueur variable
         packed_embedded = nn.utils.rnn.pack_padded_sequence(
             embedded,
-            lengths.cpu(),      # Sequence lengths
+            lengths.cpu(),      # Longueurs des séquences
             batch_first=True,
             enforce_sorted=False
         )
+        # Passage dans le LSTM
         packed_output, (hidden, cell) = self.lstm(packed_embedded)
-        output = hidden[-1]  # Use last hidden state as sequence representation
+        # hidden shape: (num_layers * num_directions, batch, hidden_dim)
+        # Pour un LSTM à 2 couches bidirectionnel, la forme est (4, batch, hidden_dim)
+        # On récupère les états finaux de la dernière couche :
+        # - hidden[-2] correspond à l'état forward
+        # - hidden[-1] correspond à l'état backward
+        forward_hidden = hidden[-2]
+        backward_hidden = hidden[-1]
+        # Concaténation des états pour obtenir une représentation de dimension hidden_dim*2
+        output = torch.cat((forward_hidden, backward_hidden), dim=1)
         return output
 
     def forward(self, input1: torch.Tensor, lengths1: torch.Tensor,
                 input2: torch.Tensor, lengths2: torch.Tensor):
-        # Encode both sequences
+        """
+        Passe avant pour les deux séquences. Pour chaque séquence, on obtient une représentation,
+        puis on concatène ces deux représentations, on applique le dropout et enfin la couche fully connected
+        afin de générer un score de similarité final.
+        """
+        # Encodage de chaque séquence
         output1 = self.forward_once(input1, lengths1)
         output2 = self.forward_once(input2, lengths2)
-        return output1, output2
+        # Apply dropout to each output for regularization
+        output1 = self.dropout(output1)
+        output2 = self.dropout(output2)
+        # Compute cosine similarity between the two representations
+        cosine_similarity = F.cosine_similarity(output1, output2)
+        # Normalize cosine similarity from [-1, 1] to [0, 1]
+        similarity = torch.clamp(cosine_similarity, min=0)
+        return similarity.unsqueeze(1)  # Ensure output shape is (batch, 1)
 
 # Custom loss function for Siamese model
 class SimilarityLoss(nn.Module):
@@ -66,11 +94,14 @@ class SimilarityLoss(nn.Module):
         super(SimilarityLoss, self).__init__()
         self.mse_loss = nn.MSELoss()  # Mean Squared Error for similarity comparison
 
-    def forward(self, output1: torch.Tensor, output2: torch.Tensor, label: torch.Tensor):
-        # Compute cosine similarity between sequence representations
-        cosine_similarity = F.cosine_similarity(output1, output2)
-        similarity = (cosine_similarity + 1) / 2  # Normalize to [0, 1]
-        loss = self.mse_loss(similarity, label)
+    def forward(self, similarity_score: torch.Tensor, label: torch.Tensor):
+        """
+        Calcule la loss en comparant le score de similarité prédit au label de vérité.
+        :param similarity_score: Score de similarité prédit par le modèle.
+        :param label: Label de similarité (attendu dans [0, 1]).
+        :return: Valeur de la loss.
+        """
+        loss = self.mse_loss(similarity_score, label)
         return loss
 
 # Custom dataset for sequence pairs and similarity labels
@@ -99,7 +130,7 @@ def collate_fn(data):
     seq1_padded = nn.utils.rnn.pad_sequence(seq1_list, batch_first=True, padding_value=0)
     lengths2 = [len(seq) for seq in seq2_list]
     seq2_padded = nn.utils.rnn.pad_sequence(seq2_list, batch_first=True, padding_value=0)
-    labels = torch.tensor(label_list, dtype=torch.float)
+    labels = torch.tensor(label_list, dtype=torch.float).unsqueeze(1)
     return seq1_padded, torch.tensor(lengths1), seq2_padded, torch.tensor(lengths2), labels
 
 # Function to train the Siamese LSTM model with early stopping and logging
@@ -140,8 +171,8 @@ def train_siamese_model_nn(
             labels = labels.to(device)
 
             optimizer.zero_grad()
-            output1, output2 = model(seq1, lengths1, seq2, lengths2)
-            loss = criterion(output1, output2, labels)
+            similarity = model(seq1, lengths1, seq2, lengths2)
+            loss = criterion(similarity, labels)
             loss.backward()
             optimizer.step()
 
@@ -209,7 +240,5 @@ def evaluate_similarity(
         seq1, lengths1 = seq1.to(device), lengths1.to(device)
         seq2, lengths2 = seq2.to(device), lengths2.to(device)
 
-        output1, output2 = model(seq1, lengths1, seq2, lengths2)
-        cosine_similarity = F.cosine_similarity(output1, output2)
-        similarity = (cosine_similarity.item() + 1) / 2
-        return round(similarity, 3)
+        similarity = model(seq1, lengths1, seq2, lengths2)
+        return round(similarity.item(), 3)

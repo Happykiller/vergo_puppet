@@ -6,6 +6,26 @@ Content-Type: application/json
 < ./puppet-o3_create.json
 
 ###
+POST {{host}}/super_train_model
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "puppet-o3",
+  "neural_network_type": "SIAMESE",
+  "iterate": 1,
+  "train_file": "o3_train_250312115100.json",
+  "test_file": "o3_test_250312115101.json"
+}
+
+
+
+
+
+
+
+
+###
 PATCH {{host}}/update_model
 Authorization: Bearer {{token}}
 Content-Type: application/json
@@ -21,7 +41,7 @@ Content-Type: application/json
 {
   "name": "puppet-o3",
   "neural_network_type": "SIAMESE",
-  "train_file": "o3_train_2502281000.json"
+  "train_file": "o3_train_250303172539.json"
 }
 
 ###
@@ -41,20 +61,6 @@ Content-Type: application/json
   "neural_network_type": "SIAMESE",
   "file_name": "o3_train_2502281000.json"
 }
-
-###
-POST {{host}}/super_train_model
-Authorization: Bearer {{token}}
-Content-Type: application/json
-
-{
-  "name": "puppet-o3",
-  "neural_network_type": "SIAMESE",
-  "iterate": 30,
-  "train_file": "o3_train_250302200722.json",
-  "test_file": "o3_test_250302200722.json"
-}
-
 
 ###
 POST {{host}}/search
