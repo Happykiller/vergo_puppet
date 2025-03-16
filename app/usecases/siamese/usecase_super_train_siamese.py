@@ -1,8 +1,10 @@
 # app/usecases/siamese/usecase_super_train_siamese.py
 import copy
+import time
 import traceback
 from typing import List, NamedTuple, Dict, Tuple
 
+from app.common import format_time
 from app.inversify import Inversify
 from app.services.logger import logger
 from app.neural_network.nn_siamese import SiameseLSTM
@@ -33,6 +35,7 @@ def super_train_model_siamese(dto: SuperTrainSiameseUsecaseDto) -> Dict:
         best_model_state = None
         best_training_report = None
         best_measurement_report = None
+        start_time = time.time()
 
         bdd = dto.inversify.get_bdd()
 
@@ -92,13 +95,19 @@ def super_train_model_siamese(dto: SuperTrainSiameseUsecaseDto) -> Dict:
                 glossary=best_model.glossary
             ))
             logger.info("Best model updated in BDD.")
+            
+        end_time = time.time()
+        total_time = end_time - start_time
 
         final_report = {
             "best_test_accuracy": best_test_accuracy,
             "training_report": best_training_report,
-            "measurement_report": best_measurement_report
+            "measurement_report": best_measurement_report,
+            "total_time": total_time
         }
+        
         logger.info("Super training completed. Best test accuracy: %.2f%%", best_test_accuracy)
+        logger.info(f"Total super training time: {format_time(total_time)}")
         
         bdd.save_metrics(MetricsModel(
             model_name=dto.name,
