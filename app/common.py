@@ -4,7 +4,7 @@ import json
 from pathlib import Path
 from dotenv import load_dotenv
 from typing import Any, Optional
-from fastapi import HTTPException
+from fastapi import HTTPException # type: ignore
 
 FILES_DIR = Path("files")
 
@@ -79,3 +79,12 @@ def parse_input_data(inline_data: Optional[Any], file_name: Optional[str]) -> An
         status_code=422,
         detail="You must provide either data or file."
     )
+    
+def format_time(milliseconds):
+    """Format time from seconds to DD:HH:MM:SS:SSS"""
+    milliseconds = int(milliseconds * 1000)  # Convert seconds to milliseconds
+    seconds, ms = divmod(milliseconds, 1000)
+    minutes, sec = divmod(seconds, 60)
+    hours, mins = divmod(minutes, 60)
+    days, hrs = divmod(hours, 24)
+    return f"{days:02}:{hrs:02}:{mins:02}:{sec:02}:{ms:03}"

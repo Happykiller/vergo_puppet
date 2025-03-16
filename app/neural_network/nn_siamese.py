@@ -1,12 +1,13 @@
 # app\neural_network\nn_siamese.py
+import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from typing import List, Tuple
 import torch.nn.functional as F
-import time  # For measuring training time
 from torch.utils.data import Dataset, DataLoader
 
+from app.common import format_time
 from app.services.logger import logger  # Import custom logger
 
 # Siamese LSTM model definition
@@ -223,7 +224,7 @@ def train_siamese_model_nn(
 
     logger.info("Training complete.")
     logger.info(f"Total epochs: {total_epochs}")
-    logger.info(f"Total training time: {total_time:.2f} seconds")
+    logger.info(f"Total training time: {format_time(total_time)}")
     logger.info(f"Final average loss: {final_loss:.8f}")
     logger.info(f"Best loss: {best_loss:.8f}")
     logger.info(f"Total model parameters: {num_parameters}")

@@ -1,0 +1,56 @@
+{
+  "poolSize": 321850,
+  "bucketDetails": [
+    {
+      "label": "0.0-0.0",
+      "length": 144260
+    },
+    {
+      "label": "0.0-0.1",
+      "length": 89
+    },
+    {
+      "label": "0.1-0.2",
+      "length": 40406
+    },
+    {
+      "label": "0.2-0.3",
+      "length": 100515
+    },
+    {
+      "label": "0.3-0.4",
+      "length": 21366
+    },
+    {
+      "label": "0.4-0.5",
+      "length": 8716
+    },
+    {
+      "label": "0.5-0.6",
+      "length": 4046
+    },
+    {
+      "label": "0.6-0.7",
+      "length": 1367
+    },
+    {
+      "label": "0.7-0.8",
+      "length": 443
+    },
+    {
+      "label": "0.8-0.9",
+      "length": 200
+    },
+    {
+      "label": "0.9-1.0",
+      "length": 16
+    },
+    {
+      "label": "1.0-1.0",
+      "length": 426
+    }
+  ],
+  "finalPoolSize": 192,
+  "testSetSize": 20,
+  "trainingSetSize": 182
+}
