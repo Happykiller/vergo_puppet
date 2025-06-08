@@ -106,36 +106,33 @@ def mesure_siamese(dto: MesureSiameseUsecaseDto):
         logger.info(f"Prediction accuracy: {prediction_accuracy:.2f}% ({correct_predictions}/{total_tests})")
         logger.info(f"Average similarity precision: {avg_similarity_precision:.2f}%")
         
-        # Médiane : La valeur centrale qui sépare une distribution ordonnée en deux parties égales. 
-        # Elle est particulièrement utile pour comprendre la tendance centrale des données, 
-        # surtout en présence de valeurs aberrantes.
+        # Median: the middle value that splits an ordered distribution in two.
+        # Useful for understanding the central tendency, especially when outliers are present.
         logger.info(f"Median similarity precision: {median_similarity:.2f}%")
 
-        # Mode : La valeur ou les valeurs les plus fréquentes dans un ensemble de données. 
-        # Le mode est utile pour identifier les valeurs les plus courantes ou les pics dans la distribution des données.
+        # Mode: the value or values that occur most frequently.
+        # Helps identify common values or peaks in the distribution.
         logger.info(f"Mode similarity precision: {mode_similarity:.2f}%")
 
-        # Étendue : La différence entre la valeur maximale et la valeur minimale. 
-        # Elle donne une indication de la dispersion des données.
+        # Range: difference between the maximum and minimum values.
+        # Provides an indication of data dispersion.
         logger.info(f"Range similarity precision: {range_similarity:.2f}%")
 
-        # Variance : Une mesure de la dispersion des données autour de la moyenne. 
-        # Elle est calculée en faisant la moyenne des carrés des écarts par rapport à la moyenne.
+        # Variance: measures the dispersion of data around the mean.
+        # Calculated as the average of squared deviations from the mean.
         logger.info(f"Variance similarity: {variance_similarity:.2f}")
 
-        # Écart-type : La racine carrée de la variance. Il fournit une mesure de la dispersion des données 
-        # dans les mêmes unités que les données elles-mêmes, facilitant ainsi l'interprétation.
+        # Standard deviation: square root of the variance providing dispersion in the same units as the data.
         logger.info(f"Standard deviation similarity: {std_dev_similarity:.2f}")
 
-        # Quartiles : Les valeurs qui divisent un ensemble de données ordonné en quatre parties égales. 
-        # Le premier quartile (Q1) correspond au 25e centile, la médiane au 50e centile, 
-        # et le troisième quartile (Q3) au 75e centile. 
-        # Les quartiles sont utilisés pour comprendre la distribution des données et identifier les valeurs aberrantes potentielles.
+        # Quartiles: values that split an ordered dataset into four equal parts.
+        # Q1 is the 25th percentile, the median the 50th, and Q3 the 75th percentile.
+        # Useful to understand distribution and detect potential outliers.
         logger.info(f"Q1 (25th percentile): {q1:.2f}%")
         logger.info(f"Q3 (75th percentile): {q3:.2f}%")
 
-        # Coefficient de variation : Le rapport de l'écart-type à la moyenne, souvent exprimé en pourcentage. 
-        # Il permet de comparer la dispersion de différentes distributions, même si les unités ou les échelles diffèrent.
+        # Coefficient of variation: ratio of the standard deviation to the mean, usually expressed as a percentage.
+        # Allows comparison of dispersion between distributions with different units or scales.
         logger.info(f"Coefficient of Variation: {coeff_variation:.2f}%")
         
         bdd.save_metrics(MetricsModel(
