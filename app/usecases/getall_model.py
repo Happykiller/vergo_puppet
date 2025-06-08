@@ -23,7 +23,7 @@ def get_all_models_usecase(inversify: Inversify) -> List[ModelData]:
         models_with_results = []
 
         for model in models:
-            # ✅ Vérifier que `model` est bien une instance de `ModelData`
+            # Ensure that `model` is an instance of `ModelData`
             if not isinstance(model, ModelData):
                 logger.warning(f"Invalid model format: expected ModelData but got {type(model)}")
                 continue 

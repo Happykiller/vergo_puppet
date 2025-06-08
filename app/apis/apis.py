@@ -173,7 +173,7 @@ def train_model_from_file_background(name: str, neural_network_type: str, file_n
     try:
         file_path = FILES_DIR / file_name
 
-        # Vérifier si le fichier existe
+        # Check if the file exists
         if not file_path.exists():
             raise HTTPException(status_code=404, detail=f"File '{file_path}' not found.")
 

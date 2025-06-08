@@ -22,13 +22,13 @@ class SiameseLSTM(nn.Module):
         dropout: float = 0.5
     ):
         """
-        Initialise un modèle Siamese LSTM évolué.
-        :param vocab_size: Taille du vocabulaire.
-        :param embedding_dim: Dimension de la couche d'embedding.
-        :param hidden_dim: Dimension des états cachés du LSTM.
-        :param num_layers: Nombre de couches LSTM.
-        :param bidirectional: Utiliser un LSTM bidirectionnel ou non.
-        :param dropout: Taux de dropout.
+        Initialize an advanced Siamese LSTM model.
+        :param vocab_size: Vocabulary size.
+        :param embedding_dim: Dimension of the embedding layer.
+        :param hidden_dim: Dimension of the LSTM hidden states.
+        :param num_layers: Number of LSTM layers.
+        :param bidirectional: Whether to use a bidirectional LSTM.
+        :param dropout: Dropout rate.
         """
         super().__init__()
         
@@ -47,7 +47,7 @@ class SiameseLSTM(nn.Module):
         
         self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
         
-        # Pour plusieurs couches, le dropout est appliqué automatiquement entre les couches (sauf la dernière)
+        # For multiple layers, dropout is automatically applied between layers except the last
         self.lstm = nn.LSTM(
             embedding_dim,      # Input embedding dimension
             hidden_dim,         # LSTM hidden dimension
@@ -62,41 +62,41 @@ class SiameseLSTM(nn.Module):
 
     def forward_once(self, x, lengths):
         """
-        Effectue la passe avant pour une seule séquence.
-        :param x: Tenseur de la séquence d'entrée.
-        :param lengths: Longueurs des séquences pour gérer le padding.
-        :return: Représentation de la séquence en concaténant les états finaux des deux directions.
+        Perform the forward pass for a single sequence.
+        :param x: Input tensor for the sequence.
+        :param lengths: Sequence lengths used for padding management.
+        :return: Sequence representation obtained by concatenating the final states of both directions.
         """
-        # Conversion des indices en vecteurs denses
+        # Convert indices to dense vectors
         embedded = self.embedding(x)
-        # Gestion des séquences de longueur variable
+        # Handle variable-length sequences
         packed_embedded = nn.utils.rnn.pack_padded_sequence(
             embedded,
-            lengths.cpu(),      # Longueurs des séquences
+            lengths.cpu(),      # Sequence lengths
             batch_first=True,
             enforce_sorted=False
         )
-        # Passage dans le LSTM
+        # Pass through the LSTM
         packed_output, (hidden, cell) = self.lstm(packed_embedded)
         # hidden shape: (num_layers * num_directions, batch, hidden_dim)
-        # Pour un LSTM à 2 couches bidirectionnel, la forme est (4, batch, hidden_dim)
-        # On récupère les états finaux de la dernière couche :
-        # - hidden[-2] correspond à l'état forward
-        # - hidden[-1] correspond à l'état backward
+        # For a two-layer bidirectional LSTM the shape is (4, batch, hidden_dim)
+        # Retrieve the final states from the last layer:
+        # - hidden[-2] corresponds to the forward state
+        # - hidden[-1] corresponds to the backward state
         forward_hidden = hidden[-2]
         backward_hidden = hidden[-1]
-        # Concaténation des états pour obtenir une représentation de dimension hidden_dim*2
+        # Concatenate the states to obtain a representation of dimension hidden_dim*2
         output = torch.cat((forward_hidden, backward_hidden), dim=1)
         return output
 
     def forward(self, input1: torch.Tensor, lengths1: torch.Tensor,
                 input2: torch.Tensor, lengths2: torch.Tensor):
         """
-        Passe avant pour les deux séquences. Pour chaque séquence, on obtient une représentation,
-        puis on concatène ces deux représentations, on applique le dropout et enfin la couche fully connected
-        afin de générer un score de similarité final.
+        Forward pass for both sequences. Each sequence is encoded, the two representations are
+        concatenated, dropout is applied and finally the fully connected layer generates the
+        similarity score.
         """
-        # Encodage de chaque séquence
+        # Encode each sequence
         output1 = self.forward_once(input1, lengths1)
         output2 = self.forward_once(input2, lengths2)
         # Apply dropout to each output for regularization
@@ -116,10 +116,10 @@ class SimilarityLoss(nn.Module):
 
     def forward(self, similarity_score: torch.Tensor, label: torch.Tensor):
         """
-        Calcule la loss en comparant le score de similarité prédit au label de vérité.
-        :param similarity_score: Score de similarité prédit par le modèle.
-        :param label: Label de similarité (attendu dans [0, 1]).
-        :return: Valeur de la loss.
+        Compute the loss by comparing the predicted similarity score to the ground truth label.
+        :param similarity_score: Predicted similarity score from the model.
+        :param label: Similarity label expected in the range [0, 1].
+        :return: Loss value.
         """
         loss = self.mse_loss(similarity_score, label)
         return loss

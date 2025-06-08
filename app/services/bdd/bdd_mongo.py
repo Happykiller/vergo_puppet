@@ -46,10 +46,10 @@ class MongoBDDService(BDDService):
         if not isinstance(data, ModelData):
             raise ValueError("The 'data' parameter must be an instance of ModelData.")
 
-        # Sérialiser les données du modèle
+        # Serialize the model data
         serialized_data = data.serialize()
 
-        # Mettre à jour les données dans MongoDB
+        # Update the data in MongoDB
         self.database.models.update_one({"name": data.name}, {"$set": serialized_data}, upsert=True)
 
     def model_exists(self, name: str):
