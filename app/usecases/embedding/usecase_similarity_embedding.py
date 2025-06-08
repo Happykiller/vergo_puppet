@@ -1,9 +1,10 @@
 # app/usecases/embedding/usecase_similarity_embedding.py
-import numpy as np
 import traceback
+import numpy as np
+from typing import Any
 
-from app.usecases.embedding.usecase_encode_embedding import encode_embedding_usecase
 from app.services.logger import logger
+from app.usecases.embedding.usecase_encode_embedding import encode_embedding_usecase
 
 def cosine_similarity(vec1, vec2):
     """
@@ -19,11 +20,9 @@ def cosine_similarity(vec1, vec2):
 
 def similarity_embedding_usecase(
     model_name: str,
-    vocab: dict,
     sentence1: str,
     sentence2: str,
-    embedding_dim: int = 128,
-    lstm_hidden_dim: int = 128,
+    inversify: Any,
 ) -> float:
     """
     Computes cosine similarity between two sentences using a trained embedding model.
@@ -31,24 +30,18 @@ def similarity_embedding_usecase(
     :param vocab: Token-to-index vocabulary
     :param sentence1: First sentence
     :param sentence2: Second sentence
-    :param embedding_dim: Embedding vector size
-    :param lstm_hidden_dim: LSTM hidden state size
     :return: Cosine similarity (float)
     """
     try:
         emb1 = encode_embedding_usecase(
             model_name=model_name,
-            vocab=vocab,
             sentence=sentence1,
-            embedding_dim=embedding_dim,
-            lstm_hidden_dim=lstm_hidden_dim,
+            inversify=inversify,
         )
         emb2 = encode_embedding_usecase(
             model_name=model_name,
-            vocab=vocab,
             sentence=sentence2,
-            embedding_dim=embedding_dim,
-            lstm_hidden_dim=lstm_hidden_dim,
+            inversify=inversify,
         )
         sim = cosine_similarity(emb1, emb2)
         logger.info(f"[similarity_embedding_usecase] similarity={sim:.4f}")

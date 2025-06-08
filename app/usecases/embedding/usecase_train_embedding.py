@@ -29,11 +29,6 @@ def train_embedding_usecase(
     """
     try:
         bdd = inversify.get_bdd()
-        model_data = bdd.get_model(model_name)
-
-        if not model_data:
-            raise Exception(f"Model '{model_name}' not found")
-        
         vocab_size = len(vocab)
 
         logger.info(f"[train_embedding_usecase] Starting training for model: {model_name}")
@@ -53,9 +48,7 @@ def train_embedding_usecase(
             name=model_name,
             neural_network_type="EMBEDDING",
             status=ModelStatus.TRAINED,
-            glossary=model_data.glossary,
-            dictionary=model_data.dictionary,
-            indexed_dictionary=model_data.indexed_dictionary,
+            glossary=list(vocab.keys()),
             nn_model=nn_model
         ))
 

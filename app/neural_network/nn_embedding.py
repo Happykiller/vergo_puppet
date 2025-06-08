@@ -1,9 +1,13 @@
 # app\neural_network\nn_embedding.py
+import time
 import torch
 import torch.nn as nn
 import torch.optim as optim
 from typing import List, Dict, Any, Optional
 from torch.utils.data import Dataset, DataLoader
+
+from app.common import format_time 
+from app.services.logger import logger
 
 # ------------------ MODEL ------------------
 
@@ -13,6 +17,12 @@ class UniversalEmbeddingModel(nn.Module):
     """
     def __init__(self, vocab_size: int, embedding_dim: int = 128, lstm_hidden_dim: int = 128):
         super().__init__()
+        # Store the initialization parameters for later access
+        self.args = {
+            "vocab_size": vocab_size,
+            "embedding_dim": embedding_dim,
+            "lstm_hidden_dim": lstm_hidden_dim
+        }
         self.embedding = nn.Embedding(vocab_size, embedding_dim, padding_idx=0)
         self.lstm = nn.LSTM(embedding_dim, lstm_hidden_dim, batch_first=True, bidirectional=True)
         self.linear = nn.Linear(lstm_hidden_dim * 2, 128)  # Output dimension can be customized
@@ -95,11 +105,24 @@ def train_embedding_model(
 
     dataset = PairDataset(trainset)
     dataloader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=pad_collate_fn)
+    
+    total_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
+    logger.info(f"[train_embedding_model] Total parameters: {total_params}")
 
     model.train()
+    
+    start_time = time.time()
+    losses = []
+    best_loss = float("inf")
+    best_model_state = None
+        
+    total_batches = len(dataloader)
+    log_every = max(1, total_batches // 20)  # ~5% steps
+    
     for epoch in range(num_epochs):
         total_loss = 0.0
-        for seq1, len1, seq2, len2, labels in dataloader:
+        
+        for i, (seq1, len1, seq2, len2, labels) in enumerate(dataloader):
             seq1, len1 = seq1.to(device), len1.to(device)
             seq2, len2 = seq2.to(device), len2.to(device)
             labels = labels.to(device) * 2 - 1  # convert 1.0/0.0 to 1/-1 for CosineEmbeddingLoss
@@ -111,16 +134,43 @@ def train_embedding_model(
             optimizer.step()
             total_loss += loss.item()
 
-        print(f"Epoch {epoch+1}/{num_epochs} - Loss: {total_loss/len(dataloader):.4f}")
+            if i % log_every == 0 or i == total_batches - 1:
+                percent = (i + 1) / total_batches * 100
+                logger.info(f"[train_embedding_model] Epoch {epoch+1}/{num_epochs} – {i+1}/{total_batches} batches ({percent:.1f}%) – Batch Loss: {loss.item():.6f}")
+            
+        avg_loss = total_loss / len(dataloader)
+        losses.append(avg_loss)
+        logger.info(f"[train_embedding_model] Epoch {epoch+1}/{num_epochs} - Avg Loss: {avg_loss:.6f}")
+        
+        if avg_loss < best_loss:
+            best_loss = avg_loss
+            best_model_state = model.state_dict()
+            logger.info(f"[train_embedding_model] → New best model (loss={best_loss:.6f}) saved in memory.")
+
+    # Save best model
+    if save_path and best_model_state:
+        torch.save(best_model_state, save_path)
+        logger.info(f"[train_embedding_model] Best model saved to {save_path}")
+        
+    end_time = time.time()
+    duration = format_time(end_time - start_time) if 'format_time' in globals() else f"{end_time - start_time:.2f}s"
+
+    logger.info("[train_embedding_model] Training complete.")
+    logger.info(f"→ Epochs: {num_epochs}")
+    logger.info(f"→ Total time: {duration}")
+    logger.info(f"→ Final average loss: {avg_loss:.6f}")
 
     # Save the model weights (if required)
     if save_path:
         torch.save(model.state_dict(), save_path)
+        logger.info(f"[train_embedding_model] Model saved to {save_path}")
 
     return model, {
         "epochs": num_epochs,
-        "final_loss": total_loss / len(dataloader),
-        "model_path": save_path
+        "final_loss": losses[-1],
+        "model_path": save_path,
+        "total_time": duration,
+        "num_parameters": total_params,
     }
 
 # ------------------ UTILITIES ------------------
