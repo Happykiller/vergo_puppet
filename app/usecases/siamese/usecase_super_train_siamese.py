@@ -60,7 +60,7 @@ def super_train_model_siamese(dto: SuperTrainSiameseUsecaseDto) -> Dict:
             training_result = train_model_siamese(train_dto)
             logger.info("Training completed for iteration %d.", i+1)
 
-            # Retrieve current model state from BDD (the training usecase met à jour le modèle)
+            # Retrieve current model state from the database (the training usecase updated the model)
             current_model = bdd.get_model(dto.name, SiameseLSTM)
             current_model_state = copy.deepcopy(current_model.nn_model.state_dict())
 
@@ -74,7 +74,7 @@ def super_train_model_siamese(dto: SuperTrainSiameseUsecaseDto) -> Dict:
             current_accuracy = measurement_result.get("prediction_accuracy_percentage", 0)
             logger.info(f"Iteration {i+1}: Test prediction accuracy: {current_accuracy:.2f}%")
 
-            # Si la performance est meilleure, sauvegarder cet état et les rapports associés
+            # If performance is better, save this state and the associated reports
             if current_accuracy > best_test_accuracy:
                 best_test_accuracy = current_accuracy
                 best_model_state = current_model_state

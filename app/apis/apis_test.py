@@ -39,9 +39,9 @@ def mocked_env_vars():
 
 @pytest.fixture(scope="module")
 def get_headers(mocked_env_vars):
-    # Génération d'un token JWT pour un utilisateur fictif
+    # Generate a JWT token for a test user
     token = create_token(user_id="test_user")
-    # Retourne les en-têtes nécessaires
+    # Return the required headers
     return {"Authorization": f"Bearer {token}"}
 
 # Test for the model creation API
