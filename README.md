@@ -1,7 +1,7 @@
 # Vergo Puppet
 
 AI service for model management, training, and predictions.  
-This project supports multiple neural network architectures (Simple NN, GRU, SIAMESE, LSTM) to tackle various tasks including regression, classification, similarity checks, and time-series forecasting.
+This project supports multiple neural network architectures (Simple NN, GRU, SIAMESE, LSTM, EMBEDDING) to tackle various tasks including regression, classification, similarity checks, and time-series forecasting. It also provides embedding-based search capabilities for storing and querying user data ("things").
 
 ## Table of Contents
 
@@ -19,6 +19,7 @@ This project supports multiple neural network architectures (Simple NN, GRU, SIA
     - [Puppet-o2 (GRU Model)](#puppet-o2-gru-model)
     - [Puppet-o3 (SIAMESE Model)](#puppet-o3-siamese-model)
     - [Puppet-o4 (LSTM Model)](#puppet-o4-lstm-model)
+    - [Puppet-o5 (Embedding Model)](#puppet-o5-embedding-model)
 9. [Project Structure](#project-structure)
 10. [Troubleshooting](#troubleshooting)
 12. [Contributing](#contributing)
@@ -38,6 +39,7 @@ This project supports multiple neural network architectures (Simple NN, GRU, SIA
 - **RESTful APIs**: Endpoints for creating, training, testing, and searching within models.
 - **Flexible deployment**: Designed to run either as a local development setup or inside Docker for production.
 - **Data caching**: Allows precomputing vectors for faster similarity searches.
+- **Universal embedding model**: Train and use embeddings for semantic search and "thing" indexing.
 
 ---
 
@@ -59,6 +61,7 @@ Vergo Puppet uses a `.env` file (or a custom environment file) to configure envi
 | `SECRET_KEY`  | Secret key for JWT token generation and validation | `SECRET_KEY`                        |
 | `MODE`        | Execution mode (`dev`, `test`, or `prod`)          | `prod`                              |
 | `MONGO_URI`   | Connection string for MongoDB                      | `mongodb://root:password@localhost:27017` |
+| `MONGO_DB_NAME` | MongoDB database name                              | `puppet`                           |
 | `DEBUG`       | Whether to enable debug logs                       | `false`                             |
 
 A sample `.env` file might look like this:
@@ -66,6 +69,7 @@ A sample `.env` file might look like this:
 SECRET_KEY=mySuperSecretKey
 MODE=dev
 MONGO_URI=mongodb://root:password@localhost:27017
+MONGO_DB_NAME=puppet
 DEBUG=true
 ```
 
@@ -262,7 +266,7 @@ curl -X GET http://localhost/api/models \
 ```
 
 ### 6. Test a Model
-**Endpoint**: `POST /test`  
+**Endpoint**: `POST /test`
 Example:
 ```bash
 curl -X POST http://localhost/api/test \
@@ -275,6 +279,98 @@ curl -X POST http://localhost/api/test \
       [["token1", "token2"], ["token3", "token4"], 0.5],
       [["token1", "token3"], ["token3", "token4"], 0.75]
     ]
+  }'
+```
+
+### 7. Embedding Endpoints
+
+#### Create an Embedding Model
+**Endpoint**: `POST /embedding/create`
+```bash
+curl -X POST http://localhost/api/embedding/create \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <YOUR_TOKEN>" \
+  -d '{
+    "model_name": "puppet-o5",
+    "vocab_path": "embedding_vocab.json",
+    "trainset_path": "embedding_train.json"
+  }'
+```
+
+#### Train an Embedding Model
+**Endpoint**: `POST /embedding/train`
+```bash
+curl -X POST http://localhost/api/embedding/train \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <YOUR_TOKEN>" \
+  -d '{
+    "model_name": "puppet-o5",
+    "vocab_path": "embedding_vocab.json",
+    "trainset_path": "embedding_train.json"
+  }'
+```
+
+#### Encode a Sentence
+**Endpoint**: `POST /embedding/encode`
+```bash
+curl -X POST http://localhost/api/embedding/encode \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <YOUR_TOKEN>" \
+  -d '{
+    "model_name": "puppet-o5",
+    "sentence": "My red bicycle"
+  }'
+```
+
+#### Compute Similarity
+**Endpoint**: `POST /embedding/similarity`
+```bash
+curl -X POST http://localhost/api/embedding/similarity \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <YOUR_TOKEN>" \
+  -d '{
+    "model_name": "puppet-o5",
+    "sentence1": "un vélo rouge",
+    "sentence2": "un grand chapeau"
+  }'
+```
+
+### 8. Thing Endpoints
+
+#### Store a Thing
+**Endpoint**: `POST /thing`
+```bash
+curl -X POST http://localhost/api/thing \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <YOUR_TOKEN>" \
+  -d '{
+    "model_encode_name": "puppet-o5",
+    "collection_name": "demo",
+    "id": "thing_123",
+    "data": {"label": "Red bike", "description": "Ultra light racing bike"}
+  }'
+```
+
+#### List Things
+**Endpoint**: `POST /thing/list`
+```bash
+curl -X POST http://localhost/api/thing/list \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <YOUR_TOKEN>" \
+  -d '{"collection_name": "demo"}'
+```
+
+#### Search Things
+**Endpoint**: `POST /thing/search`
+```bash
+curl -X POST http://localhost/api/thing/search \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <YOUR_TOKEN>" \
+  -d '{
+    "model_encode_name": "puppet-o5",
+    "collection_name": "demo",
+    "sentence": "red bike",
+    "top_k": 5
   }'
 ```
 
@@ -312,13 +408,24 @@ curl -X POST http://localhost/api/test \
   ```
 
 ### Puppet-o4 (LSTM Model)
-- **Type**: Long Short-Term Memory (LSTM)  
-- **Use Case**: Time-series forecasting  
+- **Type**: Long Short-Term Memory (LSTM)
+- **Use Case**: Time-series forecasting
 - **Example Input**:
   ```json
   {
     "time": "2024-12-19T00:00:00Z",
     "temp": 5.0
+  }
+  ```
+
+### Puppet-o5 (Embedding Model)
+- **Type**: Universal Sentence Encoder (LSTM pooling)
+- **Use Case**: Semantic search and "thing" indexing
+- **Example Input**:
+  ```json
+  {
+    "model_name": "puppet-o5",
+    "sentence": "My red bicycle"
   }
   ```
 
