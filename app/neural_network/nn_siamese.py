@@ -145,6 +145,12 @@ class SimilarityDataset(Dataset):
 
 # Collate function for DataLoader to handle variable-length sequences
 def collate_fn(data):
+    """
+    Pad sequence pairs and return tensors of sequences, lengths and labels.
+
+    :param data: Iterable of ``(seq1, seq2, label)`` tuples.
+    :return: Padded sequences and associated length and label tensors.
+    """
     seq1_list, seq2_list, label_list = zip(*data)
     lengths1 = [len(seq) for seq in seq1_list]
     seq1_padded = nn.utils.rnn.pad_sequence(seq1_list, batch_first=True, padding_value=0)
@@ -165,6 +171,20 @@ def train_siamese_model_nn(
     patience: int = 20,
     best_model_path: str = 'best_model.pth'
 ):
+    """
+    Train a Siamese LSTM network on sequence pairs with early stopping.
+
+    :param training_data: List of ``(indices1, indices2, similarity)`` tuples.
+    :param vocab_size: Size of the token vocabulary.
+    :param embedding_dim: Dimension of the embedding layer.
+    :param hidden_dim: Dimension of the LSTM hidden state.
+    :param num_epochs: Maximum number of training epochs.
+    :param learning_rate: Learning rate for Adam optimizer.
+    :param batch_size: Mini-batch size used during training.
+    :param patience: Epochs to wait without improvement before stopping.
+    :param best_model_path: Path where the best model will be saved.
+    :return: Tuple ``(model, report)`` with the trained model and metrics.
+    """
     dataset = SimilarityDataset(training_data)
     train_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True, collate_fn=collate_fn)
 
@@ -246,6 +266,14 @@ def evaluate_similarity(
     idxs1: List[int],
     idxs2: List[int]
 ) -> float:
+    """
+    Compute the similarity score between two index sequences.
+
+    :param model: Trained Siamese LSTM model.
+    :param idxs1: Indices representing the first sequence.
+    :param idxs2: Indices representing the second sequence.
+    :return: Similarity score rounded to three decimals.
+    """
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = model.to(device)
     model.eval()
