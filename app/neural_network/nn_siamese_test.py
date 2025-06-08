@@ -51,14 +51,14 @@ def test_train_siamese_model_nn():
         target_indices = tokens_to_indices(target_tokens, word2idx)
         transformed_data.append((source_indices, target_indices, score))
     
-    # Entraîner le modèle avec un chemin unique
+    # Train the model using a single path
     nn_model, report = train_siamese_model_nn(
         transformed_data,
         vocab_size,
         num_epochs=5
     )
 
-    # Vérifiez que le modèle est entraîné correctement
+    # Verify that the model is trained correctly
     assert nn_model is not None, "Siamese LSTM model was not trained correctly."
     assert report["final_loss"] is not None, "Loss report should not be None."
 

@@ -90,18 +90,18 @@ def test_calculate_word_representation():
     ]
 
     expected_output = {
-        "chat": 44.44,   # 4 occurrences / 9 mots
-        "chien": 33.33,  # 3 occurrences / 9 mots
-        "oiseau": 11.11, # 1 occurrence / 9 mots
-        "souris": 11.11  # 1 occurrence / 9 mots
+        "chat": 44.44,   # 4 occurrences out of 9 words
+        "chien": 33.33,  # 3 occurrences out of 9 words
+        "oiseau": 11.11, # 1 occurrence out of 9 words
+        "souris": 11.11  # 1 occurrence out of 9 words
     }
 
     result = calculate_word_representation(dictionary)
 
-    # Vérification que les clés correspondent
+    # Verify that the keys match
     assert set(result.keys()) == set(expected_output.keys())
 
-    # Vérification des valeurs arrondies
+    # Verify rounded values
     for key in result:
         assert round(result[key], 2) == expected_output[key], f"Mismatch for {key}: expected {expected_output[key]}, got {round(result[key], 2)}"
 
