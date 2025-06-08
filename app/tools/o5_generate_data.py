@@ -116,14 +116,6 @@ def report_label_distribution(train_data):
         pct = (count / total) * 100
         print(f"Label {label}: {count} ({pct:.2f}%)")
     print(f"Total pairs: {total}\n")
-    # Optionally save as JSON for later analysis
-    stats = {
-        "total_pairs": total,
-        "labels": {str(label): {"count": count, "pct": pct} for label, count in label_counter.items()}
-    }
-    stats_path = SAVE_DIR / "generates/embedding_train_stats.json"
-
-    print(f"Saved stats to {stats_path}")
 
 if __name__ == "__main__":
     main()
