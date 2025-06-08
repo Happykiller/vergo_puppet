@@ -123,14 +123,14 @@ def test_parse_input_data_file_path_construction():
     file_name = "example.json"
     expected_path = FILES_DIR / file_name
 
-    # This function will replace Path.open. 'self' sera
-    # l'instance de Path utilisée, ce qui nous permet de vérifier le chemin.
+    # This function replaces Path.open. 'self' will be the Path instance used,
+    # allowing us to verify the path.
     def open_side_effect(self, mode="r", encoding=None):
-        # On s'assure que l'instance 'self' correspond au chemin attendu.
+        # Ensure that the 'self' instance matches the expected path.
         assert str(self) == str(expected_path), (
             f"Expected the path to be {expected_path}, got {self}"
         )
-        # On renvoie un Mock de fichier (mock_open) pour simuler la lecture du fichier.
+        # Return a file mock (mock_open) to simulate reading the file.
         return mock_open(read_data='{"test": 123}')()
 
     with patch("pathlib.Path.exists", return_value=True), \

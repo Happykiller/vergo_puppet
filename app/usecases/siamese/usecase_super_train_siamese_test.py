@@ -5,7 +5,7 @@ from unittest.mock import patch, MagicMock
 from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.usecases.siamese.usecase_super_train_siamese import SuperTrainSiameseUsecaseDto, super_train_model_siamese
 
-# ✅ Test principal : entraînement multiple avec succès
+# ✅ Main test: successful multiple training iterations
 @patch('app.usecases.siamese.usecase_super_train_siamese.train_model_siamese')
 @patch('app.usecases.siamese.usecase_super_train_siamese.mesure_siamese')
 def test_super_train_model_siamese_success(mock_mesure_siamese, mock_train_model_siamese, patch_inversify):
@@ -45,19 +45,19 @@ def test_super_train_model_siamese_success(mock_mesure_siamese, mock_train_model
         n_iterations=3  # Small number of iterations for testing
     ))
 
-    # Vérification que l'entraînement et la mesure ont été appelés plusieurs fois
+    # Verify that training and measurement were called multiple times
     assert mock_train_model_siamese.call_count == 3
     assert mock_mesure_siamese.call_count == 3
 
-    # Vérification que la meilleure accuracy a bien été enregistrée
+    # Verify that the best accuracy was recorded
     assert result["best_test_accuracy"] == 87.5
     assert result["training_report"]["training_stats"]["final_loss"] == 0.05
     assert result["measurement_report"]["prediction_accuracy_percentage"] == 87.5
 
-    # Vérification de l'état final du modèle
+    # Verify the final state of the model
     mock_bdd.update_model.assert_called()
 
-# ✅ Test si le modèle est déjà en train d’être entraîné
+# ✅ Test if the model is already being trained
 def test_super_train_model_siamese_model_already_training(patch_inversify):
     """Test the case where the Siamese model is already in training mode."""
     mock_inversify, mock_bdd = patch_inversify
@@ -75,7 +75,7 @@ def test_super_train_model_siamese_model_already_training(patch_inversify):
             inversify=mock_inversify
         ))
 
-# ✅ Test si une erreur survient pendant l’entraînement
+# ✅ Test if an error occurs during training
 @patch('app.usecases.siamese.usecase_super_train_siamese.train_model_siamese')
 def test_super_train_model_siamese_error_during_training(mock_train_model_siamese, patch_inversify):
     """Test if an error occurs during the super training process."""
@@ -83,7 +83,7 @@ def test_super_train_model_siamese_error_during_training(mock_train_model_siames
     mock_model_data = MagicMock(status=ModelStatus.TRAINED)
     mock_bdd.get_model.return_value = mock_model_data
 
-    # Simulation d'une erreur pendant l'entraînement
+    # Simulate an error during training
     mock_train_model_siamese.side_effect = Exception("Training failure")
 
     training_data = [(["hello", "world"], ["hi", "planet"], 0.9)]

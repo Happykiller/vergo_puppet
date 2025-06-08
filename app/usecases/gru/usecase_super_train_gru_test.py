@@ -6,7 +6,7 @@ from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.apis.models.gru_training_model_data import GRUTrainingModelData
 from app.usecases.gru.usecase_super_train_gru import SuperTrainGRUUsecaseDto, super_train_model_gru
 
-# ✅ Test principal : entraînement multiple avec succès
+# ✅ Main test: successful multiple training iterations
 @patch('app.usecases.gru.usecase_super_train_gru.train_model_gru')
 @patch('app.usecases.gru.usecase_super_train_gru.mesure_gru')
 def test_super_train_model_gru_success(mock_mesure_gru, mock_train_model_gru, patch_inversify):
@@ -46,18 +46,18 @@ def test_super_train_model_gru_success(mock_mesure_gru, mock_train_model_gru, pa
         n_iterations=3  # Small number of iterations for testing
     ))
 
-    # Vérification que l'entraînement et la mesure ont été appelés plusieurs fois
+    # Verify that training and measurement were called multiple times
     assert mock_train_model_gru.call_count == 3
     assert mock_mesure_gru.call_count == 3
 
-    # Vérification que la meilleure accuracy a bien été enregistrée
+    # Verify that the best accuracy was recorded
     assert result["best_test_accuracy"] == 85.0
     assert result["best_measurement_report"]["average_accuracy"] == 85.0
 
-    # Vérification de l'état final du modèle
+    # Verify the final state of the model
     mock_bdd.update_model.assert_called()
 
-# ✅ Test si le modèle est déjà en train d’être entraîné
+# ✅ Test if the model is already being trained
 def test_super_train_model_gru_model_already_training(patch_inversify):
     """Test the case where the GRU model is already in training mode."""
     mock_inversify, mock_bdd = patch_inversify
@@ -75,7 +75,7 @@ def test_super_train_model_gru_model_already_training(patch_inversify):
             inversify=mock_inversify
         ))
 
-# ✅ Test si une erreur survient pendant l’entraînement
+# ✅ Test if an error occurs during training
 @patch('app.usecases.gru.usecase_super_train_gru.train_model_gru')
 def test_super_train_model_gru_error_during_training(mock_train_model_gru, patch_inversify):
     """Test if an error occurs during the super training process."""
@@ -83,7 +83,7 @@ def test_super_train_model_gru_error_during_training(mock_train_model_gru, patch
     mock_model_data = MagicMock(status=ModelStatus.TRAINED)
     mock_bdd.get_model.return_value = mock_model_data
 
-    # Simulation d'une erreur pendant l'entraînement
+    # Simulate an error during training
     mock_train_model_gru.side_effect = Exception("Training failure")
 
     training_data = [GRUTrainingModelData(category="cat1", tokens=["hello", "world"])]
