@@ -4,8 +4,9 @@ from typing import List, Optional
 
 from app.services.bdd.bdd import BDDService
 from app.services.bdd.models.model_data import ModelData
-from app.services.bdd.models.model_mapping import MODEL_MAPPING
+from app.services.bdd.models.model_thing import ThingModel
 from app.services.bdd.models.model_metrics import MetricsModel
+from app.services.bdd.models.model_mapping import MODEL_MAPPING
 
 class MongoBDDService(BDDService):
     """MongoDB implementation of BDDService."""
@@ -97,3 +98,22 @@ class MongoBDDService(BDDService):
         results = self.database.metrics.find(query).sort("timestamp", -1).limit(100)
 
         return [MetricsModel.from_dict(res) for res in results]
+    
+    def store_thing_embedding(self, embedding: ThingModel):
+        self.database.thing_embeddings.update_one(
+            {"id": embedding.id},
+            {"$set": {
+                "id": embedding.id,
+                "vector": embedding.vector,
+                "text": embedding.text,
+                "metadata": embedding.metadata if hasattr(embedding, "metadata") else {}
+            }},
+            upsert=True
+        )
+
+def get_things(self, ids: Optional[list[str]] = None) -> list[ThingModel]:
+    query = {}
+    if ids:
+        query = {"id": {"$in": ids}}
+    records = self.database.thing_embeddings.find(query)
+    return [ThingModel.from_dict(doc) for doc in records]

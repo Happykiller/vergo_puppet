@@ -1,13 +1,15 @@
 # app\services\bdd\bdd_fake.py
 import torch
 import traceback
+import numpy as np
 from typing import List, Optional
 
 from app.services.logger import logger
 from app.services.bdd.bdd import BDDService
 from app.services.bdd.models.model_data import ModelData
-from app.services.bdd.models.model_mapping import MODEL_MAPPING
+from app.services.bdd.models.model_thing import ThingModel
 from app.services.bdd.models.model_metrics import MetricsModel
+from app.services.bdd.models.model_mapping import MODEL_MAPPING
 
 class FakeBDDService(BDDService):
     """Fake implementation of the database service for development/testing."""
@@ -18,6 +20,7 @@ class FakeBDDService(BDDService):
         # Buffer for caching search results
         self.search_buffer = {}
         self.metrics = []
+        self.thing_embeddings = {}
         logger.debug("Bdd: Fake Bdd initialized")
 
     def save_model(self, data: ModelData):
@@ -125,3 +128,11 @@ class FakeBDDService(BDDService):
         if model_name:
             return [res for res in self.metrics if res.model_name == model_name]
         return self.metrics
+    
+    def store_thing_embedding(self, embedding: ThingModel):
+        self.thing_embeddings[embedding.id] = embedding
+
+    def get_things(self, ids: Optional[list[str]] = None) -> list[ThingModel]:
+        if ids is None:
+            return list(self.thing_embeddings.values())
+        return [entry for _id, entry in self.thing_embeddings.items() if _id in ids]

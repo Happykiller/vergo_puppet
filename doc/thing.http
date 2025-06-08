@@ -1,0 +1,26 @@
+### Store a new Thing (embedding)
+POST http://localhost:8000/thing?model_name=puppet-o3
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "id": "thing_123",
+  "label": "Red bike",
+  "description": "Ultra light racing bike",
+  "type": "cb",
+  "cb": {"label": "Visa Pro"},
+  "credential": {"id": "abc", "address": "demo@ex.com"},
+  "code": null,
+  "note": null,
+  "totp": null
+}
+
+### Get all Things
+GET http://localhost:8000/thing
+Authorization: Bearer {{token}}
+
+
+### Get Things by ID list
+GET http://localhost:8000/thing?ids=thing_123&ids=thing_2
+Authorization: Bearer {{token}}
+

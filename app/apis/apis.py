@@ -7,8 +7,12 @@ from fastapi.security import OAuth2PasswordBearer # type: ignore
 from fastapi import BackgroundTasks, Depends, APIRouter, HTTPException # type: ignore
 
 from app.version import __version__
+from app.apis.common import FILES_DIR
 from app.services.logger import logger
 from app.inversify import get_inversify
+from app.apis.thing_api import thing_router
+from app.apis.deps import verify_access_token
+from app.apis.embedding_api import embedding_router
 from app.usecases.get_model import get_model_usecase
 from app.common import load_env_vars, parse_input_data
 from app.apis.models.test_model_data import TestModelData
@@ -47,9 +51,6 @@ from app.usecases.siamese.usecase_create_siamese import CreateSiameseUsecaseDto,
 from app.usecases.siamese.prepare_cache_siamese import PrepareSiameseUsecaseDto, prepare_cache_siamese
 from app.usecases.siamese.usecase_super_train_siamese import SuperTrainSiameseUsecaseDto, super_train_model_siamese
 from app.usecases.gru.usecase_search_multi_brut_gru import SearchMultiBrutGRUUsecaseDto, search_multi_brut_model_gru
-
-FILES_DIR = Path("files")
-FILES_DIR.mkdir(parents=True, exist_ok=True)
 
 # Initialisation du routeur
 router = APIRouter()
@@ -427,3 +428,6 @@ async def secure_endpoint(payload: dict = Depends(verify_access_token)):
     except Exception as e:
         logger.error(f"Error occurred: {str(e)}")
         raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
+
+router.include_router(thing_router)
+router.include_router(embedding_router)

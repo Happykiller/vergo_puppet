@@ -173,3 +173,6 @@ vergo_puppet.tar
 *.old
 doc/puppet-o2_brut.old
 app/tools/generates/*.json
+files/embedding_train.json
+files/embedding_vocab.json
+files/puppet-o5_embedding.pt
