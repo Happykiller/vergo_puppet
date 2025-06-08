@@ -130,12 +130,14 @@ class FakeBDDService(BDDService):
         return self.metrics
     
     def store_thing_embedding(self, embedding: ThingModel):
+        """Store an embedding representing a thing."""
         self.thing_embeddings[embedding.id] = embedding
 
     def get_things(self, collection: str = "default", ids: Optional[list[str]] = None) -> list[ThingModel]:
+        """Retrieve stored things for a collection."""
         things = self.thing_embeddings.values()
 
-        # filtre par collection_name
+        # Filter by collection name
         filtered = [t for t in things if t.collection_name == collection]
 
         if ids:

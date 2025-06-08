@@ -101,6 +101,7 @@ class MongoBDDService(BDDService):
         return [MetricsModel.from_dict(res) for res in results]
     
     def store_thing_embedding(self, embedding: ThingModel):
+        """Store an embedding for a thing in MongoDB."""
         self.database.thing_embeddings.update_one(
             {"id": embedding.id},
             {"$set": {
@@ -114,6 +115,7 @@ class MongoBDDService(BDDService):
         )
 
     def get_things(self, collection: str = "default", ids: Optional[list[str]] = None) -> list[ThingModel]:
+        """Retrieve things stored in MongoDB for a collection."""
         query = {"collection_name": collection}
         if ids:
             query["id"] = {"$in": ids}

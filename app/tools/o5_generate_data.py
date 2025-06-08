@@ -100,7 +100,7 @@ def main():
 
     print(f"Saved training pairs to {TRAINSET_PATH} (total: {len(train_data)})")
 
-    # Rapport sur la répartition des labels
+    # Report on label distribution
     report_label_distribution(train_data)
 
 def report_label_distribution(train_data):
