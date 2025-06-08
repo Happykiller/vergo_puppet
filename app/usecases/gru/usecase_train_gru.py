@@ -4,8 +4,8 @@ from collections import Counter
 from typing import List, Dict, NamedTuple
 
 from app.inversify import Inversify
-from app.services.bdd.models.model_metrics import MetricsModel
 from app.services.logger import logger
+from app.services.bdd.models.model_metrics import MetricsModel
 from app.neural_network.nn_gru import GRUClassifier, train_gru
 from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.apis.models.gru_training_model_data import GRUTrainingModelData

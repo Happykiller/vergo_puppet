@@ -1,0 +1,32 @@
+### Train the embedding model
+POST {{host}}/embedding/train
+Authorization: Bearer {{token}}
+
+{
+  "model_name": "puppet-o5",
+  "vocab_path": "embedding_vocab.json",
+  "trainset_path": "embedding_train.json"
+}
+
+### Encode a sentence
+POST {{host}}/embedding/encode
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "model_name": "puppet-o5",
+  "vocab_path": "embedding_vocab.json",
+  "sentence": "My red bicycle"
+}
+
+### Compute similarity
+POST {{host}}/embedding/similarity
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "model_name": "puppet-o5",
+  "vocab_path": "embedding_vocab.json",
+  "sentence1": "firewall",
+  "sentence2": "prout"
+}

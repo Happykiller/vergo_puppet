@@ -4,6 +4,7 @@ from typing import Optional
 from abc import ABC, abstractmethod
 
 from app.services.bdd.models.model_data import ModelData
+from app.services.bdd.models.model_thing import ThingModel
 from app.services.bdd.models.model_metrics import MetricsModel
 
 class BDDService(ABC):
@@ -49,4 +50,12 @@ class BDDService(ABC):
     @abstractmethod
     def get_metrics(self, model_name: Optional[str] = None):
         """Retrieve all training results, optionally filtered by model name."""
+        pass
+
+    @abstractmethod
+    def store_thing_embedding(self, embedding: ThingModel):
+        pass
+
+    @abstractmethod
+    def get_things(self, ids: Optional[list[str]] = None) -> list[ThingModel]:
         pass

@@ -18,13 +18,6 @@ Content-Type: application/json
   "test_file": "o3_test_250316150438.json"
 }
 
-
-
-
-
-
-
-
 ###
 PATCH {{host}}/update_model
 Authorization: Bearer {{token}}
@@ -41,7 +34,7 @@ Content-Type: application/json
 {
   "name": "puppet-o3",
   "neural_network_type": "SIAMESE",
-  "train_file": "o3_train_250303172539.json"
+  "train_file": "o3_train_250312115100.json"
 }
 
 ###
