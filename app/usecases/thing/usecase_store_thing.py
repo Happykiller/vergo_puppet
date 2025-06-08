@@ -62,6 +62,7 @@ def encode_text_with_model(model, text: str) -> list[float]:
         return embedding.squeeze(0).cpu().tolist()
 
 def store_thing_usecase(model_name: str, collection_name: str, thing_id: str, data: dict, inversify: Inversify):
+    """Store a thing vectorized with the specified embedding model."""
     try:
         if not thing_id or not isinstance(data, dict):
             raise ValueError("Missing 'id' or invalid 'data' payload.")

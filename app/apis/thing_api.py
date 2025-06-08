@@ -29,6 +29,7 @@ class ThingSearchInput(BaseModel):
 
 @thing_router.post("/thing")
 async def store_thing_api(body: StoreThingInput, payload: dict = Depends(verify_access_token)):
+    """Store a new thing and its embedding."""
     try:
         result = store_thing_usecase(
             model_name=body.model_encode_name,
@@ -43,6 +44,7 @@ async def store_thing_api(body: StoreThingInput, payload: dict = Depends(verify_
 
 @thing_router.post("/thing/list")
 async def get_things_api(body: SearchThingInput, payload: dict = Depends(verify_access_token)):
+    """Retrieve things from a collection."""
     try:
         result = get_things_usecase(body.collection_name, ids=body.ids, inversify=get_inversify())
         return result
@@ -51,6 +53,7 @@ async def get_things_api(body: SearchThingInput, payload: dict = Depends(verify_
 
 @thing_router.post("/thing/search")
 async def search_thing_api(body: ThingSearchInput, payload: dict = Depends(verify_access_token)):
+    """Search for similar things based on a sentence."""
     try:
         result = search_things_usecase(
             model_name=body.model_encode_name,
