@@ -1,5 +1,6 @@
 # app\services\bdd\bdd_mongo.py
 import torch
+from pymongo import ASCENDING
 from typing import List, Optional
 
 from app.services.bdd.bdd import BDDService
@@ -106,14 +107,16 @@ class MongoBDDService(BDDService):
                 "id": embedding.id,
                 "vector": embedding.vector,
                 "text": embedding.text,
-                "metadata": embedding.metadata if hasattr(embedding, "metadata") else {}
+                "metadata": embedding.metadata,
+                "collection_name": embedding.collection_name
             }},
             upsert=True
         )
 
-def get_things(self, ids: Optional[list[str]] = None) -> list[ThingModel]:
-    query = {}
-    if ids:
-        query = {"id": {"$in": ids}}
-    records = self.database.thing_embeddings.find(query)
-    return [ThingModel.from_dict(doc) for doc in records]
+    def get_things(self, collection: str = "default", ids: Optional[list[str]] = None) -> list[ThingModel]:
+        query = {"collection_name": collection}
+        if ids:
+            query["id"] = {"$in": ids}
+
+        records = self.database.thing_embeddings.find(query)
+        return [ThingModel.from_dict(doc) for doc in records]

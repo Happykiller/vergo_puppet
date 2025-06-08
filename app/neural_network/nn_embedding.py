@@ -172,14 +172,3 @@ def train_embedding_model(
         "total_time": duration,
         "num_parameters": total_params,
     }
-
-# ------------------ UTILITIES ------------------
-
-def load_embedding_model(weights_path: str, vocab_size: int, embedding_dim: int = 128, lstm_hidden_dim: int = 128) -> UniversalEmbeddingModel:
-    """
-    Loads a trained UniversalEmbeddingModel from file.
-    """
-    model = UniversalEmbeddingModel(vocab_size, embedding_dim, lstm_hidden_dim)
-    model.load_state_dict(torch.load(weights_path, map_location="cpu"))
-    model.eval()
-    return model

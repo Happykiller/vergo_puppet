@@ -1,4 +1,5 @@
 # app/usecases/usecase_store_thing.py
+import re
 import torch
 import traceback
 
@@ -28,60 +29,67 @@ def flatten_for_embedding(obj: dict) -> str:
 
 def encode_text_with_model(model, text: str) -> list[float]:
     """
-    Encodes text using a trained NN model (e.g., Siamese LSTM), returns a vector.
-    You need to adapt this part for your tokenization and model signature.
+    Encodes text into embedding using a UniversalEmbeddingModel.
+    Assumes model.glossary and model.nn_model are present.
     """
-    # Tokenization logic: replace with your real tokenizer (e.g., spacy, custom, etc.)
-    tokens = text.split()  # Replace with real tokenizer if necessary
-    # Suppose model has a `word2idx` glossary and an `encode` method
-    indices = [model.word2idx.get(t, 1) for t in tokens]  # 1 = UNK (unknown token)
+    glossary = model.glossary
+    if not glossary or not model.nn_model:
+        raise ValueError("Model glossary or nn_model is missing")
 
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    vocab = {token: idx for idx, token in enumerate(glossary)}
+    if "<UNK>" not in vocab:
+        raise ValueError("Model glossary missing <UNK> token")
+
+    def tokenize(s: str) -> list[str]:
+        return re.findall(r"\b\w+\b", s.lower())
+
+    tokens = tokenize(text)
+    indices = [vocab.get(t, vocab["<UNK>"]) for t in tokens]
+    if not indices:
+        raise ValueError("Text produced no tokens after tokenization")
+
+    seq = torch.tensor(indices, dtype=torch.long).unsqueeze(0)
+    lengths = torch.tensor([len(indices)])
+
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model.nn_model = model.nn_model.to(device)
+    seq = seq.to(device)
+    lengths = lengths.to(device)
+
     model.nn_model.eval()
     with torch.no_grad():
-        seq = torch.tensor(indices, dtype=torch.long).unsqueeze(0).to(device)
-        lengths = torch.tensor([len(indices)]).to(device)
-        # Méthode à adapter selon le modèle (forward_once ou autre)
-        embedding = model.nn_model.forward_once(seq, lengths)
+        embedding = model.nn_model.encode(seq, lengths)
         return embedding.squeeze(0).cpu().tolist()
 
-
-def store_thing_usecase(item: dict, model_name: str, inversify: Inversify):
-    """
-    Flattens the object, encodes as an embedding using the designated model, and stores in the database.
-    """
+def store_thing_usecase(model_name: str, collection_name: str, thing_id: str, data: dict, inversify: Inversify):
     try:
-        if "id" not in item or not item.get("label"):
-            raise ValueError("Missing required field: 'id' or 'label'")
+        if not thing_id or not isinstance(data, dict):
+            raise ValueError("Missing 'id' or invalid 'data' payload.")
 
-        text = flatten_for_embedding(item)
+        text = flatten_for_embedding(data)
 
-        # 1. Récupération du modèle
         model = get_model_usecase(model_name, inversify)
         if not model:
             raise ValueError(f"Model '{model_name}' not found")
 
-        # 2. Génération de l'embedding
         vector = encode_text_with_model(model, text)
 
-        # 3. Création du ThingModel et stockage
         thing = ThingModel(
-            id=item["id"],
+            id=thing_id,
             vector=vector,
             text=text,
-            metadata=item
+            metadata=data,
+            collection_name=collection_name
         )
         bdd = inversify.get_bdd()
         bdd.store_thing_embedding(thing)
 
         return {
             "status": "stored",
-            "id": item["id"],
-            "text": text,
-            "vector_dim": len(vector)
+            "id": thing_id,
+            "collection": collection_name
         }
 
     except Exception as e:
-        logger.error(f"Error message: {str(e)}\nStack trace:\n{traceback.format_exc()}")
+        logger.error(f"[store_thing_usecase] Error: {str(e)}\n{traceback.format_exc()}")
         raise Exception(f"[store_thing_usecase] {str(e)}")

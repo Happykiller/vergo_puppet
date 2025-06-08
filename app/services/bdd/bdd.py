@@ -53,9 +53,9 @@ class BDDService(ABC):
         pass
 
     @abstractmethod
-    def store_thing_embedding(self, embedding: ThingModel):
+    def store_thing_embedding(self, thing: ThingModel, collection: str = "default"):
         pass
 
     @abstractmethod
-    def get_things(self, ids: Optional[list[str]] = None) -> list[ThingModel]:
+    def get_things(self, collection: str, ids: Optional[list[str]] = None) -> list[ThingModel]:
         pass

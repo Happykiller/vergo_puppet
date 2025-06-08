@@ -7,6 +7,7 @@ class ThingModel(BaseModel):
     vector: list[float] = Field(..., description="Vector embedding of the item")
     text: str = Field(..., description="Flattened text used for generating the embedding")
     metadata: dict[str, Any] = Field(default_factory=dict, description="Optional metadata about the item")
+    collection_name: str = Field(..., description="Logical grouping of the item (namespace)")
 
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -14,6 +15,7 @@ class ThingModel(BaseModel):
             "vector": self.vector,
             "text": self.text,
             "metadata": self.metadata,
+            "collection_name": self.collection_name
         }
 
     @staticmethod
@@ -22,5 +24,6 @@ class ThingModel(BaseModel):
             id=data["id"],
             vector=data["vector"],
             text=data["text"],
-            metadata=data.get("metadata", {})
+            metadata=data.get("metadata", {}),
+            collection_name=data.get("collection_name", "default")
         )

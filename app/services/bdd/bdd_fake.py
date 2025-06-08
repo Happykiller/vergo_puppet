@@ -20,7 +20,7 @@ class FakeBDDService(BDDService):
         # Buffer for caching search results
         self.search_buffer = {}
         self.metrics = []
-        self.thing_embeddings = {}
+        self.thing_embeddings: dict[str, ThingModel] = {}
         logger.debug("Bdd: Fake Bdd initialized")
 
     def save_model(self, data: ModelData):
@@ -132,7 +132,12 @@ class FakeBDDService(BDDService):
     def store_thing_embedding(self, embedding: ThingModel):
         self.thing_embeddings[embedding.id] = embedding
 
-    def get_things(self, ids: Optional[list[str]] = None) -> list[ThingModel]:
-        if ids is None:
-            return list(self.thing_embeddings.values())
-        return [entry for _id, entry in self.thing_embeddings.items() if _id in ids]
+    def get_things(self, collection: str = "default", ids: Optional[list[str]] = None) -> list[ThingModel]:
+        things = self.thing_embeddings.values()
+
+        # filtre par collection_name
+        filtered = [t for t in things if t.collection_name == collection]
+
+        if ids:
+            return [t for t in filtered if t.id in ids]
+        return filtered

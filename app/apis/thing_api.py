@@ -1,31 +1,64 @@
 # app/apis/thing_api.py
+from pydantic import BaseModel
+from typing import List, Optional
 from fastapi import APIRouter, Depends, HTTPException
 
 from app.inversify import get_inversify
 from app.apis.deps import verify_access_token
 from app.usecases.thing.usecase_get_things import get_things_usecase
 from app.usecases.thing.usecase_store_thing import store_thing_usecase
+from app.usecases.thing.usecase_search_things import search_things_usecase
 
 thing_router = APIRouter()
 
+class StoreThingInput(BaseModel):
+    model_encode_name: str
+    collection_name: str
+    id: str
+    data: dict
+    
+class SearchThingInput(BaseModel):
+    collection_name: str
+    ids: Optional[list[str]] = None
+    
+class ThingSearchInput(BaseModel):
+    model_encode_name: str
+    collection_name: str
+    sentence: str
+    top_k: Optional[int] = 10
+
 @thing_router.post("/thing")
-async def store_thing_api(item: dict, model_name: str, payload: dict = Depends(verify_access_token)):
-    """
-    Stores a new Thing with an embedding.
-    """
+async def store_thing_api(body: StoreThingInput, payload: dict = Depends(verify_access_token)):
     try:
-        result = store_thing_usecase(item, model_name, get_inversify())
+        result = store_thing_usecase(
+            model_name=body.model_encode_name,
+            collection_name=body.collection_name,
+            thing_id=body.id,
+            data=body.data,
+            inversify=get_inversify()
+        )
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
-@thing_router.get("/thing")
-async def get_things_api(ids: list[str] = None, payload: dict = Depends(verify_access_token)):
-    """
-    Retrieves Things by ID list or all if no ids provided.
-    """
+@thing_router.post("/thing/list")
+async def get_things_api(body: SearchThingInput, payload: dict = Depends(verify_access_token)):
     try:
-        result = get_things_usecase(ids, get_inversify())
+        result = get_things_usecase(body.collection_name, ids=body.ids, inversify=get_inversify())
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@thing_router.post("/thing/search")
+async def search_thing_api(body: ThingSearchInput, payload: dict = Depends(verify_access_token)):
+    try:
+        result = search_things_usecase(
+            model_name=body.model_encode_name,
+            collection_name=body.collection_name,
+            sentence=body.sentence,
+            top_k=body.top_k,
+            inversify=get_inversify()
+        )
         return result
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

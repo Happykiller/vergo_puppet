@@ -1,26 +1,92 @@
 ### Store a new Thing (embedding)
-POST http://localhost:8000/thing?model_name=puppet-o3
+POST {{host}}/thing
 Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
+  "model_encode_name": "puppet-o5",
+  "collection_name": "siguri",
   "id": "thing_123",
-  "label": "Red bike",
-  "description": "Ultra light racing bike",
-  "type": "cb",
-  "cb": {"label": "Visa Pro"},
-  "credential": {"id": "abc", "address": "demo@ex.com"},
-  "code": null,
-  "note": null,
-  "totp": null
+  "data": {
+    "label": "Red bike",
+    "description": "Ultra light racing bike",
+    "type": "cb",
+    "cb": {"label": "Visa Pro"},
+    "credential": {"id": "abc", "address": "demo@ex.com"},
+    "code": null,
+    "note": null,
+    "totp": null
+  }
+}
+
+### Store a new Thing (embedding)
+POST {{host}}/thing
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "model_encode_name": "puppet-o5",
+  "collection_name": "siguri",
+  "id": "thing_456",
+  "data": {
+    "label": "un casque bleu",
+    "description": "Pour se protéger la tête",
+    "type": "code",
+    "cb": null,
+    "credential": null,
+    "code": "onu",
+    "note": null,
+    "totp": null
+  }
+}
+
+### Store a new Thing (embedding)
+POST {{host}}/thing
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "model_encode_name": "puppet-o5",
+  "collection_name": "siguri",
+  "id": "thing_789",
+  "data": {
+    "label": "une chemise rose magnifique",
+    "description": "Pour être le plus beau",
+    "type": "note",
+    "cb": null,
+    "credential": null,
+    "code": null,
+    "note": "en soirée c'est la top",
+    "totp": null
+  }
 }
 
 ### Get all Things
-GET http://localhost:8000/thing
+POST {{host}}/thing/list
 Authorization: Bearer {{token}}
+
+{
+  "collection_name": "siguri"
+}
 
 
 ### Get Things by ID list
-GET http://localhost:8000/thing?ids=thing_123&ids=thing_2
+POST {{host}}/thing/list
 Authorization: Bearer {{token}}
+
+{
+  "collection_name": "siguri",
+  "ids": ["thing_123", "thing_2"]
+}
+
+### Search
+POST {{host}}/thing/search
+Authorization: Bearer {{token}}
+
+{
+  "collection_name": "siguri",
+  "model_encode_name": "puppet-o5",
+  "sentence": "red bike"
+}
+
 
