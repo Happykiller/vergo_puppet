@@ -10,6 +10,10 @@ from app.usecases.embedding.usecase_train_embedding import train_embedding_useca
 from app.usecases.embedding.usecase_create_embedding import create_embedding_usecase
 from app.usecases.embedding.usecase_encode_embedding import encode_embedding_usecase
 from app.usecases.embedding.usecase_similarity_embedding import similarity_embedding_usecase
+from app.usecases.embedding.usecase_mesure_embedding import (
+    MesureEmbeddingUsecaseDto,
+    mesure_embedding,
+)
 
 embedding_router = APIRouter()
 
@@ -17,6 +21,11 @@ class EmbeddingTrainRequest(BaseModel):
     model_name: str
     vocab_path: str
     trainset_path: str
+
+
+class EmbeddingMesureRequest(BaseModel):
+    model_name: str
+    test_path: str
 
 @embedding_router.post("/embedding/create")
 async def create_embedding_api(
@@ -82,4 +91,24 @@ async def similarity_embedding_api(
         return {"similarity": score}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Similarity computation failed: {str(e)}")
+
+
+@embedding_router.post("/embedding/mesure")
+async def mesure_embedding_api(
+    params: EmbeddingMesureRequest,
+    payload: dict = Depends(verify_access_token),
+):
+    """Measure the embedding model performance on a test dataset."""
+    try:
+        test_data = load_json_file(FILES_DIR / params.test_path)
+        result = mesure_embedding(
+            MesureEmbeddingUsecaseDto(
+                name=params.model_name,
+                test_data=test_data,
+                inversify=get_inversify(),
+            )
+        )
+        return {"status": "ok", "detail": result}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Mesure failed: {str(e)}")
 

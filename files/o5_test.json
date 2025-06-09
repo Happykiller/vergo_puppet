@@ -1,0 +1,22 @@
+[
+  {"sentence1": "hello", "sentence2": "bonjour", "label": 1.0},
+  {"sentence1": "goodbye", "sentence2": "au revoir", "label": 1.0},
+  {"sentence1": "thank you", "sentence2": "merci", "label": 1.0},
+  {"sentence1": "yes", "sentence2": "oui", "label": 1.0},
+  {"sentence1": "no", "sentence2": "non", "label": 1.0},
+  {"sentence1": "good morning", "sentence2": "bonjour", "label": 1.0},
+  {"sentence1": "good night", "sentence2": "bonne nuit", "label": 1.0},
+  {"sentence1": "i love you", "sentence2": "je t'aime", "label": 1.0},
+  {"sentence1": "how are you", "sentence2": "comment ça va", "label": 1.0},
+  {"sentence1": "see you soon", "sentence2": "à bientôt", "label": 1.0},
+  {"sentence1": "hello", "sentence2": "bonne nuit", "label": 0.0},
+  {"sentence1": "goodbye", "sentence2": "bonjour", "label": 0.0},
+  {"sentence1": "thank you", "sentence2": "je t'aime", "label": 0.0},
+  {"sentence1": "yes", "sentence2": "non", "label": 0.0},
+  {"sentence1": "no", "sentence2": "oui", "label": 0.0},
+  {"sentence1": "good morning", "sentence2": "je t'aime", "label": 0.0},
+  {"sentence1": "good night", "sentence2": "bonjour", "label": 0.0},
+  {"sentence1": "i love you", "sentence2": "comment ça va", "label": 0.0},
+  {"sentence1": "how are you", "sentence2": "à bientôt", "label": 0.0},
+  {"sentence1": "see you soon", "sentence2": "merci", "label": 0.0}
+]

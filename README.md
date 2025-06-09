@@ -389,7 +389,19 @@ curl -X POST http://localhost/api/thing/search \
     "pieces": 3,
     "floor": 2
   }
-  ```
+```
+
+#### Measure an Embedding Model
+**Endpoint**: `POST /embedding/mesure`
+```bash
+curl -X POST http://localhost/api/embedding/mesure \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer <YOUR_TOKEN>" \
+  -d '{
+    "model_name": "puppet-o5",
+    "test_path": "o5_test.json"
+  }'
+```
 
 ### Puppet-o2 (GRU Model)
 - **Type**: Gated Recurrent Unit (GRU)  

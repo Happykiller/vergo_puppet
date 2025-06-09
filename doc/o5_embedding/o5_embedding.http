@@ -41,3 +41,13 @@ Content-Type: application/json
   "sentence1": "un vélo rouge",
   "sentence2": "un grand chapeau"
 }
+
+### Measure the embedding model
+POST {{host}}/embedding/mesure
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "model_name": "puppet-o5",
+  "test_path": "o5_test.json"
+}
