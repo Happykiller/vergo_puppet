@@ -1,5 +1,5 @@
 # app\generate_token.py
-import jwt
+import jwt # type: ignore
 import datetime
 from app.common import load_env_vars
 from app.services.logger import logger

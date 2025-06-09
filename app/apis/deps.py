@@ -2,6 +2,7 @@
 import jwt
 from fastapi import Depends, HTTPException
 from fastapi.security import OAuth2PasswordBearer
+
 from app.common import load_env_vars
 from app.services.logger import logger
 

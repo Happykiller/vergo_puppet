@@ -2,7 +2,7 @@
 import os
 import json
 from pathlib import Path
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 from typing import Any, Optional
 from fastapi import HTTPException # type: ignore
 

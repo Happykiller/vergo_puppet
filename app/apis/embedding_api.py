@@ -1,10 +1,10 @@
 # app/apis/embedding_api.py
-from pydantic import BaseModel
-from app.apis.common import load_json_file
-from fastapi import APIRouter, HTTPException, Depends, Body
+from pydantic import BaseModel # type: ignore
+from fastapi import APIRouter, HTTPException, Depends, Body # type: ignore
 
 from app.apis.apis import FILES_DIR
 from app.inversify import get_inversify
+from app.apis.common import load_json_file
 from app.apis.apis import verify_access_token
 from app.usecases.embedding.usecase_train_embedding import train_embedding_usecase
 from app.usecases.embedding.usecase_create_embedding import create_embedding_usecase
@@ -19,7 +19,7 @@ class EmbeddingTrainRequest(BaseModel):
     trainset_path: str
 
 @embedding_router.post("/embedding/create")
-async def train_embedding_api(
+async def create_embedding_api(
     params: EmbeddingTrainRequest,
     payload: dict = Depends(verify_access_token)
 ):

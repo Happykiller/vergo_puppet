@@ -2,7 +2,7 @@
 import json
 from typing import Union
 from pathlib import Path
-from fastapi import HTTPException
+from fastapi import HTTPException # type: ignore
 
 FILES_DIR = Path("files")
 FILES_DIR.mkdir(parents=True, exist_ok=True)

@@ -1,7 +1,7 @@
 # app/apis/thing_api.py
-from pydantic import BaseModel
-from typing import List, Optional
-from fastapi import APIRouter, Depends, HTTPException
+from typing import Optional # type: ignore
+from pydantic import BaseModel # type: ignore
+from fastapi import APIRouter, Depends, HTTPException # type: ignore
 
 from app.inversify import get_inversify
 from app.apis.deps import verify_access_token

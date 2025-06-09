@@ -1,5 +1,5 @@
 # inversify.py
-from pymongo import MongoClient
+from pymongo import MongoClient # type: ignore
 
 from app.common import load_env_vars
 from app.services.logger import logger
@@ -43,7 +43,7 @@ class Inversify:
     return self.get("bdd_service")
 
 # Singleton instance
-_inversify_instance: Inversify = None
+_inversify_instance: Inversify = None # type: ignore
 
 
 def get_inversify() -> Inversify:

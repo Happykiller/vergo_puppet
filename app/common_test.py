@@ -1,7 +1,7 @@
 # app/common_test.py
-import json
-import pytest
-from fastapi import HTTPException
+import json # type: ignore
+import pytest # type: ignore
+from fastapi import HTTPException # type: ignore
 from unittest.mock import patch, mock_open
 
 from app.common import load_env_vars, parse_input_data, FILES_DIR

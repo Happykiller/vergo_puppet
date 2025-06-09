@@ -1,8 +1,7 @@
 # app\apis\apis.py
-import jwt
+import jwt # type: ignore
 import json
 from typing import Any
-from pathlib import Path
 from fastapi.security import OAuth2PasswordBearer # type: ignore
 from fastapi import BackgroundTasks, Depends, APIRouter, HTTPException # type: ignore
 

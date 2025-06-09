@@ -1,7 +1,8 @@
 # app\apis\apis_test.py
-from app.services.bdd.models.model_data import ModelData
-import pytest
+import pytest # type: ignore
 from fastapi.testclient import TestClient # type: ignore 
+
+from app.services.bdd.models.model_data import ModelData
 
 from app.main import app
 from unittest.mock import mock_open, patch

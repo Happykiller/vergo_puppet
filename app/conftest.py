@@ -1,4 +1,5 @@
-import pytest
+# app\conftest.py
+import pytest # type: ignore
 from unittest.mock import patch, MagicMock
 
 """Helper to configure mock Inversify and its dependencies."""
