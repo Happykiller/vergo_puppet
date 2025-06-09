@@ -10,7 +10,6 @@ Authorization: Bearer {{token}}
   "trainset_path": "embedding_train.json"
 }
 
-
 ### Train the embedding model
 POST {{host}}/embedding/train
 Authorization: Bearer {{token}}

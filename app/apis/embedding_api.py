@@ -38,6 +38,15 @@ async def create_embedding_api(
     try:
         trainset = load_json_file(FILES_DIR / params.trainset_path)
         vocab = load_json_file(FILES_DIR / params.vocab_path)
+        
+        if not isinstance(vocab, dict):
+            raise HTTPException(status_code=400, detail="Vocabulary must be a JSON object (dict).")
+        
+        if not (isinstance(trainset, list) and all(isinstance(item, dict) for item in trainset)):
+            raise HTTPException(
+                status_code=400,
+                detail="Trainset must be a JSON array of objects (list of dicts)."
+            )
 
         result = create_embedding_usecase(params.model_name, vocab, trainset, get_inversify())
         return {"status": "ok", "detail": result}
@@ -55,6 +64,15 @@ async def train_embedding_api(
     try:
         trainset = load_json_file(FILES_DIR / params.trainset_path)
         vocab = load_json_file(FILES_DIR / params.vocab_path)
+        
+        if not isinstance(vocab, dict):
+            raise HTTPException(status_code=400, detail="Vocabulary must be a JSON object (dict).")
+        
+        if not (isinstance(trainset, list) and all(isinstance(item, dict) for item in trainset)):
+            raise HTTPException(
+                status_code=400,
+                detail="Trainset must be a JSON array of objects (list of dicts)."
+            )
 
         result = train_embedding_usecase(params.model_name, vocab, trainset, get_inversify())
         return {"status": "ok", "detail": result}
@@ -101,6 +119,13 @@ async def mesure_embedding_api(
     """Measure the embedding model performance on a test dataset."""
     try:
         test_data = load_json_file(FILES_DIR / params.test_path)
+        
+        if not (isinstance(test_data, list) and all(isinstance(item, dict) for item in test_data)):
+            raise HTTPException(
+                status_code=400,
+                detail="Testset must be a JSON array of objects (list of dicts)."
+            )
+        
         result = mesure_embedding(
             MesureEmbeddingUsecaseDto(
                 name=params.model_name,
