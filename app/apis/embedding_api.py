@@ -1,11 +1,13 @@
 # app/apis/embedding_api.py
-from pydantic import BaseModel # type: ignore
-from fastapi import APIRouter, HTTPException, Depends, Body # type: ignore
+from pydantic import BaseModel  # type: ignore
+from fastapi import APIRouter, HTTPException, Depends, Body  # type: ignore
+from threading import Thread
 
 from app.apis.apis import FILES_DIR
 from app.inversify import get_inversify
 from app.apis.common import load_json_file
 from app.apis.apis import verify_access_token
+from app.services.logger import logger
 from app.usecases.embedding.usecase_train_embedding import train_embedding_usecase
 from app.usecases.embedding.usecase_create_embedding import create_embedding_usecase
 from app.usecases.embedding.usecase_encode_embedding import encode_embedding_usecase
@@ -26,6 +28,22 @@ class EmbeddingTrainRequest(BaseModel):
 class EmbeddingMesureRequest(BaseModel):
     model_name: str
     test_path: str
+
+
+def _create_embedding_thread(model_name: str, vocab: dict, trainset: list[dict]) -> None:
+    """Run create_embedding_usecase in a dedicated thread."""
+    try:
+        create_embedding_usecase(model_name, vocab, trainset, get_inversify())
+    except Exception as exc:
+        logger.error(f"[create_embedding_thread] {str(exc)}")
+
+
+def _train_embedding_thread(model_name: str, vocab: dict, trainset: list[dict]) -> None:
+    """Run train_embedding_usecase in a dedicated thread."""
+    try:
+        train_embedding_usecase(model_name, vocab, trainset, get_inversify())
+    except Exception as exc:
+        logger.error(f"[train_embedding_thread] {str(exc)}")
 
 @embedding_router.post("/embedding/create")
 async def create_embedding_api(
@@ -48,8 +66,13 @@ async def create_embedding_api(
                 detail="Trainset must be a JSON array of objects (list of dicts)."
             )
 
-        result = create_embedding_usecase(params.model_name, vocab, trainset, get_inversify())
-        return {"status": "ok", "detail": result}
+        Thread(
+            target=_create_embedding_thread,
+            args=(params.model_name, vocab, trainset),
+            daemon=True,
+        ).start()
+
+        return {"status": "started"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Training failed: {str(e)}")
 
@@ -74,8 +97,13 @@ async def train_embedding_api(
                 detail="Trainset must be a JSON array of objects (list of dicts)."
             )
 
-        result = train_embedding_usecase(params.model_name, vocab, trainset, get_inversify())
-        return {"status": "ok", "detail": result}
+        Thread(
+            target=_train_embedding_thread,
+            args=(params.model_name, vocab, trainset),
+            daemon=True,
+        ).start()
+
+        return {"status": "started"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Training failed: {str(e)}")
 
