@@ -4,7 +4,10 @@ from typing import Any
 
 from app.services.logger import logger
 from app.services.bdd.models.model_metrics import MetricsModel
-from app.neural_network.nn_embedding import train_embedding_model
+from app.neural_network.nn_embedding import (
+    UniversalEmbeddingModel,
+    train_embedding_model,
+)
 from app.services.bdd.models.model_data import ModelData, ModelStatus
 
 def train_embedding_usecase(
@@ -31,8 +34,22 @@ def train_embedding_usecase(
         bdd = inversify.get_bdd()
         vocab_size = len(vocab)
 
-        logger.info(f"[train_embedding_usecase] Starting training for model: {model_name}")
-        logger.info(f"[train_embedding_usecase] Vocab size: {vocab_size}, Train samples: {len(trainset)}")
+        model = bdd.get_model(model_name, UniversalEmbeddingModel)
+        if not model:
+            raise Exception("Model not found")
+
+        if model.status in (ModelStatus.TRAINING, ModelStatus.SUPER_TRAINING):
+            raise Exception("Model is training")
+
+        model.status = ModelStatus.TRAINING
+        bdd.update_model(model)
+
+        logger.info(
+            f"[train_embedding_usecase] Starting training for model: {model_name}"
+        )
+        logger.info(
+            f"[train_embedding_usecase] Vocab size: {vocab_size}, Train samples: {len(trainset)}"
+        )
 
         nn_model, train_stats = train_embedding_model(
             trainset=trainset,
@@ -41,16 +58,18 @@ def train_embedding_usecase(
             lstm_hidden_dim=lstm_hidden_dim,
             batch_size=batch_size,
             num_epochs=num_epochs,
-            learning_rate=learning_rate
+            learning_rate=learning_rate,
         )
 
-        bdd.update_model(ModelData(
-            name=model_name,
-            neural_network_type="EMBEDDING",
-            status=ModelStatus.TRAINED,
-            glossary=list(vocab.keys()),
-            nn_model=nn_model
-        ))
+        bdd.update_model(
+            ModelData(
+                name=model_name,
+                neural_network_type="EMBEDDING",
+                status=ModelStatus.TRAINED,
+                glossary=list(vocab.keys()),
+                nn_model=nn_model,
+            )
+        )
 
         bdd.save_metrics(MetricsModel(
             model_name=model_name,
