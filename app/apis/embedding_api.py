@@ -1,7 +1,7 @@
 # app/apis/embedding_api.py
-from pydantic import BaseModel  # type: ignore
-from fastapi import APIRouter, HTTPException, Depends, Body  # type: ignore
 from threading import Thread
+from pydantic import BaseModel # type: ignore
+from fastapi import APIRouter, HTTPException, Depends, Body # type: ignore
 
 from app.apis.apis import FILES_DIR
 from app.inversify import get_inversify

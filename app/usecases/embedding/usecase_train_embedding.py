@@ -1,6 +1,7 @@
 # app/usecases/embedding/usecase_train_embedding.py
 import traceback
 from typing import Any
+from pathlib import Path
 
 from app.services.logger import logger
 from app.services.bdd.models.model_metrics import MetricsModel
@@ -50,8 +51,11 @@ def train_embedding_usecase(
         logger.info(
             f"[train_embedding_usecase] Vocab size: {vocab_size}, Train samples: {len(trainset)}"
         )
+        
+        model_path = Path("models/embedding") / f"{model_name}.pt"
+        model_path.parent.mkdir(parents=True, exist_ok=True)
 
-        nn_model, train_stats = train_embedding_model(
+        _, train_stats = train_embedding_model(
             trainset=trainset,
             vocab_size=vocab_size,
             embedding_dim=embedding_dim,
@@ -59,6 +63,7 @@ def train_embedding_usecase(
             batch_size=batch_size,
             num_epochs=num_epochs,
             learning_rate=learning_rate,
+            save_path=str(model_path)
         )
 
         bdd.update_model(
@@ -67,7 +72,7 @@ def train_embedding_usecase(
                 neural_network_type="EMBEDDING",
                 status=ModelStatus.TRAINED,
                 glossary=list(vocab.keys()),
-                nn_model=nn_model,
+                model_path=str(model_path)
             )
         )
 
@@ -87,5 +92,14 @@ def train_embedding_usecase(
         }
 
     except Exception as e:
+        try:
+            # Optional: mark model as FAILED in DB
+            model = bdd.get_model(model_name)
+            if model:
+                model.status = ModelStatus.FAILED
+                bdd.update_model(model)
+        except Exception as e2:
+            logger.error(f"[train_embedding_usecase] Failed to update model status to FAILED: {str(e2)}")
+
         logger.error(f"[train_embedding_usecase] Error: {str(e)}\n{traceback.format_exc()}")
         raise Exception(f"[train_embedding_usecase] {str(e)}")

@@ -1,14 +1,13 @@
 # app/usecases/embedding/usecase_mesure_embedding.py
 import traceback
+import numpy as np  # type: ignore
 from collections import Counter
 from typing import Any, List, NamedTuple, Dict
 
-import numpy as np
-
 from app.services.logger import logger
 from app.services.bdd.models.model_metrics import MetricsModel
-from app.usecases.embedding.usecase_encode_embedding import encode_embedding_usecase
 from app.usecases.embedding.usecase_similarity_embedding import cosine_similarity
+from app.usecases.embedding.usecase_encode_embedding import encode_embedding_usecase
 
 
 class MesureEmbeddingUsecaseDto(NamedTuple):
@@ -29,7 +28,7 @@ def mesure_embedding(dto: MesureEmbeddingUsecaseDto) -> Dict[str, Any]:
         for item in dto.test_data:
             sent1 = item["sentence1"]
             sent2 = item["sentence2"]
-            expected = float(item.get("label", 0.0))
+            expected = float(item.get("similarity", 0.0))
 
             emb1 = encode_embedding_usecase(dto.name, sent1, dto.inversify)
             emb2 = encode_embedding_usecase(dto.name, sent2, dto.inversify)

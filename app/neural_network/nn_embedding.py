@@ -1,10 +1,10 @@
 # app\neural_network\nn_embedding.py
 import time
-import torch
-import torch.nn as nn
-import torch.optim as optim
+import torch  # type: ignore
+import torch.nn as nn  # type: ignore
+import torch.optim as optim  # type: ignore
 from typing import List, Dict, Any, Optional
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset, DataLoader  # type: ignore
 
 from app.common import format_time 
 from app.services.logger import logger
@@ -136,7 +136,7 @@ def train_embedding_model(
 
             if i % log_every == 0 or i == total_batches - 1:
                 percent = (i + 1) / total_batches * 100
-                logger.info(f"[train_embedding_model] Epoch {epoch+1}/{num_epochs} – {i+1}/{total_batches} batches ({percent:.1f}%) – Batch Loss: {loss.item():.6f}")
+                logger.info(f"[train_embedding_model] Epoch {epoch+1}/{num_epochs} – {i+1}/{total_batches} batches ({percent:.1f}%) – Batch Loss: {loss.item():.10f}")
             
         avg_loss = total_loss / len(dataloader)
         losses.append(avg_loss)
@@ -156,9 +156,9 @@ def train_embedding_model(
     duration = format_time(end_time - start_time) if 'format_time' in globals() else f"{end_time - start_time:.2f}s"
 
     logger.info("[train_embedding_model] Training complete.")
-    logger.info(f"→ Epochs: {num_epochs}")
-    logger.info(f"→ Total time: {duration}")
-    logger.info(f"→ Final average loss: {avg_loss:.6f}")
+    logger.info(f"[train_embedding_model] Epoch {epoch+1}/{num_epochs} - Avg Loss: {avg_loss:.10f}")
+    logger.info(f"[train_embedding_model] → New best model (loss={best_loss:.10f}) saved in memory.")
+    logger.info(f"[train_embedding_model] → Final average loss: {avg_loss:.10f}")
 
     # Save the model weights (if required)
     if save_path:
@@ -171,4 +171,4 @@ def train_embedding_model(
         "model_path": save_path,
         "total_time": duration,
         "num_parameters": total_params,
-    }
+    }  # type: ignore

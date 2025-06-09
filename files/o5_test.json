@@ -1,22 +1,202 @@
 [
-  {"sentence1": "hello", "sentence2": "bonjour", "label": 1.0},
-  {"sentence1": "goodbye", "sentence2": "au revoir", "label": 1.0},
-  {"sentence1": "thank you", "sentence2": "merci", "label": 1.0},
-  {"sentence1": "yes", "sentence2": "oui", "label": 1.0},
-  {"sentence1": "no", "sentence2": "non", "label": 1.0},
-  {"sentence1": "good morning", "sentence2": "bonjour", "label": 1.0},
-  {"sentence1": "good night", "sentence2": "bonne nuit", "label": 1.0},
-  {"sentence1": "i love you", "sentence2": "je t'aime", "label": 1.0},
-  {"sentence1": "how are you", "sentence2": "comment ça va", "label": 1.0},
-  {"sentence1": "see you soon", "sentence2": "à bientôt", "label": 1.0},
-  {"sentence1": "hello", "sentence2": "bonne nuit", "label": 0.0},
-  {"sentence1": "goodbye", "sentence2": "bonjour", "label": 0.0},
-  {"sentence1": "thank you", "sentence2": "je t'aime", "label": 0.0},
-  {"sentence1": "yes", "sentence2": "non", "label": 0.0},
-  {"sentence1": "no", "sentence2": "oui", "label": 0.0},
-  {"sentence1": "good morning", "sentence2": "je t'aime", "label": 0.0},
-  {"sentence1": "good night", "sentence2": "bonjour", "label": 0.0},
-  {"sentence1": "i love you", "sentence2": "comment ça va", "label": 0.0},
-  {"sentence1": "how are you", "sentence2": "à bientôt", "label": 0.0},
-  {"sentence1": "see you soon", "sentence2": "merci", "label": 0.0}
+  {
+    "sentence1": "un vélo rouge",
+    "sentence2": "un vélo de couleur rouge",
+    "similarity": 0.95
+  },
+  {
+    "sentence1": "grand vélo",
+    "sentence2": "vélocipède de grande taille",
+    "similarity": 0.91
+  },
+  {
+    "sentence1": "chat noir",
+    "sentence2": "chat de couleur sombre",
+    "similarity": 0.82
+  },
+  {
+    "sentence1": "observatoire astronomique",
+    "sentence2": "télescope professionnel",
+    "similarity": 0.79
+  },
+  {
+    "sentence1": "prendre un café",
+    "sentence2": "boire un expresso",
+    "similarity": 0.74
+  },
+  {
+    "sentence1": "cours de yoga",
+    "sentence2": "séance de méditation",
+    "similarity": 0.71
+  },
+  {
+    "sentence1": "apprendre le portugais",
+    "sentence2": "étudier l’espagnol",
+    "similarity": 0.65
+  },
+  {
+    "sentence1": "acheter une voiture",
+    "sentence2": "louer un véhicule",
+    "similarity": 0.62
+  },
+  {
+    "sentence1": "film d’horreur",
+    "sentence2": "film romantique",
+    "similarity": 0.55
+  },
+  {
+    "sentence1": "pain frais",
+    "sentence2": "croissant au beurre",
+    "similarity": 0.53
+  },
+  {
+    "sentence1": "ordinateur portable",
+    "sentence2": "chaise de bureau",
+    "similarity": 0.46
+  },
+  {
+    "sentence1": "course à pied",
+    "sentence2": "compétition d’échecs",
+    "similarity": 0.42
+  },
+  {
+    "sentence1": "plage en été",
+    "sentence2": "ski en hiver",
+    "similarity": 0.35
+  },
+  {
+    "sentence1": "soupe chaude",
+    "sentence2": "glace à la vanille",
+    "similarity": 0.33
+  },
+  {
+    "sentence1": "moteur diesel",
+    "sentence2": "pomme rouge",
+    "similarity": 0.22
+  },
+  {
+    "sentence1": "chanson classique",
+    "sentence2": "marteau en acier",
+    "similarity": 0.21
+  },
+  {
+    "sentence1": "réunion à 9 h",
+    "sentence2": "éléphant d’Afrique",
+    "similarity": 0.11
+  },
+  {
+    "sentence1": "facture impayée",
+    "sentence2": "arc-en-ciel lumineux",
+    "similarity": 0.09
+  },
+  {
+    "sentence1": "clé USB",
+    "sentence2": "pensée philosophique",
+    "similarity": 0.04
+  },
+  {
+    "sentence1": "tempête de sable",
+    "sentence2": "opération chirurgicale",
+    "similarity": 0.02
+  },
+  {
+    "sentence1": "Le chat dort sur le canapé.",
+    "sentence2": "La voiture roule vite.",
+    "similarity": 0.05
+  },
+  {
+    "sentence1": "Je bois un café ce matin.",
+    "sentence2": "Les montagnes sont enneigées.",
+    "similarity": 0.08
+  },
+  {
+    "sentence1": "Elle aime la musique classique.",
+    "sentence2": "Le train part à midi.",
+    "similarity": 0.15
+  },
+  {
+    "sentence1": "Il fait chaud aujourd'hui.",
+    "sentence2": "Les fleurs poussent au printemps.",
+    "similarity": 0.18
+  },
+  {
+    "sentence1": "Le livre est sur la table.",
+    "sentence2": "La lampe est allumée.",
+    "similarity": 0.25
+  },
+  {
+    "sentence1": "Nous avons dîné dans un restaurant italien.",
+    "sentence2": "Elle a acheté un nouveau vélo.",
+    "similarity": 0.28
+  },
+  {
+    "sentence1": "Il étudie la physique quantique.",
+    "sentence2": "La biologie est une science de la vie.",
+    "similarity": 0.35
+  },
+  {
+    "sentence1": "Le match de football commence à 20 h.",
+    "sentence2": "La conférence débute à 9 h du matin.",
+    "similarity": 0.38
+  },
+  {
+    "sentence1": "Ce film est une comédie romantique.",
+    "sentence2": "Cette série est un drame historique.",
+    "similarity": 0.45
+  },
+  {
+    "sentence1": "Le concert a été annulé à cause de la pluie.",
+    "sentence2": "Le spectacle en plein air a dû être reporté.",
+    "similarity": 0.48
+  },
+  {
+    "sentence1": "J'ai acheté une pomme rouge au marché.",
+    "sentence2": "J'ai pris une poire verte à l'épicerie.",
+    "similarity": 0.55
+  },
+  {
+    "sentence1": "Elle préfère le thé vert au café.",
+    "sentence2": "Il préfère le café au thé noir.",
+    "similarity": 0.58
+  },
+  {
+    "sentence1": "La Tour Eiffel se trouve à Paris.",
+    "sentence2": "La cathédrale Notre-Dame est à Paris.",
+    "similarity": 0.65
+  },
+  {
+    "sentence1": "Il a visité le Louvre hier.",
+    "sentence2": "Elle a exploré le musée d'Orsay hier.",
+    "similarity": 0.68
+  },
+  {
+    "sentence1": "Cet ordinateur est très rapide.",
+    "sentence2": "Ce PC possède un processeur ultra-performant.",
+    "similarity": 0.75
+  },
+  {
+    "sentence1": "Le smartphone a un écran OLED magnifique.",
+    "sentence2": "Le téléphone portable dispose d'un superbe affichage AMOLED.",
+    "similarity": 0.78
+  },
+  {
+    "sentence1": "Comment ça va aujourd'hui ?",
+    "sentence2": "Comment vas-tu aujourd'hui ?",
+    "similarity": 0.85
+  },
+  {
+    "sentence1": "Je vous souhaite une excellente journée.",
+    "sentence2": "Je te souhaite une très bonne journée.",
+    "similarity": 0.88
+  },
+  {
+    "sentence1": "Je t’aime de tout mon cœur.",
+    "sentence2": "Je t’aime profondément.",
+    "similarity": 0.95
+  },
+  {
+    "sentence1": "Ceci est un exemple simple.",
+    "sentence2": "Ceci est un exemple simple.",
+    "similarity": 1.00
+  }
 ]

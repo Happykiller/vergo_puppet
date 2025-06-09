@@ -1,11 +1,15 @@
 # app\usecases\embedding\usecase_encode_embedding.py
-import torch
+import re
+import torch  # type: ignore
 import traceback
 from typing import Any
 from pathlib import Path
 
 from app.services.logger import logger
 from app.neural_network.nn_embedding import UniversalEmbeddingModel
+
+def simple_tokenize(text: str) -> list[str]:
+    return re.findall(r"\b\w+\b", text.lower())
 
 def encode_embedding_usecase(
     model_name: str,
@@ -27,25 +31,33 @@ def encode_embedding_usecase(
         if not model:
             raise Exception(f"Model '{model_name}' not found")
         
-        glossary = model.glossary
-        nn_model = model.nn_model
-        if not nn_model:
-            raise Exception("Model not completed")
+        if not model.glossary:
+            raise Exception("Glossary is missing from model.")
+
+        if not model.model_path:
+            raise Exception("Model file path is missing.")
         
-        vocab = {token: idx for idx, token in enumerate(glossary)}
-        
-        # 2. Tokenize and convert to indices
-        import re
-        def simple_tokenize(text):
-            return re.findall(r"\b\w+\b", text.lower())
+        vocab = {token: idx for idx, token in enumerate(model.glossary)}
+        vocab_size = len(vocab)
+
+        # Tokenize input
         indices = [vocab.get(token, vocab["<UNK>"]) for token in simple_tokenize(sentence)]
         if not indices:
             raise ValueError("Input sentence produced no valid tokens.")
 
-        # 3. Prepare tensors
-        seq = torch.tensor(indices, dtype=torch.long).unsqueeze(0)  # batch=1
+        # Prepare input tensors
+        seq = torch.tensor(indices, dtype=torch.long).unsqueeze(0)  # (1, seq_len)
         lengths = torch.tensor([len(indices)])
-        nn_model.eval()
+
+        # Reconstruct and load model
+        model_path = Path(model.model_path)
+        if not model_path.exists():
+            raise FileNotFoundError(f"Model file not found at: {model_path}")
+
+        nn_model = UniversalEmbeddingModel(vocab_size=vocab_size).eval()
+        nn_model.load_state_dict(torch.load(model_path, map_location="cpu"))
+
+        # Compute embedding
         with torch.no_grad():
             embedding = nn_model.encode(seq, lengths)
             return embedding.squeeze(0).cpu().tolist()

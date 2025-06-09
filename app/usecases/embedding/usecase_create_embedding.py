@@ -3,7 +3,6 @@ import traceback
 from typing import Any
 
 from app.services.logger import logger
-from app.services.bdd.models.model_metrics import MetricsModel
 from app.services.bdd.models.model_data import ModelData, ModelStatus
 from app.usecases.embedding.usecase_train_embedding import train_embedding_usecase
 

@@ -176,3 +176,4 @@ app/tools/generates/*.json
 files/embedding_train.json
 files/embedding_vocab.json
 files/puppet-o5_embedding.pt
+*.pt

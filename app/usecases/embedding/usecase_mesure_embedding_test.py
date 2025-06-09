@@ -1,4 +1,5 @@
-import pytest
+# app\usecases\embedding\usecase_mesure_embedding_test.py
+import pytest  # type: ignore
 from unittest.mock import patch
 
 from app.usecases.embedding.usecase_mesure_embedding import (

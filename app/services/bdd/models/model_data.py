@@ -1,17 +1,18 @@
 # app\services\bdd\models\model_data.py
 import io
-import torch
+import torch # type: ignore
 import base64
-import joblib
+import joblib # type: ignore
 import traceback
 from enum import Enum
 from typing import List, Optional, Dict, Any
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
+from sklearn.preprocessing import OneHotEncoder, StandardScaler # type: ignore
 
 from app.services.logger import logger
 
 class ModelStatus(Enum):
     INIT = "init"
+    FAILED = "failed"
     CREATED = "created"
     UPDATED = "updated"
     TRAINING = "training"
@@ -42,6 +43,7 @@ class ModelData:
         indices: Optional[Dict[str, List[int]]] = None,
         targets_mean: Optional[float] = None,
         targets_std: Optional[float] = None,
+        model_path: Optional[str] = None,
     ):
         self.name = name
         self.neural_network_type = neural_network_type
@@ -60,6 +62,7 @@ class ModelData:
         self.indices = indices
         self.targets_mean = targets_mean
         self.targets_std = targets_std
+        self.model_path = model_path
 
     def serialize(self) -> Dict[str, Any]:
         """
@@ -99,6 +102,7 @@ class ModelData:
                 "indices": serialize_with_joblib(self.indices),
                 "targets_mean": self.targets_mean,
                 "targets_std": self.targets_std,
+                "model_path": self.model_path,
             }
 
             # Serialize the PyTorch model if it exists
@@ -171,6 +175,7 @@ class ModelData:
                 targets_mean=data.get("targets_mean"),
                 targets_std=data.get("targets_std"),
                 nn_model=nn_model,
+                model_path=data.get("model_path"),
             )
         except Exception as e:
             logger.error(f"Error message:{str(e)}\nStack trace:\n{traceback.format_exc()}")

@@ -85,7 +85,13 @@ async def create_model_api(data: CreateModelData, payload: dict = Depends(verify
         elif data.neural_network_type == 'GRU':
             return create_model_gru(CreateGRUUsecaseDto(name=data.name, inversify=get_inversify()))
         elif data.neural_network_type == 'SIAMESE':
-            return create_model_siamese(CreateSiameseUsecaseDto(name=data.name, dictionary=data.dictionary, inversify=get_inversify()))
+            if data.dictionary is None:
+                raise HTTPException(status_code=400, detail="Field 'dictionary' is required for SIAMESE model")
+            return create_model_siamese(CreateSiameseUsecaseDto(
+                name=data.name,
+                dictionary=data.dictionary,
+                inversify=get_inversify()
+            ))
         elif data.neural_network_type == 'LSTM':
             return create_lstm(CreateLSTMUsecaseDto(name=data.name, inversify=get_inversify()))
         else:
@@ -104,6 +110,8 @@ async def update_model_api(data: UpdateModelData, payload: dict = Depends(verify
     """
     try:
         if data.neural_network_type == 'SIAMESE':
+            if data.dictionary is None:
+                raise HTTPException(status_code=400, detail="Field 'dictionary' is required for SIAMESE model")
             return update_model_siamese(UpdateSiameseUsecaseDto(name=data.name, dictionary=data.dictionary, inversify=get_inversify()))
         else:
             raise HTTPException(status_code=400, detail=f"Model type '{data.neural_network_type}' not supported for update")
