@@ -16,18 +16,13 @@ def train_embedding_usecase(
     vocab: dict,
     trainset: list[dict],
     inversify: Any,
-    embedding_dim: int = 128,
-    lstm_hidden_dim: int = 128,
-    num_epochs: int = 2,
-    batch_size: int = 128,
-    learning_rate: float = 1e-3,
 ) -> dict:
     """
     Trains a universal embedding model using provided vocabulary and trainset.
     Saves the model using the BDD service.
     :param model_name: The name for the new model
     :param vocab: The token-to-index vocabulary (dict)
-    :param trainset: List of training examples (dict with 'seq1', 'seq2', 'label')
+    :param trainset: List of training examples (dict with 'seq1', 'seq2', 'similarity')
     :param inversify: Dependency injection container (for BDD and storage)
     :return: Dict with training summary/statistics
     """
@@ -58,11 +53,6 @@ def train_embedding_usecase(
         _, train_stats = train_embedding_model(
             trainset=trainset,
             vocab_size=vocab_size,
-            embedding_dim=embedding_dim,
-            lstm_hidden_dim=lstm_hidden_dim,
-            batch_size=batch_size,
-            num_epochs=num_epochs,
-            learning_rate=learning_rate,
             save_path=str(model_path)
         )
 

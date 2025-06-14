@@ -2,6 +2,7 @@
 import re
 import torch  # type: ignore
 import traceback
+import numpy as np  # type: ignore
 from typing import Any
 from pathlib import Path
 
@@ -59,8 +60,10 @@ def encode_embedding_usecase(
 
         # Compute embedding
         with torch.no_grad():
-            embedding = nn_model.encode(seq, lengths)
-            return embedding.squeeze(0).cpu().tolist()
+            embedding = nn_model.encode(seq, lengths)  # tensor
+            embedding = embedding.detach().cpu().numpy()  # numpy array
+            embedding = np.nan_to_num(embedding)  # Clean NaNs if any
+            return embedding.squeeze(0).tolist()
     except Exception as e:
         logger.error(f"[encode_embedding_usecase] Error: {str(e)}\n{traceback.format_exc()}")
         raise Exception(f"[encode_embedding_usecase] {str(e)}")

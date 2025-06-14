@@ -1,202 +1,68 @@
 [
+  { "seq1": "un vélo rouge", "seq2": "un vélo de couleur rouge", "similarity": 0.95 },
+  { "seq1": "grand vélo", "seq2": "vélocipède de grande taille", "similarity": 0.91 },
+  { "seq1": "chat noir", "seq2": "chat de couleur sombre", "similarity": 0.82 },
+  { "seq1": "Je t’aime de tout mon cœur.", "seq2": "Je t’aime profondément.", "similarity": 0.95 },
+  { "seq1": "Comment ça va aujourd'hui ?", "seq2": "Comment vas-tu aujourd'hui ?", "similarity": 0.85 },
+  { "seq1": "Je vous souhaite une excellente journée.", "seq2": "Je te souhaite une très bonne journée.", "similarity": 0.88 },
+  { "seq1": "Ceci est un exemple simple.", "seq2": "Ceci est un exemple simple.", "similarity": 1.00 },
+  
+  { "seq1": "observatoire astronomique", "seq2": "télescope professionnel", "similarity": 0.79 },
+  { "seq1": "prendre un café", "seq2": "boire un expresso", "similarity": 0.74 },
+  { "seq1": "cours de yoga", "seq2": "séance de méditation", "similarity": 0.71 },
+  { "seq1": "apprendre le portugais", "seq2": "étudier l’espagnol", "similarity": 0.65 },
+  { "seq1": "acheter une voiture", "seq2": "louer un véhicule", "similarity": 0.62 },
+  { "seq1": "La Tour Eiffel se trouve à Paris.", "seq2": "La cathédrale Notre-Dame est à Paris.", "similarity": 0.65 },
+  { "seq1": "Il a visité le Louvre hier.", "seq2": "Elle a exploré le musée d'Orsay hier.", "similarity": 0.68 },
+  { "seq1": "Cet ordinateur est très rapide.", "seq2": "Ce PC possède un processeur ultra-performant.", "similarity": 0.75 },
+  { "seq1": "Le smartphone a un écran OLED magnifique.", "seq2": "Le téléphone portable dispose d'un superbe affichage AMOLED.", "similarity": 0.78 },
   {
-    "sentence1": "un vélo rouge",
-    "sentence2": "un vélo de couleur rouge",
-    "similarity": 0.95
-  },
-  {
-    "sentence1": "grand vélo",
-    "sentence2": "vélocipède de grande taille",
-    "similarity": 0.91
-  },
-  {
-    "sentence1": "chat noir",
-    "sentence2": "chat de couleur sombre",
-    "similarity": 0.82
-  },
-  {
-    "sentence1": "observatoire astronomique",
-    "sentence2": "télescope professionnel",
-    "similarity": 0.79
-  },
-  {
-    "sentence1": "prendre un café",
-    "sentence2": "boire un expresso",
-    "similarity": 0.74
-  },
-  {
-    "sentence1": "cours de yoga",
-    "sentence2": "séance de méditation",
-    "similarity": 0.71
-  },
-  {
-    "sentence1": "apprendre le portugais",
-    "sentence2": "étudier l’espagnol",
-    "similarity": 0.65
-  },
-  {
-    "sentence1": "acheter une voiture",
-    "sentence2": "louer un véhicule",
-    "similarity": 0.62
-  },
-  {
-    "sentence1": "film d’horreur",
-    "sentence2": "film romantique",
-    "similarity": 0.55
-  },
-  {
-    "sentence1": "pain frais",
-    "sentence2": "croissant au beurre",
-    "similarity": 0.53
-  },
-  {
-    "sentence1": "ordinateur portable",
-    "sentence2": "chaise de bureau",
-    "similarity": 0.46
-  },
-  {
-    "sentence1": "course à pied",
-    "sentence2": "compétition d’échecs",
-    "similarity": 0.42
-  },
-  {
-    "sentence1": "plage en été",
-    "sentence2": "ski en hiver",
-    "similarity": 0.35
-  },
-  {
-    "sentence1": "soupe chaude",
-    "sentence2": "glace à la vanille",
-    "similarity": 0.33
-  },
-  {
-    "sentence1": "moteur diesel",
-    "sentence2": "pomme rouge",
-    "similarity": 0.22
-  },
-  {
-    "sentence1": "chanson classique",
-    "sentence2": "marteau en acier",
-    "similarity": 0.21
-  },
-  {
-    "sentence1": "réunion à 9 h",
-    "sentence2": "éléphant d’Afrique",
-    "similarity": 0.11
-  },
-  {
-    "sentence1": "facture impayée",
-    "sentence2": "arc-en-ciel lumineux",
-    "similarity": 0.09
-  },
-  {
-    "sentence1": "clé USB",
-    "sentence2": "pensée philosophique",
-    "similarity": 0.04
-  },
-  {
-    "sentence1": "tempête de sable",
-    "sentence2": "opération chirurgicale",
-    "similarity": 0.02
-  },
-  {
-    "sentence1": "Le chat dort sur le canapé.",
-    "sentence2": "La voiture roule vite.",
-    "similarity": 0.05
-  },
-  {
-    "sentence1": "Je bois un café ce matin.",
-    "sentence2": "Les montagnes sont enneigées.",
-    "similarity": 0.08
-  },
-  {
-    "sentence1": "Elle aime la musique classique.",
-    "sentence2": "Le train part à midi.",
-    "similarity": 0.15
-  },
-  {
-    "sentence1": "Il fait chaud aujourd'hui.",
-    "sentence2": "Les fleurs poussent au printemps.",
-    "similarity": 0.18
-  },
-  {
-    "sentence1": "Le livre est sur la table.",
-    "sentence2": "La lampe est allumée.",
-    "similarity": 0.25
-  },
-  {
-    "sentence1": "Nous avons dîné dans un restaurant italien.",
-    "sentence2": "Elle a acheté un nouveau vélo.",
-    "similarity": 0.28
-  },
-  {
-    "sentence1": "Il étudie la physique quantique.",
-    "sentence2": "La biologie est une science de la vie.",
-    "similarity": 0.35
-  },
-  {
-    "sentence1": "Le match de football commence à 20 h.",
-    "sentence2": "La conférence débute à 9 h du matin.",
-    "similarity": 0.38
-  },
-  {
-    "sentence1": "Ce film est une comédie romantique.",
-    "sentence2": "Cette série est un drame historique.",
-    "similarity": 0.45
-  },
-  {
-    "sentence1": "Le concert a été annulé à cause de la pluie.",
-    "sentence2": "Le spectacle en plein air a dû être reporté.",
-    "similarity": 0.48
-  },
-  {
-    "sentence1": "J'ai acheté une pomme rouge au marché.",
-    "sentence2": "J'ai pris une poire verte à l'épicerie.",
-    "similarity": 0.55
-  },
-  {
-    "sentence1": "Elle préfère le thé vert au café.",
-    "sentence2": "Il préfère le café au thé noir.",
-    "similarity": 0.58
-  },
-  {
-    "sentence1": "La Tour Eiffel se trouve à Paris.",
-    "sentence2": "La cathédrale Notre-Dame est à Paris.",
-    "similarity": 0.65
-  },
-  {
-    "sentence1": "Il a visité le Louvre hier.",
-    "sentence2": "Elle a exploré le musée d'Orsay hier.",
+    "seq1": "Le concert a été annulé à cause de la pluie.",
+    "seq2": "Le spectacle en plein air a dû être reporté.",
     "similarity": 0.68
   },
-  {
-    "sentence1": "Cet ordinateur est très rapide.",
-    "sentence2": "Ce PC possède un processeur ultra-performant.",
-    "similarity": 0.75
+
+  { "seq1": "film d’horreur", "seq2": "film romantique", "similarity": 0.45
   },
+  { "seq1": "pain frais", "seq2": "croissant au beurre", "similarity": 0.53 },
+  { "seq1": "Elle préfère le thé vert au café.", "seq2": "Il préfère le café au thé noir.", "similarity": 0.58 },
+  { "seq1": "Ce film est une comédie romantique.", "seq2": "Cette série est un drame historique.", "similarity": 0.45 },
   {
-    "sentence1": "Le smartphone a un écran OLED magnifique.",
-    "sentence2": "Le téléphone portable dispose d'un superbe affichage AMOLED.",
-    "similarity": 0.78
+    "seq1": "J'ai acheté une pomme rouge au marché.",
+    "seq2": "J'ai pris une poire verte à l'épicerie.",
+    "similarity": 0.60
   },
-  {
-    "sentence1": "Comment ça va aujourd'hui ?",
-    "sentence2": "Comment vas-tu aujourd'hui ?",
-    "similarity": 0.85
+
+  { "seq1": "ordinateur portable", "seq2": "chaise de bureau", "similarity": 0.40
   },
-  {
-    "sentence1": "Je vous souhaite une excellente journée.",
-    "sentence2": "Je te souhaite une très bonne journée.",
-    "similarity": 0.88
+  { "seq1": "course à pied", "seq2": "compétition d’échecs", "similarity": 0.30
   },
+  { "seq1": "plage en été", "seq2": "ski en hiver", "similarity": 0.35 },
+  { "seq1": "soupe chaude", "seq2": "glace à la vanille", "similarity": 0.33 },
+  { "seq1": "Le match de football commence à 20 h.", "seq2": "La conférence débute à 9 h du matin.", "similarity": 0.38 },
   {
-    "sentence1": "Je t’aime de tout mon cœur.",
-    "sentence2": "Je t’aime profondément.",
-    "similarity": 0.95
+    "seq1": "Il étudie la physique quantique.",
+    "seq2": "La biologie est une science de la vie.",
+    "similarity": 0.50
   },
-  {
-    "sentence1": "Ceci est un exemple simple.",
-    "sentence2": "Ceci est un exemple simple.",
-    "similarity": 1.00
-  }
+
+  { "seq1": "Le livre est sur la table.", "seq2": "La lampe est allumée.", "similarity": 0.25 },
+  { "seq1": "Nous avons dîné dans un restaurant italien.", "seq2": "Elle a acheté un nouveau vélo.", "similarity": 0.15
+  },
+  { "seq1": "Elle aime la musique classique.", "seq2": "Le train part à midi.", "similarity": 0.05
+  },
+  { "seq1": "Il fait chaud aujourd'hui.", "seq2": "Les fleurs poussent au printemps.", "similarity": 0.18 },
+  { "seq1": "Le chat dort sur le canapé.", "seq2": "La voiture roule vite.", "similarity": 0.05 },
+  { "seq1": "Je bois un café ce matin.", "seq2": "Les montagnes sont enneigées.", "similarity": 0.08 },
+
+  { "seq1": "moteur diesel", "seq2": "pomme rouge", "similarity": 0.02
+  },
+  { "seq1": "chanson classique", "seq2": "marteau en acier", "similarity": 0.01
+  },
+  { "seq1": "réunion à 9 h", "seq2": "éléphant d’Afrique", "similarity": 0.01
+  },
+  { "seq1": "facture impayée", "seq2": "arc-en-ciel lumineux", "similarity": 0.02
+  },
+  { "seq1": "clé USB", "seq2": "pensée philosophique", "similarity": 0.04 },
+  { "seq1": "tempête de sable", "seq2": "opération chirurgicale", "similarity": 0.02 }
 ]

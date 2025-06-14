@@ -2,12 +2,64 @@
 import re
 import json
 import spacy
-from typing import List
+from typing import List, Optional
 from app.apis.models.tokenize_model_data import ModelTokenizeData
 
 # Load the French language model
 nlp = spacy.load("fr_core_news_md")
 stopwords = nlp.Defaults.stop_words
+
+# -----------------------------------------------------------
+#  Global regex patterns  (compiled once)
+# -----------------------------------------------------------
+BRACKET_REF_PATTERN = re.compile(r"^\[(.+?)\]$", re.I)       # [ ... ]
+PURE_NUM_PATTERN    = re.compile(r"^\d+(?:[.,]\d+)*$")       # 123 | 1.234
+MIXED_NUM_PATTERN   = re.compile(r"^\d+[a-zé\-/.]*$", re.I)  # 231-5 | 12h30
+ROMAN_PATTERN       = re.compile(r"^(?=[ivxlcdm])[ivxlcdm]+$", re.I)
+
+# -----------------------------------------------------------
+#  Helper: normalise a single token               # 
+# -----------------------------------------------------------
+def _normalise_token(tok: str) -> Optional[str]:
+    """
+    Convert noisy tokens into canonical placeholders.
+    Returns the normalised token or None (to drop it).
+    """
+    t = tok.strip()
+
+    # --------------------------------------------------
+    # 0)  Nombres avec ponctuation finale  « 3. », « 45, »
+    # --------------------------------------------------
+    if re.fullmatch(r"\d+[.,]?", t):
+        return "<NUM>"
+
+    # 1) Bracketed references, e.g. [231-5], [III]
+    m = BRACKET_REF_PATTERN.match(t)
+    if m:
+        inside = m.group(1).replace(" ", "").lower()
+        if ROMAN_PATTERN.fullmatch(inside):
+            return "<ROMAN>"
+        if MIXED_NUM_PATTERN.fullmatch(inside) or PURE_NUM_PATTERN.fullmatch(inside):
+            return "<REF_NUM>"
+        return "<REF>"
+
+    # 2) Pure or mixed numbers
+    if PURE_NUM_PATTERN.fullmatch(t):
+        return "<NUM>"
+    if MIXED_NUM_PATTERN.fullmatch(t):
+        return "<REF_NUM>"
+
+    # 3) « h. », « t. », etc.  —> drop
+    t_base = t.rstrip(".,;:!?")
+    alpha_len = len(re.sub(r"[^a-z]", "", t_base.lower()))
+    if alpha_len < 2:
+        return None
+
+    # 4) Single non-alpha char → drop (sécurité)
+    if len(t) == 1 and not t.isalpha():
+        return None 
+
+    return t.lower()
 
 def load_regex_patterns(filepath: str):
     """
@@ -101,7 +153,7 @@ def remove_unwanted(tokens: List[str]) -> List[str]:
     """
     unwanted_tokens = [
         # Existing tokens
-        "m'", "m'", "s'", "-t", "qu", "-ce", "j'", "l'", "n'", "qu'", "jusqu'", "c'",
+        "m'", "m'", "s'", "-t", "qu", "-ce", "j'", "l'", "n'", "qu'", "jusqu'", "c'", "l´", 'ii', 'iii', 'i.'
         # Pronouns
         "je", "tu", "il", "elle", "on", "nous", "vous", "ils", "elles",
         # Other words
@@ -137,30 +189,33 @@ def remove_polite(text: str) -> str:
 
 def extract_corrected_tokens(doc):
     """
-    Extract tokens with corrected lemmatization from a spaCy document.
-    :param doc: spaCy document.
-    :return: List of corrected lemmatized tokens.
+    Extract lemmatised tokens and replace named entities
+    by a lowercase placeholder (<per>, <org>, …).
     """
     lemma_corrections = {
         "bloqu": "bloquer",
-        "essai": "essayer",  # Add other common corrections here
+        "essai": "essayer",
     }
 
     tokens = []
 
-    # Track entity positions to avoid duplicates
-    ent_positions = {ent.start for ent in doc.ents}
+    for token in doc:
+        # 1) Détecter le début d'une entité
+        if token.ent_iob_ == "B":                      # begin of entity span
+            ent_label = token.ent_type_.lower()        # PER, ORG, LOC…
+            tokens.append(f"<{ent_label}>")
+            continue                                   # on saute le reste du span
 
-    for i, token in enumerate(doc):
-        # Check if token is part of an entity
-        if i in ent_positions:
-            for ent in doc.ents:
-                if ent.start == i:
-                    tokens.append(f"[{ent.text}]")
-        elif token.pos_ not in {"DET", "PUNCT", "SPACE", "SYM", "ADP", "X", "NUM", "ADV"} and len(token.lemma_) > 1:
-            lemma = token.lemma_
-            corrected_lemma = lemma_corrections.get(lemma, lemma)
-            tokens.append(corrected_lemma)
+        # 2) Garder uniquement certains POS
+        if token.pos_ in {"DET", "PUNCT", "SPACE", "SYM",
+                          "ADP", "X", "NUM", "ADV"}:
+            continue
+
+        lemma = token.lemma_.lower()
+        corrected = lemma_corrections.get(lemma, lemma)
+        if len(corrected) > 1:                         # filtrer les 1-caractère
+            tokens.append(corrected)
+
     return tokens
 
 def expand_abbreviations(text: str) -> str:
@@ -267,6 +322,17 @@ def usecase_tokenize(data: List[ModelTokenizeData], regex_filepath: str = 'token
 
         # Remove unwanted tokens
         final = remove_unwanted(final)
+
+        # -----------------------------------------------------------
+        #  Final normalisation pass                        # 
+        # -----------------------------------------------------------
+        normalised = []
+        for tk in final:
+            norm = _normalise_token(tk)
+            if norm:            # None ⇒ drop
+                normalised.append(norm)
+
+        final = normalised
 
         # Calculate compression rate
         final_word_count = len(final)

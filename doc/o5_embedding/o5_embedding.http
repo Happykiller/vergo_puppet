@@ -27,7 +27,7 @@ Content-Type: application/json
 
 {
   "model_name": "puppet-o5",
-  "sentence": "My red bicycle"
+  "seq": "My red bicycle"
 }
 
 ### Compute similarity
@@ -37,8 +37,8 @@ Content-Type: application/json
 
 {
   "model_name": "puppet-o5",
-  "sentence1": "un vélo rouge",
-  "sentence2": "un grand chapeau"
+  "seq1": "Ceci est un exemple simple.",
+  "seq2": "est simple"
 }
 
 ### Measure the embedding model
@@ -48,5 +48,5 @@ Content-Type: application/json
 
 {
   "model_name": "puppet-o5",
-  "test_path": "o5_test.json"
+  "test_path": "embedding_eval.json"
 }

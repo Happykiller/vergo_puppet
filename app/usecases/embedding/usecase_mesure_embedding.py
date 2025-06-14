@@ -26,8 +26,8 @@ def mesure_embedding(dto: MesureEmbeddingUsecaseDto) -> Dict[str, Any]:
         details: List[Dict[str, Any]] = []
 
         for item in dto.test_data:
-            sent1 = item["sentence1"]
-            sent2 = item["sentence2"]
+            sent1 = item["seq1"]
+            sent2 = item["seq2"]
             expected = float(item.get("similarity", 0.0))
 
             emb1 = encode_embedding_usecase(dto.name, sent1, dto.inversify)
@@ -40,8 +40,8 @@ def mesure_embedding(dto: MesureEmbeddingUsecaseDto) -> Dict[str, Any]:
             if is_correct:
                 correct_predictions += 1
             details.append({
-                "sentence1": sent1,
-                "sentence2": sent2,
+                "seq1": sent1,
+                "seq2": sent2,
                 "expected_similarity": expected,
                 "predicted_similarity": predicted,
                 "error": error,

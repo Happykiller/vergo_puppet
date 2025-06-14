@@ -1,0 +1,1002 @@
+[
+  {
+    "seq1": "être huil pied bœuf assouplir nourrir type cuir ancien récent encrasser gras",
+    "seq2": "être huil pied bœuf lioran nourrir type cuir ancien récent encrasser gras",
+    "similarity": 0.91
+  },
+  {
+    "seq1": "simvastatine <num> cholestérol",
+    "seq2": "simvastatine <num> cholestérol",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "climatisation réversible chaud froid)climatiseur mobileclimatiseur",
+    "seq2": "titre nom entreprise",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "estimation taille marché broyage ciment performance part analyse commercial prévision croissance",
+    "seq2": "visiter site web stocker récupérer information navigateur forme cookie",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "question <ref> experte politique communication sensible crise",
+    "seq2": "questions| <REF> experte politique communication sensible crise",
+    "similarity": 0.85
+  },
+  {
+    "seq1": "science étude situ système solaire univers",
+    "seq2": "science étude situ système solaire univers",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "<ref> <ref> monarchie <ref> élu",
+    "seq2": "<REF> <REF> monarchie warranty élu",
+    "similarity": 0.85
+  },
+  {
+    "seq1": "<num> <org> point",
+    "seq2": "<NUM> <REF> <NUM> point",
+    "similarity": 0.82
+  },
+  {
+    "seq1": "high tech <misc> tv dévoiler nouveau téléviseur oled",
+    "seq2": "high tech <misc> tv dévoiler nouveau téléviseur oled",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "chaussure marier nouveau collection escarpin mariage sandale mariage chaussure plat mariage",
+    "seq2": "chaussure marier nouveau collection escarpin mariage sandale mariage chaussure plat mariage",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "miss immobilier présente agréable maison année mouvau sein endroit chic arboré minute pied tram faidherbe commodité mouvalloise",
+    "seq2": "pied commodité sein miss année immobilier endroit agréable",
+    "similarity": 0.4
+  },
+  {
+    "seq1": "<loc> part effort application sanction nord",
+    "seq2": "alternative communiste révolutionnaire site gelé",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "<loc> iphone forum <ref> panneau contrôle utilisateur supprimer cookie forum",
+    "seq2": "rc proposer meilleur rapport qualité prix produit texte rédiger écrire synonyme qualité contribuer soigner image marqu",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "ville ordinaire résident <ref> <ref> heureux parent petit alice frère aîné <org>",
+    "seq2": "ville ordinaire résident <ref> <ref> heureux parent petit alice frère aîné <org>",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "oublier engager futur père accouchement",
+    "seq2": "accouchement engager oublier",
+    "similarity": 0.42
+  },
+  {
+    "seq1": "déco table plage <ref> grand prix art table",
+    "seq2": "déco table plage <REF> <misc> prix art table",
+    "similarity": 0.88
+  },
+  {
+    "seq1": "cookie utiliser <org> règle synchronisation identification échange donnée utilisateur service annonce publicitaire",
+    "seq2": "cookie utiliser <org> règle synchronisation identification échange donnée utilisateur service annonce publicitaire",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "catégorie <per> siterecup autreautr trier heure messagesujet messagetitr sujetauteurforum",
+    "seq2": "catégorie <per> siterecup autreautr trier heure messagesujet messagetitr sujetauteurforum",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "<loc> italie enregistrer décès coronavirus",
+    "seq2": "décès italie enregistrer",
+    "similarity": 0.33
+  },
+  {
+    "seq1": "camping car focus infiltration garantie étanchéité",
+    "seq2": "<misc> equipe <org> <ref> cassé genou appui monstrueux",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "site constituer œuvre esprit protéger disposition code propriété intellectuel réglementation international applicable",
+    "seq2": "international œuvre disposition applicable protéger esprit",
+    "similarity": 0.4
+  },
+  {
+    "seq1": "ressource rpg maker xp tileset autotile character battler window skin icône transition fog template",
+    "seq2": "xp character battler template autotile rpg maker icône skin transition ressource window tileset fog",
+    "similarity": 0.65
+  },
+  {
+    "seq1": "devoir aller désolée opper",
+    "seq2": "désolée aller opper devoir",
+    "similarity": 0.71
+  },
+  {
+    "seq1": "ravivi commencer version actuel <misc> chrome incompatible ancien ipad vien réinitialiser juillet",
+    "seq2": "ravivi commencer version actuel <misc> chrome inassimilable ancien ipad vien réinitialiser juillet",
+    "similarity": 0.92
+  },
+  {
+    "seq1": "<misc> désactiver navigateur meilleur expérience site assurer activer javascript navigateur",
+    "seq2": "<misc> désactiver navigateur meilleur expérience site assurer activer javascript navigateur",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "utilisation être polyvalent <misc> cao retouche image jeu",
+    "seq2": "être image jeu <misc>",
+    "similarity": 0.41
+  },
+  {
+    "seq1": "prothèse implant être capable croquer mastiquer tente digestion améliorer",
+    "seq2": "prothèse implant être capable croquer mastiquer tente digestion améliorer",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "<ref> groupe <org>",
+    "seq2": "<ref> groupe <org>",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "congrès américain éviter paralysie etat fédéral",
+    "seq2": "congrès paralysie éviter américain etat fédéral",
+    "similarity": 0.69
+  },
+  {
+    "seq1": "<misc> site web analyse parcours client",
+    "seq2": "e-posta [name]. gerekli alanlar <loc> işaretlenmişlerdir",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "trouver jeune chef petit bande qui empoisonner vie habitant",
+    "seq2": "trouver jeune chef petit bande qui empoisonner vie habitant",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "<loc> nouveau mise page chouette bravo bdg",
+    "seq2": "<loc> nouveau mise .page chouette bravo bdg",
+    "similarity": 0.94
+  },
+  {
+    "seq1": "ing fantasia mélange traditionnel traditionnel rester argentin permettre divagation dansant type soirer adapter",
+    "seq2": "participer consultation expert remplir condition général professionnel suivant",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "main et accessoire outillage électrique",
+    "seq2": "électrique main et outillage accessoire",
+    "similarity": 0.67
+  },
+  {
+    "seq1": "<ref> hinvy inviter studio",
+    "seq2": "<REF> hinvy inviter dj",
+    "similarity": 0.93
+  },
+  {
+    "seq1": "let[name] <ref> utiliser <ref> partition mme systme fichier figurer partition",
+    "seq2": "partition let[name] systme mme fichier",
+    "similarity": 0.33
+  },
+  {
+    "seq1": "chariot niveal facile manœuvrer polyvalent",
+    "seq2": "<misc> iphone mobile app development",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "visite -performance dector et dupuy",
+    "seq2": "revisite -performance dector et dupuy",
+    "similarity": 0.85
+  },
+  {
+    "seq1": "<ref> <ref> parcours décrire passion pression",
+    "seq2": "<ref> <ref> parcours décrire passion pression",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "tranche pain mie",
+    "seq2": "tranche pain mie",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "doc-2013 politique pratique rémunération prestataire service investissement",
+    "seq2": "doc-2013 politique pratique rémunération prestataire service investissement",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "mise relation partenaire prise rendez-vous permanence partenaire local msap",
+    "seq2": "relation prise permanence mise",
+    "similarity": 0.35
+  },
+  {
+    "seq1": "administrateur autoriser interdire type fichier joindre être sûr autoriser charger contacter administrateur information",
+    "seq2": "administrateur autoriser type fichier joindre être sûr autoriser charger contacter administrateur information",
+    "similarity": 0.86
+  },
+  {
+    "seq1": "<org> fournier frustrer jeu défaite passer",
+    "seq2": "utiliser navigateur jour ancien afficher site autre site",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "service inclure acquisition logiciel autre gratuit",
+    "seq2": "gratuit inclure acquisition service logiciel autre",
+    "similarity": 0.69
+  },
+  {
+    "seq1": "situer <org> curgies",
+    "seq2": "changer série passer <misc> pro7 exemple falloir payer tarif mettre jour",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "rencontre passant manifestant commerçant rappeler vérité tenter cacher syndicat parti opposition",
+    "seq2": "rencontre passant manifestant commerçant rappeler vérité tenter cacher syndicat parti pré­si­dence",
+    "similarity": 0.84
+  },
+  {
+    "seq1": "cueillir produit être meilleur",
+    "seq2": "meilleur cueillir être produit",
+    "similarity": 0.74
+  },
+  {
+    "seq1": "demande écrire formulée membre <org> président donne connaissance fonction mandat exercer membre",
+    "seq2": "fonction écrire formulée mandat demande exercer",
+    "similarity": 0.45
+  },
+  {
+    "seq1": "respect vie priver problématique éthique ère donnée massif",
+    "seq2": "respect vie priver problématique éthique ère donnée massif",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "avoir filer frisson shock vrai kop ol centre tibun <ref>",
+    "seq2": "avoir filer frisson shock scandaleux kop ol centre tibun <REF>",
+    "similarity": 0.87
+  },
+  {
+    "seq1": "fonctionnalité être disponible",
+    "seq2": "commentaire classer test comparatif tag biscuit cocotte <ref> manger français <ref> test alimentaire",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "réseau international acteur émergent riae <loc> <loc>",
+    "seq2": "réseau international acteur émergent riae <loc> <loc>",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "<misc> maso je aimer savoir attendre",
+    "seq2": "<REF> devoir maso je aimer savoir attendre",
+    "similarity": 0.85
+  },
+  {
+    "seq1": "peinture intérieur décorative peinture mural honneur",
+    "seq2": "peinture intérieur décorative peinture mural l´honneur",
+    "similarity": 0.82
+  },
+  {
+    "seq1": "communication degré expert",
+    "seq2": "formuler recommandation fonder résultat travail réaliser degré",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "lire description glaner internet <misc> sensation je avoir resssentier stupéfiant",
+    "seq2": "avoir internet stupéfiant je lire description sensation glaner resssentier <misc>",
+    "similarity": 0.71
+  },
+  {
+    "seq1": "<ref> intéressant je avoir indice répartir pièce celui <ref> julian",
+    "seq2": "<ref> intéressant je avoir indice répartir pièce celui <ref> julian",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "novembre <org> organiser édition science évaluation individuel",
+    "seq2": "gremlins72 répondre sujet forum ipad mini mini retiner",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "entreprise vertueux plan fiscal",
+    "seq2": "interentreprise vertueux plan fiscal",
+    "similarity": 0.88
+  },
+  {
+    "seq1": "transition réussir opter solution pérenne éviter raccourci chemin simpliste escarpé fatal",
+    "seq2": "réponse peine orienter être hab",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "<misc> e-mail publier champ obligatoire indiquer",
+    "seq2": "adresse e-mail pré-publier champ obligatoire indiquer",
+    "similarity": 0.81
+  },
+  {
+    "seq1": "être lui qu'[name] être adam prophétiser terme seigneur venir multitude innombrable saint",
+    "seq2": "multitude venir être terme adam saint",
+    "similarity": 0.46
+  },
+  {
+    "seq1": "je aimer packaging généreux classe cheveu avoir apprécier",
+    "seq2": "lot pince bascule paquet contenir pince horizontal <ref_num> antidérapant outil libération rapide installer",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "unity facture royalty facturer titre demander partage revenu",
+    "seq2": "unity facture royalty facturer titre demander partage revenu",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "retrait obligatoire suite offrir public soumettre disposition chapitre",
+    "seq2": "suite obligatoire public chapitre soumettre disposition offrir retrait",
+    "similarity": 0.65
+  },
+  {
+    "seq1": "traitement adamantinome consister résection large reconstruction [name]. amputation nécessaire",
+    "seq2": "traitement adamantinome consister résection large reconstruction [name]. amputation nécessaire",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "maladie parodontal produire perte osseux traitement exister redonner volume osseux",
+    "seq2": "maladie parodontal produire perte osseux traitement exister redonner volume osseux",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "choisir offre économique avantageux attribuer marché",
+    "seq2": "offre marché économique attribuer avantageux choisir",
+    "similarity": 0.64
+  },
+  {
+    "seq1": "classer mushroom tv",
+    "seq2": "classer mushroom tv",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "conseil amateur café novembre",
+    "seq2": "amateur conseil café novembre",
+    "similarity": 0.65
+  },
+  {
+    "seq1": "modèle actif passif solvabilité <org>",
+    "seq2": "passif actif <org> solvabilité modèle",
+    "similarity": 0.68
+  },
+  {
+    "seq1": "conducteur engin chantier heure",
+    "seq2": "conducteur engin chantier heure fcu1",
+    "similarity": 0.88
+  },
+  {
+    "seq1": "être beau soumission être bel victoire que être",
+    "seq2": "être beau soumission être bel victoire que être",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "étape réequilibr chakra passe lent circulaire",
+    "seq2": "étape passe circulaire",
+    "similarity": 0.39
+  },
+  {
+    "seq1": "accès gratuit matériel consommation voie postal saf",
+    "seq2": "accès gratuit matér consommation voie postal saf",
+    "similarity": 0.84
+  },
+  {
+    "seq1": "ecologie environnement biodiversité archive laboratoir pêche colonial",
+    "seq2": "biodiversité colonial laboratoir",
+    "similarity": 0.47
+  },
+  {
+    "seq1": "argiope argenté appétit féroce",
+    "seq2": "argiope argenté appétit féroce",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "méthode technique apply méthode technique filter",
+    "seq2": "méthode technique apply méthode technique filter",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "dépôt terme net banque",
+    "seq2": "banque terme dépôt net",
+    "similarity": 0.72
+  },
+  {
+    "seq1": "modifier arrêter décembre journal officiel janvier",
+    "seq2": "mois périmètre chiffrer",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "élection démocratique préférence majorité emporter élection être cas comprendre parler principe <ref>",
+    "seq2": "élection majorité être <ref> cas comprendre",
+    "similarity": 0.39
+  },
+  {
+    "seq1": "rose disponible faire amour",
+    "seq2": "rose disponible faire l?amour",
+    "similarity": 0.81
+  },
+  {
+    "seq1": "leblanc <loc> police anti-émeute évoquer",
+    "seq2": "torre soulier or iniesta meilleur joueur",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "<per> entrer adresse valide inscription aller recevoir e-mail confirmation problème inscription [name].",
+    "seq2": "<per> entrer adresse valide inscription aller recevoir brullemail confirmation problème inscription [name].",
+    "similarity": 0.88
+  },
+  {
+    "seq1": "formation premier accueil mardi octobre complet hésiter contacter souhaiter <loc> prochain date",
+    "seq2": "formation premier accueil mardi octobre complet hésiter contacter souhaiter <loc> prochain date",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "verre blanc anti-reflet interférence optique côté lumière entrant disperser superficie verre réduit reflet indésiré",
+    "seq2": "reflet blanc verre anti-reflet superficie entrant côté",
+    "similarity": 0.31
+  },
+  {
+    "seq1": "faire mumuse besoin oc",
+    "seq2": "membre permanent cd onu",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "emplois-geneve.ch guide internet question relatif marché travail",
+    "seq2": "question relatif guide",
+    "similarity": 0.33
+  },
+  {
+    "seq1": "information donner public émetteur exact préciser sincère",
+    "seq2": "sincère préciser exact",
+    "similarity": 0.41
+  },
+  {
+    "seq1": "jour <ref> connaître nom <org> più corto film comédie italien parodie film guerre",
+    "seq2": "connaître film guerre jour più corto <ref> italien comédie parodie <org> film nom",
+    "similarity": 0.69
+  },
+  {
+    "seq1": "sirop gingembre cuisine az recette cuisine",
+    "seq2": "sirop cuisine az",
+    "similarity": 0.41
+  },
+  {
+    "seq1": "dalaï lama an juillet anniversaire célébrer weekend communauté tibétain france ami pagode vincenne <loc>",
+    "seq2": "dalaï lama an juillet anniversaire célébrer weekend communauté tibétain france ami pagode vincenne <loc>",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "vision opposer dieu miséricordieux majorité chrétien croire rejeter",
+    "seq2": "vision opposer dieu chrétien majorité croire rejeter miséricordieux",
+    "similarity": 0.63
+  },
+  {
+    "seq1": "répertoire méthodique fonds archive départemental archive départemental hautes-alpe archive départemental hautes-alper",
+    "seq2": "<loc> gouvernement trahit intérêt économique nation",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "violence conjugal état réaffirmer engagement",
+    "seq2": "violence conjugal état réaffirmer engagement",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "diagnostiqueur sérieux pro bon tarif",
+    "seq2": "rédaction <loc> auto-entrepreneur concurrence déloyal artisan ouest france,‎ juin lire ligne",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "chose savoir <per> solo solo star",
+    "seq2": "savoir <per> chose",
+    "similarity": 0.48
+  },
+  {
+    "seq1": "coût faible falloir comprendre père bricoleur",
+    "seq2": "faible falloir père coût comprendre bricoleur",
+    "similarity": 0.7
+  },
+  {
+    "seq1": "amélioration cibler performance",
+    "seq2": "amélioration cibler performance",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "petit enfance regard croisé théorie pratique",
+    "seq2": "enfance pratique regard théorie petit croisé",
+    "similarity": 0.72
+  },
+  {
+    "seq1": "<misc> business partnersite tour et avenue port bruxellespostuler",
+    "seq2": "<misc> business partnersite tour et avenue port bruxellespostuler",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "visite dégustation cave cal joan",
+    "seq2": "visite dégustation cave cal joan",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "<misc> aix provence",
+    "seq2": "<misc> aix provence",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "description atteint syndrome métabolique lorsque lui posséder combinaison risque particulier santé",
+    "seq2": "atteint lui particulier posséder description lorsque santé syndrome risque combinaison métabolique",
+    "similarity": 0.69
+  },
+  {
+    "seq1": "francai archéologie wallonie moderne epoque contemporain archéologie conflit monde urbain rural good taste pdf",
+    "seq2": "francai archéologie wallonie moderne epoque contemporain archéologie conflit supercontinent urbain rural good taste pdf",
+    "similarity": 0.81
+  },
+  {
+    "seq1": "rédiger <ref> avril <ref>",
+    "seq2": "rédiger <ref> avril <ref>",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "conserver -vou amour dieu attendre miséricorde seigneur <ref> obtenir vie éternel",
+    "seq2": "amour vie conserver seigneur attendre",
+    "similarity": 0.44
+  },
+  {
+    "seq1": "orifice permettre air passer dire annuler effet ventous être éviter fuite cup",
+    "seq2": "orifice permettre air passer dire annuler effet ventous être éviter fuite cup",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "projet loi règlement approbation compter document annexer",
+    "seq2": "loi projet règlement",
+    "similarity": 0.47
+  },
+  {
+    "seq1": "navigateur supporter <misc>",
+    "seq2": "ping <misc> coin couture chebiwoman",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "réduire présentation détailler",
+    "seq2": "négocier condition tarifaire commercial",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "prière <misc> <misc> ball gâchette apercevoir <ref>",
+    "seq2": "poster <ref> décembre <ref> répondre",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "bon fin vacance joyeux fête",
+    "seq2": "bon fin vacance joyeux fête",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "filed under nouveau france nucléaire militaire",
+    "seq2": "cliquer je inscrire je accepter condition général créer compte bénéficier service postuler offre",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "avoir besoin attendre cadette rentrer tour collège",
+    "seq2": "avoir tour cadette",
+    "similarity": 0.42
+  },
+  {
+    "seq1": "acheter cadeau romantique",
+    "seq2": "acheter cadeau romantique",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "<org> petit costaud",
+    "seq2": "<org> petit costaud",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "kit station adblu <ref_num> minute <ref_num> pistolet <ref>",
+    "seq2": "kit station adblu <ref_num> minute <ref_num> pistolet <ref>",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "<loc> <ref> lancer contrat engagement jeune",
+    "seq2": "jeune <loc> contrat <ref> engagement lancer",
+    "similarity": 0.75
+  },
+  {
+    "seq1": "arriver détendu aéroport option <org> express solution acheminement train bus voiture",
+    "seq2": "express bus option <org> acheminement",
+    "similarity": 0.46
+  },
+  {
+    "seq1": "programme franco-chinoi coopération science social",
+    "seq2": "programme franco-chinoi coopération science social",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "benazzi découverte monde novembre <ref_num>",
+    "seq2": "monde <ref_num> benazzi découverte novembre",
+    "similarity": 0.68
+  },
+  {
+    "seq1": "octobre lieu dîner collecter servir financer bourse social excellence étudiant imt <loc> douai",
+    "seq2": "servir <loc> lieu social excellence financer imt étudiant dîner douai bourse collecter octobre",
+    "similarity": 0.69
+  },
+  {
+    "seq1": "adresse messagerie publier champ obligatoire indiquer",
+    "seq2": "adresse messagerie publier champ obligatoire indiquer",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "confirmer mot passer",
+    "seq2": "confirmer mot passer",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "<org> espagnol action one piece montre puissant coup pied",
+    "seq2": "coup piece <org> pied",
+    "similarity": 0.32
+  },
+  {
+    "seq1": "quartier gare nord être présenter samedi logement prévoir site <loc>",
+    "seq2": "quartier être site samedi présenter",
+    "similarity": 0.4
+  },
+  {
+    "seq1": "chapitre principe négociation règle transparence bon conduite",
+    "seq2": "chapitre principe négociation règle transparence bon conduite",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "hésiter contacter souhaiter continuer action arrêter pénaliser personne aider",
+    "seq2": "hésiter pénaliser personne aider",
+    "similarity": 0.44
+  },
+  {
+    "seq1": "visite aoû réaction tibet libre partager",
+    "seq2": "visite aoû réaction tibet libre partager",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "cours langue arabe cours arabe dialectal marocain gratuit",
+    "seq2": "retourner emballage origine",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "hit africatitre diffusésafricer club",
+    "seq2": "faire don simple être paypal",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "voir message passer liste visiter archive nuitdebout cazere archive cours être disponible abonné",
+    "seq2": "voir passer abonné cazere visiter disponible archive nuitdebout cours message liste archive être",
+    "similarity": 0.71
+  },
+  {
+    "seq1": "trouver professionnel fournir service lier embauche hypothèque",
+    "seq2": "<ref> sortie <ref>",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "petit studio capacité personne trouver grand boulevard",
+    "seq2": "petit capacité boulevard personne studio trouver grand",
+    "similarity": 0.61
+  },
+  {
+    "seq1": "partager lavraievie passion cheval job tatoueuse <misc> fibromyalgie",
+    "seq2": "partager lavraievie passion demi-sang job tatoueuse <misc> fibromyalgie",
+    "similarity": 0.84
+  },
+  {
+    "seq1": "bougie vertu magique",
+    "seq2": "bougie vertu magique",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "<misc> assurer comparabilité compte semestriel comporter élément",
+    "seq2": "format fichier archive",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "<ref> kinésithérapeute situer centre kiné balnéothérapie <loc> vésone <loc>",
+    "seq2": "<REF> omne situer centre kiné balnéothérapie <loc> vésone <loc>",
+    "similarity": 0.86
+  },
+  {
+    "seq1": "chemin sable <loc> <loc>",
+    "seq2": "chemin sable <loc> <loc>",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "petit patrie image préface",
+    "seq2": "petitecam patrie image préface",
+    "similarity": 0.93
+  },
+  {
+    "seq1": "tourbillon rivenord tourbillon <misc> rapeutiqu spa pi accessoire neuf usag paration remplacement bain spa plomberie salle bain",
+    "seq2": "tourbillon rivenord tourbillon th rapeutiqu thala pi accessoire neuf usag paration remplacement bain spa plomberie salle bain",
+    "similarity": 0.88
+  },
+  {
+    "seq1": "prévenir moi nouveau article e-mail",
+    "seq2": "nouveau e-mail moi",
+    "similarity": 0.31
+  },
+  {
+    "seq1": "doc-2020 <num> question réponse relatif régime prestataire service actif numérique",
+    "seq2": "question relatif régime actif <num> numérique réponse service doc-2020 prestataire",
+    "similarity": 0.74
+  },
+  {
+    "seq1": "mot mystère appétissant attention devenir indigeste précaris statut diviser équipe dommage que traver gorge",
+    "seq2": "mot mystère appétissant attention devenir indigeste précaris statut diviser équipe dommage que traver gorge",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "article <ref> pape <ref> être inculper",
+    "seq2": "<ref> être inculper article pape <ref>",
+    "similarity": 0.72
+  },
+  {
+    "seq1": "personne dossier vaccination incomplet",
+    "seq2": "incomplet personne vaccination dossier",
+    "similarity": 0.62
+  },
+  {
+    "seq1": "<ref> éditeur baser bloc élément contenu ajouter bloc",
+    "seq2": "<ref> éditeur baser bloc élément contenu ajouter bloc",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "crain que bon réponse question",
+    "seq2": "crain que bon réponse queston",
+    "similarity": 0.89
+  },
+  {
+    "seq1": "que être signifier accepter cookie",
+    "seq2": "cookie que être",
+    "similarity": 0.38
+  },
+  {
+    "seq1": "chapitre <misc> obligation général",
+    "seq2": "<misc> général obligation chapitre",
+    "similarity": 0.72
+  },
+  {
+    "seq1": "vol budapest grand canari",
+    "seq2": "budapest vol canari grand",
+    "similarity": 0.74
+  },
+  {
+    "seq1": "température maximal ensemble mesure chaud",
+    "seq2": "température maximal ensemble",
+    "similarity": 0.32
+  },
+  {
+    "seq1": "tournage petit prince",
+    "seq2": "tournage petit prince",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "fin connexion être connecter crédit agricole ligne",
+    "seq2": "être crédit agricole",
+    "similarity": 0.34
+  },
+  {
+    "seq1": "avoir accès contenu",
+    "seq2": "avoir accès contenu",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "lutte classe paravent idéologique",
+    "seq2": "ajouter liste envie",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "pi remplacement produit <misc> gorie <loc> qui ressort peindre anneau suspension noir capsule curit party",
+    "seq2": "pi remplacement produit <misc> gorie <loc> qui ressort peindre anneau suspension noir capsule curit party",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "fréquence hebdomadaire semaine mensuel",
+    "seq2": "hebdomadaire fréquence mensuel semaine",
+    "similarity": 0.61
+  },
+  {
+    "seq1": "brunch voir mer être meilleur",
+    "seq2": "brunch mer être meilleur",
+    "similarity": 0.85
+  },
+  {
+    "seq1": "professionnel aventure désir transmettre esprit qualité homme dépendre service",
+    "seq2": "professionnel aventure désir transmettre esprit qualité homme dépendre service",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "cliqu lien e-mail utilisateur demande connecter",
+    "seq2": "cliqu lien e-mail utilisateur demande connecter",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "attribuer santé enfant sécurité entretien éducation nécessiter",
+    "seq2": "éducation enfant entretien",
+    "similarity": 0.49
+  },
+  {
+    "seq1": "antiviru trend micro gratuit enseignant personnel éducation national",
+    "seq2": "antiviru trend micro gratuit enseignant personnel éducation national",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "domicile attribuer demande accord mère père assumer charge enfant",
+    "seq2": "domicile attribuer demande accord mère père assumer charge enfant",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "lexing droit entreprise",
+    "seq2": "lexing droit <REF>",
+    "similarity": 0.92
+  },
+  {
+    "seq1": "<org> tenir courant publication blog penser abonner newsletter",
+    "seq2": "publication tenir newsletter courant",
+    "similarity": 0.4
+  },
+  {
+    "seq1": "novembre <ref> an élire diriger résistance occupation français",
+    "seq2": "novembre <ref> an élire diriger résistance occupation français",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "accès place stationnement gratuit proximité",
+    "seq2": "accès place stationnement gratuit proximité",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "critique féministe capitalisme intersectionnalité lutte",
+    "seq2": "féministe intersectionnalité capitalisme critique lutte",
+    "similarity": 0.67
+  },
+  {
+    "seq1": "<misc> hug viell blogueus",
+    "seq2": "<misc> hug viell blogueus",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "tournée entreprendre écrire nouveau chanson manière traite thème sociétal politique intéresser",
+    "seq2": "tournée entreprendre écrire nouveau chanson manière traite thème sociétal politique intéresser",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "capacité charg maximal",
+    "seq2": "<ref> musée national moyen âge thermes cluny catalogue sculpture xii siècle roman art gothique <loc> <loc> no",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "partie <misc> tremblay raconter origine projet murale titre entre-nous",
+    "seq2": "partie <misc> tremblay raconter origine projet murale titre entre-nous",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "soutenir appel appel",
+    "seq2": "<ref> sas capital euro inscrire rc <loc> numéro <num> <num> siège rue <loc> <loc> <loc> <loc>",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "section condition pris extension participation capital société gestion portefeuille",
+    "seq2": "connaître grand mère accepter être rémunérée garder petit enfant permettre juger être grand mère",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "bl gaga poster mercredi juin <ref>",
+    "seq2": "bl gaga poster opam juin <REF>",
+    "similarity": 0.81
+  },
+  {
+    "seq1": "beauty hair color coloration châtain clair lumineux <num>",
+    "seq2": "lumineux color <num> beauty coloration clair hair châtain",
+    "similarity": 0.66
+  },
+  {
+    "seq1": "mot clé efficience énergétique processus industriel chaleur récupération chaleur séchage",
+    "seq2": "mot clé efficience énergétique processus industriel chaleur irrécupérable chaleur séchage",
+    "similarity": 0.93
+  },
+  {
+    "seq1": "<per> jeykundo tibet <loc> souhaiter visite dalaï lama",
+    "seq2": "tibet visite jeykundo <per>",
+    "similarity": 0.38
+  },
+  {
+    "seq1": "actualité commerce jun",
+    "seq2": "actualité commerce jun",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "pratiquer taille fruitier pépin noyal",
+    "seq2": "taille pratiquer noyal pépin fruitier",
+    "similarity": 0.67
+  },
+  {
+    "seq1": "doc-2006 arrêté compte",
+    "seq2": "doc-2006 arrêté compte",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "cookie tiers cookie collecter information relatif navigation connecter <misc>",
+    "seq2": "cookie tiers cookie collecter information relatif navigation connecter <misc>",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "ducati trottinett urban emobility",
+    "seq2": "trottinett urban emobility ducati",
+    "similarity": 0.69
+  },
+  {
+    "seq1": "personnalisation partir unité prénom parent prénom bébé date naissance",
+    "seq2": "personnalisation partir unité prénom parent prénom bébé date naissance",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "cliquer partager twitter(ouvr nouveau fenêtre",
+    "seq2": "cliquer partager twitter(ouvr nouveau fenêtre",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "aménager terrasse hiver",
+    "seq2": "aménager terrasse hiver",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "je espérer cas trouver voie <loc> aileur croiser vrai vie",
+    "seq2": "traditionnel boisson région chicorée souffrir image désuet",
+    "similarity": 0.0
+  },
+  {
+    "seq1": "espace naturel numéro avril",
+    "seq2": "espace naturel numéro davril",
+    "similarity": 0.86
+  },
+  {
+    "seq1": "page pliage nem pliage samossas réussir chou givrer verre préparer fève",
+    "seq2": "page pliage nem pliage dorayaki réussir chou givrer verre préparer fève",
+    "similarity": 0.95
+  },
+  {
+    "seq1": "espace naturel numéro <num> janvier",
+    "seq2": "espace naturel numéro <NUM> décem­bre",
+    "similarity": 0.82
+  },
+  {
+    "seq1": "dossier individuel directeur <num> <num>",
+    "seq2": "pog dossier individuel directeur <NUM> <NUM>",
+    "similarity": 0.95
+  },
+  {
+    "seq1": "conférence décolonisation sahara occidental\"au norvèg",
+    "seq2": "sahara conférence norvèg",
+    "similarity": 0.37
+  },
+  {
+    "seq1": "excel <misc> toolbo microsoft office excel",
+    "seq2": "excel office <misc>",
+    "similarity": 0.36
+  },
+  {
+    "seq1": "évaluation externe concluant efficacité impact initiative amélioration formation continuer personnel éducation",
+    "seq2": "évaluation externe concluant efficacité impact initiative méliorative formation continuer personnel éducation",
+    "similarity": 0.92
+  },
+  {
+    "seq1": "projet échéance fixe gérer méthode scrum mettre accent gestion temp",
+    "seq2": "projet échéance fixe driver méthode scrum mettre accent gestion temp",
+    "similarity": 0.93
+  },
+  {
+    "seq1": "être jour <ref> modèle justice prendre épous église mère que tirer abîme misère plonger",
+    "seq2": "être jour <ref> modèle justice prendre épous église mère que tirer abîme misère plonger",
+    "similarity": 1.0
+  },
+  {
+    "seq1": "coffret tomate ancien variété savoureux graine",
+    "seq2": "coffret tomate ancien variété croustillant graine",
+    "similarity": 0.9
+  }
+]

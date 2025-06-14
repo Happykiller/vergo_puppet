@@ -24,11 +24,9 @@ class EmbeddingTrainRequest(BaseModel):
     vocab_path: str
     trainset_path: str
 
-
 class EmbeddingMesureRequest(BaseModel):
     model_name: str
     test_path: str
-
 
 def _create_embedding_thread(model_name: str, vocab: dict, trainset: list[dict]) -> None:
     """Run create_embedding_usecase in a dedicated thread."""
@@ -110,14 +108,14 @@ async def train_embedding_api(
 @embedding_router.post("/embedding/encode")
 async def encode_embedding_api(
     model_name: str = Body(..., embed=True),
-    sentence: str = Body(..., embed=True),
+    seq: str = Body(..., embed=True),
     payload: dict = Depends(verify_access_token)
 ):
     """
     Encode a single sentence to its embedding vector.
     """
     try:
-        embedding = encode_embedding_usecase(model_name, sentence, get_inversify())
+        embedding = encode_embedding_usecase(model_name, seq, get_inversify())
         return {"embedding": embedding}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Encoding failed: {str(e)}")
@@ -125,15 +123,15 @@ async def encode_embedding_api(
 @embedding_router.post("/embedding/similarity")
 async def similarity_embedding_api(
     model_name: str = Body(..., embed=True),
-    sentence1: str = Body(..., embed=True),
-    sentence2: str = Body(..., embed=True),
+    seq1: str = Body(..., embed=True),
+    seq2: str = Body(..., embed=True),
     payload: dict = Depends(verify_access_token)
 ):
     """
     Compute cosine similarity between embeddings of two sentences.
     """
     try:
-        score = similarity_embedding_usecase(model_name, sentence1, sentence2, get_inversify())
+        score = similarity_embedding_usecase(model_name, seq1, seq2, get_inversify())
         return {"similarity": score}
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Similarity computation failed: {str(e)}")

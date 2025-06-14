@@ -8,15 +8,34 @@ from app.usecases.embedding.usecase_encode_embedding import encode_embedding_use
 
 def cosine_similarity(vec1, vec2):
     """
-    Computes cosine similarity between two vectors.
+    Computes the cosine similarity between two vectors and normalizes it to the [0, 1] range.
+    This is the single source of truth for similarity calculation at inference time.
+    
+    Args:
+        vec1: First vector as a NumPy array.
+        vec2: Second vector as a NumPy array.
+
+    Returns:
+        The normalized similarity score (float between 0.0 and 1.0).
     """
+    # Ensure they are numpy arrays
     v1 = np.array(vec1)
     v2 = np.array(vec2)
+    
     norm1 = np.linalg.norm(v1)
     norm2 = np.linalg.norm(v2)
+
     if norm1 == 0 or norm2 == 0:
         return 0.0
-    return float(np.dot(v1, v2) / (norm1 * norm2))
+    
+    # Raw cosine similarity [-1, 1]
+    raw_similarity = np.dot(v1, v2) / (norm1 * norm2)
+    
+    # Normalize to [0, 1]
+    normalized_similarity = (raw_similarity + 1.0) / 2.0
+    
+    # Clip to ensure it's strictly within [0, 1] due to potential float precision issues
+    return float(np.clip(normalized_similarity, 0.0, 1.0))
 
 def similarity_embedding_usecase(
     model_name: str,
