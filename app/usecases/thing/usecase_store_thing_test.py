@@ -1,5 +1,4 @@
 # app/usecases/thing/usecase_store_thing_test.py
-import torch # type: ignore
 import pytest # type: ignore
 from unittest.mock import MagicMock, patch
 
@@ -42,12 +41,15 @@ def valid_item():
 
 # --- Main tests ---
 
+@patch("app.usecases.thing.usecase_store_thing.encode_embedding_usecase")
 @patch("app.usecases.thing.usecase_store_thing.get_model_usecase")
-def test_store_thing_success(mock_get_model_usecase, mock_encode, mock_model, valid_item):
+def test_store_thing_success(mock_get_model_usecase, mock_encode_embedding, mock_model, valid_item):
     """
     Nominal case: the object is indexed, the vector is generated and persisted.
     """
     mock_get_model_usecase.return_value = mock_model
+    mock_encode_embedding.return_value = [0.1, 0.2, 0.3]
+    
     mock_bdd = MagicMock()
     inversify = MagicMock()
     inversify.get_bdd.return_value = mock_bdd

@@ -11,30 +11,37 @@ FILES_DIR = Path("files")
 # Internal cache for singleton behavior
 _env_cache: Optional[Dict[str, Any]] = None
 
+def _reset_env_cache():
+    """
+    Reset the cached environment variables (used in tests).
+    """
+    global _env_cache
+    _env_cache = None
+
 # Encapsulate environment variable loading
 def load_env_vars():
     """
     Load and cache environment variables only once.
     """
+    mode = os.getenv("MODE", "test").lower()
+    
     global _env_cache
     if _env_cache is not None:
         return _env_cache
     
-    # Paths to .env files
-    root_dir = Path(__file__).resolve().parent.parent
-    env_path = root_dir / ".env"
-    env_local_path = root_dir / ".env.local"
-    env_prod_path = root_dir / ".env.prod"
+    if(mode != "test") :
+        # Paths to .env files
+        root_dir = Path(__file__).resolve().parent.parent
+        env_path = root_dir / ".env"
+        env_local_path = root_dir / ".env.local"
+        env_prod_path = root_dir / ".env.prod"
 
-    # Load in order: .env → .env.local → .env.prod if MODE=prod
-    load_dotenv(env_path)
-    load_dotenv(env_local_path, override=True)
-    
-    # Ensure SECRET_KEY is loaded
-    mode = os.getenv("MODE", 'local')
-    
-    if mode == 'prod':
-        load_dotenv(env_prod_path, override=True)
+        # Load in order: .env → .env.local → .env.prod if MODE=prod
+        load_dotenv(env_path, override=True)
+        load_dotenv(env_local_path, override=True)
+        
+        if mode == 'prod':
+            load_dotenv(env_prod_path, override=True)
 
     # Validate essential variables
     secret_key = os.getenv("SECRET_KEY")

@@ -1,4 +1,5 @@
 # app\main.py
+import warnings
 from fastapi import FastAPI  # type: ignore
 from fastapi.middleware.cors import CORSMiddleware  # type: ignore
 
@@ -7,6 +8,12 @@ from app.apis.apis import router as model_router  # Import the API routes from t
 
 # Initialize the FastAPI application
 app = FastAPI()
+warnings.filterwarnings(
+    "ignore",
+    message=(
+        "torch.utils._pytree._register_pytree_node is deprecated.*"
+    ),
+)
 
 # Configure allowed origins
 app.add_middleware(

@@ -1,12 +1,19 @@
 # docker-compose.prod.yml
 services:
-  vergo_puppet:
-    image: vergo_puppet
-    container_name: vergo_puppet
+  puppet:
+    image: puppet
+    container_name: puppet
     ports:
       - "3004:8000"
     restart: always
     volumes:
       - ./files:/app/files
+      - ./models:/app/models
     extra_hosts:
       - 'host.docker.internal:host-gateway'
+    networks:
+      - interservices
+
+networks:
+  interservices:
+    external: true

@@ -139,7 +139,7 @@ There are two main approaches to installing Vergo Puppet:
    docker-compose build
    docker-compose up -d
    ```
-   This will spin up a container named `vergo_puppet` and map port `3004` on your machine to port `8000` inside the container. Visit `http://localhost:3004/docs` to see the Swagger UI in production mode.
+   This will spin up a container named `puppet` and map port `3004` on your machine to port `8000` inside the container. Visit `http://localhost:3004/docs` to see the Swagger UI in production mode.
 
 ---
 

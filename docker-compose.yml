@@ -1,12 +1,12 @@
 # docker-compose.yml
 services:
-  vergo_puppet:
-    image: vergo_puppet
-    container_name: vergo_puppet
+  puppet:
+    image: puppet
+    container_name: puppet
     build: .
     ports:
       - "3004:8000"
     volumes:
       - .:/app
-      - ./training_data:/app/training_data
-      - ./test_data:/app/test_data
+      - ./files:/app/files
+      - ./models:/app/models
