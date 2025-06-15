@@ -147,7 +147,7 @@ There are two main approaches to installing Vergo Puppet:
 
 To run the application locally in development mode (with hot-reload):
 ```bash
-uvicorn app.main:app --reload
+MODE=dev uvicorn app.main:app --reload
 ```
 - Access API docs at: [http://localhost:8000/docs](http://localhost:8000/docs)
 

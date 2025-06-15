@@ -19,5 +19,9 @@ COPY . /app
 # Expose the port the app runs on
 EXPOSE 8000
 
+# Default env values (can be overridden by docker-compose)
+ENV MODE=prod
+ENV DEBUG=false
+
 # Run the application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--timeout-keep-alive", "300"]

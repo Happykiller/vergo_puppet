@@ -13,20 +13,28 @@ class Inversify:
   def __init__(self):
     envs = load_env_vars()
     self._mode = envs["mode"]
+    self._bdd = envs["bdd"]
     self._mongo_uri = envs["mongo_uri"]
     self._mongo_db_name = envs["mongo_db_name"]
+    
+    # Log initial environment configuration
+    logger.info(f"[Inversify] Mode: {self._mode}")
+    debug = envs["debug"]
+    logger.info(f"[Inversify] Debug: {debug}")
+    logger.info(f"[Inversify] BDD: {self._bdd}")
+    logger.info(f"[Inversify] Mongo URI: {self._mongo_uri}")
+    logger.info(f"[Inversify] Mongo DB Name: {self._mongo_db_name}")
+        
     self._dependencies = {}
 
   def configure(self) -> None:
     """Configure services based on the mode."""
-    if self._mode == "dev":
+    if self._bdd == "fake":
       self._dependencies["bdd_service"] = FakeBDDService()
-    elif self._mode == "test":
-      self._dependencies["bdd_service"] = FakeBDDService()
-    elif self._mode == "prod":
+    elif self._bdd == "mongo":
       # Placeholder for a real database service in production
       mongo_client = MongoClient(self._mongo_uri)
-      logger.info(f"Connected to MongoDB at {self._mongo_uri}")
+      logger.info(f"[Inversify] Connected to MongoDB at success")
       self._dependencies["bdd_service"] = MongoBDDService(mongo_client, self._mongo_db_name)
     else:
       raise ValueError(f"Unknown mode: {self._mode}")

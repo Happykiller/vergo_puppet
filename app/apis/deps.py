@@ -1,7 +1,7 @@
 # app/apis/deps.py
-import jwt
-from fastapi import Depends, HTTPException
-from fastapi.security import OAuth2PasswordBearer
+import jwt # type: ignore
+from fastapi import Depends, HTTPException # type: ignore
+from fastapi.security import OAuth2PasswordBearer # type: ignore
 
 from app.common import load_env_vars
 from app.services.logger import logger

@@ -3,7 +3,7 @@
 .PHONY: start startall down reset tar install help
 
 dev:
-	uvicorn app.main:app --reload
+	MODE=local uvicorn app.main:app --reload
 
 start: 
 	docker compose up -d
