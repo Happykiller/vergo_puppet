@@ -11,13 +11,6 @@ FILES_DIR = Path("files")
 # Internal cache for singleton behavior
 _env_cache: Optional[Dict[str, Any]] = None
 
-def _reset_env_cache():
-    """
-    Reset the cached environment variables (used in tests).
-    """
-    global _env_cache
-    _env_cache = None
-
 # Encapsulate environment variable loading
 def load_env_vars():
     """

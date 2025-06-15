@@ -2,8 +2,6 @@
 import pytest # type: ignore
 from unittest.mock import patch, MagicMock
 
-from app.common import _reset_env_cache
-
 """Helper to configure mock Inversify and its dependencies."""
 @pytest.fixture
 def patch_inversify():
@@ -24,18 +22,3 @@ def patch_inversify():
     # On "yield" un tuple (mock_inversify_instance, mock_bdd)
     # afin que le test (ou d'autres fixtures) puissent les utiliser
     yield mock_inversify_instance, mock_bdd
-
-@pytest.fixture(autouse=True, scope="function")
-def mock_env_vars(monkeypatch):
-    """
-    Automatically apply mocked env vars for every test.
-    Resets the singleton cache so each test gets a fresh environment.
-    """
-    _reset_env_cache()
-
-    monkeypatch.setenv("SECRET_KEY", "mocked-secret-key")
-    monkeypatch.setenv("MODE", "test")
-    monkeypatch.setenv("BDD", "fake")
-    monkeypatch.setenv("MONGO_URI", "mongodb://mock")
-    monkeypatch.setenv("MONGO_DB_NAME", "mock-db")
-    monkeypatch.setenv("DEBUG", "true")
