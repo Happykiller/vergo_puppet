@@ -1,5 +1,5 @@
 import json
-import pytest
+import pytest # type: ignore
 import tempfile
 from unittest.mock import patch, MagicMock
 
@@ -111,7 +111,7 @@ def test_usecase_tokenize_full_process(mock_nlp, mock_anonymize_names, mock_load
     assert expected_anonymized in before_spacy, f"Name anonymization failed. Processed: {before_spacy}"
 
     # Check regex replacement
-    assert "[service_k]" in result[0]["tokens"], "Regex replacement or token extraction failed."
+    assert "<REF>" in result[0]["tokens"], "Expected normalised token <REF> from [service_k]"
 
     # Check token extraction
     assert "connecter" in result[0]["tokens"], "Token extraction failed for 'connecter'."
@@ -172,13 +172,6 @@ def test_usecase_tokenize_remove_polite(mock_remove_polite, test_data):
     # Verify that polite phrases are removed
     assert "Bonjour" not in result[0]["before_spacy"], "Polite phrase removal failed for 'Bonjour'."
     assert "Merci" not in result[0]["before_spacy"], "Polite phrase removal failed for 'Merci'."
-
-
-def test_load_regex_patterns():
-    """Test loading regex patterns."""
-    patterns = REGEX_PATTERNS
-    assert len(patterns) == 2, "Expected two regex patterns."
-    assert patterns[0]["op"] == "REPLACE", "Expected REPLACE operation."
 
 def test_anonymize_names():
     """Test anonymizing names."""

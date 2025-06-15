@@ -81,7 +81,7 @@ def train_embedding_model(
     embedding_dim: int = 128,
     lstm_hidden_dim: int = 128,
     batch_size: int = 128,
-    num_epochs: int = 50,
+    num_epochs: int = 100,
     learning_rate: float = 1e-3,
     device: Optional[str] = None,
     save_path: Optional[str] = None,

@@ -1,9 +1,9 @@
 # app/usecases/thing/usecase_store_thing_test.py
-import torch
-import pytest
+import torch # type: ignore
+import pytest # type: ignore
 from unittest.mock import MagicMock, patch
 
-from app.usecases.thing.usecase_store_thing import store_thing_usecase, flatten_for_embedding, encode_text_with_model
+from app.usecases.thing.usecase_store_thing import store_thing_usecase, flatten_for_embedding
 
 # --- Fixtures & helpers ---
 
@@ -42,7 +42,6 @@ def valid_item():
 
 # --- Main tests ---
 
-@patch("app.usecases.thing.usecase_store_thing.encode_text_with_model", return_value=[0.1, 0.2, 0.3])
 @patch("app.usecases.thing.usecase_store_thing.get_model_usecase")
 def test_store_thing_success(mock_get_model_usecase, mock_encode, mock_model, valid_item):
     """
@@ -53,7 +52,7 @@ def test_store_thing_success(mock_get_model_usecase, mock_encode, mock_model, va
     inversify = MagicMock()
     inversify.get_bdd.return_value = mock_bdd
 
-    result = store_thing_usecase(valid_item, "mock_model", inversify)
+    result = store_thing_usecase("mock_model", 'colleciton', valid_item["id"], valid_item, inversify)
 
     mock_bdd.store_thing_embedding.assert_called()
     assert result["status"] == "stored"
@@ -67,10 +66,11 @@ def test_store_thing_missing_label(mock_get_model_usecase, mock_model):
     Error case: missing label field.
     """
     item = {"id": "thing_123"}
+    mock_model.glossary = ["<UNK>", "vélo", "rouge"]
     mock_get_model_usecase.return_value = mock_model
     inversify = MagicMock()
     with pytest.raises(Exception) as exc:
-        store_thing_usecase(item, "mock_model", inversify)
+        store_thing_usecase("mock_model", 'colleciton', item["id"], item, inversify)
     assert "label" in str(exc.value)
 
 @patch("app.usecases.thing.usecase_store_thing.get_model_usecase")
@@ -82,7 +82,7 @@ def test_store_thing_missing_id(mock_get_model_usecase, mock_model):
     mock_get_model_usecase.return_value = mock_model
     inversify = MagicMock()
     with pytest.raises(Exception) as exc:
-        store_thing_usecase(item, "mock_model", inversify)
+        store_thing_usecase("mock_model", 'colleciton', item["id"], item, inversify)
     assert "id" in str(exc.value)
 
 @patch("app.usecases.thing.usecase_store_thing.get_model_usecase")
@@ -94,7 +94,7 @@ def test_store_thing_model_not_found(mock_get_model_usecase):
     mock_get_model_usecase.return_value = None
     inversify = MagicMock()
     with pytest.raises(Exception) as exc:
-        store_thing_usecase(item, "model_does_not_exist", inversify)
+        store_thing_usecase("model_does_not_exist", 'colleciton', item["id"], item, inversify)
     assert "not found" in str(exc.value)
 
 def test_flatten_for_embedding_flat_and_nested():
@@ -141,31 +141,3 @@ def test_flatten_for_embedding_only_nested():
     result = flatten_for_embedding(obj)
     assert "Visa" in result
     assert "z@t.com" in result
-
-def test_encode_text_with_model_basic():
-    """
-    encode_text_with_model should produce a vector as a list of floats from the model.
-    """
-    import torch
-    mock_model = MagicMock()
-    mock_model.word2idx = {"bike": 2, "red": 3}
-    mock_model.nn_model = MagicMock()
-    mock_model.nn_model.to.return_value = mock_model.nn_model
-    mock_model.nn_model.forward_once.return_value = torch.tensor([[1.1, 2.2, 3.3]])
-
-    result = encode_text_with_model(mock_model, "bike red")
-    assert result == pytest.approx([1.1, 2.2, 3.3], abs=1e-6)
-
-def test_encode_text_with_model_handles_unknown_words():
-    """
-    encode_text_with_model should use 1 for unknown tokens (UNK).
-    """
-    import torch
-    mock_model = MagicMock()
-    mock_model.word2idx = {"bike": 2}
-    mock_model.nn_model = MagicMock()
-    mock_model.nn_model.to.return_value = mock_model.nn_model
-    mock_model.nn_model.forward_once.return_value = torch.tensor([[4.4, 5.5]])
-
-    result = encode_text_with_model(mock_model, "bike unknownword")
-    assert result == pytest.approx([4.4, 5.5], abs=1e-6)

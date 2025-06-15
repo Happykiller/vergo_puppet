@@ -1,7 +1,7 @@
 # app\usecases\usecase_tokenize.py
 import re
 import json
-import spacy
+import spacy # type: ignore
 from typing import List, Optional
 from app.apis.models.tokenize_model_data import ModelTokenizeData
 
@@ -213,7 +213,7 @@ def extract_corrected_tokens(doc):
 
         lemma = token.lemma_.lower()
         corrected = lemma_corrections.get(lemma, lemma)
-        if len(corrected) > 1:                         # filtrer les 1-caractère
+        if corrected and len(corrected) > 1:                         # filtrer les 1-caractère
             tokens.append(corrected)
 
     return tokens

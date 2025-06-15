@@ -1,3 +1,9 @@
+0.21.0 [2025-06-16]
+  - Refacto
+
+0.20.0 [2025-06-15]
+  - Add o5 model
+
 0.19.0 [2025-02-23]
   - siamese, merge glossary create, train
 

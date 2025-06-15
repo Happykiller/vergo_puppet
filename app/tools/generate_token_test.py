@@ -1,8 +1,8 @@
 # app\tools/generate_token_test.py
 from unittest.mock import patch
-from app.generate_token import create_token
+from app.tools.generate_token import create_token
 
-@patch("app.generate_token.load_env_vars")
+@patch("app.tools.generate_token.load_env_vars")
 def test_create_token(mock_load_env_vars):
     """
     Test JWT token creation with mocked environment variables.

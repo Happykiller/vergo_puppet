@@ -43,8 +43,8 @@ from typing import Union, List, Dict, TypedDict, Any, Tuple
 
 # --- Configuration ---
 LANG = "fr"
-VOCAB_SIZE = 50000
-MAX_SAMPLES = 50000
+VOCAB_SIZE = 100000
+MAX_SAMPLES = 100000
 RAW_SAMPLE_LIMIT = int(MAX_SAMPLES * 1.5)
 NEG_PER_POS = 1
 # Définissez le nombre maximum de processus. Mettez 0 pour utiliser tous les cœurs disponibles moins un.

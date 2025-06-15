@@ -1,23 +1,21 @@
 # app\usecases\thing\usecase_search_things.py
-import torch
 import traceback
-import numpy as np
 
 from app.services.logger import logger
 from app.usecases.get_model import get_model_usecase
 from app.usecases.thing.usecase_get_things import get_things_usecase
-from app.usecases.thing.usecase_store_thing import encode_text_with_model
 from app.usecases.embedding.usecase_similarity_embedding import cosine_similarity
+from app.usecases.embedding.usecase_encode_embedding import encode_embedding_usecase
 
 def search_things_usecase(model_name: str, collection_name: str, sentence: str, top_k: int, inversify):
     """Search for the most similar things within a collection."""
     try:
         model = get_model_usecase(model_name, inversify)
-        if not model or not model.nn_model:
+        if not model:
             raise ValueError("Model not loaded or incomplete")
 
         # Tokenize and encode the query sentence
-        vector = encode_text_with_model(model, sentence)
+        vector = encode_embedding_usecase(model_name, sentence, inversify)
 
         # Retrieve things stored in the requested collection
         things = get_things_usecase(collection_name, ids=None, inversify=inversify)

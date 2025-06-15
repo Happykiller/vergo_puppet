@@ -1,12 +1,11 @@
 # app/usecases/usecase_store_thing.py
-import re
-import torch
 import traceback
 
 from app.inversify import Inversify
 from app.services.logger import logger
 from app.usecases.get_model import get_model_usecase
 from app.services.bdd.models.model_thing import ThingModel
+from app.usecases.embedding.usecase_encode_embedding import encode_embedding_usecase
 
 def flatten_for_embedding(obj: dict) -> str:
     """
@@ -27,45 +26,14 @@ def flatten_for_embedding(obj: dict) -> str:
 
     return " ".join(parts).strip()
 
-def encode_text_with_model(model, text: str) -> list[float]:
-    """
-    Encodes text into embedding using a UniversalEmbeddingModel.
-    Assumes model.glossary and model.nn_model are present.
-    """
-    glossary = model.glossary
-    if not glossary or not model.nn_model:
-        raise ValueError("Model glossary or nn_model is missing")
-
-    vocab = {token: idx for idx, token in enumerate(glossary)}
-    if "<UNK>" not in vocab:
-        raise ValueError("Model glossary missing <UNK> token")
-
-    def tokenize(s: str) -> list[str]:
-        return re.findall(r"\b\w+\b", s.lower())
-
-    tokens = tokenize(text)
-    indices = [vocab.get(t, vocab["<UNK>"]) for t in tokens]
-    if not indices:
-        raise ValueError("Text produced no tokens after tokenization")
-
-    seq = torch.tensor(indices, dtype=torch.long).unsqueeze(0)
-    lengths = torch.tensor([len(indices)])
-
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    model.nn_model = model.nn_model.to(device)
-    seq = seq.to(device)
-    lengths = lengths.to(device)
-
-    model.nn_model.eval()
-    with torch.no_grad():
-        embedding = model.nn_model.encode(seq, lengths)
-        return embedding.squeeze(0).cpu().tolist()
-
 def store_thing_usecase(model_name: str, collection_name: str, thing_id: str, data: dict, inversify: Inversify):
     """Store a thing vectorized with the specified embedding model."""
     try:
         if not thing_id or not isinstance(data, dict):
             raise ValueError("Missing 'id' or invalid 'data' payload.")
+        
+        if "label" not in data or not isinstance(data["label"], str):
+            raise ValueError("Missing required field 'label'")
 
         text = flatten_for_embedding(data)
 
@@ -73,7 +41,7 @@ def store_thing_usecase(model_name: str, collection_name: str, thing_id: str, da
         if not model:
             raise ValueError(f"Model '{model_name}' not found")
 
-        vector = encode_text_with_model(model, text)
+        vector = encode_embedding_usecase(model_name, text, inversify)
 
         thing = ThingModel(
             id=thing_id,
@@ -88,7 +56,9 @@ def store_thing_usecase(model_name: str, collection_name: str, thing_id: str, da
         return {
             "status": "stored",
             "id": thing_id,
-            "collection": collection_name
+            "collection": collection_name,
+            "text": text,
+            "vector_dim": len(vector)
         }
 
     except Exception as e:

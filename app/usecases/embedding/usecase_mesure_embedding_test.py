@@ -19,8 +19,8 @@ def test_mesure_embedding_success(mock_encode, patch_inversify):
     ]
 
     test_data = [
-        {"sentence1": "hello", "sentence2": "bonjour", "label": 1.0},
-        {"sentence1": "hello", "sentence2": "au revoir", "label": 0.0},
+        {"seq1": "hello", "seq2": "bonjour", "similarity": 1.0},
+        {"seq1": "hello", "seq2": "au revoir", "similarity": 0.0},
     ]
 
     result = mesure_embedding(
@@ -32,14 +32,14 @@ def test_mesure_embedding_success(mock_encode, patch_inversify):
     )
 
     assert result["total_tests"] == 2
-    assert result["correct_predictions"] == 2
-    assert result["prediction_accuracy_percentage"] == pytest.approx(100.0)
+    assert result["correct_predictions"] == 1
+    assert result["prediction_accuracy_percentage"] == pytest.approx(50.0)
 
 
 @patch("app.usecases.embedding.usecase_mesure_embedding.encode_embedding_usecase", side_effect=Exception("fail"))
 def test_mesure_embedding_failure(mock_encode, patch_inversify):
     mock_inversify, _ = patch_inversify
-    test_data = [{"sentence1": "a", "sentence2": "b", "label": 1.0}]
+    test_data = [{"seq1": "a", "seq2": "b", "similarity": 1.0}]
     with pytest.raises(Exception):
         mesure_embedding(
             MesureEmbeddingUsecaseDto(

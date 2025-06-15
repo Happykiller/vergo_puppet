@@ -5,8 +5,8 @@ from fastapi.testclient import TestClient # type: ignore
 from app.services.bdd.models.model_data import ModelData
 
 from app.main import app
-from unittest.mock import mock_open, patch
-from app.generate_token import create_token
+from unittest.mock import patch
+from app.tools.generate_token import create_token
 
 # Initialize test client for making requests to the API
 client = TestClient(app)
@@ -32,7 +32,7 @@ def mocked_env_vars():
     with patch("app.apis.apis.load_env_vars", return_value={
         "secret_key": "mocked-secret-key",
         "mode": "test"
-    }), patch("app.generate_token.load_env_vars", return_value={
+    }), patch("app.tools.generate_token.load_env_vars", return_value={
         "secret_key": "mocked-secret-key",
         "mode": "test"
     }):

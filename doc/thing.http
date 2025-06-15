@@ -86,7 +86,7 @@ Authorization: Bearer {{token}}
 {
   "collection_name": "siguri",
   "model_encode_name": "puppet-o5",
-  "sentence": "red bike"
+  "sentence": "demo@ex.com"
 }
 
 
