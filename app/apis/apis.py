@@ -5,6 +5,7 @@ from typing import Any
 from fastapi.security import OAuth2PasswordBearer # type: ignore
 from fastapi import BackgroundTasks, Depends, APIRouter, HTTPException # type: ignore
 
+from app.apis.o6 import o6_router
 from app.version import __version__
 from app.apis.common import FILES_DIR
 from app.services.logger import logger
@@ -438,3 +439,4 @@ async def secure_endpoint(payload: dict = Depends(verify_access_token)):
 
 router.include_router(thing_router)
 router.include_router(embedding_router)
+router.include_router(o6_router)
