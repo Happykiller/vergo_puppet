@@ -6,6 +6,7 @@ from pydantic import BaseModel # type: ignore
 from fastapi import APIRouter, Depends, HTTPException # type: ignore
 
 from app.services.logger import logger
+from app.apis.common import format_duration
 from app.apis.deps import verify_access_token
 from app.usecases.usecase_summarize_mr import usecase_summarize_mr
 
@@ -32,7 +33,7 @@ def summarize_mr_worker(prompt_path: str, markdown_path: str, output_path: str):
 
         duration = perf_counter() - start_time
         Path(output_path).write_text(summary, encoding="utf-8")
-        logger.info(f"[summarize_mr_worker] ✅ Summary written to {output_path} in {duration:.2f} seconds.")
+        logger.info(f"[summarize_mr_worker] ✅ Summary written to {output_path} in {format_duration(duration)}")
     except Exception as e:
         logger.error(f"[summarize_mr_worker] ❌ Exception: {e}\n{format_exc()}")
         Path(output_path).write_text(f"[ERROR] {str(e)}", encoding="utf-8")

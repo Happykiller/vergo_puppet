@@ -1,6 +1,7 @@
-# MR 48 – [MR][SP][Shiva] Unicité Message_id et Impact du passage de champs "To" des demandes d'un mail à une liste de mail séparé par un ";"
+## Titre initiale
+MR 48 – [MR][SP][Shiva] Unicité Message_id et Impact du passage de champs "To" des demandes d'un mail à une liste de mail séparé par un ";"
 
-## Description
+## Description initiale
 * Lever de l'unicité du message id
 * Impact du passage de champs "To" des demandes d'un mail à une liste de mail séparé par un ";"
 

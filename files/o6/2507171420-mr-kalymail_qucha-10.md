@@ -1,6 +1,7 @@
-# MR 10 – Fix(spamrock.c#send_shiva_notif): Split notif by domains
+## Titre initiale
+MR 10 – Fix(spamrock.c#send_shiva_notif): Split notif by domains
 
-## Description
+## Description initiale
 Il s'agit de grouper par domaines les destinataires pour émettre les notifications aux tenants dédié à ces domaines
 
 ## Fichiers modifiés

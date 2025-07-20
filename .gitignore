@@ -183,3 +183,5 @@ app/tools/generates/**/*.json
 app/tools/o5/generates/**/*.json
 app/tools/o5/generates/**/*.jsonl
 *.pt
+models/mistral*
+models/devstral*

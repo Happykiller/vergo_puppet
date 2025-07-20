@@ -5,6 +5,6 @@ POST {{host}}/o6
 Authorization: Bearer {{token}}
 
 {
-  "prompt_path": "files/o6/prompt.md",
+  "prompt_path": "files/o6/prompt_fr.md",
   "markdown_path": "files/o6/2507171420-mr-kalymail_qucha-10.md"
 }

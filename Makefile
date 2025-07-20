@@ -1,9 +1,15 @@
 # Makefile
 # Mark targets as not file-dependent; they are always executed
-.PHONY: start startall down reset tar install help
+.PHONY: start install-deps startall down reset tar install help
 
 dev:
 	MODE=local uvicorn app.main:app --reload
+
+# Install dependencies for local development
+install-deps:
+	pip install --no-cache-dir --upgrade pip
+	pip install --no-cache-dir -r requirements-dev.txt
+	pip install --no-cache-dir -r requirements-prod.txt	
 
 start: 
 	docker compose up -d

@@ -24,3 +24,11 @@ def load_json_file(filepath: Union[str, Path]) -> Union[dict, list]:
             return json.load(f)
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error reading JSON from '{file_path}': {e}")
+    
+def format_duration(seconds: float) -> str:
+    # Format duration as HH:MM:SS.mmm
+    h = int(seconds // 3600)
+    m = int((seconds % 3600) // 60)
+    s = int(seconds % 60)
+    ms = int((seconds - int(seconds)) * 1000)
+    return f"{h:02d}:{m:02d}:{s:02d}.{ms:03d}"

@@ -492,6 +492,160 @@ You may add or remove files as your project evolves.
 
 ---
 
+**Thank you for using Vergo Puppet!**  
+If you have any questions or need further assistance, feel free to open an issue or reach out to the maintainers.
+
+Voici une documentation complète au format Markdown (`llama-cpp-python-cuda.md`) pour compiler **`llama-cpp-python` avec CUDA** dans un environnement Linux (ex: WSL2 Ubuntu 22.04) :
+
+---
+
+Here is a fully rewritten and polished version of your CUDA build guide for `llama-cpp-python`, in clear and professional English. It’s now suitable for direct inclusion in a `README.md` or `docs/llama-cuda.md`.
+
+---
+
+# 🧠 Building `llama-cpp-python` with CUDA Support
+
+This guide explains how to compile `llama-cpp-python` with **CUDA acceleration** to leverage your NVIDIA GPU for LLM inference. This setup is ideal for high-performance applications using quantized GGUF models (like Devstral or Mistral variants).
+
+---
+
+## ✅ Prerequisites
+
+Make sure you have the following:
+
+* An NVIDIA GPU with recent drivers installed
+* [CUDA Toolkit](https://developer.nvidia.com/cuda-downloads)
+* Python 3.8 or newer
+* Common build tools
+
+Install required system packages (Ubuntu/Debian-based):
+
+```bash
+sudo apt update && sudo apt install -y \
+  build-essential cmake ninja-build \
+  python3-dev python3-pip \
+  libopenblas-dev libsqlite3-dev libssl-dev
+```
+
+---
+
+## 🚀 Compilation Steps
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/abetlen/llama-cpp-python.git
+cd llama-cpp-python
+```
+
+### 2. Build with CUDA enabled using `pip`
+
+You can force a full build with GPU support:
+
+```bash
+CMAKE_ARGS="-DGGML_CUDA=on" pip install llama-cpp-python
+```
+
+Or to ensure full rebuild:
+
+```bash
+CMAKE_ARGS="-DGGML_CUDA=on" FORCE_CMAKE=1 pip install llama-cpp-python --upgrade --force-reinstall --no-cache-dir
+```
+
+### 💡 Option Breakdown
+
+| Option            | Description                                 |
+| ----------------- | ------------------------------------------- |
+| `GGML_CUDA=on`    | Enables CUDA backend                        |
+| `LLAMA_CUBLAS=on` | (Optional) Uses cuBLAS for best performance |
+| `FORCE_CMAKE=1`   | Forces native compilation (bypasses wheels) |
+| `--no-cache-dir`  | Avoids using cached builds                  |
+
+---
+
+### 3. Validate the installation
+
+Run this Python command to confirm GPU support is available:
+
+```bash
+python3 -c "import llama_cpp; print(hasattr(llama_cpp, 'llama_create_context_with_cuda'))"
+# Should print: True
+```
+
+---
+
+## 📦 Using Locally Built Version in `requirements.txt`
+
+To use your custom-compiled version in your project, point to the local folder:
+
+```
+llama-cpp-python @ file:///path/to/llama-cpp-python
+```
+
+Example:
+
+```
+llama-cpp-python @ file:///mnt/data/projects/llama-cpp-python
+```
+
+---
+
+## 🧪 Runtime Output Example
+
+When running your application, successful CUDA usage will look like this:
+
+```bash
+ggml_cuda_init: found 1 CUDA devices:
+  Device 0: NVIDIA GeForce RTX 4080
+...
+load_tensors: layer 12 assigned to device CUDA0
+```
+
+---
+
+## 🐧 CUDA Setup in WSL (Optional)
+
+If you're using WSL2, install the CUDA toolkit like this:
+
+```bash
+sudo apt update
+sudo apt install -y nvidia-cuda-toolkit
+```
+
+Check that `nvcc` is installed:
+
+```bash
+nvcc --version
+```
+
+Monitor your GPU usage in real-time:
+
+```bash
+watch -n 1 nvidia-smi
+```
+
+---
+
+## Download the Devstral LLM Model (GGUF)
+
+The `usecase_summarize_mr` feature uses a quantized LLaMA-compatible model in GGUF format.
+
+### 1. Create the `models/` folder if not present
+
+```bash
+mkdir -p models
+````
+
+### 2. Download the Devstral GGUF model
+
+```bash
+huggingface-cli download "mistralai/Devstral-Small-2505_gguf" --include "devstralQ4_K_M.gguf" --local-dir "./models"
+```
+
+> ⚠️ **Make sure to update the URL if your GGUF model is hosted elsewhere (e.g., Hugging Face, private link).**
+
+---
+
 ## Contributing
 
 We welcome contributions! To get started:
@@ -501,8 +655,3 @@ We welcome contributions! To get started:
 3. **Submit a pull request** to the main branch.
 
 Please follow the existing code style and add/update tests for any changed functionality.
-
----
-
-**Thank you for using Vergo Puppet!**  
-If you have any questions or need further assistance, feel free to open an issue or reach out to the maintainers.

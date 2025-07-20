@@ -1,7 +1,9 @@
 # app/usecases/usecase_summarize_mr.py
-from llama_cpp import Llama
 from pathlib import Path
+from time import perf_counter
 
+from app.services.logger import logger
+from app.apis.common import format_duration
 from app.services.llm_loader import get_llm
 
 def usecase_summarize_mr(prompt_path: str, markdown_path: str) -> str:
@@ -14,17 +16,30 @@ def usecase_summarize_mr(prompt_path: str, markdown_path: str) -> str:
 
     prompt = prompt_file.read_text(encoding="utf-8")
     markdown = markdown_file.read_text(encoding="utf-8")
-    full_input = f"{prompt.strip()}\n\n---\n\n{markdown.strip()}"
+    system = "[SYSTEM_PROMPT]Tu es Devstral, un assistant code…[/SYSTEM_PROMPT]"
+    full_input = system + "\n[INST]" + prompt + markdown + "[/INST]"
 
     llm = get_llm()
+    
+    start_time = perf_counter()
+    
     response = llm(
         full_input,
-        max_tokens=1024,
-        temperature=0.7,
-        top_p=0.9,
-        stop=["</s>", "## Titre MR", "## Résumé"]
+        max_tokens=2048,
+        temperature=0.1, 
+        min_p=0.01, 
+        top_p=1.0
     )
-
-    #response = llm("Quel temps fait-il à Paris aujourd'hui ?", max_tokens=128)
+    
+    duration = perf_counter() - start_time
+    
+    usage = response.get("usage", {})
+    logger.info(
+        "[usecase_summarize_mr] ✅ LLM completed | "
+        f"Duration: {format_duration(duration)} | "
+        f"Prompt tokens: {usage.get('prompt_tokens', '?')} | "
+        f"Completion tokens: {usage.get('completion_tokens', '?')} | "
+        f"Total tokens: {usage.get('total_tokens', '?')}"
+    )
 
     return response["choices"][0]["text"].strip()
